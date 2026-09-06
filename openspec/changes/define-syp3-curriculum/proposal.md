@@ -52,13 +52,25 @@ abgelegt werden.
   Projektdokumentation entsteht als Nebenprodukt; CI bekommt einen echten Anlass;
   `ubuntu-latest` wird zum Schiedsrichter zwischen Linux- und macOS-Geräten.
 
-### Offen (Threads 2–5)
+### Entschieden in `setup-curriculum-repository` (Threads 2 und 5)
 
-- Speicherformat der Stoffstruktur (maschinenlesbare `topics.yaml` vs. LLM-Wiki) und
-  daraus abgeleitet der Umbau des Fragenkatalogs auf Voraussetzungs-Tags je Jahrgang
-- Konsolidierung der Publikationswege (Hugo-Website vs. AsciiDoc auf GitHub Pages)
-- Urheberrechtliche Bedingungen für die Verwendung des Manz-Schulbuchs
-- Detaillierungsgrad und Struktur einer einzelnen Lernressource
+- **Speicherformat der Stoffstruktur**: `curriculum.yaml` ist die einzige
+  Strukturwahrheit, gekoppelt an die Lernressourcen über `:topic-id:` (P1). Kein
+  LLM-Wiki — der Defekt war Struktur-in-Prosa, nicht die Speicherform.
+- **Fragenkatalog**: Der bestehende Katalog bleibt unangetastet; ein neuer wird von
+  Beginn an aus den `questions.adoc` der Module generiert (P8).
+- **Publikationswege**: gh-pages primär, Schulwebspace optional über `publish.sh`, die
+  Hugo-Site bleibt vorerst parallel bestehen (P7).
+- **Detaillierungsgrad und Struktur einer Lernressource**: ein Topic entspricht einem
+  Unterricht (P1), feste Abschnittsfolge mit den Pflichtteilen `Learning outcomes`,
+  `Decisions`, `Pitfalls` und `Terminology` (P4), kein Unterrichtsjournal im
+  Repository (P10), PlantUML als Diagramm-Default mit Herkunftsklassen für Bilder (P11),
+  Englisch mit zweisprachigem Governance-Wortschatz (P12).
+
+### Offen
+
+- Urheberrechtliche Bedingungen für die Verwendung des Manz-Schulbuchs — und damit
+  zusammenhängend für Bilder aus dem Web auf einer öffentlich zugänglichen Site (P11).
 
 ## Capabilities
 
@@ -96,9 +108,9 @@ noch keine Capabilities.
   Formulierung; keine Abbildungen oder Seitenkopien (rechtliche Prüfung offen).
 - **Schülerprojekte**: Repository-Struktur mit openspec, Projektdokumentation als
   AsciiDoc, Publikation über GitHub Pages.
-- **Fragenkatalog** (htl-leonding-college.github.io/fragenkatalog): Tag-Schema wird
-  von „Foundation/Advanced" auf Voraussetzungs-Tags je Jahrgang umgestellt — Umfang
-  und Verfahren offen (Thread 2).
+- **Fragenkatalog** (htl-leonding-college.github.io/fragenkatalog): **keine Änderung.**
+  Er bleibt öffentlich, unverändert und als Archiv erhalten; der neue, aus den Modulen
+  generierte Katalog entsteht daneben (`setup-curriculum-repository` — P8).
 - **4./5. Jahrgang**: Deployment-Diagramm und Kubernetes-Vertiefung werden dorthin
   verschoben; Abstimmung mit der dortigen Jahresplanung erforderlich.
 - **Nicht im Umfang**: Ausarbeitung der Lernressourcen selbst, Umbau des

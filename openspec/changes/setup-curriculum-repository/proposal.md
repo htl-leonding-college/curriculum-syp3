@@ -32,8 +32,28 @@ Jahrgänge hinweg.
   nur zusätzliche Handarbeit.
 - **Generatoren statt Doppelpflege**: PlantUML-Mindmap der Stoffstruktur,
   Website-Navigation und Fragenkatalog-Tags werden aus `curriculum.yaml` erzeugt.
+- **Ein Topic ist ein Unterricht.** Die Themen werden so geschnitten, dass eines genau
+  einen Slot füllt (1 UE Theorie bzw. 2 UE Praxis) — rund 48 Topics statt rund 13 auf
+  Blockebene. Damit ergibt sich der Detaillierungsgrad einer Lernressource aus der
+  Struktur, statt als Konvention festgelegt und dann nicht eingehalten zu werden.
 - **Einheitliches Modulformat** je Thema: `index.adoc` (Inhalt), `exercises.adoc`
   (Aufgaben mit `[%collapsible]` Lösungen), `questions.adoc` (mündliche Prüfungsfragen).
+  `index.adoc` hat eine feste Abschnittsfolge mit den Pflichtteilen `Learning outcomes`,
+  `Decisions`, `Pitfalls` und `Terminology`; eine ausdrückliche Nullaussage erfüllt die
+  Pflicht. Jedes Lernziel hat mindestens eine Prüfungsfrage — geprüft, nicht beabsichtigt.
+- **Das Repository trägt kein Unterrichtsjournal.** Module sind vorbereitet, stabil und
+  klassenunabhängig; der Verlauf (welche Klasse wie weit) wird außerhalb geführt. Bisher
+  war beides ein nach Datum gegliedertes Dokument, das live mitgeschrieben wurde und
+  deshalb nicht über Klassen und Jahre hinweg tragfähig ist.
+- **Diagramme bevorzugt als PlantUML-Quelltext**, inline im AsciiDoc. Bilder bleiben
+  erlaubt, wo PlantUML nicht trägt (Git-Commit-Graphen, Screenshots, freie Skizzen); sie
+  liegen beim Modul, Keynote-Quellen daneben. **Jedes Bild trägt eine Herkunftsklasse**
+  `own` / `free` / `unclear`. Ein eigener `rights-check`-Job macht `unclear` sichtbar,
+  blockiert die Veröffentlichung aber nicht.
+- **Sprache: Englisch mit zweisprachigem Governance-Wortschatz.** Der
+  Diplomarbeitsantrag ist deutsch; Governance-Fachbegriffe werden deshalb durchgehend in
+  beiden Sprachen geführt, jedes Modul hat einen `Terminology`-Abschnitt, und die
+  Vorlagen für Projektantrag und Projektauftrag tragen zweisprachige Feldbezeichner.
 - **Lösungen werden mitgeliefert, nicht verborgen.** Der Leistungsnachweis ist die
   mündliche Prüfung über die Aufgabe, nicht die Abgabe. Kein zeitgesteuertes
   Freischalten, keine Sichtbarkeitstrennung, keine getrennten Branches für Lösungen —
@@ -69,8 +89,10 @@ Jahrgänge hinweg.
   Voraussetzungsgraph und Pflichtfelder
 - `platform/curriculum-generators`: Ableitung von PlantUML-Mindmap, Navigation und
   Fragenkatalog-Tags aus dem Modell
-- `platform/learning-resource-format`: Aufbau eines Moduls, Aufgaben- und Lösungsmodell,
-  Prüfungsfragen je Thema
+- `platform/learning-resource-format`: Aufbau eines Moduls, feste Abschnittsfolge und
+  Pflichtabschnitte, Kopplung Lernziel ↔ Prüfungsfrage, Aufgabenarten (`drill` /
+  `project`) und Lösungsmodell, Prüfungsfragen je Thema, Diagramm- und Bildpolitik mit
+  Herkunftsklassen, Sprachregelung
 - `platform/publication`: Build-Pipeline nach gh-pages, revealjs-Ausgabe, optionales
   Ausrollen auf den Schulwebspace, Koexistenz mit der bestehenden Hugo-Site
 - `platform/question-catalogue`: Aufbau eines aus den Modulen generierten Fragenkatalogs,
@@ -84,8 +106,9 @@ Keine — unter `openspec/specs/` existieren noch keine Capabilities.
 
 ## Impact
 
-- **Repository `curriculum-syp3`**: neue Verzeichnisse `modules/`, `tools/`,
-  `templates/`, `.github/workflows/`, neue Datei `curriculum.yaml`.
+- **Repository `curriculum-syp3`**: neue Verzeichnisse `modules/` (rund 48
+  Topic-Verzeichnisse mit je drei Dateien und einem `images/`-Unterverzeichnis),
+  `tools/`, `templates/`, `.github/workflows/`, neue Datei `curriculum.yaml`.
 - **Repository `fragenkatalog`** (eigenständig, öffentlich): **keine Änderung.** Es
   bleibt als Bestand erhalten; der neue Katalog entsteht daneben.
 - **`define-syp3-curriculum`**: Die UE-Budget-Tabellen in dessen `design.md` werden zur

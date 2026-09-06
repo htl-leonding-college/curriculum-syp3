@@ -61,25 +61,27 @@ meta:
     praxis: 50
 
 topics:
-  - id: sdd-openspec
-    title: Spec-Driven Development with openspec
+  - id: sdd-why-specs
+    title: Why specifications instead of a requirements document
     block: vorgehen           # governance | vorgehen | modellierung | werkzeuge
     kind: theorie             # theorie | praxis
-    ue: 5
+    ue: 1                     # 1 UE Theorie bzw. 2 UE Praxis = ein Unterricht
     lesson: 8                 # Nummer des Unterrichts
     taught_in: jg3
     prerequisite_for: jg4     # ersetzt Foundation / Advanced
-    requires: [git-basics, ai-basics]
+    requires: [git-basics, ai-prompting]
     resources:
-      - modules/sdd-openspec/index.adoc
+      - modules/sdd-why-specs/index.adoc
+    exercises:
+      - modules/sdd-why-specs/exercises.adoc
     questions:
-      - modules/sdd-openspec/questions.adoc
+      - modules/sdd-why-specs/questions.adoc
 ```
 
 ```adoc
-// modules/sdd-openspec/index.adoc
-= Spec-Driven Development with openspec
-:topic-id: sdd-openspec
+// modules/sdd-why-specs/index.adoc
+= Why specifications instead of a requirements document
+:topic-id: sdd-why-specs
 
 ...Inhalt...
 ```
@@ -92,6 +94,43 @@ CI-Check verbindet beide Vorteile und macht Drift zum Build-Fehler.
 *Regel, an der die Entscheidung hängt:* Strukturdaten stehen **ausschließlich** in
 `curriculum.yaml`. Sobald UE-Zahlen oder Tags zusätzlich im AsciiDoc auftauchen, sind
 zwei Wahrheiten zurück.
+
+**Granularität: ein Topic ist ein Unterricht.**
+
+Ein Topic umfasst genau das, was in einem Slot behandelt wird — 1 UE Theorie oder 2 UE
+Praxis. Für den Jahresrahmen aus `define-syp3-curriculum` (30 Unterrichte, 25 UE Theorie /
+50 UE Praxis) ergibt das rund 48 Topics.
+
+```
+GROB (Blockebene, ~13 Topics)        FEIN (ein Unterricht, ~48 Topics)
+
+  git-toolchain    ue: 14              git-basics        ue: 2  lesson: 2
+  governance       ue:  8              git-branching     ue: 2  lesson: 3
+  ai               ue: 15              git-pullrequests  ue: 2  lesson: 4
+  ...                                  git-conflicts     ue: 2  lesson: 5
+                                       asciidoctor       ue: 2  lesson: 6
+                                       gh-actions-pages  ue: 2  lesson: 7
+                                       ...
+
+  index.adoc: 10-20 Seiten             index.adoc: 1-2 Seiten
+```
+
+*Begründung:* Der Detaillierungsgrad einer Lernressource muss dann nicht als Konvention
+festgelegt werden („höchstens N Seiten") — er folgt aus dem Zuschnitt. Ein `index.adoc`
+enthält, was in seinem Slot vorgetragen wird, und ist fertig, wenn der Slot voll ist.
+Konventionen dieser Art werden erfahrungsgemäß nicht eingehalten; eine Struktur, aus der
+sich der Umfang ergibt, braucht keine Disziplin.
+
+*Zweitwirkung:* Grobe Topics machen `requires:` trivial („git-toolchain vor allem
+anderen"), die Vorwärtsreferenzprüfung wirkungslos und die Fragenkatalog-Zuordnung
+ungenau. Erst feine IDs erzeugen eine echte Voraussetzungskette
+(`asciidoctor` vor `gh-actions-pages`).
+
+*Preis:* rund 48 Verzeichnisse statt rund 13. Die Textmenge ist dieselbe, nur anders
+geschnitten; die Verzeichnismenge tragen die Generatoren aus P3, nicht der Autor.
+
+*Folge:* `lesson:` zusammen mit `kind:` adressiert einen konkreten Slot. Damit wird der
+Jahresplan selbst maschinell prüfbar, nicht nur das UE-Budget (P2, Prüfung 5).
 
 ### P2 — Der CI-Check ist der Vertrag
 
@@ -116,6 +155,34 @@ Ohne ihn ist P1 nur eine zusätzliche Datei. Geprüft wird:
 4  VOLLSTAENDIGKEIT
      jedes topic hat taught_in und prerequisite_for
      jedes topic mit kind: praxis hat >= 1 question
+
+5  SLOT-BELEGUNG
+     je lesson hoechstens 1 topic mit kind: theorie
+     je lesson hoechstens 1 topic mit kind: praxis
+     keine Luecke zwischen lesson 1 und der letzten belegten
+
+6  PFLICHTABSCHNITTE
+     index.adoc enthaelt  == Learning outcomes
+                          == Decisions
+                          == Pitfalls
+                          == Terminology
+     jeder Abschnitt ist nicht leer; eine ausdrueckliche Nullaussage
+     ("None specific to this topic.") gilt als erfuellt
+
+7  OUTCOME-KOPPLUNG
+     jedes Learning outcome hat >= 1 Frage in questions.adoc
+     jede Frage verweist auf ein existierendes Outcome
+
+8  BILDHERKUNFT
+     jedes image:: unter modules/ traegt eine Herkunftsklasse
+       own | free | unclear
+     free verlangt Lizenzname und URL
+     Klasse unclear laeuft in den Job rights-check (P11)
+
+9  MODULSKELETT
+     jedes Modulverzeichnis enthaelt index.adoc, exercises.adoc
+     und questions.adoc
+     exercises.adoc darf inhaltsleer sein
 ```
 
 *Wirkung von Prüfung 3:* Wird ein Thema verschoben und rutscht dadurch eine Voraussetzung
@@ -123,6 +190,18 @@ nach hinten, schlägt der Build an — nicht der Unterricht im März.
 
 *Wirkung von Prüfung 2:* Die Budget-Tabellen aus `define-syp3-curriculum` werden zur
 maschinell geprüften Vorgabe statt zur Dokumentation, die veraltet.
+
+*Wirkung von Prüfung 5:* Der Jahresplan ist nicht mehr nur eine Summe, sondern eine
+Belegung. Ein Thema ohne Slot oder zwei Theoriethemen im selben Unterricht fallen beim
+Build auf, nicht im Unterrichtsjahr.
+
+*Wirkung von Prüfung 7:* Sie macht aus P4 („Prüfungsfragen werden mitgeliefert") einen
+Vertrag statt einer Absicht. Die Schüler sehen vorab, woran gemessen wird, und ein neu
+formuliertes Lernziel ohne zugehörige Frage blockiert den Build.
+
+*Nicht geprüft wird* der Inhalt der Aufgaben: weder `.Solution` noch ein Kriterienblock
+sind Pflicht (P4). Der Vertrag betrifft Struktur und Herkunft, nicht Vollständigkeit der
+Didaktik.
 
 ### P3 — Generatoren statt Doppelpflege
 
@@ -160,6 +239,70 @@ Uebungsaufgabe --> Loesung --> Pruefungsfragen --> Fragenkatalog
       |                              |
       +------ ein Modul, eine topic-id ------+
 ```
+
+**Abschnittsfolge von `index.adoc`.** Bei rund 48 Modulen (P1) entscheidet eine feste
+Gliederung darüber, ob sie einander gleichen. Ohne sie driften sie, und `questions.adoc`
+hängt an nichts.
+
+```adoc
+= Branching in git
+:topic-id: git-branching
+
+== Learning outcomes     PFLICHT  was danach gekonnt werden muss;
+                                  korrespondiert 1:1 mit questions.adoc
+
+== <Stoff>                        frei viele Abschnitte, Stichpunkte
+== <Stoff>                        und Diagramme, ~1-2 Seiten
+
+== Decisions             PFLICHT  was BEI UNS gilt: no-flow, kein rebase
+                                  auf main, Ubuntu statt WSL2
+
+== Pitfalls              PFLICHT  was erfahrungsgemaess schiefgeht
+
+== Terminology           PFLICHT  dt./engl. Begriffspaare (P12)
+
+== Further reading                Manz-Kapitel, Links, Uni-Heidelberg-Skript
+```
+
+*Begründung für `Decisions`:* Das ist der Abschnitt, den kein Sprachmodell erzeugen kann.
+Erklärtext ist keine knappe Ware mehr — jeder Schüler kann sich eine beliebig lange
+Erklärung generieren lassen. Was der Agent nicht weiß, ist, was in diesem Jahrgang gilt,
+was geprüft wird und welche Entscheidung hier getroffen wurde. Bisher steckte das
+implizit im Vortrag und ging beim Nachlesen verloren.
+
+*Füllfloskel-Risiko:* Pflichtabschnitte erzeugen Leerlauf in Modulen, wo es nichts zu
+entscheiden gibt. Deshalb ist eine ausdrückliche Nullaussage erlaubt und gilt als
+erfüllt:
+
+```adoc
+== Decisions
+
+None specific to this topic.
+```
+
+Das ist eine bewusste Aussage statt eines vergessenen Abschnitts und hält Prüfung 6
+trivial.
+
+**Aufgabenarten in `exercises.adoc`.** Nicht jede Aufgabe hat eine Musterlösung.
+
+```
+DRILL                              PROJECT
+generisch, wiederholbar            am eigenen Projekt
+"erzeuge einen Merge-Konflikt      "erstellt die Nutzwertanalyse fuer
+ und loese ihn auf"                 eure drei Projektideen"
+
+Musterloesung moeglich             Musterloesung existiert nicht
+```
+
+`kind=drill|project` ist eine **Kennzeichnung, kein CI-Zwang**. Weder `.Solution` noch ein
+Kriterienblock sind verpflichtend; die Aufgabenzahl je Modul ist frei, `exercises.adoc`
+darf inhaltsleer sein (Prüfung 9). Die Kennzeichnung dient zwei Zwecken: Die Schüler
+erkennen, welche Aufgabe Teil ihrer Projektarbeit ist, und die Jahresplanung zeigt,
+welcher Unterricht das Projekt vorantreibt.
+
+*Verhältnis zu P5:* Verbergen bleibt kein Prinzip. Mitliefern ist aber keine Pflicht —
+bei `project`-Aufgaben gibt es nichts mitzuliefern, weil die Lösung das Projekt des Teams
+ist.
 
 ### P5 — Kein Freischalten, keine Lösungs-Branches in Lernressourcen
 
@@ -333,6 +476,155 @@ antrainiert werden soll. Der Umweg ist der Lehrinhalt.
 
 *Versionierung:* `versions.env` pinnt die Werkzeugversionen; je Schuljahr ein git-Tag.
 
+### P10 — Das Modul ist vorbereitet und klassenunabhängig, der Verlauf bleibt außerhalb
+
+Bisher war die Lernressource ein einziges Dokument, das im Unterricht live mitgeschrieben
+wurde und nach Datum gegliedert war (`2526-3bhif-syp-lecture-notes` und die
+Vorgängerjahrgänge: 20–31 Kapitel, je ein Unterrichtstermin). Dieses Dokument leistete
+drei Dinge gleichzeitig.
+
+```
+1  Stoff erklaeren         --> gehoert ins Modul   (stabil, mehrjaehrig)
+2  Verlauf protokollieren  --> klassenspezifisch   (fluechtig)
+3  Spontanes festhalten    --> fluechtig, manches spaeter wertvoll
+```
+
+Nur (1) gehört ins Curriculum-Repository. `modules/<topic-id>/index.adoc` ist jahrgangs-
+weit und mehrjährig gültig; wird darin live mitgeschrieben, steht Klassenspezifisches in
+der gemeinsamen Quelle, überschreibt die nächste Klasse den Verlauf der vorigen, und der
+Text ist im Folgejahr mit den Zufällen des Vorjahres durchsetzt.
+
+```
+   BISHER: eine Achse -- ZEIT        NEU: eine Achse -- THEMA
+
+   2025-09-16                        modules/git-basics/
+     Static Site Generators            index.adoc, exercises.adoc,
+     Types of Branches                 questions.adoc
+   2025-09-23                        modules/git-branching/
+     Fork, Pull Request                ...
+```
+
+**Entscheidung:** Das Repository trägt kein Journal. Der Unterrichtsverlauf — welche
+Klasse wie weit gekommen ist — wird außerhalb geführt. Damit bleibt das Modul
+vorbereitbar, und der Detaillierungsgrad aus P1/P4 ist haltbar.
+
+*Verworfen:* `journal/<klasse>/<datum>.adoc` im Repository mit `:covered:`-Attributen und
+generierter Fortschrittsübersicht. Technisch reizvoll, aber eine Struktur, die niemand
+gefordert hat; der Verlauf ist ohnehin nur für den Lehrenden relevant und braucht keine
+Versionierung neben dem Stoff.
+
+*Konsequenz für die Schüler:* Nachgelesen wird das vorbereitete Modul, nicht das
+Unterrichtsprotokoll. Der Text muss deshalb ohne den Vortrag verständlich sein.
+
+### P11 — Diagramme: PlantUML als Default, Bilder mit Herkunftsklasse
+
+In den bestehenden Lecture Notes sind alle Diagramme exportierte Bilder ohne Quelltext,
+bei 15–25 % Anteil am Material. Inhaltlich ist davon fast alles PlantUML-fähig —
+Git-Workflows, V-Modell, Scrum-Framework, Kubernetes-Architektur, Docker-Volumes, UML.
+
+```
+@startuml      alle UML-Typen, component, deployment
+@startmindmap  Stoffstruktur
+@startwbs      Projektstrukturplan
+@startgantt    Meilensteinplan   <-- unmittelbar Governance-Stoff
+@startsalt     UI-Skizzen
+@startjson     Datenstrukturen
+```
+
+**Regel:**
+
+```
+PlantUML ist Default, inline im .adoc, kein separates File.
+Bild nur, wo PlantUML nicht traegt.
+Bilder liegen beim Modul:   modules/<topic-id>/images/
+Keynote-Quelle liegt daneben (.key), sonst ist der Export tot.
+Screenshots tragen die Werkzeugversion im Dateinamen.
+```
+
+Ein PlantUML-Block ist diffbar, im Review lesbar, stilistisch einheitlich, überlebt eine
+Überarbeitung und ist selbst Lehrmittel — PlantUML wird laut `define-syp3-curriculum`
+(D4) ohnehin unterrichtet. Ein PNG ist ein Binärklotz, dessen Quelle auf dem Rechner des
+Lehrenden liegt: genau die Drift, die P1 für Strukturdaten abgeschafft hat, nur für
+Bilder.
+
+*Echte Grenzen von PlantUML:* Git-Commit-Graphen (Punktnetz aus Branches und Merges),
+Screenshots realer Oberflächen (GitHub-PR, IntelliJ) und freie konzeptuelle Skizzen. Dort
+sind Bilder ausdrücklich erwünscht — ein vorhandenes gutes Bild neu zu zeichnen ist
+Verschwendung.
+
+**Herkunft ist Pflichtfeld, nicht Bildverzicht.** Drei Klassen:
+
+```adoc
+.Zielkreuz (own)
+image::zielkreuz.png[Zielkreuz,500]
+
+.Scrum framework (free: CC BY-SA 4.0, Scrum.org, https://…, retrieved 2026-09-10)
+image::scrum-framework.png[Scrum framework,600]
+
+.Kanban board (unclear: found via web search, rights not checked)
+image::kanban.png[Kanban board,600]
+```
+
+*Begründung für die Erfassung zum Zeitpunkt des Einfügens:* Herkunft ist der einzige
+Bestandteil, der sich nachträglich nicht beschaffen lässt. Bei 48 Modulen und
+größenordnungsmäßig 100 Bildern ist in zwei Jahren nicht mehr feststellbar, welches PNG
+woher kam; eine spätere Bereinigung würde zur Vollprüfung. Mit Feld ist sie ein `grep`.
+
+**`unclear` blockiert nicht.**
+
+```
+Job "build"         baut und deployt        -> laeuft auch bei unclear
+Job "rights-check"  faellt rot bei unclear > 0, listet Datei und Zeile
+```
+
+*Begründung:* Ein hartes Fail würde die Veröffentlichung von 48 Modulen an einem einzigen
+ungeklärten Bild aufhängen — mit der Folge, dass die Klasse `unclear` gemieden und das
+Feld wertlos wird. Ehrlich zu sein muss die bequemere Option bleiben.
+
+*Rechtliche Einordnung offen:* Die Site ist öffentlich. § 42 UrhG deckt Vervielfältigung
+für den eigenen Schulgebrauch, nicht öffentliche Zugänglichmachung im Web. Das betrifft
+die bestehenden Lecture-Notes-Sites bereits heute. Belastbar geklärt wird das zusammen
+mit der Manz-Frage; hier wird nur die Struktur festgelegt, die eine spätere Bereinigung
+möglich macht.
+
+### P12 — Sprache: Englisch, Governance-Begriffe zweisprachig
+
+Unterrichtssprache und Lernressourcen sind Englisch. Der Governance-Block ist jedoch an
+**deutsche Formulare** gebunden: Der Diplomarbeitsantrag fragt nach *Ausgangslage*,
+*Untersuchungsanliegen*, *Geplantes Ergebnis*, *Verantwortlich*. Wer den Stoff nur als
+*initial situation* und *research objective* gelernt hat, übersetzt im 5. Jahrgang unter
+Prüfungsdruck zurück.
+
+```
+Governance    deutsche Begriffe sind der Lerngegenstand
+Werkzeuge     englische Begriffe sind der Lerngegenstand
+              (git, pull request, merge conflict, spec, capability)
+Modellierung  gemischt (Anwendungsfalldiagramm / use case diagram)
+```
+
+**Entscheidung:** Modultext auf Englisch, plus Pflichtabschnitt `== Terminology` mit
+deutsch/englischen Begriffspaaren (P4, Prüfung 6). In Governance-Modulen werden
+Fachbegriffe durchgehend in beiden Sprachen geführt, nicht nur im Terminology-Abschnitt.
+
+Die Vorlage für Projektantrag und Projektauftrag trägt zweisprachige Feldbezeichner:
+
+```adoc
+== Ausgangslage / Initial situation
+== Untersuchungsanliegen / Research objective
+== Geplantes Ergebnis / Planned deliverable
+```
+
+*Alternative:* Deutsche Begriffe nur in Klammern beim ersten Auftreten. Verworfen — im
+Fließtext gehen sie beim Lernen unter, und der Terminology-Abschnitt liefert nebenbei die
+Vokabelliste, die bei mündlichen Prüfungen fehlt.
+
+*Alternative:* Governance-Module auf Deutsch, Rest Englisch. Verworfen — eine
+zweisprachige Site ist inkonsistent, und die Unterrichtssprache ist Englisch.
+
+*Folge für `define-syp3-curriculum`:* Zweisprachige Feldbezeichner ergeben nur Sinn, wenn
+die Feldstruktur die des DA-Antrags ist. Damit ist die dortige offene Frage entschieden —
+siehe D2.
+
 ## Risks / Trade-offs
 
 | Risiko | Mitigation |
@@ -347,6 +639,10 @@ antrainiert werden soll. Der Umweg ist der Lehrinhalt.
 | Kein Freischalten → Schüler kopieren Lösungen | Bewusst akzeptiert: Nachweis ist die mündliche Prüfung, Prüfungsfragen werden mitgeliefert (P4) |
 | `setup-tools.sh` bricht mitten im Lauf ab und blockiert den Praxisunterricht | Idempotenz als Pflichtanforderung (P9); zweiter Lauf setzt fort; 30 min Troubleshooting-Puffer in U2 |
 | Gepinnte Werkzeugversionen veralten unbemerkt | `versions.env` an einer Stelle; jährlicher Durchgang vor Schulbeginn, git-Tag je Schuljahr |
+| Pflichtabschnitte (`Decisions`, `Pitfalls`, `Terminology`) erzeugen Füllfloskeln | Ausdrückliche Nullaussage ist erlaubt und erfüllt die Prüfung (P4); eine bewusste Leermeldung ist informativer als ein fehlender Abschnitt |
+| Bilder der Klasse `unclear` gehen öffentlich live | Bewusst akzeptiert (P11): `rights-check` meldet sie rot und macht sie auffindbar, statt die Veröffentlichung zu blockieren; endgültige Klärung mit der Manz-Rechtsfrage |
+| 48 Modulverzeichnisse statt 13 erhöhen den Pflegeaufwand | Textmenge unverändert, nur anders geschnitten (P1); Skelett und Navigation kommen aus den Generatoren (P3), Prüfung 9 hält die Struktur einheitlich |
+| Unterrichtsverlauf ist im Repository nicht mehr nachvollziehbar | Bewusst (P10): Verlauf ist klassenspezifisch und wird außerhalb geführt; das Modul bleibt dafür mehrjährig gültig |
 
 ## Einführungsplan
 
@@ -374,6 +670,8 @@ antrainiert werden soll. Der Umweg ist der Lehrinhalt.
   Template-Repository wird — Letzteres wäre für „classroom 50" bequemer.
 - Ob Theoriethemen ebenfalls Pflichtfragen bekommen (CI-Prüfung 4 ausweiten), sobald die
   Theorieseite des neuen Katalogs existiert.
+- Wie das containerisierte asciidoctor-Image um `asciidoctor-diagram` und Graphviz
+  ergänzt wird — betrifft auch `local-convert.sh` (P11).
 - Ob der neue Katalog als eigener Bereich der Curriculum-Site publiziert wird oder als
   eigenes Repository mit eigener Adresse.
 - Zeitpunkt und Umfang der Hugo-Ablösung.

@@ -92,6 +92,20 @@ Lerngegenstand (Scope-Management).
 *Optional:* Initiale Spec-Menge per git-Tag (`baseline-v1`) markieren — das „Pflichtenheft"
 ist dann ein `git diff` entfernt.
 
+*Formstruktur:* Die Governance-Artefakte des 3. Jahrgangs folgen der Feldstruktur des
+DA-Antrags, damit die Schüler im 5. Jahrgang ein bekanntes Formular ausfüllen. Die
+Feldbezeichner der Vorlage sind zweisprachig:
+
+```adoc
+== Ausgangslage / Initial situation
+== Untersuchungsanliegen / Research objective
+== Geplantes Ergebnis / Planned deliverable
+```
+
+Das Formular ist deutsch, die Unterrichtssprache englisch; Governance-Fachbegriffe werden
+deshalb durchgehend in beiden Sprachen geführt. Begründung und Regelwerk in
+`../setup-curriculum-repository/design.md` — P12.
+
 ### D3 — Vorgehensmodelle als drei Taktfrequenzen desselben Musters
 
 Wasserfall, Scrum und SDD werden nicht als konkurrierende Schulen gelehrt, sondern als
@@ -324,5 +338,3 @@ Governance-Hausübung fallen zusammen.
 - Feinaufteilung der 15 AI-UE zwischen Grundlagen (vor U10) und Vertiefung (nach U10).
 - Genauer Zeitpunkt des revealjs-Blocks — abhängig vom Termin der ersten
   Meilenstein-Präsentation.
-- Ob die 3.-Jg-Governance-Artefakte formal an die DA-Antragsstruktur angelehnt werden
-  sollen, damit die Schüler im 5. Jg ein bekanntes Formular ausfüllen.
