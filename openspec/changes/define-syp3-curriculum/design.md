@@ -143,8 +143,10 @@ kritischen Pfad liegt.
 
 ### D7 — Lernumgebung: Ubuntu-Partition oder macOS, kein WSL2
 
-Ubuntu 24.04 LTS als Dual-Boot-Partition (≥ 100 GB) oder macOS. Ein klassenweites
-`setup.sh` mit `apt`- und `brew`-Zweig etabliert den Standard.
+Ubuntu 26.04 LTS als Dual-Boot-Partition (≥ 100 GB) oder macOS. Ein klassenweites Setup
+mit `apt`- und `brew`-Zweig etabliert den Standard; Aufbau und Ablage sind in
+`../setup-curriculum-repository/design.md` — P9 entschieden (eigenes Repository
+`klassen-setup`).
 
 *Begründung:* Der Gewinn ist Umgebungsisolation, nicht Didaktik — eine saubere, einheitliche
 Partition gegenüber N unterschiedlich verkonfigurierten Windows-Installationen. „Works on my

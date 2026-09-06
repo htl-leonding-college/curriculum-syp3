@@ -44,7 +44,7 @@ abgelegt werden.
 - **Jahresrahmen 30 Unterrichte à 3 UE** (1 UE Theorie + 2 UE Praxis), davon U1
   Vorstellungseinheit und U26–U30 Reserve. Die Reserve liegt am Ende und ist mit dem
   verzichtbarsten Inhalt (minikube) gefüllt, damit Ausfälle automatisch das Richtige treffen.
-- **Lernumgebung**: Ubuntu 24.04 LTS als Dual-Boot-Partition (≥ 100 GB) oder macOS.
+- **Lernumgebung**: Ubuntu 26.04 LTS als Dual-Boot-Partition (≥ 100 GB) oder macOS.
   WSL2 ist kein Fallback, da es die Windows-Fehlkonfiguration erbt; Überbrückung per
   Ubuntu-Live-USB mit Persistenz. Klassenweites `setup.sh` (apt/brew) als
   versionierter Standard und späterer Anknüpfungspunkt für den Docker-Block.
