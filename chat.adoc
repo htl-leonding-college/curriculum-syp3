@@ -173,10 +173,17 @@ Der Fragnkatalog gehört nur mir. Andere Lehrer dürfen diesen natürlich benutz
 
 Habe ein Frage zu Antora. Ist das nicht recht kompliziert und kann ich das auf meinem Webspace in der Schule laufen lassen
 
+//--
 
+möchte die beiden Dateien in "assets" einstweilen noch behalten. Bislang habe ich etwas erklärt und live in einem index.adoc mitgeschrieben oder ich
+hatte Folien und habe diese erläutert und ggf etwas in index.adoc eingetrage. Das hatte den Vorteil, dass ich wusste, was ich in welcher Klasse
+vorgetragen habe und wie weit ich gekommen bin. Ich kann ruhig anhand eines Textes erklären, möchte aber sehr gerne aussagekräftige Diagramme, Abbildungen und Zeichnungen wie du siehst in:
 
+* https://2526-3bhif-syp.github.io/2526-3bhif-syp-lecture-notes/
+* https://2425-3ahitm-itp.github.io/2425-3ahitm-itp-lecture-notes/ (ITP ist eigentlich genau dasselbe wie SYP, nur weniger UE)
+* https://2425-3ahif-syp.github.io/2425-3ahif-syp-lecture-notes/
 
-
+Fazit: Ich muss nicht unbedingt Foliensätze haben.
 
 
 

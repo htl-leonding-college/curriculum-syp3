@@ -45,3 +45,6 @@ venv/
 .env
 .env.local
 .claude/settings.local.json
+
+# Arbeitsmaterial mit personenbezogenen Daten (Screenshots DA-Antrag u. ae.)
+assets/
