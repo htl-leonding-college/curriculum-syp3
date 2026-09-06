@@ -2,12 +2,12 @@
 Bin Lehrer an einer HTL für Informatik. Muss in einer 3. Klasse englisch den Gegenstand SYP (SYPPRE) unterrichten.
 Möchte daher meine Stoffinhalte neu strukturieren und auf Englisch online präsentieren. Folgende Arbeitschritte:
 
-- Definieren des Curriculums
-- Erstellen der einzelnen Lernressourcen  in englischer Sprache. Jede Lernressource (Detaillierungsgrad und Tiefe soll im Vorfeld besprtochen werden)
--- Erstellen der Lerninhalte
--- Erstellen von Übungsaufgaben und Lösungen
-- Erarbeiten der Präsentationsform: Wird Moodle, eine selbst erstellte Website, github (mit "classroom 50") verwendet?
--- Erstellen der Rahmenbedingungen für die Schülerprojekte in github
+* Definieren des Curriculums
+* Erstellen der einzelnen Lernressourcen  in englischer Sprache. Jede Lernressource (Detaillierungsgrad und Tiefe soll im Vorfeld besprtochen werden)
+** Erstellen der Lerninhalte
+** Erstellen von Übungsaufgaben und Lösungen
+** Erarbeiten der Präsentationsform: Wird Moodle, eine selbst erstellte Website, github (mit "classroom 50") verwendet?
+** Erstellen der Rahmenbedingungen für die Schülerprojekte in github
 
 Derzeit handhabe ich das so:
 
@@ -19,57 +19,58 @@ Derzeit handhabe ich das so:
 - Projekte der Schüler werden ebenfalls in github durchgeführt
 
 Das Curriculum sieht derzeit so
-- Theorie
--- Grundlagen der klassischen Projektentwicklung (Wasserfallmodell). Hierfür wird Momentan wird folgendes Buch verwendet im Folder "/Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/eBooks/SYP-Buch.Manz.Aufl_2013" (Zum Buch muss ich anmerken, dass ich dort nur Teile der Lernkapitel verwende und keine Übungen des Buches):
 
---- Projektbegriff
---- Kreativitätstechniken
---- Zielbestimmung
---- Stakeholder
---- Projektauftrag
---- Organisationsformen im Projekt (eher nicht mehr aus Zeitgründen)
---- Was ist Software-Engineering? (eher sehr, sehr kurz)
---- Phasenkonzepte und Phasenmodelle
---- Prozessmodelle
---- Klassische und agile Vorgehensmodelle (hier Konzentration auf Scrum) Verwende hier /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/01.Vorgehensmodelle.key
---- kurz UML: Verwende hier Auszüge (speziell die Besipiele) aus /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/uml/Uni Heidelberg/UML1.1. Dabei konzentriere ich mich auf Klassendiagramme, Anwendungsfalldiagramme, Zustandsdiagramme (State diagram), Aktivitätsdiagramme, Klassen- und Objektdiagramme, Deployment diagram
-Der Detaillierungsgrad ist eher übersichtsmäßig. Als Darstellung verwende ich https://plantuml.com/en/
+* Theorie
+
+** Grundlagen der klassischen Projektentwicklung (Wasserfallmodell). Hierfür wird Momentan wird folgendes Buch verwendet im Folder "/Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/eBooks/SYP-Buch.Manz.Aufl_2013" (Zum Buch muss ich anmerken, dass ich dort nur Teile der Lernkapitel verwende und keine Übungen des Buches):
+
+*** Projektbegriff
+*** Kreativitätstechniken
+*** Zielbestimmung
+*** Stakeholder
+*** Projektauftrag
+*** Organisationsformen im Projekt (eher nicht mehr aus Zeitgründen)
+*** Was ist Software-Engineering? (eher sehr, sehr kurz)
+*** Phasenkonzepte und Phasenmodelle
+*** Prozessmodelle
+*** Klassische und agile Vorgehensmodelle (hier Konzentration auf Scrum) Verwende hier /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/01.Vorgehensmodelle.key
+*** kurz UML: Verwende hier Auszüge (speziell die Beispiele) aus /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/uml/Uni Heidelberg/UML1.1. Dabei konzentriere ich mich auf Klassendiagramme, Anwendungsfalldiagramme, Zustandsdiagramme (State diagram), Aktivitätsdiagramme, Klassen- und Objektdiagramme, Deployment diagram. Der Detaillierungsgrad ist eher übersichtsmäßig. Als Darstellung verwende ich https://plantuml.com/en/
 
 IMPORTANT: Da durch die Verwendung der AI weder klassisch noch mittels scrum vorgegangen wird, möchte ich mich hier eher auf openspec (https://openspec.dev/) bzw spec-driven-development konzentrieren und die anderen Vorgehensweisen, sehr, sehr kurz halten. Darüber müssen wir diskutieren.
 
 IMPORTANT: Das verwendete Buch ist ein "Schulbuch" und es dürfen aus gesetzlichen Gründen keine Abbildungen oder Kopien von Seiten ausgegeben werden. Allerdings dürfen Aufzählungen und Texte in eigenen Worten wiedergegeben werden. (Recherchiere die aktuell gültigen Bestimmungen im österreichischen Recht)
 
-- Praxisübungen
+* Praxisübungen
 
--- git Grundlagen (inkl. branches, pull requests, github pages)
--- Verwendung von AI (am Bsp Claude, ev. gemini)
---- continuation prompt
---- prompt engineering
---- harness engineering
---- loops
---- ...
--- Docker
--- docker compose
--- kubernetes
+** git Grundlagen (inkl. branches, pull requests, github pages)
+** Verwendung von AI (am Bsp Claude, ev. gemini)
+*** continuation prompt
+*** prompt engineering
+*** harness engineering
+*** loops
+*** ...
+** Docker
+** docker compose
+** kubernetes
 
 
 In einem Unterricht möchte ich eine Einheit Theorie und zwei Einheiten Praxis durchführen.
 
 Ergänzend möchte ich grob den Stoff für den 4. und 5. Jahrgang anführen:
 
-- 4. Jahrgang
--- Wiederholung des 3. Jg.
--- Vertiefung Kubernetes
--- Qualitätssicherung
--- Gestaltungsprinzipien / UI und UX
--- Architekturprinzipien
--- Projektarbeit
+* 4. Jahrgang
+** Wiederholung des 3. Jg.
+** Vertiefung Kubernetes
+** Qualitätssicherung
+** Gestaltungsprinzipien / UI und UX
+** Architekturprinzipien
+** Projektarbeit
 
-- 5. Jahrgang
--- Wiederholung der 3. und 4. Jg.
--- Vertiefung der bisherigen Inhalte
--- Konzentration auf Projekte
--- Maturavorbereitung
+* 5. Jahrgang
+** Wiederholung der 3. und 4. Jg.
+** Vertiefung der bisherigen Inhalte
+** Konzentration auf Projekte
+** Maturavorbereitung
 
 Derzeit verwende ich einen Fragenkatalog (https://htl-leonding-college.github.io/fragenkatalog/), um festzuhalten, welche Inhalte Grundlage für den 4. Jahrgang sind (Tag "Foundation") und welche Inhalte für den 5. Jahrgang sind (Tag "Advanced"). Die Inhalte für den 4. Jahrgang werden in der 3. Klasse unterrichtet, die Inhalte für den 5. Jahrgang werden in der 4. Klasse unterrichtet. Allerdings muss dieser Fragenkatalog neu überarbeitet werden, da sich Inhalte verschieben werden.
 
@@ -86,3 +87,85 @@ Man kann davon ausgeben, dass ich ca 25 Unterrichte á 3 Unterrichtseinheiten ha
 Erstelle nichts, ohne dass ich vorher zugestimmt habe
 
 Für Diagramme verwende vorzugsweise plantuml. Insbesondere die Strukturierung der Unterrichtsinhalte stelle mit https://plantuml.com/en/mindmap-diagram dar.
+
+//--
+
+Wie beginnen mit Thread 1, wie Du vorgeschlagen hast.
+Sowohl bei den einjährigen Schulprojekten im 3. Jg. als auch bei den zweijährigen Schulprojekten im 4. und 5. Jg als auch bei den Diplomarbeiten ist immer ein Projektauftrag, Meilensteinplan usw. notwendig. Habe dir hierzu den Ordner "assets" erstellt mit Screenshots des Diplomarbeitsantrags. Die Durchführung erfolgte bislang eher nach Scrum. Aber seit AI-Agenten so mächtig sind, arbeiten wir eher spec-driven zB mit openspec
+
+//--
+
+Welches Verfahren zur Aufwandsschätzung möchtest Du lehren? Ich bin mir nicht sicher, ob ich Aufwandsschätzverfahren lehren möchte.
+
+//--
+
+Ich schätze für:
+
+* Projektantragsstruktur ca 1 UE. Als Übung werden zuhause die Projektanträge formuliert
+* Auswahl + Teambildung 1 UE
+* Projektauftragsstruktur 1UE. Den Projektauftrag muss jedes Team zuhause schreiben
+
+Git muss vorab besprochen werden.
+
+//--
+
+Die Projektarbeit ist zuhause zu erledigen. Die 7 h reichen für reviews und Hilfestellungen
+Ausserdem sollten es nicht 25, sondern 30 Unterrichtstage sein. Allerdings zeigt die Erfahrung, dass einige Tage durch externe Veranstaltungen ausfallen. Trotzdem kann man diese 5 Tage als Reserve (für kubernetes) einplanen. kubernetes ist im 3. Jg nur minikube. Im 4. Jg, dann deployment auf "richtige" cloud
+
+Die erste Unterrichtseinheit ist eine Vorstellungseinheit, in der ein grober Überblick über das Stoffgebiet gezeigt wird. Dabei möchte ich auch eine Information geben wie man neben Windows auch Linux auf seinem Laptop installieren kann
+
+"
+
+Installation von Linux
+
+Schritte:
+
+    Daten sichern! (falls doch etwas passiert :-))
+    Bitlocker abschalten (Geräteverschlüsselung deaktivieren)
+    Festplatte für Windows verkleinern (entweder über Bordmittel oder EaseUs Partition Master Free (Link in Discord))
+    Ubuntu von USB booten (ISO downloaden und mit RUFUS oder usbimager eine bootable USB erstellen)
+    Bei der Partitionierung von Ubuntu aufpassen: NICHT die ganze Platte nehmen, sondern auf "manuell" einstellen und die leere Partition finden und "Hinzufügen" drücken "ext4" als Filesystem und "/" als Mountpunkt (alle Eingaben ohne Anführungszeichen). die anderen Einstellungen passen bereits.
+    Ubuntu fertig installieren lassen. Den Anweisungen am Bildschirm folgen.
+    Neu starten.
+    Es sollte dann bereits der Ubuntu grub-Bootloader als Text-menu kommen und "Ubuntu" als Eintrag haben und "Windows Boot Manager" ebenfalls, damit hat man bereits alles fertig.
+    Linux Booten und gem. Anweisungen die Programme installieren
+
+            JetBrains Toolbox
+            IntelliJ Ultimate/Edu und Android-Studio
+            Java inkl. Java-HOME Umgebungsvariable)
+            Maven (3.9.x)
+            (opt.) Gradle ab Version 8
+
+Links mit Tutorials zu Linux-Windows Dual-Boot Installation:
+
+    https://www.youtube.com/watch?v=T78rCJ_i1no (hab ich selbst durchgemacht ,... )
+    https://www.youtube.com/watch?v=GXxTxBPKecQ
+    https://www.youtube.com/watch?v=G55m92gmEzQ
+
+Ev. kann man noch installieren:
+
+    Homebrew: https://brew.sh/
+    Oh my zsh: https://ohmyz.sh/ with theme powerlevel10k
+"
+
+
+Die Verwendung von asciidoctor zur Erstellung von Webseiten (adoc -> Verarbeitung durch gh-actions -> Darstellung in gh-pages) und online-präsentationen (adoc -> gh-actiuons mit revealjs -> gh-pages) könnte man ev. bei git einbauen.
+
+//--
+
+Habe in meiner Projektarbeit bislang immer Probleme mit windoes gehabt. Auch Schüler haben oft verkonfigurierte Windows-Versionen. In meiner Erfahrung zahlt es sich aus eine Partiotion zu haben, die nur fürs Arbeiten (für die Schule) verwendet wird
+
+//--
+
+Wo würdest du die Kreativitätstechniken hingeben. Das Schätzverfahren lassen wir erstmals.
+
+
+
+
+
+
+
+
+
+
+
