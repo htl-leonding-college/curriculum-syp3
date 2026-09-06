@@ -1,0 +1,47 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Synology Drive
+@eaDir/
+.SynologyWorkingDirectory/
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
+*.iws
+out/
+
+# VS Code
+.vscode/
+
+# Build / Output
+build/
+dist/
+target/
+*.pdf
+*.html
+
+# Node
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Logs / Temp
+*.log
+*.tmp
+.cache/
+
+# Local settings / secrets
+.env
+.env.local
+.claude/settings.local.json

@@ -1,0 +1,88 @@
+/opsx:explore
+Bin Lehrer an einer HTL für Informatik. Muss in einer 3. Klasse englisch den Gegenstand SYP (SYPPRE) unterrichten.
+Möchte daher meine Stoffinhalte neu strukturieren und auf Englisch online präsentieren. Folgende Arbeitschritte:
+
+- Definieren des Curriculums
+- Erstellen der einzelnen Lernressourcen  in englischer Sprache. Jede Lernressource (Detaillierungsgrad und Tiefe soll im Vorfeld besprtochen werden)
+-- Erstellen der Lerninhalte
+-- Erstellen von Übungsaufgaben und Lösungen
+- Erarbeiten der Präsentationsform: Wird Moodle, eine selbst erstellte Website, github (mit "classroom 50") verwendet?
+-- Erstellen der Rahmenbedingungen für die Schülerprojekte in github
+
+Derzeit handhabe ich das so:
+
+- Lernressourcen werden auf eine Website öffentlich zugänglich präsentiert. zB:
+-- https://edufs.edu.htl-leonding.ac.at/~t.stuetz/hugo/2025/06/technology-notes/
+- Personenbezogene Daten (zB Ergebnisse von Leistungsfeststellungen (Tests), ...) werden in einem Moodle-Kurs verwaltet
+- Assignments und Leistungsfeststellungen (Tests) werden mittels (früher "github classroom" und in Zukunft) "classroom 50" abgehalten.
+- Für die Mitschrift im Unterricht verwende ich adoc-Ressourcen auf "github-pages" wie zB https://2526-3bhif-syp.github.io/2526-3bhif-syp-lecture-notes/
+- Projekte der Schüler werden ebenfalls in github durchgeführt
+
+Das Curriculum sieht derzeit so
+- Theorie
+-- Grundlagen der klassischen Projektentwicklung (Wasserfallmodell). Hierfür wird Momentan wird folgendes Buch verwendet im Folder "/Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/eBooks/SYP-Buch.Manz.Aufl_2013" (Zum Buch muss ich anmerken, dass ich dort nur Teile der Lernkapitel verwende und keine Übungen des Buches):
+
+--- Projektbegriff
+--- Kreativitätstechniken
+--- Zielbestimmung
+--- Stakeholder
+--- Projektauftrag
+--- Organisationsformen im Projekt (eher nicht mehr aus Zeitgründen)
+--- Was ist Software-Engineering? (eher sehr, sehr kurz)
+--- Phasenkonzepte und Phasenmodelle
+--- Prozessmodelle
+--- Klassische und agile Vorgehensmodelle (hier Konzentration auf Scrum) Verwende hier /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/01.Vorgehensmodelle.key
+--- kurz UML: Verwende hier Auszüge (speziell die Besipiele) aus /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/uml/Uni Heidelberg/UML1.1. Dabei konzentriere ich mich auf Klassendiagramme, Anwendungsfalldiagramme, Zustandsdiagramme (State diagram), Aktivitätsdiagramme, Klassen- und Objektdiagramme, Deployment diagram
+Der Detaillierungsgrad ist eher übersichtsmäßig. Als Darstellung verwende ich https://plantuml.com/en/
+
+IMPORTANT: Da durch die Verwendung der AI weder klassisch noch mittels scrum vorgegangen wird, möchte ich mich hier eher auf openspec (https://openspec.dev/) bzw spec-driven-development konzentrieren und die anderen Vorgehensweisen, sehr, sehr kurz halten. Darüber müssen wir diskutieren.
+
+IMPORTANT: Das verwendete Buch ist ein "Schulbuch" und es dürfen aus gesetzlichen Gründen keine Abbildungen oder Kopien von Seiten ausgegeben werden. Allerdings dürfen Aufzählungen und Texte in eigenen Worten wiedergegeben werden. (Recherchiere die aktuell gültigen Bestimmungen im österreichischen Recht)
+
+- Praxisübungen
+
+-- git Grundlagen (inkl. branches, pull requests, github pages)
+-- Verwendung von AI (am Bsp Claude, ev. gemini)
+--- continuation prompt
+--- prompt engineering
+--- harness engineering
+--- loops
+--- ...
+-- Docker
+-- docker compose
+-- kubernetes
+
+
+In einem Unterricht möchte ich eine Einheit Theorie und zwei Einheiten Praxis durchführen.
+
+Ergänzend möchte ich grob den Stoff für den 4. und 5. Jahrgang anführen:
+
+- 4. Jahrgang
+-- Wiederholung des 3. Jg.
+-- Vertiefung Kubernetes
+-- Qualitätssicherung
+-- Gestaltungsprinzipien / UI und UX
+-- Architekturprinzipien
+-- Projektarbeit
+
+- 5. Jahrgang
+-- Wiederholung der 3. und 4. Jg.
+-- Vertiefung der bisherigen Inhalte
+-- Konzentration auf Projekte
+-- Maturavorbereitung
+
+Derzeit verwende ich einen Fragenkatalog (https://htl-leonding-college.github.io/fragenkatalog/), um festzuhalten, welche Inhalte Grundlage für den 4. Jahrgang sind (Tag "Foundation") und welche Inhalte für den 5. Jahrgang sind (Tag "Advanced"). Die Inhalte für den 4. Jahrgang werden in der 3. Klasse unterrichtet, die Inhalte für den 5. Jahrgang werden in der 4. Klasse unterrichtet. Allerdings muss dieser Fragenkatalog neu überarbeitet werden, da sich Inhalte verschieben werden.
+
+Möchte insbesondere die Tags ändern:
+
+- Stoff der Voraussetzung für den 3. Jahrgang ist (zB Grundlagen der Handhabung der Shell)
+- Stoff der Voraussetzung für den 4. Jahrgang ist
+- Stoff der Voraussetzung für den 5. Jahrgang ist
+
+Eine zentrale Frage ist, ob die Erstellung eines LLM-Wikis für den Lernstoff sinnvoll wäre oder wie sonst die Stoffstruktur gespeichert werden soll,
+
+Man kann davon ausgeben, dass ich ca 25 Unterrichte á 3 Unterrichtseinheiten habe.
+
+Erstelle nichts, ohne dass ich vorher zugestimmt habe
+
+Für Diagramme verwende vorzugsweise plantuml. Insbesondere die Strukturierung der Unterrichtsinhalte stelle mit https://plantuml.com/en/mindmap-diagram dar.
