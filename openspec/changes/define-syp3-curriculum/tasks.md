@@ -37,10 +37,10 @@
 
 - [ ] 4.1 Verschiebung von Deployment-Diagramm und Kubernetes-Vertiefung in den 4. Jahrgang mit den dort Unterrichtenden abstimmen; Pruefung: Zusage oder Ablehnung im Change vermerkt, bei Ablehnung Ruecknahme in `curriculum.yaml` und Budget
 - [ ] 4.2 JDK-Version fuer `versions.env` mit 4./5. Jahrgang abstimmen und an `setup-curriculum-repository` Aufgabe 7.3 melden; Pruefung: eine Version, die in allen drei Jahrgaengen gilt
-- [ ] 4.3 Materialbestand je Topic sichten (Manz-Kapitel, PUMA-Kreativitaetstechniken, PUMA-Nutzwertanalyse, UML Uni Heidelberg, `01.Vorgehensmodelle.key`) und in `coverage.md` je Topic als Quelle vermerken; Pruefung: jedes Governance- und Modellierungs-Topic nennt seine Quelle oder ausdruecklich keine
-- [ ] 4.4 Nutzungsregel fuer das Manz-Schulbuch aus D11 an sichtbarer Stelle festhalten: eigene Formulierung, eigene Gliederung, keine Abbildungen, keine Weitergabe der PDF-Kapitel; Pruefung: Regel steht im `README.adoc` des Curriculum-Repositorys neben der Bildherkunfts-Regel
+- [x] 4.3 Materialbestand je Topic sichten (Manz-Kapitel, PUMA-Kreativitaetstechniken, PUMA-Nutzwertanalyse, UML Uni Heidelberg, `01.Vorgehensmodelle.key`) und in `coverage.md` je Topic als Quelle vermerken; Pruefung: jedes Governance- und Modellierungs-Topic nennt seine Quelle oder ausdruecklich keine
+- [x] 4.4 Nutzungsregel fuer das Manz-Schulbuch aus D11 an sichtbarer Stelle festhalten: eigene Formulierung, eigene Gliederung, keine Abbildungen, keine Weitergabe der PDF-Kapitel; Pruefung: Regel steht im `README.adoc` des Curriculum-Repositorys neben der Bildherkunfts-Regel
 
 ## 5. Abschluss
 
-- [ ] 5.1 Abschnitt "Open Questions" in `design.md` auf den Stand der yaml bringen (Schaetzverfahren entschieden, AI-Aufteilung entschieden, revealjs auf U22 gelegt); Pruefung: keine Frage bleibt ohne Entscheidung oder Vertagungsgrund
+- [x] 5.1 Abschnitt "Open Questions" in `design.md` auf den Stand der yaml bringen (Schaetzverfahren entschieden, AI-Aufteilung entschieden, revealjs auf U22 gelegt); Pruefung: keine Frage bleibt ohne Entscheidung oder Vertagungsgrund
 - [x] 5.2 Uebergabe an den Autoren-Change: Reihenfolge der zu schreibenden Module aus der Eroeffnungssequenz ableiten (U1-U10 zuerst); Pruefung: Liste liegt vor und beginnt mit den Topics, die vor Schulbeginn fertig sein muessen

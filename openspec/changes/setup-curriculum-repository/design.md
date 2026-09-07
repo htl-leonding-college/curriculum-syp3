@@ -805,13 +805,20 @@ nötig, wenn ein privates Repository Pages liefern soll.
 
 ## Open Questions
 
-- Sprache der Werkzeuge in `tools/` (Python, Node oder Shell). Beeinflusst weder Modell
-  noch Layout; entscheidbar bei der Umsetzung. Betrifft nicht `klassen-setup`, das
-  bewusst Bash ist (P9).
-- Welche JDK-Version gepinnt wird — abhängig davon, was die übrigen Gegenstände im
-  4./5. Jahrgang verwenden.
-- Ob Theoriethemen ebenfalls Pflichtfragen bekommen (CI-Prüfung 4 ausweiten), sobald die
-  Theorieseite des neuen Katalogs existiert.
-- Wie das containerisierte asciidoctor-Image um `asciidoctor-diagram` und Graphviz
-  ergänzt wird — betrifft auch `local-convert.sh` (P11).
-- Zeitpunkt und Umfang der Hugo-Ablösung.
+Stand 2026-09-07 nach der Umsetzung:
+
+- ~~Sprache der Werkzeuge in `tools/`~~ **Python** mit PyYAML als einziger
+  Fremdabhängigkeit; `klassen-setup` bleibt Bash (P9). Die Graphprüfungen (Zyklen,
+  Vorwärtsreferenzen) sind in Bash mühsam und schlecht testbar, und Node würde
+  `node_modules` in ein Repository ziehen, das sonst keinen Build-Schritt hat.
+- ~~Wie das containerisierte asciidoctor-Image ergänzt wird~~ **Gar nicht.**
+  `asciidoctor/docker-asciidoctor:1.83` bringt `asciidoctor-diagram`, PlantUML, Graphviz
+  und `asciidoctor-revealjs` bereits mit; `local-convert.sh` und der Build-Job rufen
+  dasselbe Image.
+- **Offen:** JDK-Version — hängt am 4./5. Jahrgang. `versions.env` trägt `25.0.1-tem`
+  als vorläufigen Wert mit TODO.
+- **Vertagt:** Pflichtfragen auch für Theoriethemen (CI-Prüfung 4 ausweiten). Sinnvoll
+  erst, wenn die Theorieseite des Katalogs eine Weile bestanden hat; heute tragen alle
+  zwanzig fertigen Module ohnehin Fragen, Theorie wie Praxis.
+- **Vertagt:** Zeitpunkt und Umfang der Hugo-Ablösung. Entscheidbar, sobald die neue
+  Site ein Schuljahr im Einsatz war.

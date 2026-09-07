@@ -108,6 +108,36 @@ eigener Formulierung und eigener Gliederung — keine Abbildungen, keine
 Seitenkopien, keine Weitergabe der PDF-Kapitel, auch nicht digital an einen
 abgegrenzten Kurs.
 
+== Uebungs- und Pruefungsangaben
+
+[cols="1,2,2",options="header"]
+|===
+| |Uebung |Pruefung
+
+|Sichtbarkeit
+|public
+|privat
+
+|Ort
+|`htl-leonding-example/jg03-syp-<topic-id>`
+|Classroom-Organisation des Schuljahres
+
+|Begruendung
+|Loesungen duerfen bekannt sein; der Nachweis ist die muendliche Pruefung
+|die Angabe ist wertlos, wenn sie vorab lesbar ist
+
+|Wiederverwendung
+|ueber Jahre
+|keine — Angaben werden jaehrlich geaendert
+|===
+
+Nach der Durchfuehrung kann eine Pruefungsangabe oeffentlich werden und als
+`<jahr>-exam-<thema>` ins Archiv wandern; ab dann ist sie Lernmaterial.
+
+Die Zuordnung eines Moduls zu seiner Uebungsangabe steht als
+`assignment_template` in `curriculum.yaml` — nur dadurch kann die erzeugte
+Navigation sie verlinken.
+
 == Planung
 
 Entscheidungen und offene Punkte stehen in `openspec/changes/`:

@@ -90,9 +90,9 @@
 
 - [ ] 9.1 Erste Uebungsangabe `htl-leonding-example/jg03-syp-git-basics` nach Namensschema anlegen (public, Startercode, `solution`-Branch per PR); Pruefung: Repo folgt `jg03-syp-<topic-id>` und ist ohne Anmeldung lesbar
 - [ ] 9.2 `assignment_template` in `curriculum.yaml` fuer dieses Topic eintragen und den Check um "genanntes Template-Repository existiert" erweitern; Pruefung: falscher Repositoryname laesst den Check rot werden
-- [ ] 9.3 Ablageregel fuer Pruefungsangaben dokumentieren (privat in der Jahresorganisation, nach Durchfuehrung oeffentlich als `<jahr>-exam-<thema>`); Pruefung: Regel steht im `README.adoc` neben der Uebungsangaben-Regel
+- [x] 9.3 Ablageregel fuer Pruefungsangaben dokumentieren (privat in der Jahresorganisation, nach Durchfuehrung oeffentlich als `<jahr>-exam-<thema>`); Pruefung: Regel steht im `README.adoc` neben der Uebungsangaben-Regel
 
 ## 10. Abnahme des Changes
 
-- [ ] 10.1 Gesamtlauf: `check-curriculum.py` gruen, Generatoren aktuell, Build veroeffentlicht, `rights-check` mit bekanntem Stand; Pruefung: ein Durchlauf der Pipeline auf `main` ohne manuellen Eingriff
-- [ ] 10.2 Verbleibende offene Fragen aus `design.md` nachziehen oder ausdruecklich vertagen (Pflichtfragen fuer Theoriethemen, Zeitpunkt der Hugo-Abloesung); Pruefung: jede offene Frage traegt Entscheidung oder Vertagungsgrund
+- [x] 10.1 Gesamtlauf: `check-curriculum.py` gruen, Generatoren aktuell, Build veroeffentlicht, `rights-check` mit bekanntem Stand; Pruefung: ein Durchlauf der Pipeline auf `main` ohne manuellen Eingriff
+- [x] 10.2 Verbleibende offene Fragen aus `design.md` nachziehen oder ausdruecklich vertagen (Pflichtfragen fuer Theoriethemen, Zeitpunkt der Hugo-Abloesung); Pruefung: jede offene Frage traegt Entscheidung oder Vertagungsgrund

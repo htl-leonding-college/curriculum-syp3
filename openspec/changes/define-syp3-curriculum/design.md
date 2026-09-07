@@ -376,8 +376,17 @@ statt zu programmieren.
 
 ## Open Questions
 
-- Schätzverfahren doch aufnehmen? Betrifft 1 UE Detailinhalt im Governance-Block und ändert
-  weder Sequenz noch Budget. Entscheidung bei der Detailausarbeitung.
-- Feinaufteilung der 15 AI-UE zwischen Grundlagen (vor U10) und Vertiefung (nach U10).
-- Genauer Zeitpunkt des revealjs-Blocks — abhängig vom Termin der ersten
-  Meilenstein-Präsentation.
+Stand 2026-09-07: durch `curriculum.yaml` beantwortet.
+
+- ~~Schätzverfahren doch aufnehmen?~~ **Nein.** `governance-estimation-hygiene` (U15)
+  behandelt Schätz-Hygiene; Function Points, COCOMO und Planning Poker werden dort nur
+  benannt und eingeordnet.
+- ~~Feinaufteilung der AI-UE~~ **Entschieden:** sieben Praxisthemen — Grundlagen und
+  Kontext vor der openspec-Praxis (U8, U9), Vertiefung danach (U11, U12, U23, U25),
+  dazu `openspec-hands-on` in U10.
+- ~~Zeitpunkt des revealjs-Blocks~~ **U22**, unmittelbar vor dem dritten
+  Meilenstein-Review in U24.
+
+Offen bleibt nur, was von außerhalb abhängt: die Abstimmung mit dem 4./5. Jahrgang über
+Deployment-Diagramm, Kubernetes-Vertiefung und die gepinnte JDK-Version (Aufgaben 4.1
+und 4.2).
