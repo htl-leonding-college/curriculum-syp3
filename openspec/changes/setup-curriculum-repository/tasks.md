@@ -58,11 +58,11 @@
 ## 5. Pipeline und Publikation (P7, P11)
 
 - [x] 5.1 Containerisiertes asciidoctor-Image um `asciidoctor-diagram` und Graphviz ergaenzen, `local-convert.sh` uebernehmen und anpassen; Pruefung: ein Modul mit PlantUML-Block rendert lokal ohne lokale Ruby-Installation
-- [x] 5.2 (geschrieben, noch nicht gegen GitHub gelaufen) Workflow `build`: `check-curriculum.py` -> Generatoren -> asciidoctor -> Deploy auf `gh-pages`; Pruefung: Push auf `main` veroeffentlicht, roter Check verhindert das Deploy und die Site bleibt auf dem letzten gueltigen Stand
-- [x] 5.3 (geschrieben, noch nicht gegen GitHub gelaufen) Eigener Job `rights-check`: faellt rot bei `unclear > 0`, listet Datei und Zeile, blockiert das Deploy nicht; Pruefung: Modul mit `unclear`-Bild wird veroeffentlicht und der Job meldet es rot
+- [x] 5.2 Workflow `build`: `check-curriculum.py` -> Generatoren -> asciidoctor -> Deploy auf `gh-pages`; Pruefung: Push auf `main` veroeffentlicht, roter Check verhindert das Deploy und die Site bleibt auf dem letzten gueltigen Stand
+- [x] 5.3 Eigener Job `rights-check`: faellt rot bei `unclear > 0`, listet Datei und Zeile, blockiert das Deploy nicht; Pruefung: Modul mit `unclear`-Bild wird veroeffentlicht und der Job meldet es rot
 - [x] 5.4 revealjs-Ausgabe aus derselben Quelle erzeugen; Pruefung: Aenderung an einem Modultext erscheint ohne zweite Bearbeitung in der Praesentationsansicht
 - [ ] 5.5 `publish.sh` fuer rsync auf den Schulwebspace, lokal ausfuehrbar, keine Zugangsdaten in Actions-Secrets; Pruefung: Lauf legt die Site parallel zur bestehenden Hugo-Site ab, ein Altlink bleibt erreichbar
-- [ ] 5.6 GitHub Pages fuer `htl-leonding-college/curriculum-syp3` aktivieren und Einstiegsseite verlinken (Altsite, bestehender Fragenkatalog); Pruefung: oeffentliche URL liefert die Site ohne Anmeldung
+- [x] 5.6 GitHub Pages fuer `htl-leonding-college/curriculum-syp3` aktivieren und Einstiegsseite verlinken (Altsite, bestehender Fragenkatalog); Pruefung: oeffentliche URL liefert die Site ohne Anmeldung
 
 ## 6. Fragenkatalog (P8)
 
@@ -83,7 +83,7 @@
 ## 8. Vorlage fuer Schuelerprojekte (P6, P13)
 
 - [x] 8.1 (lokal angelegt, Remote steht aus) `htl-leonding-college/student-project-template`: openspec-Scaffold, `docs/` als AsciiDoc, CI nach Muster 5.2; Pruefung: aus der Vorlage erzeugtes Repo baut beim ersten Push eine Pages-Site
-- [ ] 8.2 Governance-Vorlagen aus `define-syp3-curriculum` (Projektantrag, Projektauftrag, Meilensteinplan, Abnahme) mit zweisprachigen Feldbezeichnern einbinden; Pruefung: Vorlage enthaelt die Feldstruktur des DA-Antrags in beiden Sprachen
+- [x] 8.2 Governance-Vorlagen aus `define-syp3-curriculum` (Projektantrag, Projektauftrag, Meilensteinplan, Abnahme) mit zweisprachigen Feldbezeichnern einbinden; Pruefung: Vorlage enthaelt die Feldstruktur des DA-Antrags in beiden Sprachen
 - [x] 8.3 `baseline-v1`-Tag als dokumentierten Schritt aufnehmen (D2, optional); Pruefung: `README` beschreibt, wie die eingefrorene Spec-Menge markiert und spaeter als `git diff` gelesen wird
 
 ## 9. Ablage der Uebungsangaben (P13)

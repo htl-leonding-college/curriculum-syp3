@@ -1,0 +1,88 @@
+= Projektantrag / Project proposal
+:toc: left
+:toc-title: Inhalt
+:toclevels: 2
+:icons: font
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+// Feldstruktur des Diplomarbeitsantrags. Die Bezeichner sind zweisprachig, weil
+// das Formular im 5. Jahrgang deutsch ist und der Unterricht englisch laeuft.
+// Wer den Stoff nur als "research objective" gelernt hat, uebersetzt spaeter
+// unter Pruefungsdruck zurueck.
+
+== Projekttitel / Project title
+
+TODO: ein Satz, der das Ergebnis benennt — nicht die Technologie.
+
+== Team
+
+[cols="2,2,3",options="header"]
+|===
+|Name |Rolle / Role |Verantwortlich fuer / Responsible for
+
+|TODO
+|TODO
+|TODO
+|===
+
+== Auftraggeber / Client
+
+TODO: Wer bekommt das Ergebnis? Schulintern, Betrieb, oder das Team selbst.
+
+== Ausgangslage / Initial situation
+
+TODO: Was ist heute, und was ist daran unbefriedigend? Beschreibt den Zustand
+*ohne* euer Projekt — wer arbeitet wie, und woran scheitert es.
+
+NOTE: Dieser Text wandert unveraendert in `openspec/config.yaml` unter `context:`.
+Der Agent braucht ihn genauso wie der Betreuer.
+
+== Untersuchungsanliegen / Research objective
+
+TODO: Welche Frage beantwortet das Projekt? Nicht "wir bauen eine App", sondern
+was daran offen ist.
+
+== Geplantes Ergebnis / Planned deliverable
+
+TODO: Was liegt am Ende vor, und woran erkennt man, dass es fertig ist?
+
+[cols="1,3",options="header"]
+|===
+|Ergebnis / Deliverable |Nachweis / Evidence
+
+|TODO
+|TODO
+|===
+
+== Abgrenzung / Out of scope
+
+TODO: Was gehoert ausdruecklich *nicht* dazu? Eine Abgrenzung, die nichts
+ausschliesst, ist keine.
+
+== Geschaetzter Aufwand / Estimated effort
+
+[cols="2,1,1,1",options="header"]
+|===
+|Arbeitspaket / Work package |Optimistisch |Realistisch |Pessimistisch
+
+|TODO
+|TODO h
+|TODO h
+|TODO h
+|===
+
+TIP: Bandbreite statt Punktwert. Eine Zahl ohne Bandbreite behauptet eine
+Genauigkeit, die ihr nicht habt — und Schaetzung ist weder Zusage noch
+Zielvorgabe.
+
+== Technologie / Technology
+
+TODO: Sprache, Framework, Datenhaltung, Zielplattform — je mit einem Satz, warum.

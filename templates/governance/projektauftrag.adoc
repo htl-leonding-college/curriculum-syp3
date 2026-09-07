@@ -1,0 +1,107 @@
+= Projektauftrag / Project charter
+:toc: left
+:toc-title: Inhalt
+:toclevels: 2
+:icons: font
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+// Der Projektauftrag wird eingefroren. Er ist der Anker, gegen den am Ende
+// beurteilt wird - nicht der Endstand, sonst waeren alle per Definition fertig.
+// Gebaut wird gegen openspec/specs/, die weiterleben duerfen.
+
+[IMPORTANT]
+====
+Nach der Freigabe wird dieses Dokument nicht mehr geaendert. Aenderungen am
+Vorhaben laufen ueber `openspec/changes/` und werden dort sichtbar; die Differenz
+zwischen Auftrag und Endstand ist selbst Lerngegenstand (Scope-Management).
+====
+
+== Projekttitel / Project title
+
+TODO
+
+== Auftraggeber und Team / Client and team
+
+[cols="2,2,3",options="header"]
+|===
+|Name |Rolle / Role |Verantwortlich fuer / Responsible for
+
+|TODO
+|TODO
+|TODO
+|===
+
+== Ausgangslage / Initial situation
+
+TODO: uebernommen aus dem Projektantrag, ggf. praezisiert.
+
+== Zielsetzung / Objectives
+
+TODO: Was soll erreicht werden? Jedes Ziel pruefbar formuliert — woran erkennt
+ein Aussenstehender, dass es erreicht ist?
+
+[cols="1,3,2",options="header"]
+|===
+|Nr. |Ziel / Objective |Pruefbar an / Verified by
+
+|Z1
+|TODO
+|TODO
+|===
+
+== Nicht-Ziele / Non-goals
+
+TODO
+
+== Geplantes Ergebnis / Planned deliverable
+
+TODO: Beschreibung des Endprodukts. Die Ausformulierung lebt in
+`openspec/specs/` als Requirements und Scenarios.
+
+== Stakeholder
+
+[cols="2,2,2",options="header"]
+|===
+|Person oder Gruppe |Interesse / Interest |Einfluss / Influence
+
+|TODO
+|TODO
+|TODO
+|===
+
+== Meilensteine / Milestones
+
+Siehe `meilensteinplan.adoc`.
+
+== Rahmenbedingungen / Constraints
+
+TODO: Zeit, Geraete, Zugaenge, rechtliche Vorgaben.
+
+== Freigabe / Approval
+
+[cols="2,2,2",options="header"]
+|===
+|Datum / Date |Name |Unterschrift / Signature
+
+|TODO
+|TODO
+|
+|===
+
+Nach der Freigabe:
+
+[source,bash]
+----
+git tag baseline-v1
+git push origin baseline-v1
+----
+
+Das "Pflichtenheft" ist ab hier ein `git diff baseline-v1 -- openspec/specs/`.

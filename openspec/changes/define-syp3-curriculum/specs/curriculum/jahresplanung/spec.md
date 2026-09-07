@@ -61,3 +61,22 @@ Werkzeugkette bereitstellen, bevor die Projektarbeit beginnt.
 - **WHEN** der erste Unterricht stattgefunden hat
 - **THEN** kennt der Schueler den Stoffumfang des Jahres, die Bewertungsgrundlage und die
   Anforderungen an sein Geraet
+
+### Requirement: Der Gegenstand wird zu Beginn eingeordnet
+Zu Beginn des Jahres SHALL vermittelt werden, womit sich der Gegenstand befasst und wie
+das Jahr organisiert ist: Stoffueberblick, Werkzeugkette, Bewertung und der Begriff des
+Software-Engineering.
+
+#### Scenario: Schueler fragt nach dem Zweck des Gegenstands
+- **WHEN** ein Schueler wissen will, warum Werkzeuge, Governance und Modellierung in
+  einem Gegenstand zusammenliegen
+- **THEN** ist das im ersten Unterricht behandelt worden und im Modul nachlesbar
+
+### Requirement: Die Leistungsfeststellung ist vorab bekannt
+Die Art der Leistungsfeststellung SHALL vor der ersten Pruefung behandelt werden. Zu
+jedem Lernziel SHALL die zugehoerige Pruefungsfrage vorab verfuegbar sein.
+
+#### Scenario: Schueler bereitet sich auf die muendliche Pruefung vor
+- **WHEN** ein Schueler wissen will, woran er gemessen wird
+- **THEN** findet er den Ablauf im Modul zur Leistungsfeststellung und die Fragen in den
+  Modulen des jeweiligen Stoffs

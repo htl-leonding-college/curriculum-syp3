@@ -1,0 +1,76 @@
+= Antragsfelder und openspec / Charter fields and openspec
+:toc: left
+:toc-title: Inhalt
+:toclevels: 2
+:icons: font
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Governance und Durchfuehrung sind zwei Ebenen, nicht zwei Meinungen. Der Antrag
+schreibt kein Vorgehensmodell vor — er fragt nach Ausgangslage, Zielen,
+Ergebnissen und Terminen. Wie ihr dorthin kommt, ist eure Sache.
+
+[plantuml,ebenen,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "GOVERNANCE (aussen, eingefroren)\nProjektauftrag, Ziele, Stakeholder,\nMeilensteinplan, Abnahme" as G
+rectangle "DURCHFUEHRUNG (innen, frei)\nspecs, changes, Code" as D
+G -down-> D : setzt Rahmen
+D -up-> G : liefert Nachweise
+@enduml
+----
+
+== Zuordnung / Mapping
+
+[cols="2,2,3",options="header"]
+|===
+|Antragsfeld / Charter field |openspec-Artefakt |Nachweis / Evidence
+
+|Ausgangslage / Initial situation
+|`openspec/config.yaml` -> `context:`
+|Der Text steht dort, wo ihn auch der Agent liest
+
+|Zielsetzung / Objectives
+|Menge der `openspec/specs/`
+|Jede Capability ist ein Ziel in pruefbarer Form
+
+|Individuelle Themenstellung / Individual assignment
+|Zuschnitt der `changes/` je Schueler
+|Wer welchen Change besitzt, steht im Change
+
+|Untersuchungsanliegen / Research objective
+|`proposal.md` -> Why und offene Fragen
+|Die Frage steht vor der Loesung
+
+|Geplantes Ergebnis / Planned deliverable
+|`spec.md` -> Requirements und Scenarios
+|Ein Scenario ist die Abnahmebedingung im Kleinen
+
+|Meilenstein + Termin / Milestone
+|Change bis zum Termin archiviert
+|`openspec/changes/archive/<change>`
+
+|Verantwortlich / Responsible
+|Change-Ownership plus git-Historie
+|`git log --author` je Schueler
+
+|Projektfortschritt / Progress
+|`openspec list`, `openspec status`
+|Kein Statusbericht von Hand
+|===
+
+== Was das *nicht* heisst
+
+Die openspec-Artefakte ersetzen die Governance-Dokumente nicht. Beide bestehen
+nebeneinander: Der Projektauftrag wird eingefroren und bleibt der
+Beurteilungsanker, die specs leben weiter. Genau diese Differenz —
+Auftrag gegen Endstand — macht `changes/archive/` sichtbar.

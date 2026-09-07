@@ -11,20 +11,20 @@
 
 ## 1. Stoffstruktur gegen die Specs abgleichen
 
-- [ ] 1.1 Abdeckungstabelle Requirement -> `topic-id` fuer alle acht Capabilities erstellen und als `coverage.md` im Change ablegen; Pruefung: jedes Requirement der acht Spec-Dateien nennt mindestens ein Topic, und jedes der 54 Topics traegt mindestens ein Requirement
-- [ ] 1.2 Luecken aus 1.1 schliessen: fehlende Topics ergaenzen oder das betroffene Requirement anpassen; Pruefung: zweiter Lauf der Tabelle ohne offene Zeile
-- [ ] 1.3 Budget gegen den Jahresrahmen pruefen: 26 UE Theorie / 56 UE Praxis, Blocksummen 9/10/5/2; Pruefung: von Hand gerechnete Summen stimmen mit `meta.budget` und `meta.budget_je_block` ueberein (spaeter maschinell durch Pruefung 2 des CI-Checks)
-- [ ] 1.4 Eroeffnungssequenz U1-U10 aus `design.md` Zeile fuer Zeile gegen `curriculum.yaml` pruefen; Pruefung: Theorie- und Praxisslot jedes Unterrichts entsprechen der Tabelle, Hausuebungen (Projektantrag nach U3, Projektauftrag nach U6, Baseline-specs nach U10) sind zugeordnet
-- [ ] 1.5 Reservezone U26-U30 pruefen: minikube in der Reserve, U29/U30 und die Theorieslots von U27/U28 frei (D9); Pruefung: kein Kerninhalt liegt hinter U25
+- [x] 1.1 Abdeckungstabelle Requirement -> `topic-id` fuer alle acht Capabilities erstellen und als `coverage.md` im Change ablegen; Pruefung: jedes Requirement der acht Spec-Dateien nennt mindestens ein Topic, und jedes der 54 Topics traegt mindestens ein Requirement
+- [x] 1.2 Luecken aus 1.1 schliessen: fehlende Topics ergaenzen oder das betroffene Requirement anpassen; Pruefung: zweiter Lauf der Tabelle ohne offene Zeile
+- [x] 1.3 Budget gegen den Jahresrahmen pruefen: 26 UE Theorie / 56 UE Praxis, Blocksummen 9/10/5/2; Pruefung: von Hand gerechnete Summen stimmen mit `meta.budget` und `meta.budget_je_block` ueberein (spaeter maschinell durch Pruefung 2 des CI-Checks)
+- [x] 1.4 Eroeffnungssequenz U1-U10 aus `design.md` Zeile fuer Zeile gegen `curriculum.yaml` pruefen; Pruefung: Theorie- und Praxisslot jedes Unterrichts entsprechen der Tabelle, Hausuebungen (Projektantrag nach U3, Projektauftrag nach U6, Baseline-specs nach U10) sind zugeordnet
+- [x] 1.5 Reservezone U26-U30 pruefen: minikube in der Reserve, U29/U30 und die Theorieslots von U27/U28 frei (D9); Pruefung: kein Kerninhalt liegt hinter U25
 
 ## 2. Governance-Vorlagen (D2, P12)
 
-- [ ] 2.1 Vorlage Projektantrag mit der Feldstruktur des DA-Antrags und zweisprachigen Feldbezeichnern (`Ausgangslage / Initial situation` usw.); Pruefung: jedes Feld des DA-Antrags kommt genau einmal vor
-- [ ] 2.2 Vorlage Projektauftrag samt Einfrier-Regel und optionalem `baseline-v1`-Tag; Pruefung: Vorlage benennt, was eingefroren wird und woran spaeter beurteilt wird
-- [ ] 2.3 Vorlage Meilensteinplan als PlantUML-Gantt mit Termin, Ergebnis und Spalte "Verantwortlich / Responsible"; Pruefung: Plan rendert und enthaelt je Meilenstein ein pruefbares Ergebnis
-- [ ] 2.4 Vorlage Abnahmeprotokoll (Abnahmekriterien, Ist-Stand, Restpunkte); Pruefung: Kriterien verweisen auf den eingefrorenen Projektauftrag, nicht auf den Endstand
-- [ ] 2.5 Zuordnungstabelle Antragsfeld -> openspec-Artefakt aus D2 als eigenstaendiges Material fuer die Bruecken-Themen (U11/U12) ausformulieren; Pruefung: jede Zeile nennt Feld, Artefakt und den Nachweis, an dem der Fortschritt sichtbar wird
-- [ ] 2.6 Vorlagen an `setup-curriculum-repository` Aufgabe 8.2 uebergeben; Pruefung: dort eingebunden und im Vorlagen-Repository sichtbar
+- [x] 2.1 Vorlage Projektantrag mit der Feldstruktur des DA-Antrags und zweisprachigen Feldbezeichnern (`Ausgangslage / Initial situation` usw.); Pruefung: jedes Feld des DA-Antrags kommt genau einmal vor
+- [x] 2.2 Vorlage Projektauftrag samt Einfrier-Regel und optionalem `baseline-v1`-Tag; Pruefung: Vorlage benennt, was eingefroren wird und woran spaeter beurteilt wird
+- [x] 2.3 Vorlage Meilensteinplan als PlantUML-Gantt mit Termin, Ergebnis und Spalte "Verantwortlich / Responsible"; Pruefung: Plan rendert und enthaelt je Meilenstein ein pruefbares Ergebnis
+- [x] 2.4 Vorlage Abnahmeprotokoll (Abnahmekriterien, Ist-Stand, Restpunkte); Pruefung: Kriterien verweisen auf den eingefrorenen Projektauftrag, nicht auf den Endstand
+- [x] 2.5 Zuordnungstabelle Antragsfeld -> openspec-Artefakt aus D2 als eigenstaendiges Material fuer die Bruecken-Themen (U11/U12) ausformulieren; Pruefung: jede Zeile nennt Feld, Artefakt und den Nachweis, an dem der Fortschritt sichtbar wird
+- [x] 2.6 Vorlagen an `setup-curriculum-repository` Aufgabe 8.2 uebergeben; Pruefung: dort eingebunden und im Vorlagen-Repository sichtbar
 
 ## 3. Lernumgebung vorbereiten (D7)
 

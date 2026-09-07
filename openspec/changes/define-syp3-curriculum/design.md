@@ -305,13 +305,18 @@ U    THEORIE (1 UE)                    PRAXIS (2 UE)                HUE
  7   Vorgehensmodelle-Ueberblick       gh-actions -> gh-pages       --
  8   SDD: warum specs                  AI I: Grundlagen, Prompting  --
  9   BRUECKE Auftrag <-> specs         AI II: Kontext, Continuation --
-10   --                                openspec I+II                Baseline-specs
+10   Was ist Software-Engineering      openspec I+II                Baseline-specs
 --------------------------------------------------------------------------------
      ab U11: Projekt laeuft, restliche Theorie just-in-time
 ```
 
 Der Projektantrag wird als `.adoc` im eigenen Repo geschrieben — git-Praxis und
 Governance-Hausübung fallen zusammen.
+
+*Nachtrag 2026-09-07:* Der Theorieslot von U10 war in der ersten Fassung frei. Er traegt
+jetzt `what-is-software-engineering`, weil das Theoriebudget (26 UE) sonst nicht aufgeht
+und der Begriff genau dort hingehoert, wo die Schueler zum ersten Mal spezifizieren
+statt zu programmieren.
 
 ## Stoffstruktur (Übersicht)
 

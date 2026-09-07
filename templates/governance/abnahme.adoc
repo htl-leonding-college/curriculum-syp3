@@ -1,0 +1,78 @@
+= Abnahme / Acceptance
+:toc: left
+:toc-title: Inhalt
+:toclevels: 2
+:icons: font
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Abgenommen wird gegen den *eingefrorenen Projektauftrag*, nicht gegen den
+Endstand. Sonst ist jedes Projekt per Definition vollstaendig.
+
+== Abnahmekriterien / Acceptance criteria
+
+[cols="1,3,1,2",options="header"]
+|===
+|Nr. |Kriterium aus dem Projektauftrag / Criterion from the charter |Erfuellt / Met |Nachweis / Evidence
+
+|Z1
+|TODO
+|ja / nein
+|TODO
+
+|Z2
+|TODO
+|ja / nein
+|TODO
+|===
+
+== Abweichungen vom Auftrag / Deviations from the charter
+
+[cols="2,3,2",options="header"]
+|===
+|Was / What |Warum / Why |Wo dokumentiert / Documented in
+
+|TODO
+|TODO
+|`openspec/changes/archive/TODO`
+|===
+
+NOTE: Eine begruendete, dokumentierte Abweichung ist kein Mangel. Eine
+unbemerkte ist einer.
+
+== Offene Punkte / Open items
+
+[cols="3,2,2",options="header"]
+|===
+|Punkt / Item |Auswirkung / Impact |Vereinbarung / Agreement
+
+|TODO
+|TODO
+|TODO
+|===
+
+== Uebergabe / Handover
+
+* [ ] Quellcode im Repository, `main` baut gruen
+* [ ] Dokumentation veroeffentlicht (GitHub Pages)
+* [ ] Betriebsanleitung: Installation, Start, Konfiguration
+* [ ] Zugaenge und Geheimnisse uebergeben — *nicht* im Repository
+* [ ] Bekannte Einschraenkungen benannt
+
+== Bestaetigung / Sign-off
+
+[cols="2,2,2",options="header"]
+|===
+|Datum / Date |Name |Unterschrift / Signature
+
+|TODO
+|TODO
+|
+|===

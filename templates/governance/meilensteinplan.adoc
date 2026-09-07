@@ -1,0 +1,90 @@
+= Meilensteinplan / Milestone plan
+:toc: left
+:toc-title: Inhalt
+:toclevels: 2
+:icons: font
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Ein Meilenstein ist ein *pruefbares Ergebnis zu einem Termin*, keine Taetigkeit.
+"Datenbank angefangen" ist kein Meilenstein; "Anmeldung funktioniert
+end-to-end, Change archiviert" ist einer.
+
+== Uebersicht / Overview
+
+[cols="1,2,1,2,2",options="header"]
+|===
+|Nr. |Ergebnis / Deliverable |Termin / Due |Nachweis / Evidence |Verantwortlich / Responsible
+
+|M1
+|TODO
+|TODO
+|Change `TODO` archiviert
+|TODO
+
+|M2
+|TODO
+|TODO
+|Change `TODO` archiviert
+|TODO
+
+|M3
+|TODO
+|TODO
+|Change `TODO` archiviert
+|TODO
+|===
+
+NOTE: Der Nachweis ist ein archivierter Change in `openspec/changes/archive/`.
+Damit ist der Fortschritt nicht behauptet, sondern nachlesbar — und
+`openspec list` zeigt ihn jederzeit.
+
+== Terminplan / Schedule
+
+[plantuml,meilensteinplan,svg]
+----
+@startgantt
+skinparam monochrome true
+skinparam shadowing false
+Project starts 2026-09-14
+
+[Projektantrag] lasts 14 days
+[Projektauftrag] lasts 14 days
+[Projektauftrag] starts at [Projektantrag]'s end
+[Baseline-specs] lasts 21 days
+[Baseline-specs] starts at [Projektauftrag]'s end
+
+[M1] happens at [Baseline-specs]'s end
+[Umsetzung 1] lasts 40 days
+[Umsetzung 1] starts at [M1]'s end
+[M2] happens at [Umsetzung 1]'s end
+[Umsetzung 2] lasts 40 days
+[Umsetzung 2] starts at [M2]'s end
+[M3] happens at [Umsetzung 2]'s end
+[Abnahme] lasts 7 days
+[Abnahme] starts at [M3]'s end
+@endgantt
+----
+
+TIP: Der Plan wird nicht schoener, wenn er frueh perfekt ist. Er wird brauchbar,
+wenn beim Review geschaetzter und tatsaechlicher Aufwand nebeneinander stehen —
+das ist eure Kalibrierung, und sie kostet nichts extra.
+
+== Abweichungen / Deviations
+
+[cols="1,2,2,2",options="header"]
+|===
+|Nr. |Geplant / Planned |Tatsaechlich / Actual |Grund / Reason
+
+|M1
+|TODO
+|TODO
+|TODO
+|===
