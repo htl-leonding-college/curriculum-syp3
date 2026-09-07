@@ -1,0 +1,140 @@
+= Pull requests and review
+:topic-id: git-pull-requests
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Open a pull request from a branch and describe it so it can be reviewed
+* [[lo-2]] Review somebody else's pull request and leave useful comments
+* [[lo-3]] Explain what a pull request adds that a plain merge does not
+* [[lo-4]] Apply the review rules used in this course
+
+== What a pull request is
+
+A pull request is a *request to merge a branch*, plus a place to discuss it
+before that happens. Technically it adds nothing to git — you could merge
+locally. What it adds is a moment where somebody else looks.
+
+[plantuml,pr-flow,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+start
+:branch off main;
+:commit your work;
+:push the branch;
+:open a pull request;
+:CI runs on the branch;
+if (review + CI green?) then (yes)
+  :merge into main;
+  :delete the branch;
+  stop
+else (no)
+  :push more commits to the same branch;
+  :the pull request updates itself;
+  detach
+endif
+@enduml
+----
+
+[source,bash]
+----
+git switch -c feature/attendance-export
+# ... commits ...
+git push -u origin feature/attendance-export
+gh pr create --fill          # or open it in the web interface
+gh pr view --web
+----
+
+== Writing a pull request others can review
+
+The description answers three questions, in this order:
+
+. *What does this change, for the user of the system?*
+. *Why this way?* — the alternative you rejected, in one sentence
+. *How did you check it?* — the test, the command, the screenshot
+
+A pull request that says "fixes stuff" forces the reviewer to reconstruct all
+three. A description of five lines saves twenty minutes of someone else's time.
+
+Keep it small. A pull request of fifty lines gets a real review; one of two
+thousand gets "looks good to me", which is not a review, it is a signature.
+
+== Reviewing
+
+[cols="1,2",options="header"]
+|===
+|Useless comment |Useful comment
+
+|"This is wrong."
+|"If `members` is empty this divides by zero — line 42. Add a guard or return 0."
+
+|"I don't like this name."
+|"`data` here is a list of bookings; `bookings` would save the next reader a
+ lookup."
+
+|"LGTM" after ten seconds
+|"Checked the CSV export against the sample file; the date column is off by a day
+ in the DST week."
+|===
+
+Review the change, not the person. Say what you checked, so the author knows what
+was *not* checked. And approve only what you actually understood — an approval is
+a statement about your reading, not about your trust in the author.
+
+== Decisions
+
+* Everything reaches `main` through a pull request, including documentation.
+* At least one review from another team member before merging.
+* CI must be green before merging. A red build is not merged "and fixed later".
+* Pull requests stay small enough to read in one sitting.
+
+== Pitfalls
+
+* Approving without reading. The review then certifies nothing, and everyone
+  behaves as if it had.
+* A pull request that mixes a rename with a behaviour change. The diff hides the
+  behaviour change inside three hundred renamed lines.
+* Answering review comments by force-pushing a rewritten branch. The reviewer
+  loses the thread of what changed since their comment.
+* Leaving pull requests open for a week. The branch drifts from `main` and the
+  merge becomes a conflict exercise.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Zusammenfuehrungsantrag
+|pull request
+
+|Begutachtung, Durchsicht
+|review
+
+|Freigabe
+|approval
+
+|Rueckmeldung
+|feedback
+
+|Aenderungsumfang
+|scope of the change
+|===
+
+== Further reading
+
+* GitHub docs — About pull requests, https://docs.github.com/pull-requests
+* Module `git-conflicts-remotes` — what happens when two branches touch the same
+  lines

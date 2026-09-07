@@ -1,0 +1,52 @@
+= From project charter to specifications — exercises
+:topic-id: bridge-charter-to-specs
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Map a foreign charter
+
+kind: drill
+
+Take an example charter and write, for every field, which file in the repository
+would carry it.
+
+.Solution
+[%collapsible]
+====
+The fields that regularly cause discussion are "Aufwandsschaetzung" and
+"Rahmenbedingungen": neither has an openspec artefact, and both stay in the
+charter. Not every field needs a counterpart — the mapping exists where a field
+has a living counterpart, not for symmetry.
+====
+
+== Derive two capabilities from two objectives
+
+kind: drill
+
+Take two objectives from the example charter and write one capability spec for
+each, with at least one requirement and scenario.
+
+.Solution
+[%collapsible]
+====
+Two checks on your result: does the scenario mention anything about the
+implementation (it should not), and could a person outside the team decide
+whether it holds (they should be able to). If either fails, the objective was
+still a wish.
+====
+
+== Wire your milestones to changes
+
+kind: project
+
+For each milestone in your charter, name the change that must be archived and by
+when, and record it in the milestone plan.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

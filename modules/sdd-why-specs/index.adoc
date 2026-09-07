@@ -1,0 +1,150 @@
+= Why specifications instead of a requirements document
+:topic-id: sdd-why-specs
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain what a specification is and how it differs from a requirements
+  document
+* [[lo-2]] Write a requirement with a scenario that can be checked
+* [[lo-3]] Explain why a precise statement of intent became the scarce resource
+* [[lo-4]] Say what stays frozen and what stays alive, and why both are needed
+
+== The scarce resource moved
+
+Producing code used to be the bottleneck. It is not any more: a competent agent
+turns a precise description into a working implementation faster than you can
+type it. What it cannot do is decide *what should be true*.
+
+[cols="1,1",options="header"]
+|===
+|Cheap now |Still expensive
+
+|writing the implementation
+|saying exactly what it must do
+
+|producing an explanation of anything
+|deciding which behaviour is correct here
+
+|generating tests that pass
+|knowing which behaviour must never break
+|===
+
+A specification is where that decision is written down — in a form precise enough
+to build from and to check against.
+
+== Requirements document vs. specification
+
+[cols="1,1",options="header"]
+|===
+|Pflichtenheft / requirements document |specs
+
+|written once, before building
+|written continuously, alongside
+
+|prose, hundreds of pages
+|short, per capability
+
+|becomes stale silently
+|drifts visibly, because the build checks it
+
+|"the system should support user management"
+|a requirement plus scenarios that either hold or do not
+|===
+
+The classic requirements document is not wrong; it is *unverifiable*. Nobody can
+run it, so nothing tells you when it stopped describing the system.
+
+== Shape of a specification
+
+[source,markdown]
+------
+## ADDED Requirements
+
+### Requirement: Bookings are refused for sessions that already started
+The system SHALL refuse a booking whose session start time lies in the past.
+
+#### Scenario: Booking a session that started ten minutes ago
+- **WHEN** a member books a session whose start time has passed
+- **THEN** the booking is refused and the member is offered the next session
+------
+
+Read it as three parts: the requirement says what must hold, the scenario says
+how you would observe it, and the pair together is what "done" means. Anything
+you cannot phrase this way is either not yet understood or is a wish.
+
+== Frozen and alive, at the same time
+
+[plantuml,frozen-and-alive,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "Projektauftrag\nfrozen at approval" as C
+rectangle "specs/\nthe current target state" as S
+rectangle "changes/\nhow it got there" as A
+C -right-> S : sets the frame
+S -right-> A : every change recorded
+@enduml
+----
+
+The charter cannot live, or there is nothing to judge against. The specification
+cannot be frozen, or it stops describing the system within a fortnight. Keeping
+both, and keeping the difference visible, is the whole arrangement.
+
+== Decisions
+
+* Each team keeps a target state under `openspec/specs/`, one file per
+  capability.
+* Requirements use SHALL / MUST NOT and carry at least one scenario.
+* The requirements document (Pflichtenheft) is replaced by the specs; the charter
+  is not replaced by anything.
+* A requirement without an observable scenario goes back for rewriting.
+
+== Pitfalls
+
+* Writing specifications that describe the implementation ("the service uses a
+  repository class"). A spec says what must be true from outside.
+* One giant spec file. Then nobody reads it, exactly like the document it
+  replaced.
+* Writing the spec after the code. It then documents what happened rather than
+  deciding what should happen — and the agent had nothing to work from.
+* Believing the spec removes the need to think. It *is* the thinking; the code is
+  the easy part now.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Pflichtenheft
+|requirements document
+
+|Spezifikation
+|specification
+
+|Anforderung
+|requirement
+
+|Szenario
+|scenario
+
+|Sollzustand
+|target state
+|===
+
+== Further reading
+
+* Module `sdd-openspec-artifacts` — the concrete files and their roles
+* Module `bridge-charter-to-specs` — which charter field maps to which artefact

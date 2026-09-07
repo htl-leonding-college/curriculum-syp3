@@ -1,0 +1,52 @@
+= Choosing a project with weighted scoring — exercises
+:topic-id: governance-weighted-scoring
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Score three laptops
+
+kind: drill
+
+Build a weighted scoring for buying a laptop for school use, with at least five
+criteria and three alternatives of your choice.
+
+.Solution
+[%collapsible]
+====
+Any table works if the criteria discriminate. A common mistake is a criterion
+like "has a keyboard": every alternative scores 10 and the criterion contributes
+nothing but its weight to every column equally. Compare your criteria against
+that test before you rate anything.
+====
+
+== Break your own table
+
+kind: drill
+
+Take the table from the previous exercise and change weights until the loser
+wins. Note how much you had to change.
+
+.Solution
+[%collapsible]
+====
+If a small change flips the result, the alternatives are genuinely close and the
+table should not be presented as if it decided anything. If you had to move
+twenty or thirty points of weight, the result is robust — which is exactly the
+information you want before defending the decision.
+====
+
+== Choose your team's project
+
+kind: project
+
+Score your three candidate ideas with criteria and weights your team agrees on,
+fix the weights first, and put the table into your project proposal.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

@@ -1,0 +1,159 @@
+= From project charter to specifications
+:topic-id: bridge-charter-to-specs
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Map each charter field onto the openspec artefact that carries it
+* [[lo-2]] Derive a capability spec from a charter objective
+* [[lo-3]] Explain how a milestone becomes checkable through an archived change
+* [[lo-4]] Show responsibility per student without a separate report
+
+== The mapping
+
+The charter is not replaced. Each of its fields has a place in the repository
+where the living version of that field is kept.
+
+[cols="1,1,2",options="header"]
+|===
+|Feld / field |Artefact |Why there
+
+|Ausgangslage / initial situation
+|`openspec/config.yaml` -> `context:`
+|the agent needs the same context the supervisor does
+
+|Zielsetzung / objectives
+|the set of `openspec/specs/`
+|one capability per objective, in checkable form
+
+|Untersuchungsanliegen / research objective
+|`proposal.md` -> Why
+|the open question, stated before the solution
+
+|Geplantes Ergebnis / planned deliverable
+|`spec.md` -> requirements and scenarios
+|a scenario is an acceptance condition in miniature
+
+|Meilenstein + Termin / milestone
+|a change archived by that date
+|the evidence is a state of the repository, not a claim
+
+|Verantwortlich / responsible
+|change ownership plus git history
+|visible per person without a separate report
+
+|Projektfortschritt / progress
+|`openspec list`, `openspec status`
+|no hand-written status update
+|===
+
+[plantuml,bridge,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "PROJEKTAUFTRAG (frozen)" as C
+rectangle "specs/ (living target state)" as S
+rectangle "changes/ (how it moved)" as CH
+rectangle "changes/archive/ (milestone evidence)" as A
+C -down-> S
+S -right-> CH
+CH -right-> A
+A -up-> C : difference = scope management
+@enduml
+----
+
+== From objective to capability
+
+An objective from the charter — "a trainer can record attendance for a session in
+under two minutes" — becomes a capability with requirements:
+
+[source,markdown]
+------
+## ADDED Requirements
+
+### Requirement: Attendance is recorded per session
+A trainer SHALL be able to mark each member of a group present or absent for one
+session and store the result in one operation.
+
+#### Scenario: Recording a full group
+- **WHEN** a trainer opens a session with 30 members and marks 28 present
+- **THEN** the attendance for all 30 members is stored with the session date
+------
+
+Note what survived the translation: the observable behaviour. What was dropped:
+the time limit, which belongs in the charter as a quality goal and is checked at
+acceptance, not in every scenario.
+
+== Milestones without status reports
+
+A milestone is "change X archived by date Y". That makes progress a fact about
+the repository:
+
+[source,bash]
+----
+openspec list                 # what is in flight
+openspec status --change x    # how far along
+git log --author "Name"       # who did what
+----
+
+Nobody writes a progress report and nobody has to believe one. The milestone
+review then compares estimate against reality, which is the only calibration data
+a school team ever gets.
+
+== Decisions
+
+* Every charter objective maps to at least one capability under
+  `openspec/specs/`.
+* Every milestone names the change that must be archived for it, and its date.
+* Responsibility is per change; shared ownership of everything means nobody is
+  responsible for anything.
+* Progress is read from the repository, not reported in prose.
+
+== Pitfalls
+
+* Copying the charter text into the specs. Then you maintain two versions of the
+  same sentence and they diverge.
+* Milestones without a named change. "Frontend ready" cannot be archived.
+* Specs that grow past the charter without anyone noticing. The gap should be a
+  decision, taken visibly, not a drift.
+* Treating `openspec list` as bookkeeping. It is the status report — that is why
+  the bookkeeping does not exist separately.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Bruecke
+|bridge
+
+|Meilenstein
+|milestone
+
+|Nachweis
+|evidence
+
+|Verantwortlichkeit
+|responsibility, ownership
+
+|Projektfortschritt
+|project progress
+|===
+
+== Further reading
+
+* `templates/governance/antragsfelder-und-openspec.adoc` — the same table to hand
+  out
+* Module `bridge-progress-and-milestones` — reading progress from the archive

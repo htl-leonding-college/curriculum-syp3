@@ -1,0 +1,58 @@
+= What software engineering is — exercises
+:topic-id: what-is-software-engineering
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Justify five practices by their force
+
+kind: drill
+
+For version control, code review, CI, specifications and commit messages, name
+the force each addresses and what happens without it.
+
+.Solution
+[%collapsible]
+====
+The instructive case is commit messages: the force is time, not scale. Without
+them the code still works — it just cannot be understood six months later, which
+is a cost you pay exactly once you have forgotten everything. A practice whose
+force you cannot name is a candidate for dropping.
+====
+
+== Find the practice that is a ritual
+
+kind: drill
+
+Look at a process you know — from a job, a club, or a previous project — and find
+one step nobody can justify. What force was it supposed to address?
+
+.Solution
+[%collapsible]
+====
+Usually it addressed a real force in a different context and was copied without
+it. That is the reason this course does not adopt git-flow or Scrum ceremonies
+wholesale: the practice is only as good as the force it answers here.
+====
+
+== Explain the subject to somebody outside it
+
+kind: drill
+
+Write five sentences explaining to a parent why "just writing the program" is not
+the hard part.
+
+.Solution
+[%collapsible]
+====
+The convincing version usually contains a concrete failure: two people editing
+the same file, a requirement that changed in February, or a system handed to
+somebody who was not there. Abstractions about "quality" convince nobody,
+including examiners.
+====

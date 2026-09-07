@@ -1,0 +1,52 @@
+= Generating ideas with structured techniques — exercises
+:topic-id: governance-idea-generation
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Run one 6-3-5 round on a given topic
+
+kind: drill
+
+Topic: "something at this school that wastes people's time every week". Six
+people, three ideas, five minutes, pass on. Do at least three rounds.
+
+.Solution
+[%collapsible]
+====
+No model solution — but two observations are reliable. Round one produces the
+obvious ideas everybody already had; rounds three and later produce the ones
+worth discussing, because by then the obvious ones are used up and you are
+forced to build on what is on the sheet. If a round produces nothing, it is
+usually because people stopped reading before writing.
+====
+
+== Collect and cluster the sheets
+
+kind: drill
+
+Collect the sheets from the exercise above and group the ideas into clusters of
+related ones. Count how many distinct clusters remain.
+
+.Solution
+[%collapsible]
+====
+Typically five to ten clusters from a hundred ideas. That reduction is the
+hand-over point to the next module: clusters are candidates, and the weighted
+scoring decides between them.
+====
+
+== Produce your team's candidate list
+
+kind: project
+
+From your own round, write down the three candidates your team would actually be
+willing to work on for a year.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

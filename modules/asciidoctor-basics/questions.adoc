@@ -1,0 +1,60 @@
+= Documentation as text with AsciiDoc — questions
+:topic-id: asciidoctor-basics
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Why is documentation kept as text in the repository?
+
+covers: lo-4
+
+Expected answer points:
+
+* Same commit, same review, same history as the code
+* Line-based diffs make changes reviewable
+* No question which document version belongs to which state of the code
+
+== Show the AsciiDoc markup for a section, a table, a code block and a warning
+
+covers: lo-1
+
+Expected answer points:
+
+* `== Section`, `[cols=…,options="header"]` with `|===`, `[source,java]` with
+  `----`, `WARNING:` or the `[WARNING]` block
+* Blank lines separate blocks — without them the markup does not start
+
+== How do you convert the document, and why through a container?
+
+covers: lo-2
+
+Expected answer points:
+
+* `./local-convert.sh`, which runs the containerised asciidoctor
+* The container carries the diagram extension, PlantUML and Graphviz
+* Everyone's output is identical, including the pipeline's
+
+== Why are diagrams kept as PlantUML source rather than as images?
+
+covers: lo-3
+
+Expected answer points:
+
+* Text diffs, is reviewable, survives editing, is rebuilt with the document
+* An exported PNG has its source on one person's machine — drift
+* Images remain right for screenshots, photos and freehand sketches
+
+== What must accompany every image in this course?
+
+covers: lo-3, lo-4
+
+Expected answer points:
+
+* Its provenance: own work, free licence with licence name and URL, or unclear
+* Recorded when the image is inserted, because it cannot be reconstructed later

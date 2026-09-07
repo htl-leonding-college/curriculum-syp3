@@ -69,6 +69,7 @@ topics:
     taught_in: jg3
     prerequisite_for: none
     requires: []
+    status: ready
 
   - id: learning-environment-setup
     title: Setting up the learning environment
@@ -79,6 +80,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: []
+    status: ready
 
 # ============================================================================
 # Kernbetrieb U2-U25 — Theorie
@@ -93,6 +95,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: []
+    status: ready
 
   - id: governance-idea-generation
     title: Generating ideas with structured techniques
@@ -103,6 +106,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [governance-project-basics]
+    status: ready
 
   - id: governance-weighted-scoring
     title: Choosing a project with weighted scoring
@@ -113,6 +117,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [governance-idea-generation]
+    status: ready
 
   - id: governance-stakeholders-goals
     title: Stakeholders and verifiable project goals
@@ -123,6 +128,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [governance-weighted-scoring]
+    status: ready
 
   - id: governance-project-charter
     title: Structure of the project application and charter
@@ -133,6 +139,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-stakeholders-goals]
+    status: ready
 
   - id: process-models-overview
     title: Process models as three tempos of one pattern
@@ -143,6 +150,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [governance-project-charter]
+    status: ready
 
   - id: sdd-why-specs
     title: Why specifications instead of a requirements document
@@ -153,6 +161,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [process-models-overview]
+    status: ready
 
   - id: bridge-charter-to-specs
     title: From project charter to specifications
@@ -163,6 +172,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-project-charter, sdd-why-specs]
+    status: ready
 
   - id: what-is-software-engineering
     title: What software engineering is
@@ -173,6 +183,7 @@ topics:
     taught_in: jg3
     prerequisite_for: none
     requires: [process-models-overview]
+    status: ready
 
   - id: sdd-openspec-artifacts
     title: The artefacts of spec-driven development
@@ -337,6 +348,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [learning-environment-setup]
+    status: ready
 
   - id: git-branching
     title: Branching and merging
@@ -347,6 +359,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [git-basics]
+    status: ready
 
   - id: git-pull-requests
     title: Pull requests and review
@@ -357,6 +370,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [git-branching]
+    status: ready
 
   - id: git-conflicts-remotes
     title: Conflicts and remote repositories
@@ -367,6 +381,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [git-pull-requests]
+    status: ready
 
   - id: asciidoctor-basics
     title: Documentation as text with AsciiDoc
@@ -377,6 +392,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [git-basics]
+    status: ready
 
   - id: gh-actions-pages
     title: From push to published page
@@ -387,6 +403,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [asciidoctor-basics, git-conflicts-remotes]
+    status: ready
 
   - id: ai-basics-prompting
     title: Working with AI agents, first steps
@@ -397,6 +414,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [git-basics]
+    status: ready
 
   - id: ai-context-continuation
     title: Providing context and continuing across sessions
@@ -407,6 +425,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [ai-basics-prompting]
+    status: ready
 
   - id: openspec-hands-on
     title: Running a change end to end
@@ -417,6 +436,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [ai-context-continuation, sdd-why-specs, git-conflicts-remotes]
+    status: ready
 
   - id: ai-harness-engineering
     title: Shaping the agent's working environment

@@ -1,0 +1,67 @@
+= Working with AI agents, first steps — exercises
+:topic-id: ai-basics-prompting
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Sharpen three weak prompts
+
+kind: drill
+
+Rewrite so each names the target state, the place in the code and the check:
+"write tests", "make it faster", "clean up this class".
+
+.Solution
+[%collapsible]
+====
+For example: "Add tests for `BookingService.book` covering full session, past
+session and happy path; use JUnit 5 as in `MemberServiceTest`; all tests must
+pass with `mvn test`." The improvement is not politeness or length — it is that
+the result can now be judged without asking what you meant.
+====
+
+== Catch a confident mistake
+
+kind: drill
+
+Ask an agent for a method that uses a library you know well, then check every
+call against the real API documentation.
+
+.Solution
+[%collapsible]
+====
+Invented or renamed methods appear regularly, and they look right. The lesson is
+the check, not the score: compile it, run it, and look up anything you have not
+used yourself. A method that does not exist fails immediately; one that exists
+with different semantics fails much later.
+====
+
+== Verify before committing
+
+kind: drill
+
+Have an agent produce a change of about thirty lines, then read the diff line by
+line and mark every line you could not explain to an examiner.
+
+.Solution
+[%collapsible]
+====
+The marked lines are your homework, not the agent's. Either you understand them
+after reading the documentation, or they should not be in your repository — the
+oral exam does not accept "the agent wrote it".
+====
+
+== Agree on rules in your team
+
+kind: project
+
+Write down in your project README how your team uses agents: what is allowed,
+what is verified before merging, and what never goes into a prompt.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

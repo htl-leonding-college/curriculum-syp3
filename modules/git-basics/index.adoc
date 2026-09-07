@@ -14,29 +14,122 @@ endif::[]
 
 == Learning outcomes
 
-* [[lo-1]] TODO: was nach diesem Unterricht gekonnt werden muss
+* [[lo-1]] Create a repository, record changes as commits and read the history
+* [[lo-2]] Explain the three places a file can be in — working tree, index,
+  repository — and move a file between them
+* [[lo-3]] Write a commit message that is useful to somebody reading it in six
+  months
+* [[lo-4]] Keep generated and secret files out of the repository
 
-== TODO: Abschnittstitel
+== Three places, not one
 
-Stichpunkte, Diagramme als PlantUML, rund ein bis zwei Seiten — so viel, wie in
-den Slot dieses Themas passt.
+Most confusion with git comes from believing a file is simply "saved or not".
+There are three states.
 
-[plantuml,git-basics-overview,svg]
+[plantuml,git-three-states,svg]
 ----
 @startuml
 skinparam monochrome true
 skinparam shadowing false
-:Beispiel;
+rectangle "working tree\nyour files as you edit them" as W
+rectangle "index (staging area)\nwhat the next commit will contain" as I
+rectangle "repository\nthe recorded history" as R
+W -right-> I : git add
+I -right-> R : git commit
+R -left-> W : git checkout
 @enduml
 ----
 
+[source,bash]
+----
+git init                    # start a repository in this directory
+git status                  # which files are where
+git add report.adoc         # working tree -> index
+git commit -m "Add report"  # index -> repository
+git log --oneline           # read the history
+----
+
+`git status` answers the only question that matters while you work: what is in
+which state right now. Run it more often than you think you need to.
+
+== What a commit is
+
+A commit records the *complete state* of the tracked files, plus who made it,
+when, and a message. It is not a diff — the diff is computed between two
+commits when you ask for it.
+
+[source,bash]
+----
+git log --oneline --graph
+git show <hash>             # what this commit changed
+git diff                    # working tree vs index
+git diff --staged           # index vs last commit
+----
+
+Because a commit is a state, you can always go back to one. That is the actual
+promise of version control: you can experiment because you can return.
+
+== Commit messages
+
+The message is written for a person reading the history later — usually you, and
+usually while looking for the moment something broke.
+
+[cols="1,1",options="header"]
+|===
+|Useless |Useful
+
+|`update`
+|`Fix off-by-one in attendance count`
+
+|`stuff`
+|`Add initial situation to config.yaml`
+
+|`fix bug`
+|`Reject bookings for slots that already started`
+|===
+
+Rule of thumb: the subject line says *what changes for the reader*, in the
+imperative, under about fifty characters. If you need to explain *why*, add a
+blank line and a paragraph — that is where the reasoning belongs, not in the
+code as a comment nobody updates.
+
+== What does not belong in a repository
+
+[source,gitignore]
+----
+build/
+target/
+node_modules/
+.venv/
+.env            # secrets
+*.class
+.DS_Store
+----
+
+Two categories: things you can regenerate, and things that must not be public.
+A secret committed once stays in the history even after you delete the file —
+removing it means rewriting history, which is a bad afternoon. Check *before*
+you commit.
+
 == Decisions
 
-None specific to this topic.
+* Every project in this course lives in a git repository from the first day, not
+  from the first milestone.
+* Documentation is committed together with the code it describes. Same
+  repository, same history.
+* Generated output is never committed. If it can be rebuilt, it is not a source.
+* Commit messages are in English, imperative mood, subject under fifty
+  characters.
 
 == Pitfalls
 
-None specific to this topic.
+* One giant commit at the end of the evening. The history then says nothing, and
+  bisecting a bug is impossible.
+* `git add .` without looking. That is how `node_modules` and `.env` get in.
+* Committing generated HTML next to the AsciiDoc source. Two truths, and the
+  diff becomes unreadable.
+* Believing a file is "in git" because you saved it. Saving writes the working
+  tree; only `git commit` records it.
 
 == Terminology
 
@@ -44,10 +137,23 @@ None specific to this topic.
 |===
 |Deutsch |English
 
-|TODO
-|TODO
+|Arbeitsverzeichnis
+|working tree
+
+|Bereitstellungsbereich
+|index / staging area
+
+|Versionsstand, Einspielung
+|commit
+
+|Verlauf, Historie
+|history
+
+|Repository, Ablage
+|repository
 |===
 
 == Further reading
 
-* TODO: Quelle
+* Pro Git, chapters 1–2, https://git-scm.com/book
+* Module `git-branching` — the next step, once one line of history is not enough

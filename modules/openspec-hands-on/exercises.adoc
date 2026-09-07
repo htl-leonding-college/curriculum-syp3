@@ -1,0 +1,68 @@
+= Running a change end to end — exercises
+:topic-id: openspec-hands-on
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Run one small change completely
+
+kind: drill
+
+In a practice repository, run a change from `openspec propose` to
+`openspec archive` for something tiny — for example, adding a `--version` flag to
+a script.
+
+.Solution
+[%collapsible]
+====
+The step that surprises people is archiving: the delta disappears from `changes/`
+and reappears inside `specs/`. Before archiving, `specs/` describes the old
+target state; afterwards it describes the new one, and the change document
+records how it moved. Run `openspec list` before and after to see it.
+====
+
+== Decide three times whether a design document is needed
+
+kind: drill
+
+For each, decide and justify: renaming a variable; choosing between storing dates
+in UTC or local time; adding a fourth field to an existing form.
+
+.Solution
+[%collapsible]
+====
+Rename — no decision, no design. UTC versus local time — a real choice with
+consequences that will be questioned in six months, so yes. Fourth field — usually
+no, unless it forces a schema migration, in which case the decision is the
+migration, not the field.
+====
+
+== Split an oversized change
+
+kind: drill
+
+Take a change whose task list contains two unrelated halves and split it into
+two changes with their own specs and tasks.
+
+.Solution
+[%collapsible]
+====
+The split usually reveals that one half was blocking the other for no reason.
+That is the practical argument for small changes: they can be archived
+independently, so a milestone does not wait for unrelated work.
+====
+
+== Run your project's first change
+
+kind: project
+
+Propose, implement and archive the first change of your own project, and record
+the archived change as the evidence for your first milestone.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

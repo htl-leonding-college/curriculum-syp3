@@ -1,0 +1,64 @@
+= Pull requests and review — questions
+:topic-id: git-pull-requests
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What does a pull request add that a local merge does not?
+
+covers: lo-3
+
+Expected answer points:
+
+* Technically nothing in git terms — the merge is the same
+* It adds a review moment, a discussion attached to the change, and a CI run on
+  the branch before the merge
+* The history then records who reviewed what
+
+== Which three questions does a pull request description answer?
+
+covers: lo-1
+
+Expected answer points:
+
+* What changes, for the user of the system
+* Why this way — the rejected alternative in one sentence
+* How it was checked — test, command, evidence
+
+== What makes a review comment useful? Give an example of each kind
+
+covers: lo-2
+
+Expected answer points:
+
+* Concrete, located, actionable: "empty list divides by zero at line 42, add a
+  guard"
+* Useless: "this is wrong", "LGTM" after ten seconds
+* Review the change, not the person; say what you checked
+
+== Which rules apply to pull requests in this course?
+
+covers: lo-4
+
+Expected answer points:
+
+* Everything goes through a pull request, including documentation
+* At least one review by another team member
+* CI green before merging, no "fix it after the merge"
+* Small enough to read in one sitting
+
+== Why is a two-thousand-line pull request a problem?
+
+covers: lo-1, lo-4
+
+Expected answer points:
+
+* It gets a signature instead of a review
+* Behaviour changes hide inside mechanical changes such as renames
+* Split it: one pull request per intent

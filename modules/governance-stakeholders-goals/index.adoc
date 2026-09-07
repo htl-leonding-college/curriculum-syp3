@@ -1,0 +1,155 @@
+= Stakeholders and verifiable project goals
+:topic-id: governance-stakeholders-goals
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Identify the stakeholders of a project and classify them by interest
+  and influence
+* [[lo-2]] Turn a wish into a goal that can be verified by someone else
+* [[lo-3]] Distinguish goals from non-goals and explain why non-goals are written
+  down
+
+== Stakeholders
+
+A stakeholder is anyone affected by the project or able to affect it. Missing one
+is the most common way a finished project turns out to be unusable.
+
+[cols="1,2,2",options="header"]
+|===
+|Type |Example in a school project |What they can do to you
+
+|User
+|the trainer who records attendance
+|refuse to use it if it is slower than paper
+
+|Client
+|the club, the teacher, the school
+|change what "finished" means
+
+|Operator
+|whoever runs the server afterwards
+|refuse to host it
+
+|Affected party
+|members whose data is stored
+|data protection, and rightly so
+|===
+
+Sort them by *interest* and *influence*:
+
+[plantuml,stakeholder-grid,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "high influence\nlow interest\n-> keep satisfied" as A
+rectangle "high influence\nhigh interest\n-> involve closely" as B
+rectangle "low influence\nlow interest\n-> inform" as C
+rectangle "low influence\nhigh interest\n-> keep informed" as D
+A -right- B
+C -right- D
+A -down- C
+B -down- D
+@enduml
+----
+
+The quadrant with high influence and low interest is the dangerous one: they are
+not paying attention until the moment they say no.
+
+== Goals that can be verified
+
+A goal is verifiable when somebody who was not involved can check it without
+asking you what you meant.
+
+[cols="1,1",options="header"]
+|===
+|Wish |Verifiable goal
+
+|"The app should be fast."
+|"Opening the attendance list for a group of 30 takes under one second on the
+ lab laptops."
+
+|"Users should like it."
+|"A trainer can record a full session without written instructions, in under two
+ minutes."
+
+|"The data must be safe."
+|"Personal data is stored only for members with a signed consent, and can be
+ deleted on request within one working day."
+|===
+
+The pattern: an observable action, a measurable condition, a context in which it
+holds. If your goal has none of those, it is a wish — write it down as one, but
+do not call it a goal.
+
+== Non-goals
+
+Non-goals are what the project explicitly does not do. They cost one line each
+and prevent the two most expensive conversations of the year: scope creep during
+the project, and disappointment at the acceptance.
+
+----
+Non-goals:
+  - no mobile app, browser only
+  - no payment handling
+  - no import from the old Excel sheets
+----
+
+A non-goal is not a promise never to do it. It is a statement that it is out of
+scope for *this* project, in *this* year.
+
+== Decisions
+
+* Every project charter names stakeholders in a table with interest and influence.
+* Goals are written so a third party can check them; unverifiable goals go back
+  to the team for rewriting.
+* Every charter has a non-goals section. An empty one is not accepted — if
+  nothing is out of scope, the scope was not thought through.
+
+== Pitfalls
+
+* Only listing users and forgetting whoever has to operate or approve the thing.
+* Goals that measure your effort instead of the result ("we implement a REST
+  API"). Nobody outside your team cares how it is built; they care what it does.
+* Goals written after the fact, matched to what was finished. That is what the
+  frozen charter exists to prevent.
+* Non-goals that are secretly plans ("no mobile app *for now*"). Then it is not a
+  non-goal.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Anspruchsgruppe, Beteiligter
+|stakeholder
+
+|Zielsetzung
+|objectives
+
+|Nicht-Ziel
+|non-goal
+
+|ueberpruefbar
+|verifiable
+
+|Einflussnahme
+|influence
+|===
+
+== Further reading
+
+* Template `templates/governance/projektauftrag.adoc` — the goals table you fill
+* Module `governance-acceptance` — where these goals are checked again

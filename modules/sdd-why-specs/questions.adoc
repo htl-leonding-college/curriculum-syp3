@@ -1,0 +1,60 @@
+= Why specifications instead of a requirements document — questions
+:topic-id: sdd-why-specs
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is a specification, and how does it differ from a requirements document?
+
+covers: lo-1
+
+Expected answer points:
+
+* Short, per capability, written continuously, checkable
+* The requirements document is written once, is prose, and cannot be verified
+* Drift becomes visible instead of silent
+
+== Write a requirement with a scenario for "sessions have a capacity limit"
+
+covers: lo-2
+
+Expected answer points:
+
+* Requirement with SHALL, stating what must hold
+* Scenario with WHEN and THEN, observable from outside
+* No implementation detail in either
+
+== Why did precise statements of intent become the scarce resource?
+
+covers: lo-3
+
+Expected answer points:
+
+* Producing code and explanations is now cheap
+* Deciding which behaviour is correct is not
+* The effort moves to specifying and verifying
+
+== What is frozen, what is alive, and why do you need both?
+
+covers: lo-4
+
+Expected answer points:
+
+* Charter frozen — otherwise there is no yardstick
+* Specs alive — otherwise they stop describing the system
+* The visible difference between them is scope management
+
+== Why is "the service uses a repository class" a bad requirement?
+
+covers: lo-1, lo-2
+
+Expected answer points:
+
+* It describes the implementation, not the observable behaviour
+* It cannot be verified from outside, and it forbids a better implementation

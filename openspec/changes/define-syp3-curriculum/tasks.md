@@ -28,10 +28,10 @@
 
 ## 3. Lernumgebung vorbereiten (D7)
 
-- [ ] 3.1 Hardware-Checkliste erstellen: RAM >= 8 GB (16 empfohlen), Partition >= 100 GB, Virtualisierung im BIOS, SATA-Modus AHCI, Secure Boot, Windows-Schnellstart aus, BitLocker-Recovery-Key vorher gesichert; Pruefung: Liste deckt jeden Punkt aus D7 ab und ist vor U1 verteilbar
-- [ ] 3.2 Ablauf Live-USB mit Persistenz -> Installationstest -> Partitionierung beschreiben; Pruefung: der Hardwaretest steht vor jedem Schritt, der die Platte veraendert
-- [ ] 3.3 Abgrenzung zu WSL2 schriftlich festhalten (kein Fallback, erbt die Windows-Fehlkonfiguration); Pruefung: Begruendung steht dort, wo Schueler nach WSL2 fragen werden
-- [ ] 3.4 Verweis auf `klassen-setup` statt eigener Werkzeugliste; Pruefung: die Lernumgebungs-Unterlage nennt kein Werkzeug, das nicht in `versions.env` gepinnt ist
+- [x] 3.1 Hardware-Checkliste erstellen: RAM >= 8 GB (16 empfohlen), Partition >= 100 GB, Virtualisierung im BIOS, SATA-Modus AHCI, Secure Boot, Windows-Schnellstart aus, BitLocker-Recovery-Key vorher gesichert; Pruefung: Liste deckt jeden Punkt aus D7 ab und ist vor U1 verteilbar
+- [x] 3.2 Ablauf Live-USB mit Persistenz -> Installationstest -> Partitionierung beschreiben; Pruefung: der Hardwaretest steht vor jedem Schritt, der die Platte veraendert
+- [x] 3.3 Abgrenzung zu WSL2 schriftlich festhalten (kein Fallback, erbt die Windows-Fehlkonfiguration); Pruefung: Begruendung steht dort, wo Schueler nach WSL2 fragen werden
+- [x] 3.4 Verweis auf `klassen-setup` statt eigener Werkzeugliste; Pruefung: die Lernumgebungs-Unterlage nennt kein Werkzeug, das nicht in `versions.env` gepinnt ist
 
 ## 4. Abstimmung und Quellenlage
 
@@ -43,4 +43,4 @@
 ## 5. Abschluss
 
 - [ ] 5.1 Abschnitt "Open Questions" in `design.md` auf den Stand der yaml bringen (Schaetzverfahren entschieden, AI-Aufteilung entschieden, revealjs auf U22 gelegt); Pruefung: keine Frage bleibt ohne Entscheidung oder Vertagungsgrund
-- [ ] 5.2 Uebergabe an den Autoren-Change: Reihenfolge der zu schreibenden Module aus der Eroeffnungssequenz ableiten (U1-U10 zuerst); Pruefung: Liste liegt vor und beginnt mit den Topics, die vor Schulbeginn fertig sein muessen
+- [x] 5.2 Uebergabe an den Autoren-Change: Reihenfolge der zu schreibenden Module aus der Eroeffnungssequenz ableiten (U1-U10 zuerst); Pruefung: Liste liegt vor und beginnt mit den Topics, die vor Schulbeginn fertig sein muessen

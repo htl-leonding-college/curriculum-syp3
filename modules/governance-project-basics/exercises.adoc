@@ -1,0 +1,54 @@
+= What makes a project a project — exercises
+:topic-id: governance-project-basics
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Classify five pieces of work
+
+kind: drill
+
+For each of the following, decide project or not, and name the criterion that
+decides it: the school's yearly open day, fixing a printer, replacing the timetable
+software, weekly backups, writing your diploma thesis.
+
+.Solution
+[%collapsible]
+====
+Open day — project (unique, dated, resourced), though a recurring one, so parts
+of it are routine. Printer — not a project, routine operation. Timetable software
+— project. Backups — not a project, continuous operation. Diploma thesis —
+project, and the one this course is preparing you for.
+====
+
+== Rewrite a solution-shaped text as an initial situation
+
+kind: drill
+
+Rewrite this so it describes the problem and not the solution: "We build a web
+app where students can book lab slots, with a login and an admin panel."
+
+.Solution
+[%collapsible]
+====
+For example: "Lab slots are handed out on a printed sheet outside the lab. The
+sheet is often full or out of date, students queue for slots that are already
+taken, and the lab supervisor cannot tell in advance how many people to expect."
+Nothing about login or admin panel — those are decisions, and decisions belong
+in the charter, not in the description of the problem.
+====
+
+== Write your team's initial situation
+
+kind: project
+
+Write the initial situation for your own project idea, at most one paragraph,
+and put it into `openspec/config.yaml` under `context:`.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

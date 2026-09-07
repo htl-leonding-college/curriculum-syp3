@@ -1,0 +1,62 @@
+= From project charter to specifications — questions
+:topic-id: bridge-charter-to-specs
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Map the charter fields onto their artefacts
+
+covers: lo-1
+
+Expected answer points:
+
+* Initial situation to `config.yaml` context, objectives to the set of specs
+* Research objective to proposal Why, planned deliverable to requirements and
+  scenarios
+* Milestone to an archived change, responsibility to change ownership plus git
+  history
+
+== Turn a charter objective into a requirement with a scenario
+
+covers: lo-2
+
+Expected answer points:
+
+* Keep the observable behaviour, drop quality limits that belong in the charter
+* Requirement with SHALL, scenario with WHEN and THEN
+* One capability per objective, not one per feature idea
+
+== Why is "change archived by date" a better milestone than a status report?
+
+covers: lo-3
+
+Expected answer points:
+
+* The evidence is a state of the repository that anyone can check
+* Nothing has to be believed
+* Estimate versus reality can be compared at the review
+
+== How is individual responsibility visible without a separate document?
+
+covers: lo-4
+
+Expected answer points:
+
+* Each change has an owner; git history shows the commits
+* `openspec list` and `git log --author` answer the question directly
+* The diploma application's "Verantwortlich" column is filled from this
+
+== What goes wrong if you copy the charter text into the specs?
+
+covers: lo-1, lo-2
+
+Expected answer points:
+
+* Two versions of the same sentence, maintained separately, drifting apart
+* The charter is frozen and the specs are not, so they cannot be the same text

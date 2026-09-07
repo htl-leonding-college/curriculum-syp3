@@ -1,0 +1,63 @@
+= Branching and merging — questions
+:topic-id: git-branching
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is a branch technically, and why is creating one cheap?
+
+covers: lo-2
+
+Expected answer points:
+
+* A movable pointer to a commit, not a copy of the files
+* The commits form a graph; the branch is one hash in a file
+* Therefore branching costs nothing, and short-lived branches are practical
+
+== When do you get a fast-forward and when a merge commit?
+
+covers: lo-3
+
+Expected answer points:
+
+* Fast-forward when the target branch has not moved — the pointer advances
+* Merge commit when both lines have new commits; it has two parents
+* The merge commit records how two lines were reconciled
+
+== Show the commands for creating, merging and deleting a branch
+
+covers: lo-1
+
+Expected answer points:
+
+* `git switch -c feature/x`, work, commit
+* `git switch main`, `git merge feature/x`
+* `git branch -d feature/x` — the label goes, the commits remain
+
+== Which branching rules apply in this course, and why each?
+
+covers: lo-4
+
+Expected answer points:
+
+* Never commit to `main` directly — everything gets reviewed
+* Short-lived branches — conflicts accumulate otherwise
+* No rebase of published branches — it destroys other people's history
+* `main` always builds
+* No git-flow: it solves a release-coordination problem a school project does
+  not have
+
+== You deleted a branch by mistake. Is the work gone?
+
+covers: lo-2, lo-4
+
+Expected answer points:
+
+* No — the commits still exist, only the pointer was removed
+* `git reflog` finds the hash, `git switch -c name <hash>` restores it

@@ -1,0 +1,151 @@
+= Process models as three tempos of one pattern
+:topic-id: process-models-overview
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Name the invariant pattern behind every process model
+* [[lo-2]] Place waterfall, Scrum and spec-driven development by their tempo
+* [[lo-3]] Explain why the choice of process model does not touch governance
+* [[lo-4]] Choose a suitable tempo for a given situation and justify it
+
+== One pattern
+
+Every process model, from the 1970s to this morning, runs the same loop:
+
+----
+clarify the goal
+  -> bound the scope
+    -> state the requirement precisely
+      -> build
+        -> verify
+          -> take the change in under control
+----
+
+What differs is not the steps. It is *how often you go round* — and therefore how
+expensive it is to be wrong.
+
+[cols="1,1,2",options="header"]
+|===
+|Model |Tempo of one loop |Consequence
+
+|Waterfall / V-model
+|months
+|being wrong is found late and costs the most
+
+|Scrum
+|weeks
+|being wrong is found at the sprint boundary
+
+|Spec-driven development
+|minutes
+|being wrong is found while you are still holding the thought
+|===
+
+[plantuml,three-tempos,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "WATERFALL\nspecify -> build -> verify\none pass, months" as W
+rectangle "SCRUM\nbacklog -> sprint -> review\nweeks, repeated" as S
+rectangle "SDD\nspec -> change -> verify\nminutes, continuous" as D
+W -down-> S : shorter loop
+S -down-> D : shorter loop again
+@enduml
+----
+
+== Why the tempo changed
+
+The loop shortens when the cost of one pass falls. Two things have made a pass
+cheap: automation of build and test, and — recently — agents that turn a precise
+statement into an implementation in minutes.
+
+That shifts where the uncertainty lives. It is no longer mainly in *writing the
+code*; it is in *saying precisely what the code should do* and in *checking that
+what came out is what you meant*. A model whose loop is measured in months puts
+its effort in exactly the wrong place.
+
+== Governance does not move
+
+[cols="1,2",options="header"]
+|===
+|Layer |Changes with the model?
+
+|Governance — charter, goals, milestones, acceptance
+|no, and it never asked which model you use
+
+|Execution — how you get from goal to result
+|yes, freely
+|===
+
+The diploma thesis application asks for initial situation, objectives,
+deliverable, milestones and dates. It contains no field for "sprint", "phase" or
+"iteration". So swapping Scrum for spec-driven development changes nothing that
+the school, the client or the examiner sees — which is why it can be done at all.
+
+== Choosing a tempo
+
+* The consequences of being wrong are irreversible and expensive (a bridge, a
+  medical device, a payment run) — go slower, verify more before building.
+* The requirements are known and stable, the domain is understood — a long loop
+  wastes nothing.
+* You are exploring, the requirement becomes clear by trying — the shortest loop
+  you can verify.
+
+Nobody picks a model for their whole life. They pick a tempo for a situation.
+
+== Decisions
+
+* This course teaches waterfall and Scrum in outline for the vocabulary, and
+  spec-driven development as the working practice.
+* Process models are compared by tempo, not by manifesto.
+* Governance is taught separately from execution and stays constant across
+  models.
+
+== Pitfalls
+
+* Believing a shorter loop means less thinking. It means the thinking is
+  distributed differently and happens more often.
+* Treating "agile" as a synonym for "without a plan". Scrum has more meetings
+  than waterfall, not fewer.
+* Adopting Scrum ceremonies in a school year without stable sprints. Velocity
+  needs sprints that resemble each other; a school calendar does not provide
+  that.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Vorgehensmodell
+|process model
+
+|Wasserfallmodell
+|waterfall model
+
+|Iteration, Sprint
+|iteration, sprint
+
+|Taktfrequenz
+|tempo, cadence
+
+|Anforderung
+|requirement
+|===
+
+== Further reading
+
+* Module `process-waterfall` and `process-scrum` — the two in outline
+* Module `sdd-why-specs` — why the shortest loop needs written specifications

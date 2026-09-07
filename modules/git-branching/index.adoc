@@ -1,0 +1,130 @@
+= Branching and merging
+:topic-id: git-branching
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Create a branch, work on it and merge it back
+* [[lo-2]] Explain what a branch is and why creating one is cheap
+* [[lo-3]] Tell a fast-forward merge from a merge commit and say when each occurs
+* [[lo-4]] Apply the branching rules used in this course
+
+== A branch is a pointer
+
+A branch is not a copy of your files. It is a movable pointer to a commit; the
+commits themselves form a graph. That is why creating a branch costs nothing —
+git writes a file containing one hash.
+
+[plantuml,git-branch,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "A" as A
+rectangle "B" as B
+rectangle "C" as C
+rectangle "D" as D
+A -right-> B
+B -right-> C
+B -down-> D
+note top of C : main
+note bottom of D : feature/export
+@enduml
+----
+
+[source,bash]
+----
+git switch -c feature/export   # create and switch
+git switch main                # back
+git branch                     # which branches exist, where am I
+git merge feature/export       # bring the work into main
+git branch -d feature/export   # delete the pointer, the commits stay
+----
+
+== Two kinds of merge
+
+[cols="1,2",options="header"]
+|===
+|Situation |Result
+
+|`main` has not moved since the branch started
+|*fast-forward* — the pointer simply moves forward, no new commit
+
+|`main` has moved
+|*merge commit* — a commit with two parents, recording that two lines of work
+ came together
+|===
+
+The merge commit is not noise. It is the record of when and how two lines of
+development were reconciled, and it is what makes the history readable later.
+
+== The rules in this course
+
+* Work happens on a branch, never directly on `main`.
+* One branch, one purpose. `feature/attendance-export`, not `felix-work`.
+* Branches are short-lived — days, not months. A branch that lives for six weeks
+  merges badly, and you find out at the worst moment.
+* `main` always builds. If it does not, fixing it is the first task of the
+  morning.
+* No rebase of anything that other people already have. Rewriting shared history
+  is the one operation that destroys other people's work.
+
+We deliberately do not use git-flow with its `develop`, `release/*` and
+`hotfix/*` layers. It solves a problem — coordinating versioned releases across
+teams — that a school project does not have, and the ceremony would be learned
+as a ritual rather than as a tool.
+
+== Decisions
+
+* Branch from `main`, merge back into `main`, no long-lived side branches.
+* No rebasing of published branches.
+* Branch names describe the work: `feature/…`, `fix/…`, `docs/…`.
+* Delete the branch after merging. The commits survive; only the label goes.
+
+== Pitfalls
+
+* Committing to `main` "just this once". The next person's merge then has to
+  reconcile something that was never reviewed.
+* Confusing `git switch` with copying files. Switching branches rewrites your
+  working tree — commit or stash before you switch.
+* Long-lived branches. The longer they live, the more conflicts they accumulate,
+  and the conflicts arrive all at once.
+* Deleting a branch and believing the work is gone. The commits are still there;
+  `git reflog` finds them.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Zweig
+|branch
+
+|Zusammenfuehren
+|merge
+
+|Vorspulen
+|fast-forward
+
+|Zeiger
+|pointer
+
+|kurzlebiger Zweig
+|short-lived branch
+|===
+
+== Further reading
+
+* Pro Git, chapter 3 — Branching, https://git-scm.com/book
+* Module `git-pull-requests` — how a branch gets reviewed before it is merged

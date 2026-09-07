@@ -1,0 +1,53 @@
+= From push to published page — exercises
+:topic-id: gh-actions-pages
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Build a pipeline for a one-page document
+
+kind: drill
+
+In a practice repository, add an `.adoc` file and a workflow that converts it and
+publishes it to Pages. Push and watch the run.
+
+.Solution
+[%collapsible]
+====
+Checkout, convert, upload artefact, deploy. The step most people forget is
+enabling Pages with source "GitHub Actions" in the repository settings — the
+workflow then succeeds but nothing appears, which looks like a build problem and
+is not.
+====
+
+== Break the build on purpose, three ways
+
+kind: drill
+
+Make the pipeline fail by (a) referencing an image that is not committed, (b) an
+`include::` whose file name differs only in case, (c) a syntax error in the
+workflow YAML. Read each failure.
+
+.Solution
+[%collapsible]
+====
+(a) and (b) fail in the convert step and both work locally on a Mac — that is the
+lesson. (c) fails before any step runs, and the error names the line in the YAML.
+Note how differently the three failures present themselves; recognising which
+kind you have is most of the debugging.
+====
+
+== Publish your project documentation
+
+kind: project
+
+Add the documentation workflow to your project repository and publish the
+charter to Pages.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

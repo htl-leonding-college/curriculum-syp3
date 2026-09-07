@@ -1,0 +1,51 @@
+= Structure of the project application and charter — exercises
+:topic-id: governance-project-charter
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Sort ten sentences into the right fields
+
+kind: drill
+
+Take ten sentences from an example application, shuffled, and assign each to the
+field it belongs in.
+
+.Solution
+[%collapsible]
+====
+The two that regularly land in the wrong field: a sentence naming the technology
+belongs in the technology section, not in the initial situation; and "we want to
+learn Spring Boot" is neither an objective nor a research objective — it is a
+personal motivation and belongs nowhere in the form.
+====
+
+== Turn three activities into milestones
+
+kind: drill
+
+Rewrite as milestones: "build the database", "do the frontend", "write tests".
+
+.Solution
+[%collapsible]
+====
+For example: "Members and sessions can be stored and read back; the schema is
+documented — 15 Nov"; "A trainer can record attendance for one session in the
+browser — 10 Dec"; "The booking rules are covered by tests that run in CI — 20
+Dec". Each names a checkable result and a date.
+====
+
+== Write your project charter
+
+kind: project
+
+Complete the charter for your project from the template, have it reviewed, and
+freeze it with a `baseline-v1` tag once it is approved.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

@@ -1,0 +1,171 @@
+= Documentation as text with AsciiDoc
+:topic-id: asciidoctor-basics
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Write a structured AsciiDoc document — headings, lists, tables, code,
+  admonitions
+* [[lo-2]] Convert it to HTML with the containerised toolchain
+* [[lo-3]] Embed a diagram as source text with PlantUML
+* [[lo-4]] Explain why documentation is kept as text next to the code
+
+== Why text
+
+Documentation as text sits in the same repository as the code, in the same
+commit, reviewed in the same pull request. A `.docx` in a shared drive does none
+of that: no diff, no history, no review, and no way to tell which version
+described which release.
+
+[cols="1,1",options="header"]
+|===
+|Word processor |AsciiDoc in the repository
+
+|binary, no useful diff
+|line-based diff, readable in a review
+
+|lives beside the code
+|lives *with* the code, in one commit
+
+|"final_v3_really_final.docx"
+|the history is the version list
+
+|screenshots of diagrams
+|diagram source, rebuilt on every change
+|===
+
+== The syntax you need
+
+[source,adoc]
+------
+= Document title
+:toc: left
+
+== Section
+
+Text with *bold*, _italic_ and `monospace`.
+
+* bullet
+** nested bullet
+
+. numbered
+. numbered
+
+[cols="1,2",options="header"]
+|===
+|Column |Meaning
+
+|a
+|the first one
+|===
+
+[source,java]
+----
+System.out.println("hello");
+----
+
+TIP: One-line admonition.
+
+[WARNING]
+====
+Multi-line admonition.
+====
+
+link:https://example.org[Link text]
+
+.Screenshot of the booking page (own)
+image::images/screenshot.png[Alt text,600]
+------
+
+The header attributes matter more than they look: `:toc:` builds the table of
+contents, `:source-highlighter:` colours the code, and the `ifdef::env-github[]`
+block makes admonitions render on GitHub as well as in the built site.
+
+== Diagrams as source text
+
+[source,adoc]
+------
+[plantuml,login-flow,svg]
+----
+@startuml
+skinparam monochrome true
+actor Student
+Student -> Browser : opens booking page
+Browser -> Server : GET /sessions
+Server --> Browser : list of sessions
+@enduml
+----
+------
+
+The diagram is *text*. It diffs, it is reviewable, it survives an edit six months
+later, and it is rebuilt with the document. A PNG exported from a drawing tool is
+a binary whose source lives on one person's laptop — which is exactly the drift
+this course avoids everywhere else.
+
+== Building it
+
+[source,bash]
+----
+./local-convert.sh          # the same steps the pipeline runs
+----
+
+Nothing is installed locally except Docker. The container carries asciidoctor,
+the diagram extension, PlantUML and Graphviz, so everybody's output is identical
+— including the pipeline's.
+
+== Decisions
+
+* All project documentation is AsciiDoc in the project repository.
+* Diagrams are PlantUML source inside the document. A picture is used only where
+  source text cannot carry it — screenshots, photos, freehand sketches.
+* Every image records where it came from: own work, a free licence with name and
+  URL, or explicitly unclear.
+* asciidoctor is not installed locally; it runs in the container.
+
+== Pitfalls
+
+* Committing the generated HTML. Two truths, unreadable diffs, and one of them
+  is always stale.
+* A four-space indent by accident — AsciiDoc reads it as a literal block and your
+  text turns into monospace.
+* Forgetting the blank line before a list or table. The block then does not start
+  and the markup shows up as text.
+* Diagram screenshots "just for now". They stay, and the source is lost.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Auszeichnungssprache
+|markup language
+
+|Hinweiskasten
+|admonition
+
+|Inhaltsverzeichnis
+|table of contents
+
+|Quelltextblock
+|source block
+
+|Dokumentation als Text
+|docs as code
+|===
+
+== Further reading
+
+* AsciiDoc syntax quick reference, https://docs.asciidoctor.org
+* PlantUML language reference, https://plantuml.com
+* Module `gh-actions-pages` — turning this document into a published website

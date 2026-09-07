@@ -1,0 +1,64 @@
+= Conflicts and remote repositories — questions
+:topic-id: git-conflicts-remotes
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is `origin/main`, and how does it differ from the remote's `main`?
+
+covers: lo-1
+
+Expected answer points:
+
+* A remote-tracking branch: your local note of where the remote was at the last
+  fetch
+* It updates on `git fetch`, not on its own
+* `git pull` is fetch plus merge
+
+== When does a conflict occur, and why does git not resolve it itself?
+
+covers: lo-3
+
+Expected answer points:
+
+* Two branches changed the same lines
+* Git refuses to guess which version is correct — that is a decision about
+  meaning
+* Conflicts are normal, especially with long-lived branches
+
+== Walk through resolving a conflict
+
+covers: lo-2
+
+Expected answer points:
+
+* `git status` to find the files, read both sides, decide, delete all markers
+* `git add` the file, then `git commit` to complete the merge
+* Verify by building and testing — removed markers prove nothing
+* `git merge --abort` gets you out
+
+== Your push is rejected with "fetch first". What happened, what do you do?
+
+covers: lo-4
+
+Expected answer points:
+
+* The remote has commits you do not have
+* `git pull`, resolve any conflict, then push
+* Not `--force` — that deletes the other commits
+
+== You committed to `main` by mistake. How do you fix it?
+
+covers: lo-4
+
+Expected answer points:
+
+* `git switch -c feature/x` takes the commits onto a branch
+* `git switch main`, then reset `main` back to `origin/main`
+* Open a pull request from the branch as usual

@@ -1,0 +1,60 @@
+= Process models as three tempos of one pattern — questions
+:topic-id: process-models-overview
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is the invariant pattern behind every process model?
+
+covers: lo-1
+
+Expected answer points:
+
+* Clarify goal, bound scope, state the requirement, build, verify, control the
+  change
+* The steps do not differ between models — the frequency of the loop does
+
+== Place waterfall, Scrum and SDD by tempo and say what follows from each
+
+covers: lo-2
+
+Expected answer points:
+
+* Months, weeks, minutes
+* The later you close the loop, the later and more expensively an error is found
+* Shorter loops require automation and precise statements
+
+== Why does the choice of process model not affect the charter?
+
+covers: lo-3
+
+Expected answer points:
+
+* The charter asks for goals, deliverables, milestones and dates
+* It has no field for sprints, phases or iterations
+* Governance and execution are separate layers
+
+== Where has the uncertainty moved, now that code is cheap to produce?
+
+covers: lo-1, lo-2
+
+Expected answer points:
+
+* Out of writing code, into specifying precisely and verifying the result
+* A months-long loop invests effort where it is now least needed
+
+== When would you still choose a long loop?
+
+covers: lo-4
+
+Expected answer points:
+
+* Irreversible or expensive consequences, stable and well-understood
+  requirements, regulated environments
+* The choice is per situation, not per person

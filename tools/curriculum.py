@@ -328,3 +328,23 @@ def load(path: Path | str = DEFAULT_PATH, root: Path | None = None) -> Curriculu
         root=root,
         findings=tuple(findings),
     )
+
+
+def _cli() -> int:
+    """Kleines Abfragewerkzeug: `python tools/curriculum.py ready` gibt die IDs
+    der fertigen Themen aus — der Site-Build baut nur diese."""
+    import argparse
+
+    parser = argparse.ArgumentParser(description=_cli.__doc__)
+    parser.add_argument("what", choices=("ready", "planned", "all"))
+    parser.add_argument("--curriculum", type=Path, default=DEFAULT_PATH)
+    args = parser.parse_args()
+    model = load(args.curriculum)
+    topics = {"ready": model.ready, "planned": model.planned, "all": model.topics}[args.what]
+    for topic in topics:
+        print(topic.id)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_cli())

@@ -1,0 +1,61 @@
+= Choosing a project with weighted scoring — questions
+:topic-id: governance-weighted-scoring
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Describe the four steps of a weighted scoring
+
+covers: lo-1
+
+Expected answer points:
+
+* Collect criteria, assign weights summing to 100, rate alternatives on a fixed
+  scale, multiply and sum
+* The comparison is between the weighted sums
+
+== What makes a criterion useful, and what makes one useless?
+
+covers: lo-2
+
+Expected answer points:
+
+* Useful when the alternatives actually differ on it
+* Useless when everything scores the same — it only adds arithmetic
+* Vague criteria ("interesting") should be replaced by observable ones
+
+== Two alternatives end 745 to 738. What does that mean?
+
+covers: lo-3
+
+Expected answer points:
+
+* The method says they are equivalent — the gap is within the noise
+* Decide on something the table does not capture and write down what it was
+* Do not pretend the number decided it
+
+== How can a weighted scoring be manipulated, and what prevents it?
+
+covers: lo-4
+
+Expected answer points:
+
+* Adjusting weights after seeing the ratings
+* Adding criteria that favour the preferred option
+* Prevention: fix weights before rating, keep the table in version control where
+  changes are visible
+
+== Why is the result written into the project proposal at all?
+
+covers: lo-1, lo-3
+
+Expected answer points:
+
+* It makes the choice traceable for someone who was not in the room
+* The reasoning, not the number, is what can be questioned and defended

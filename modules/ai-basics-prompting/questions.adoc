@@ -1,0 +1,61 @@
+= Working with AI agents, first steps — questions
+:topic-id: ai-basics-prompting
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What does a language model do, and what follows for its reliability?
+
+covers: lo-1
+
+Expected answer points:
+
+* Predicts likely continuations of text
+* No source of truth: wrong answers are as fluent as right ones
+* No memory beyond the session context
+* An agent adds tools, so a wrong prediction can change the repository
+
+== Which three ingredients make a task formulation checkable?
+
+covers: lo-2
+
+Expected answer points:
+
+* What must be true afterwards, where it belongs in the existing code, how it
+  will be checked
+* The third is the one usually missing
+
+== Name four failure modes and how you would notice each
+
+covers: lo-3
+
+Expected answer points:
+
+* Confident wrongness, invented interfaces, outdated practice, silent scope creep,
+  folding under pushback
+* Countermeasure is verification: run, test, read the diff
+
+== What may you hand to an agent, and what must stay out?
+
+covers: lo-4
+
+Expected answer points:
+
+* Own code, public documentation, own text, synthetic data
+* Not personal data of others; not credentials or tokens
+* Responsibility for what is committed stays with you
+
+== Why is a large single prompt worse than several small ones?
+
+covers: lo-2, lo-3
+
+Expected answer points:
+
+* Large answers hide their errors; small steps expose them
+* Each step can be verified before the next builds on it

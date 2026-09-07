@@ -1,0 +1,75 @@
+= Pull requests and review — exercises
+:topic-id: git-pull-requests
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Open a pull request against a partner's repository
+
+kind: drill
+
+Pair up. Each of you adds a small change to the other's practice repository on a
+branch and opens a pull request with a description that answers the three
+questions.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+git switch -c fix/typo-readme
+git commit -am "Fix broken link in README"
+git push -u origin fix/typo-readme
+gh pr create --fill
+----
+The description matters more than the change here. Compare the two pull requests
+afterwards: the one you could review without asking a question is the one that
+did its job.
+====
+
+== Review two pull requests, once badly and once well
+
+kind: drill
+
+Review your partner's pull request twice: first with comments like "looks fine",
+then with concrete, located comments. Compare what the author can do with each.
+
+.Solution
+[%collapsible]
+====
+The first review produces no action and no information. The second names a line,
+a condition and a suggested fix, so the author can act without a conversation. A
+review that cannot be acted on without a follow-up question is an unfinished
+review.
+====
+
+== Split an oversized change
+
+kind: drill
+
+Take a branch that contains a rename plus a behaviour change and split it into
+two branches with one pull request each.
+
+.Solution
+[%collapsible]
+====
+Create a new branch from `main`, cherry-pick or redo only the rename, open that
+pull request first; then rebase the behaviour change on top once the rename is
+merged. The point is visible in the diff: the second pull request now contains
+only lines that change what the program does.
+====
+
+== Set up review in your team
+
+kind: project
+
+Enable branch protection on your project repository so `main` requires a pull
+request and a passing CI run.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

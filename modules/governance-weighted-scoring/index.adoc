@@ -1,0 +1,159 @@
+= Choosing a project with weighted scoring
+:topic-id: governance-weighted-scoring
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Build a weighted scoring table from criteria, weights and ratings
+* [[lo-2]] Choose criteria that discriminate between the alternatives
+* [[lo-3]] Read the result correctly — including when it says the alternatives
+  are equal
+* [[lo-4]] Name the ways a weighted scoring can be manipulated
+
+== The method
+
+*Nutzwertanalyse* — weighted scoring — turns a decision between alternatives into
+something you can hand to somebody else and have them follow.
+
+. List the criteria that matter.
+. Give each a weight; the weights sum to 100.
+. Rate each alternative per criterion, on a fixed scale (say 0–10).
+. Multiply, sum, compare.
+
+[cols="2,1,1,1,1,1",options="header"]
+|===
+|Criterion |Weight |Idea A |A·w |Idea B |B·w
+
+|Team can build it in one year
+|30
+|8
+|240
+|5
+|150
+
+|Somebody actually needs it
+|25
+|6
+|150
+|9
+|225
+
+|We learn something new
+|20
+|7
+|140
+|8
+|160
+
+|Data protection is manageable
+|15
+|9
+|135
+|4
+|60
+
+|Testable without a real client
+|10
+|8
+|80
+|6
+|60
+
+|*Sum*
+|*100*
+|
+|*745*
+|
+|*655*
+|===
+
+The number is not the point. The *visible reasoning* is: anyone can now ask
+"why is feasibility weighted higher than novelty?" — and that is a question the
+team can answer, unlike "why did you pick A?".
+
+== Choosing criteria
+
+A criterion is useful only if the alternatives differ on it. "Must be software"
+scores 10 for everything and contributes nothing but arithmetic.
+
+[cols="1,1",options="header"]
+|===
+|Weak criterion |Better criterion
+
+|"Is interesting"
+|"At least three of us want to work on it in February"
+
+|"Modern technology"
+|"Uses at most one technology none of us has used before"
+
+|"Useful"
+|"There is a named person who will use it and can be asked questions"
+|===
+
+Set the weights *before* you rate the alternatives. Otherwise the weights become
+the place where the preferred answer is engineered.
+
+== Reading the result
+
+* A clear gap — take the winner.
+* A gap of a few percent — the method says: these are equivalent. Then decide on
+  something the table does not capture, and write down what that was.
+* A result that feels wrong — look for the criterion you left out. That feeling
+  is usually information, not stubbornness.
+
+== Decisions
+
+* Every team documents its project choice as a weighted scoring table in the
+  project proposal.
+* Criteria and weights are the team's own. There is no prescribed catalogue —
+  a borrowed catalogue produces borrowed decisions.
+* Weights are fixed before the ratings are entered.
+* If two alternatives end within a few percent of each other, the team writes
+  one sentence saying what actually decided it.
+
+== Pitfalls
+
+* Tuning weights until the desired alternative wins. It happens, it is visible in
+  the history, and it destroys the point of the exercise.
+* Criteria that do not discriminate. They add work and change nothing.
+* Too many criteria. Above roughly seven, each weight is so small that the sums
+  are noise.
+* Treating the number as the decision. The table supports a decision; the team
+  makes it.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Nutzwertanalyse
+|weighted scoring / utility analysis
+
+|Kriterium
+|criterion
+
+|Gewichtung
+|weight
+
+|Bewertung
+|rating
+
+|nachvollziehbar
+|traceable, comprehensible
+|===
+
+== Further reading
+
+* PUMA 8/05, Nutzwertanalyse — the source used for this module
+* Module `governance-stakeholders-goals` — turning the chosen idea into goals

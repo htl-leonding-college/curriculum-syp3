@@ -1,0 +1,64 @@
+= Branching and merging — exercises
+:topic-id: git-branching
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Produce both kinds of merge on purpose
+
+kind: drill
+
+In a test repository, produce first a fast-forward merge and then a merge commit.
+Show with `git log --graph --oneline` that the histories differ.
+
+.Solution
+[%collapsible]
+====
+Fast-forward: branch off, commit only on the branch, merge — the graph stays a
+line. Merge commit: branch off, commit on the branch *and* on `main`, then merge
+— the graph forks and joins, and `git log` shows a commit with two parents. You
+can force the second form with `git merge --no-ff` when you want the record even
+though a fast-forward would be possible.
+====
+
+== Recover a deleted branch
+
+kind: drill
+
+Create a branch with two commits, switch away, delete it with `git branch -D`,
+then get it back.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+git reflog                      # find the hash of the branch tip
+git switch -c feature/x <hash>
+----
+The commits were never deleted — only the pointer was. Unreferenced commits are
+removed eventually by garbage collection, but not immediately, which is what
+makes this recovery possible.
+====
+
+== Name five branches for real work
+
+kind: drill
+
+Write branch names for: exporting attendance to CSV, fixing a crash on an empty
+list, updating the README, trying out a new database schema, preparing the
+milestone presentation.
+
+.Solution
+[%collapsible]
+====
+For example `feature/attendance-csv-export`, `fix/empty-list-crash`,
+`docs/readme-setup`, `spike/schema-v2`, `docs/milestone-1-slides`. What matters
+is that the name says what the branch is for — `felix` and `test2` do not.
+====

@@ -1,0 +1,65 @@
+= Providing context and continuing across sessions — exercises
+:topic-id: ai-context-continuation
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Same task, two contexts
+
+kind: drill
+
+Give an agent the same task twice: once with only the task, once with the spec,
+the relevant file and the error message. Compare the two results.
+
+.Solution
+[%collapsible]
+====
+The first answer usually invents names that do not exist in your project and
+ignores your conventions; the second fits. The comparison is the point — it makes
+"context matters" an observation rather than a claim.
+====
+
+== Write a continuation note and hand it over
+
+kind: drill
+
+Work on something for twenty minutes, write a continuation note, and give it to a
+classmate who then continues in a fresh session.
+
+.Solution
+[%collapsible]
+====
+Whatever they have to ask you is what was missing from the note. Usually it is the
+decision, not the state: they can see where the code is, but not which of two
+paths you had already rejected — which is why they take it again.
+====
+
+== Provoke a context overflow
+
+kind: drill
+
+Run a long session with many files and watch for the moment the agent
+contradicts an earlier decision. Note what triggered it.
+
+.Solution
+[%collapsible]
+====
+Typically after long file dumps or a long back-and-forth. Restart with a two-line
+summary of the decision it forgot and observe that the problem disappears — that
+is the practical difference between "it forgot" and "the text left the window".
+====
+
+== Add continuation notes to your project routine
+
+kind: project
+
+Agree in your team where continuation notes live in the repository, and write the
+first one at the end of today's session.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

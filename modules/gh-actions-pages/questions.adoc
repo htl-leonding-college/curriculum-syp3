@@ -1,0 +1,63 @@
+= From push to published page — questions
+:topic-id: gh-actions-pages
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Describe the four parts of the smallest useful pipeline
+
+covers: lo-1
+
+Expected answer points:
+
+* Trigger (push, pull request), build step, artefact, deployment
+* It runs on a runner, not on your machine
+* Nothing is published when the build fails
+
+== Why does CI run the same script as the local build?
+
+covers: lo-1, lo-3
+
+Expected answer points:
+
+* Two build paths drift, and then green means nothing
+* A green pipeline should certify the local build too
+* The script is the single description of how the site is produced
+
+== What does the neutral build environment settle?
+
+covers: lo-3
+
+Expected answer points:
+
+* Case sensitivity between macOS and Linux
+* Processor architecture, arm64 versus amd64
+* Tool version differences
+* "Works on my machine" ceases to be an argument
+
+== A run is red. How do you find the cause?
+
+covers: lo-2
+
+Expected answer points:
+
+* First red step, last lines of its log
+* Reproduce locally with the same command
+* If it only fails on the runner: a file not committed, a case difference, a
+  version difference
+
+== How does the site get published, and what happens on a red build?
+
+covers: lo-4
+
+Expected answer points:
+
+* Pages source set to GitHub Actions; a deploy job publishes the artefact
+* Only from `main`, only from a green build
+* On red, the previous state stays online

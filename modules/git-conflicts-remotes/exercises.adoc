@@ -1,0 +1,72 @@
+= Conflicts and remote repositories — exercises
+:topic-id: git-conflicts-remotes
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Cause a conflict on purpose and resolve it
+
+kind: drill
+
+In a shared practice repository, two people change the same line of the same
+file on two branches. Merge both into `main` and resolve the conflict.
+
+.Solution
+[%collapsible]
+====
+The first merge is a fast-forward or a clean merge; the second reports the
+conflict. Resolve by reading both versions and deciding what the code should do
+— often the answer is a third version containing both intentions. Then `git add`,
+`git commit`, and run the build before you push.
+====
+
+== Produce a diverged branch and repair it
+
+kind: drill
+
+Commit locally, then commit something else to `main` through the web interface,
+then try to push.
+
+.Solution
+[%collapsible]
+====
+The push is rejected. `git status` reports "diverged". `git pull` creates a merge
+commit joining both lines, then the push works. Note what you did *not* do:
+`--force`, which would have deleted the web commit.
+====
+
+== Recover a commit made on `main` by mistake
+
+kind: drill
+
+Commit directly to `main`, then move that commit onto a branch and restore
+`main`.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+git switch -c fix/oops        # branch now contains the commit
+git switch main
+git reset --hard origin/main  # main back to the remote state
+----
+`reset --hard` discards local changes on `main` — safe here precisely because the
+commit is already saved on the new branch. Check with `git log` on both before
+you reset.
+====
+
+== Establish the team routine
+
+kind: project
+
+Agree in your team on when everyone pulls, how conflicts are resolved and who
+merges, and write it into the project README.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

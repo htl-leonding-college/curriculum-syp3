@@ -1,0 +1,162 @@
+= Structure of the project application and charter
+:topic-id: governance-project-charter
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Name the fields of the project application and say what belongs in each
+* [[lo-2]] Explain the difference between the application (Projektantrag) and the
+  charter (Projektauftrag)
+* [[lo-3]] Explain what "frozen" means for the charter and why it is the yardstick
+* [[lo-4]] Use the German field names alongside the English terms
+
+== Two documents, two moments
+
+[cols="1,2,2",options="header"]
+|===
+| |Projektantrag / application |Projektauftrag / charter
+
+|Moment
+|before the decision
+|after the decision
+
+|Purpose
+|propose: this is worth doing
+|commission: this is what we do
+
+|Changes later?
+|irrelevant — it is superseded
+|no — it is frozen
+
+|Signed by
+|the team
+|team and client
+|===
+
+The same fields appear in both. The application argues; the charter commits.
+
+== The fields
+
+[cols="1,3",options="header"]
+|===
+|Feld / Field |What belongs in it
+
+|Projekttitel / project title
+|the result in one line, not the technology
+
+|Ausgangslage / initial situation
+|what exists today and why it is unsatisfactory — no solution
+
+|Untersuchungsanliegen / research objective
+|the open question the project answers
+
+|Zielsetzung / objectives
+|verifiable goals, each with its evidence
+
+|Geplantes Ergebnis / planned deliverable
+|what exists at the end, and how you recognise it is done
+
+|Meilensteine / milestones
+|dated, checkable results — not activities
+
+|Verantwortlich / responsible
+|one named person per work package
+
+|Aufwandsschaetzung / effort estimate
+|hours, as a range, per work package
+|===
+
+These are the fields of the diploma thesis application. You fill them for the
+first time now, in year three, so that in year five the form is familiar rather
+than new.
+
+[TIP]
+====
+The field names are German because the form is German. That is why this course
+teaches governance vocabulary in both languages — under exam pressure you should
+not be translating "research objective" back into *Untersuchungsanliegen*.
+====
+
+== Frozen — and why
+
+The charter is frozen at approval. Everything after that happens against it:
+
+[plantuml,frozen-charter,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "Projektauftrag (frozen)\ngoals, deliverable, milestones" as C
+rectangle "specs (living)\nthe current target state" as S
+rectangle "changes/archive\nwhat actually happened" as A
+C -down-> S : sets the frame
+S -down-> A : each change archived
+A -up-> C : the difference is visible\nand is itself the lesson
+@enduml
+----
+
+Without a fixed point, a team can quietly adjust its goals to whatever got
+finished — and then every project is complete by definition. The difference
+between charter and result is not a failure; it is the subject of scope
+management, and it is only visible because one side does not move.
+
+== Decisions
+
+* The charter follows the field structure of the diploma thesis application, with
+  bilingual field labels.
+* It is frozen at approval. Changes go through `openspec/changes/` and are
+  visible there, not through edits to the charter.
+* Effort estimates are ranges, never single numbers.
+* Every work package has exactly one responsible person — shared responsibility
+  is none.
+
+== Pitfalls
+
+* Filling in the fields as prose without a single verifiable statement. The form
+  is then complete and useless.
+* Writing the charter after building. It happens, it is visible in the git dates,
+  and it removes the only yardstick you had.
+* Milestones that are activities ("work on the frontend"). A milestone is a
+  result you can check on a date.
+* Editing the charter quietly when the plan changes. Then nobody can say what
+  changed, and the archive of changes is the wrong place to look.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Projektantrag
+|project application / proposal
+
+|Projektauftrag
+|project charter
+
+|Untersuchungsanliegen
+|research objective
+
+|Geplantes Ergebnis
+|planned deliverable
+
+|Verantwortlich
+|responsible
+
+|Aufwandsschaetzung
+|effort estimate
+|===
+
+== Further reading
+
+* `templates/governance/projektantrag.adoc` and `projektauftrag.adoc`
+* Module `bridge-charter-to-specs` — which openspec artefact carries which field

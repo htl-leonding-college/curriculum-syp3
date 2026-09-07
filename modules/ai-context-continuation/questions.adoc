@@ -1,0 +1,63 @@
+= Providing context and continuing across sessions — questions
+:topic-id: ai-context-continuation
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What belongs in the context for a task, and what only adds noise?
+
+covers: lo-1
+
+Expected answer points:
+
+* The spec or requirement, the file being changed and its neighbours, the exact
+  error, the convention to follow
+* Noise: whole repository, generated files, build logs, unrelated history
+* Too little context produces invented conventions; too much buries the relevant
+  part
+
+== What happens when the context window fills up?
+
+covers: lo-3
+
+Expected answer points:
+
+* Early instructions drop out
+* Symptom: the agent contradicts earlier decisions or reintroduces fixed bugs
+* Remedy: end the session deliberately and restart with a written summary
+
+== Which four parts does a continuation prompt have?
+
+covers: lo-2
+
+Expected answer points:
+
+* State, decisions already taken, next step, relevant files
+* Written after each substantial session
+* It is the same handover a human teammate would need
+
+== Why does project knowledge belong in the repository and not in a chat?
+
+covers: lo-4
+
+Expected answer points:
+
+* A chat is not versioned, not reviewed, not visible to the team
+* "The agent knew this yesterday" is false — the text was in the window and the
+  window is gone
+* Decisions belong in specs, `Decisions` sections, charter or commit messages
+
+== What is wrong with a continuation note that lists what you did?
+
+covers: lo-2
+
+Expected answer points:
+
+* The next reader needs state and direction, not a diary
+* The decisions matter so they are not re-litigated

@@ -1,0 +1,139 @@
+= What software engineering is
+:topic-id: what-is-software-engineering
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain what distinguishes software engineering from programming
+* [[lo-2]] Name the forces that make software hard at scale, and give an example
+  of each
+* [[lo-3]] Explain what changes and what stays when code becomes cheap to produce
+
+== Programming is not the discipline
+
+Programming is getting a machine to do something. Software engineering is
+everything that becomes necessary once *other people* and *time* are involved.
+
+[cols="1,1",options="header"]
+|===
+|Programming |Software engineering
+
+|it works on my machine, today
+|it works on other machines, next year
+
+|I understand my code
+|somebody who has never met me can change it safely
+
+|I remember why I did that
+|the reason survives me leaving
+
+|one person, one session
+|a team, many sessions, changing membership
+|===
+
+The whole subject follows from that difference: version control exists because
+several people touch the same lines; specifications exist because intent has to
+outlive a conversation; reviews exist because nobody catches their own mistakes;
+CI exists because "it worked when I checked" is not a claim anyone can verify.
+
+== The forces
+
+[cols="1,2",options="header"]
+|===
+|Force |Where you meet it
+
+|*Change* — requirements move while you build
+|the feature agreed in October is wrong in February; the specs move visibly, the
+ charter does not
+
+|*Scale* — more code, more people, more state
+|the file everyone edits becomes the file nobody dares to touch
+
+|*Time* — the system outlives its authors
+|a project handed over in year five to somebody who was not there
+
+|*Communication* — most defects start as misunderstandings
+|"done" meaning two different things to two people
+
+|*Uncertainty* — you cannot know before you build
+|estimates that were honest and still wrong
+|===
+
+None of these is a technical problem, and none is solved by a better language.
+They are solved by practices — and practices are what this subject teaches.
+
+== What the agent changed, and what it did not
+
+[cols="1,1",options="header"]
+|===
+|Changed |Unchanged
+
+|writing an implementation is fast and cheap
+|deciding what should be true is still yours
+
+|explanations are available on demand
+|knowing which explanation applies here is not
+
+|a first version appears in minutes
+|integrating, verifying and maintaining it takes what it took
+
+|the bottleneck moved
+|the bottleneck exists
+|===
+
+This is why the course spends its time on governance, specification and
+verification rather than on typing. The part that got cheaper is not the part
+that was hard.
+
+== Decisions
+
+* This subject is taught as practices, not as a language or framework course.
+* Every practice is justified by the force it addresses. A practice nobody can
+  justify is a ritual and gets dropped.
+* Agents are treated as a tool that shifted the bottleneck, not as a topic of
+  their own.
+
+== Pitfalls
+
+* Judging a practice by how it feels in one afternoon. Most of them pay off over
+  months, which is exactly why they are hard to appreciate in week two.
+* Copying a process from a large company. Their forces are not your forces.
+* Concluding that because code is cheap, engineering is obsolete. The opposite
+  follows: when producing is cheap, deciding and verifying dominate.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Softwaretechnik
+|software engineering
+
+|Wartbarkeit
+|maintainability
+
+|Wiederverwendbarkeit
+|reusability
+
+|Nachvollziehbarkeit
+|traceability
+
+|Praxis, bewaehrtes Vorgehen
+|practice
+|===
+
+== Further reading
+
+* Manz textbook, introductory chapter — the classical definition
+* Module `course-overview` — how this subject is organised around those forces

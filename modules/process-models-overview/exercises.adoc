@@ -1,0 +1,53 @@
+= Process models as three tempos of one pattern — exercises
+:topic-id: process-models-overview
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Map three projects onto the pattern
+
+kind: drill
+
+For each — a school festival, a payroll system, a prototype for a hackathon —
+write down what "clarify the goal", "verify" and "control the change" concretely
+mean, and which tempo fits.
+
+.Solution
+[%collapsible]
+====
+The interesting one is the payroll system: verification is external (an audit),
+being wrong is expensive and visible, so the loop stays long even though the
+technology would allow a short one. Tempo follows the cost of error, not the
+tooling.
+====
+
+== Find the loop in a model you were not taught here
+
+kind: drill
+
+Look up Kanban or the spiral model and identify the six steps of the invariant
+pattern in it.
+
+.Solution
+[%collapsible]
+====
+They are always there. Kanban's "definition of done" is the verification step,
+its WIP limit bounds the scope, and the pull signal controls when a change is
+taken in. Being able to find the pattern in an unfamiliar model is the point of
+learning it as a pattern.
+====
+
+== Justify the tempo for your project
+
+kind: project
+
+Write one paragraph for your charter: which tempo your team works at and why the
+cost of being wrong justifies it.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

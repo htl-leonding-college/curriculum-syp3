@@ -1,0 +1,154 @@
+= Running a change end to end
+:topic-id: openspec-hands-on
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Run a change from proposal to archive with the tooling
+* [[lo-2]] Explain the role of each artefact — proposal, specs, design, tasks
+* [[lo-3]] Decide when something needs a design document and when it does not
+* [[lo-4]] Recognise when a change is too large and split it
+
+== The loop
+
+[plantuml,openspec-loop,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+start
+:propose — why, what changes, which capabilities;
+:specs — requirements and scenarios (the delta);
+:design — only if there is a real decision to record;
+:tasks — checkable steps;
+:apply — implement, tick off, verify;
+:archive — the delta folds into the target state;
+stop
+@enduml
+----
+
+[source,bash]
+----
+openspec propose              # create the change and its artefacts
+openspec status --change x    # what is still missing
+openspec apply                # work through the tasks
+openspec validate --changes   # structure is sound
+openspec archive              # fold the delta into specs/
+----
+
+== The four artefacts
+
+[cols="1,2,2",options="header"]
+|===
+|Artefact |Answers |Fails when
+
+|`proposal.md`
+|why now, what changes, which capabilities are touched
+|it lists activities instead of a reason
+
+|`specs/**/spec.md`
+|what must be true afterwards — the delta to the current target state
+|it describes the implementation
+
+|`design.md`
+|which decision was taken, which alternatives were rejected and why
+|it is written for a change that had no decision to take
+
+|`tasks.md`
+|which steps, in which order, and how each is verified
+|a task has no way to tell whether it is done
+|===
+
+The design document is the one people either skip when they needed it or write
+when they did not. The test: *was there a choice?* If two reasonable options
+existed and you picked one, the reason is worth a paragraph — future you will ask.
+If there was only one way, there is nothing to record.
+
+== A change that is the right size
+
+A change is one intention. It should be reviewable in one sitting and archivable
+as a whole.
+
+[cols="1,1",options="header"]
+|===
+|Too large |Right size
+
+|"build the booking system"
+|"refuse bookings for sessions that already started"
+
+|touches eight capabilities
+|touches one, maybe two
+
+|three weeks of work
+|days, with visible intermediate states
+|===
+
+If the tasks list is thirty items long and the first ten have nothing to do with
+the last ten, it is two changes. Splitting is cheap; unpicking a half-finished
+change is not.
+
+== Archiving
+
+Archiving folds the delta into `openspec/specs/` and moves the change into
+`changes/archive/`. From then on the target state contains the new behaviour, and
+the history of how it got there is intact. That is what makes a milestone
+checkable: not "we worked on it", but "this change is in the archive, dated".
+
+== Decisions
+
+* Every piece of work in the project runs through a change — including
+  documentation work.
+* Design documents are written when a decision was taken, not by default.
+* Changes are archived as soon as they are done, not collected for the end of
+  the term.
+* Tasks state how they are verified. A task without a check is a wish.
+
+== Pitfalls
+
+* Writing the tasks before the specs. You then plan work whose target is not yet
+  decided.
+* Archiving nothing all year and having twelve open changes in June. The archive
+  is the milestone evidence — an empty one says the project produced nothing
+  finished.
+* Implementing beyond the change. The extra work is invisible in the record and
+  usually breaks something unrelated.
+* Treating `openspec validate` as the definition of correct. It checks structure;
+  whether the requirement is the right one is your judgement.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Aenderungsvorhaben
+|change
+
+|Vorschlag
+|proposal
+
+|Entwurfsentscheidung
+|design decision
+
+|Aufgabenliste
+|task list
+
+|archivieren
+|to archive
+|===
+
+== Further reading
+
+* openspec documentation and `openspec --help`
+* Module `sdd-change-lifecycle` — the same loop, seen from the artefacts
+* This repository's own `openspec/changes/` — a worked example at full size

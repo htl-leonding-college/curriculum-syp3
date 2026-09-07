@@ -1,0 +1,61 @@
+= Stakeholders and verifiable project goals — questions
+:topic-id: governance-stakeholders-goals
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Who counts as a stakeholder, and which four types should you look for?
+
+covers: lo-1
+
+Expected answer points:
+
+* Anyone affected by the project or able to affect it
+* Users, client, operators, affected parties (for example data subjects)
+* The dangerous quadrant is high influence with low interest
+
+== Turn "the app should be fast" into a verifiable goal
+
+covers: lo-2
+
+Expected answer points:
+
+* Observable action, measurable condition, context
+* For example: attendance list for 30 members opens in under one second on the
+  lab laptops
+* A third party must be able to check it without asking what you meant
+
+== Why does a charter contain non-goals?
+
+covers: lo-3
+
+Expected answer points:
+
+* They prevent scope creep during the project and disappointment at acceptance
+* One line each, cheap
+* A non-goal is not a permanent refusal, it is out of scope for this project
+
+== Why is "we implement a REST API" a bad goal?
+
+covers: lo-2, lo-3
+
+Expected answer points:
+
+* It measures effort, not result
+* Nobody outside the team cares how it is built
+* Rewrite it as what a user can then do
+
+== What is the risk in the high-influence, low-interest quadrant?
+
+covers: lo-1
+
+Expected answer points:
+
+* They are not watching until they say no
+* Keep them satisfied and informed early, when a veto is still cheap

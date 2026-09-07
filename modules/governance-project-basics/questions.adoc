@@ -1,0 +1,51 @@
+= What makes a project a project — questions
+:topic-id: governance-project-basics
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Which criteria make a piece of work a project? Give an example that fails one
+
+covers: lo-1
+
+Expected answer points:
+
+* Unique, time-bounded, resourced, goal-directed, complex enough to organise
+* Counter-example: routine work such as support mail — continuous, repeating,
+  no unique result
+
+== What belongs in an initial situation, and what does not?
+
+covers: lo-2
+
+Expected answer points:
+
+* Who has the problem, what happens today, what it costs
+* Not the solution, not the technology
+* Test: a reader who does not know your solution must still recognise the problem
+
+== Name the three constraints and explain which one moves in a school year
+
+covers: lo-3
+
+Expected answer points:
+
+* Scope, time, resources
+* Time and resources are fixed by the school year and the team
+* Scope is the only variable; if it is treated as fixed too, quality gives way
+  silently
+
+== Where does the initial situation live in the project repository, and why there?
+
+covers: lo-2
+
+Expected answer points:
+
+* `openspec/config.yaml` under `context:`
+* One text instead of two; the agent and the supervisor read the same thing

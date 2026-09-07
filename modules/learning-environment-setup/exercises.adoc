@@ -1,0 +1,58 @@
+= Setting up the learning environment — exercises
+:topic-id: learning-environment-setup
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Boot from a live USB and record the result
+
+kind: drill
+
+Write an Ubuntu 26.04 live USB with persistence, boot your machine from it and
+record: does it boot, does wifi work, does the display run at native resolution,
+does the trackpad work.
+
+.Solution
+[%collapsible]
+====
+The value is the record, not the outcome. A machine that boots the live system
+cleanly will install cleanly; one that does not is a case for the lab — before
+the partition table is changed, not after.
+====
+
+== Prove that the setup script is idempotent
+
+kind: drill
+
+Run `./setup-tools.sh`, wait for it to finish, then run it a second time. Compare
+the output of the two runs.
+
+.Solution
+[%collapsible]
+====
+The second run reports `[ok]` for every step and installs nothing. That is the
+observable definition of idempotent: same end state, no damage, no duplicate
+work. Interrupt a run with kbd:[Ctrl+C] and start it again — it continues from
+where the state actually is, not from where it stopped.
+====
+
+== Interrupt a run on purpose
+
+kind: drill
+
+Start `./setup-tools.sh` on a machine that still has tools missing, interrupt it
+during an installation step, and restart it.
+
+.Solution
+[%collapsible]
+====
+The restart skips everything already installed and resumes at the first missing
+tool. If it did not, the script would be unusable in a classroom, where an
+interrupted run is the normal case rather than the exception.
+====

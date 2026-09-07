@@ -1,0 +1,54 @@
+= Stakeholders and verifiable project goals — exercises
+:topic-id: governance-stakeholders-goals
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Find the missing stakeholder
+
+kind: drill
+
+A team builds a system that stores which student borrowed which piece of lab
+equipment. They list: students, the lab supervisor, themselves. Who is missing,
+and what can that person do to the project?
+
+.Solution
+[%collapsible]
+====
+At least: whoever operates the server afterwards (can refuse to host it), the
+school's data protection contact (personal data plus borrowing history), and the
+teacher who accepts the project. Any of them can stop the project at the end,
+which is the most expensive moment to be stopped.
+====
+
+== Rewrite five wishes as goals
+
+kind: drill
+
+Rewrite: "easy to use", "secure", "modern", "reliable", "works on phones".
+
+.Solution
+[%collapsible]
+====
+Each needs an observable action and a condition, for example "a first-time user
+completes a booking without instructions in under 90 seconds" or "the site is
+usable at a viewport width of 360 px without horizontal scrolling". If you
+cannot state how it would be checked, it stays a wish — and it belongs in the
+proposal as one, not in the goals table.
+====
+
+== Write the goals and non-goals for your project
+
+kind: project
+
+Fill in the goals table and the non-goals section of your charter — at least
+three goals, each with the evidence that verifies it, and at least three
+non-goals.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

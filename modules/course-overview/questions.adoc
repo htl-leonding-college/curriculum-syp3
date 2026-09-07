@@ -1,0 +1,54 @@
+= Course overview, organisation and assessment — questions
+:topic-id: course-overview
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Name the four areas of this course and say what each is for
+
+covers: lo-1
+
+Expected answer points:
+
+* Governance — the outer, mandatory frame: proposal, charter, milestones,
+  acceptance
+* Process models and SDD — how the work is done inside that frame
+* Modelling — describing a system with UML, kept as source text
+* Tools — git, AsciiDoc, CI, AI agents, containers
+
+== Why can the execution side change without touching the governance side?
+
+covers: lo-1
+
+Expected answer points:
+
+* The charter asks for goals, deliverables and dates, never for a process model
+* Scrum was a choice, not a requirement, so replacing it with SDD changes
+  nothing on the outside
+
+== How is a lesson structured, and where does the project work happen?
+
+covers: lo-2
+
+Expected answer points:
+
+* Three units per lesson: one theory, two practice
+* Project work happens outside the lesson; lesson time is input, review and help
+* Three milestone reviews during the year
+
+== How are you assessed, and why are the exam questions published in advance?
+
+covers: lo-3
+
+Expected answer points:
+
+* Oral examination
+* An agent can solve any handed-in exercise, so handing in proves nothing
+* The exercise becomes an occasion to learn; the questions state what you must be
+  able to explain

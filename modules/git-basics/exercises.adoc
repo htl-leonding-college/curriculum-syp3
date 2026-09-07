@@ -1,7 +1,6 @@
 = Repository, commit, history — exercises
 :topic-id: git-basics
 :icons: font
-:source-highlighter: rouge
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -11,18 +10,62 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-// Diese Datei darf inhaltsleer bleiben. Jede Aufgabe traegt ihre Art:
-//   kind: drill    generisch, wiederholbar, Musterloesung moeglich
-//   kind: project  am eigenen Projekt, keine Musterloesung
-
-== TODO: Aufgabentitel
+== Make the three states visible
 
 kind: drill
 
-TODO: Arbeitsauftrag
+Create a repository, add a file, and run `git status` after every single step:
+after creating the file, after `git add`, after `git commit`, after editing the
+file again.
 
 .Solution
 [%collapsible]
 ====
-TODO: Loesung oder Abschnitt loeschen
+Untracked → staged ("Changes to be committed") → clean → modified but not staged.
+The fourth state is the one that surprises people: the file is committed *and*
+changed, so the repository and your disk disagree. `git diff` shows exactly that
+disagreement.
 ====
+
+== Recover a deleted file from the history
+
+kind: drill
+
+Commit a file, delete it in the working tree, then restore it from the last
+commit without retyping it.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+git restore report.adoc      # or: git checkout -- report.adoc
+----
+Works because the commit holds the whole state, not just a diff. If the deletion
+was already committed, `git restore --source=HEAD~1 report.adoc` reaches one
+commit further back.
+====
+
+== Rewrite five bad commit messages
+
+kind: drill
+
+Rewrite: `update`, `asdf`, `fixed it`, `changes to the file`, `work`.
+
+.Solution
+[%collapsible]
+====
+There is no single right wording, but each one must answer "what changes for the
+reader": `Add attendance export to CSV`, `Fix crash on empty member list`,
+`Rename Booking.date to Booking.startsAt`, and so on. If you cannot say what
+changed, the commit is probably too large.
+====
+
+== Set up your project repository
+
+kind: project
+
+Create the repository for your team project from the template, add a
+`.gitignore` that fits your stack, and make the first commit.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

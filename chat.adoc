@@ -200,6 +200,105 @@ Grundsätzlich ist das so in Ordnung. "curriculum-syp3" kann ruhig public sein. 
 Wie sieht das aber für die angaben für exams aus. sind die auch public. Das möchte ich eigentlich nicht
 
 
+Bitte die Mindmap in diesem Stil erstellen, oder mache einen Vorschlag:
+
+
+
+@startmindmap
+*[#lightblue] quarkus
+**[#lightgreen] Einführung
+***_ Einführung
+***_ JakartaEE vs microprofile (Abgrenzung zu JakartaEE und Spring Boot, micronaut, ...)
+***_ **maven**/gradle, pom.xml, application.properties,
+***_ Quarkus-Extensions, Quarkus-Project-Generator, Quarkus-Guides
+
+**[#lightgreen] CDI
+***_ @Inject, @ApplicationScoped/@Singleton
+***_ @Startup
+
+**[#lightgreen] RESTful Endpoint
+***_ safety vs idempotence, mime-types
+***_ statuscodes
+***_ context
+*** http-Methoden
+****_ GET, PATCH, PUT, DELETE
+****_ POST mit Jackson, Objects und **DTO**s
+*** Parametertypen
+****_ QueryParam
+****_ PathParam
+****_ FormParam
+****_ BodyParam
+****_ HeaderParam
+****_ CookieParam
+*** Json-Libraries
+****_ JSON_B
+****_ JSON-P
+****_ **Jackson**
+*** Response-Formate
+****_ void
+****_ Response
+****_ Entity Poviders (Json-Binding)
+****_ JsonValue/JsonObject/JsonArray
+*** Clients
+****_ curl (oder httpie)
+****_ **REST-Client der IDE**
+****_ browser (mit und ohne add-on)
+****_ swagger (openapi-extension)
+****_ postman, insomnia u. dgl.
+****_ Test-Library wie REST-assured
+***_ Beispiel: einfache REST-Endpoints
+***_ Beispiel: REST mit Entities
+
+**[#lightgreen] DB-Zugriff
+*** JPA
+****_ Begriff ORM
+****_ Konfiguration (datasources, H2-Database, postgres) in IDE
+****_ Entity Lifecycle, Entity Lifecycle-Callbacks (@PrePersist, @PostLoad, @PreUpdate)
+****_ Definition von Entity-Klassen mit @Entity, @Table, @Column
+****_ Primärschlüsselstrategien: @Id, @GeneratedValue, @SequenceGenerator
+****_ Relationen: @OneToOne, @OneToMany, @ManyToOne, @ManyToMany, @Cascading
+****_ **@IdClass** vs @Embeddable
+****_ Fetch-Strategien: Lazy vs. Eager Loading
+****_ Transaktionen
+****_ CRUD-Operationen
+****_ Queries: NamedQueries, NamedNativeQueries
+****_ Paging und Sorting
+*** Panache
+****_ active-record-pattern vs **repository-pattern**
+****_ CRUD-Operationen mit Repository-Pattern
+****_ PanacheQueries
+****_ Paging und Sorting
+
+**[#lightgreen] REST-Client
+***_ Quarkus als REST-Client
+
+**[#lightgreen] websockets
+***_ Einsatzgebiete und Abgrenzung: REST, websockets, SSE, graphql, grpc
+***_ Beispiel websockets
+
+**[#lightgreen] graphql
+
+**[#lightgreen]: Automatisiertes Testen
+(falls nicht in PRE/ITP);
+***_ junit
+****_ Unit-Tests
+****_ IntegrationTests mit @QuarkusTest
+***_ Matcher in junit: junit-Matcher, hamcrest, **assertj-core**
+***_ DB-Tests mit **assertj-db**
+*** e2e-Test
+****_ Tests von RESTful Endpoints mit **RestAssured**
+****_ Unterschied @QuarkusTest und @QuarkusIntegrationTest
+****_ Systemtests mit eigenem TestProjekt `<project>-st`
+
+**[#lightgreen] Quarkus Qute
+
+**[#lightgreen] Compile: jvm vs. native
+
+**[#lightgreen] Messaging/MQTT
+***_ Mosquitto aufsetzen und mit Quarkus subscriben
+@endmindmap
+
+
 
 
 

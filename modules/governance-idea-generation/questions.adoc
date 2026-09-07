@@ -1,0 +1,52 @@
+= Generating ideas with structured techniques — questions
+:topic-id: governance-idea-generation
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Why are generating and selecting ideas kept apart?
+
+covers: lo-1
+
+Expected answer points:
+
+* Opposite rules: quantity without evaluation versus evaluation against criteria
+* Evaluating early makes the group defend ideas instead of producing them
+* Separation is in time, not only in intention
+
+== Describe the 6-3-5 procedure and say what it produces
+
+covers: lo-2
+
+Expected answer points:
+
+* Six people, three ideas, five minutes, sheet passes on, six rounds
+* 108 written ideas, of which a handful are worth pursuing
+* Written output, everyone contributes, time-boxed by construction, forced
+  building on others
+
+== Name two other techniques and the situation each suits
+
+covers: lo-3
+
+Expected answer points:
+
+* Mind mapping — one person or a pair, unclear structure, visual
+* SCAMPER — a stuck group with an existing solution, forces variation
+* Neither is practised in this course; 6-3-5 is
+
+== Why is "ask an agent for fifty ideas" not a replacement?
+
+covers: lo-1, lo-3
+
+Expected answer points:
+
+* Produces plausible averages, not ideas the team cares about
+* Commitment matters for a project that has to survive the whole year
+* The technique also produces the written raw material for the proposals

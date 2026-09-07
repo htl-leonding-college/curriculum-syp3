@@ -28,9 +28,12 @@ cp site/index.adoc "${SITE_DIR}/index.adoc"
 cp "${BUILD_DIR}"/nav.adoc "${BUILD_DIR}"/ue-overview.adoc "${BUILD_DIR}"/stoffstruktur.puml "${SITE_DIR}/"
 mkdir -p "${SITE_DIR}/questions"
 cp "${BUILD_DIR}"/questions/* "${SITE_DIR}/questions/"
-if compgen -G "modules/*" >/dev/null; then
-  cp -R modules "${SITE_DIR}/modules"
-fi
+# Nur fertige Module gehen auf die Site — ein Skelett mit TODO-Platzhaltern
+# hat dort nichts verloren (status: ready in curriculum.yaml).
+mkdir -p "${SITE_DIR}/modules"
+while IFS= read -r topic; do
+  [[ -d "modules/${topic}" ]] && cp -R "modules/${topic}" "${SITE_DIR}/modules/${topic}"
+done < <("${PYTHON}" tools/curriculum.py ready)
 
 echo "==> asciidoctor (${ASCIIDOCTOR_IMAGE})"
 docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -v "${PWD}:/documents" -w /documents \

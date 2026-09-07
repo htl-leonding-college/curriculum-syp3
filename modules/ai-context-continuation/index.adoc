@@ -1,0 +1,143 @@
+= Providing context and continuing across sessions
+:topic-id: ai-context-continuation
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Decide what context an agent needs for a task and what only adds noise
+* [[lo-2]] Write a continuation prompt that lets work resume after a session ends
+* [[lo-3]] Explain why context is finite and what happens when it runs out
+* [[lo-4]] Keep project knowledge in the repository rather than in a chat history
+
+== Context is the whole input
+
+An agent knows exactly what is in front of it: your instructions, the files it
+read, the output of commands it ran. Nothing else. Two consequences that decide
+whether a session goes well:
+
+* *Too little context* produces confident guesses about your codebase — invented
+  file names, wrong conventions, a second implementation of something you already
+  have.
+* *Too much context* buries the relevant part. A dump of forty files does not
+  make the answer better; it makes the important three harder to weigh.
+
+[cols="1,1",options="header"]
+|===
+|Worth including |Usually noise
+
+|the spec or requirement being implemented
+|the entire repository
+
+|the file being changed and its immediate neighbours
+|generated output, lock files, build logs
+
+|the exact error message and stack trace
+|"it doesn't work"
+
+|the convention to follow, or a file that shows it
+|your entire chat history from last week
+|===
+
+== Context runs out
+
+The context window is finite. A long session eventually pushes early
+instructions out, and the symptom is characteristic: the agent starts
+contradicting a decision you made an hour ago, or reintroduces a bug you already
+fixed.
+
+The fix is not a longer session. It is to *end the session deliberately* and
+start a new one with a written summary.
+
+== Continuation prompts
+
+A continuation prompt is a short document that lets somebody — you, a teammate,
+or a new session — pick the work up cold.
+
+[source,markdown]
+------
+# Continuation: attendance export
+
+**State:** CSV export works for one session; the date column is off by one
+in the DST week (see failing test `ExportTest.dstWeek`).
+
+**Decided:** dates are stored in UTC and converted on export, not the other way
+round. Do not "fix" this by storing local time.
+
+**Next:** make `ExportTest.dstWeek` pass, then add the group column.
+
+**Files:** `ExportService.java`, `ExportTest.java`, spec
+`openspec/specs/export/spec.md`.
+------
+
+Four parts: where things stand, what has been decided (so it is not re-litigated),
+what comes next, and where to look. Written after every substantial session, it
+costs two minutes and saves a restart.
+
+Note that this is the same document a human teammate needs. Writing it for the
+agent is not extra work — it is the handover you should have written anyway.
+
+== Keep the knowledge in the repository
+
+A chat history is not a project record: it is not versioned, not reviewed, and
+not visible to your team. Anything worth remembering belongs in the repository —
+in the spec, in a continuation file, in the charter, or in a commit message.
+
+That is also the honest answer to "the agent knew this yesterday". It did not
+know anything; the text was in its window, and the window is gone.
+
+== Decisions
+
+* Every substantial working session ends with a continuation note in the project
+  repository.
+* Decisions live in specs or in `Decisions` sections, never only in a chat.
+* Context is assembled deliberately: the spec, the file, the error. Not the whole
+  repository.
+* No personal data in any context you hand over.
+
+== Pitfalls
+
+* Continuing a session past the point where the agent starts contradicting
+  itself. Start a fresh one with a summary instead.
+* Pasting whole files when three functions would do — and then wondering why the
+  answer is vague.
+* Keeping the important decision only in the chat. Nobody else can see it, and
+  neither can tomorrow's session.
+* Writing a continuation note that lists what you did instead of what is next.
+  The next person needs the state and the direction, not a diary.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Kontext
+|context
+
+|Kontextfenster
+|context window
+
+|Fortsetzungsprompt
+|continuation prompt
+
+|Uebergabe
+|handover
+
+|Projektwissen
+|project knowledge
+|===
+
+== Further reading
+
+* Module `ai-harness-engineering` — shaping the environment the agent works in
+* The continuation files of this curriculum repository, under `continuations/`

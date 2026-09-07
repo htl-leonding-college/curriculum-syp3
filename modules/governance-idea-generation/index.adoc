@@ -1,0 +1,140 @@
+= Generating ideas with structured techniques
+:topic-id: governance-idea-generation
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain why idea generation and idea selection are separated
+* [[lo-2]] Run a 6-3-5 brainwriting round and produce written results from it
+* [[lo-3]] Name two further techniques and say what situation each suits
+
+== Diverge first, converge later
+
+Two activities, opposite rules, and the classic mistake is doing both at once:
+
+[cols="1,1",options="header"]
+|===
+|Diverging |Converging
+
+|as many ideas as possible
+|as few as necessary
+
+|no evaluation, no "that won't work"
+|evaluation is the whole point
+
+|quantity, variety, building on others
+|criteria, weights, a decision
+
+|this module
+|next module — weighted scoring
+|===
+
+The moment somebody says "that's not feasible" during the diverging phase, the
+group stops producing ideas and starts defending them. That is why the phases
+are separated in time, not just in intention.
+
+== 6-3-5 brainwriting
+
+Six people, three ideas each, five minutes per round, six rounds. Every round the
+sheet moves one seat on, and you build on what is already written.
+
+[plantuml,brainwriting,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+start
+:each person gets a sheet with 3 columns;
+repeat
+  :write 3 ideas in 5 minutes;
+  :pass the sheet to the next person;
+  :read what is there, build on it;
+repeat while (six rounds done?) is (no)
+->yes;
+:6 x 3 x 6 = 108 written ideas;
+stop
+@enduml
+----
+
+Why this one and not a group discussion:
+
+* *Everyone contributes.* In a discussion two people talk and four agree.
+* *The result is written.* No transcription step, no "what did we say?", and the
+  sheets are raw material for the project proposals directly.
+* *It is time-boxed by construction.* Five minutes per round, and the round ends
+  because the sheet moves, not because somebody decides it does.
+* *Building on others is forced.* You read three ideas before writing your own.
+
+The output is not 108 good ideas. It is maybe five worth pursuing, and the other
+hundred are the price of finding them.
+
+== Two more techniques worth knowing
+
+[cols="1,2",options="header"]
+|===
+|Technique |Suits
+
+|*Mind mapping*
+|one person or a pair, exploring an area where the structure is still unclear;
+ fast, visual, but the loudest branch tends to win
+
+|*SCAMPER* (substitute, combine, adapt, modify, put to other use, eliminate,
+ reverse)
+|a stuck group with an existing solution — it forces variation on something
+ concrete instead of asking for inspiration from nothing
+|===
+
+== Decisions
+
+* 6-3-5 is the one technique actually carried out in this course; the others are
+  named and placed, not practised.
+* Idea generation happens in the theory unit, without machines. It needs paper,
+  not an IDE.
+* The sheets are kept. They become the raw material for the project proposals in
+  the following lessons.
+
+== Pitfalls
+
+* Evaluating during the diverging phase. It ends the phase.
+* Skipping the reading step and just writing your own three ideas again. The
+  method then degenerates into six people writing alone.
+* Asking an agent for "50 project ideas" and calling it done. You get plausible
+  averages, not ideas anybody in the room cares about — and caring is what gets a
+  project through February.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Kreativitaetstechnik
+|creativity technique
+
+|Ideenfindung
+|idea generation
+
+|divergieren / konvergieren
+|diverge / converge
+
+|Brainwriting
+|brainwriting
+
+|zeitlich begrenzt
+|time-boxed
+|===
+
+== Further reading
+
+* PUMA 8/12, Kreativitaetstechniken — the source used for this module
+* Module `governance-weighted-scoring` — the converging half

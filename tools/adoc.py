@@ -17,6 +17,7 @@ IMAGE_RE = re.compile(r"^image::([^\[]+)\[(.*)\]\s*$")
 BLOCK_TITLE_RE = re.compile(r"^\.(?!\.)(.+?)\s*$")
 OUTCOME_RE = re.compile(r"^\*+\s*\[\[([A-Za-z0-9_-]+)\]\]\s*(.*?)\s*$")
 COVERS_RE = re.compile(r"^covers:\s*(.+?)\s*$", re.IGNORECASE)
+DELIMITER_RE = re.compile(r"^(-{4,}|\.{4,}|={4,}|\*{4,})$")
 PROVENANCE_RE = re.compile(r"\((own|free|unclear)(?::\s*(.*?))?\)\s*$")
 URL_RE = re.compile(r"https?://\S+")
 
@@ -119,7 +120,19 @@ class Document:
 
     def images(self) -> tuple[Image, ...]:
         found: list[Image] = []
+        delimiter: str | None = None
         for index, line in enumerate(self.lines):
+            stripped = line.rstrip()
+            if delimiter is None:
+                if DELIMITER_RE.match(stripped):
+                    delimiter = stripped
+                    continue
+            else:
+                # Ein Block endet nur an seiner eigenen Begrenzung; laengere
+                # Begrenzer schachteln (Beispiel im Beispiel).
+                if stripped == delimiter:
+                    delimiter = None
+                continue
             match = IMAGE_RE.match(line)
             if not match:
                 continue

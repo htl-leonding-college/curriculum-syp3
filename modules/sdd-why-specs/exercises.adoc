@@ -1,0 +1,52 @@
+= Why specifications instead of a requirements document — exercises
+:topic-id: sdd-why-specs
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Turn three prose sentences into requirements with scenarios
+
+kind: drill
+
+Rewrite: "the system should be secure", "users can manage their bookings", "the
+export must work".
+
+.Solution
+[%collapsible]
+====
+Each needs one observable statement per behaviour, for example: "The system SHALL
+refuse a booking change less than two hours before the session start" with a
+scenario stating when and what the member sees. "Secure" is not one requirement
+but several — authentication, authorisation, data retention — and splitting it is
+the actual work.
+====
+
+== Find the drift
+
+kind: drill
+
+Take a requirements document written for an earlier project (your own or a
+partner's) and mark every sentence that no longer describes the system.
+
+.Solution
+[%collapsible]
+====
+Typically a third of it. The relevant observation is that nothing announced the
+drift — no build failed, no test broke. That is the property specs plus a check
+are meant to restore.
+====
+
+== Write the first capability spec for your project
+
+kind: project
+
+Write one `openspec/specs/<capability>/spec.md` for your project with at least
+two requirements, each with a scenario.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

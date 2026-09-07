@@ -1,0 +1,70 @@
+= Documentation as text with AsciiDoc — exercises
+:topic-id: asciidoctor-basics
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Write a one-page document with every block type
+
+kind: drill
+
+Write an AsciiDoc document containing: a title with table of contents, two
+sections, a nested list, a table with a header row, a Java code block, a tip and
+a warning. Convert it and look at the result.
+
+.Solution
+[%collapsible]
+====
+The two errors that show up in almost every first attempt: a missing blank line
+before a list or table, so the markup is printed literally; and an accidental
+four-space indent, which turns a paragraph into a literal block. Both are visible
+immediately in the HTML, which is why converting early is worth the ten seconds.
+====
+
+== Turn a described process into a PlantUML diagram
+
+kind: drill
+
+Draw as a PlantUML activity diagram: a student opens the booking page, picks a
+session, the system checks whether the session is full, and either confirms or
+offers the waiting list.
+
+.Solution
+[%collapsible]
+====
+[source,adoc]
+------
+[plantuml,booking,svg]
+----
+@startuml
+skinparam monochrome true
+start
+:open booking page;
+:pick a session;
+if (session full?) then (yes)
+  :offer waiting list;
+else (no)
+  :confirm booking;
+endif
+stop
+@enduml
+----
+------
+Change one line of the text and rebuild — that is the property a PNG does not
+have.
+====
+
+== Convert your charter to HTML
+
+kind: project
+
+Convert your project charter with `./local-convert.sh` and check that the tables
+and the milestone diagram render.
+
+// Aufgabe am eigenen Projekt — keine Musterloesung.

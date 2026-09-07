@@ -1,0 +1,63 @@
+= Structure of the project application and charter — questions
+:topic-id: governance-project-charter
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Name the fields of the project application and what belongs in each
+
+covers: lo-1
+
+Expected answer points:
+
+* Title, initial situation, research objective, objectives, planned deliverable,
+  milestones, responsible person, effort estimate
+* Initial situation without a solution; objectives verifiable; milestones dated
+  results
+
+== What is the difference between Projektantrag and Projektauftrag?
+
+covers: lo-2
+
+Expected answer points:
+
+* Application argues before the decision; charter commissions after it
+* Same fields, different moment and different status
+* The charter is signed by team and client and then frozen
+
+== What does "frozen" mean, and what would go wrong without it?
+
+covers: lo-3
+
+Expected answer points:
+
+* No edits after approval; changes run through `openspec/changes/`
+* Without a fixed point a team adjusts goals to what got finished
+* The visible difference between charter and result is the point of scope
+  management
+
+== Give the German terms for research objective, planned deliverable and effort
+estimate
+
+covers: lo-4
+
+Expected answer points:
+
+* Untersuchungsanliegen, Geplantes Ergebnis, Aufwandsschaetzung
+* The form in year five is German; the vocabulary is learned in both languages
+  for that reason
+
+== Why is "work on the frontend" not a milestone?
+
+covers: lo-1, lo-3
+
+Expected answer points:
+
+* It is an activity, not a checkable result
+* A milestone has a date and something a third party can verify

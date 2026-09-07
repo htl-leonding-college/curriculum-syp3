@@ -306,3 +306,18 @@ def test_bijection_reports_non_empty_file_without_topic_id(repo: Repo) -> None:
         questions=GOOD_QUESTIONS,
     )
     assert "traegt keine :topic-id:" in repo.messages("bijection")
+
+
+def test_images_inside_listing_blocks_are_examples(repo: Repo) -> None:
+    """Ein image:: im Quelltextblock ist Dokumentation, keine Einbindung."""
+    repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])
+    example = """
+
+    [source,adoc]
+    ------
+    .Some caption
+    image::images/example.png[Example,600]
+    ------
+    """
+    repo.write_module("git-basics", index=GOOD_INDEX + example, questions=GOOD_QUESTIONS)
+    assert repo.run("images") == []

@@ -1,0 +1,156 @@
+= Course overview, organisation and assessment
+:topic-id: course-overview
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Name the four subject areas of this course and say what each one is for
+* [[lo-2]] Explain how a lesson is split into theory and practice, and where the
+  project work happens
+* [[lo-3]] Explain how you are assessed and where the exam questions come from
+
+== What this subject is about
+
+The course has four areas. They are not four unrelated topics — they are the
+outer frame, the inner work, the way you describe a system, and the tools you
+need to do any of it.
+
+[plantuml,course-areas,svg]
+----
+@startmindmap
+skinparam monochrome true
+skinparam shadowing false
+* SYP year 3
+** Governance
+*** the outside: proposal, charter, milestones, acceptance
+*** mandatory in every project form up to the diploma thesis
+** Process models and SDD
+*** the inside: how you get from goal to result
+*** waterfall, Scrum and spec-driven development as three tempos
+** Modelling
+*** UML: use case, class, activity, state
+*** diagrams as source text, not as pictures
+** Tools
+*** git, AsciiDoc, GitHub Actions and Pages
+*** AI agents, Docker, compose, minikube
+@endmindmap
+----
+
+The distinction that runs through the whole year:
+
+[cols="1,2,2",options="header"]
+|===
+|  |Governance (outside) |Execution (inside)
+
+|What it fixes
+|goals, deliverable, milestones, responsibility
+|how the work is done
+
+|Who prescribes it
+|the school, the client, later the diploma thesis rules
+|your team
+
+|Changes during the project?
+|no — it is frozen and stays the yardstick
+|constantly, and visibly
+
+|Where it lives
+|`docs/` — proposal, charter, milestone plan
+|`openspec/specs/`, `openspec/changes/`, `src/`
+|===
+
+A project charter never says "use Scrum". It asks what you want to achieve and
+by when. That is why the execution side could change — from Scrum to
+spec-driven development — without touching the governance side at all.
+
+== How the year runs
+
+A lesson is three units: one unit of theory, two units of practice.
+
+----
+1 UE theory     the idea, the vocabulary, the decision
+2 UE practice   your hands on the keyboard
+----
+
+The order is not the order of a textbook. It follows what you need to be able to
+do next: git before you can hand anything in, AsciiDoc before documentation
+means anything, an agent before spec-driven development is more than a claim.
+
+Project work happens *outside* the lesson. Lesson time is input, review and
+getting unstuck. Three lessons in the year are milestone reviews, where the team
+shows what exists and compares estimate against reality.
+
+== Assessment
+
+You are assessed in an *oral examination*. That is a deliberate choice and it
+follows from something you already know: an agent produces a plausible solution
+to almost any exercise in seconds. An exercise handed in is therefore no longer
+proof of anything.
+
+So the exercises stop pretending to be proof and become what they are — an
+occasion to learn. Every module ships its exam questions with it, in
+`questions.adoc`. Nothing is hidden, nothing is unlocked later.
+
+[TIP]
+====
+Read the questions of a module *before* you work through it. They tell you what
+the module is for, which is more useful than reading the text twice.
+====
+
+== Decisions
+
+* The course language is English. Governance terms are additionally taught in
+  German, because the forms you fill in later — the diploma thesis application
+  above all — are German.
+* Everyone works on Ubuntu 26.04 LTS or macOS. WSL2 is not an option here; the
+  module on the learning environment says why.
+* Solutions are not hidden. The proof of competence is the oral exam.
+* Exercises marked `project` refer to your own team project and have no model
+  solution.
+
+== Pitfalls
+
+* Treating the exercise as the deliverable. The deliverable is that you can
+  explain it afterwards.
+* Postponing the environment setup. Everything from the second lesson on assumes
+  a working machine, and a broken installation costs an afternoon, not ten
+  minutes.
+* Reading only the theory unit. Half the subject is in your hands, not in the
+  slides.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Unterrichtseinheit (UE)
+|teaching unit
+
+|Leistungsfeststellung
+|assessment
+
+|muendliche Pruefung
+|oral examination
+
+|Jahresprojekt
+|year project
+
+|Lernziel
+|learning outcome
+|===
+
+== Further reading
+
+* Module `learning-environment-setup` — what to prepare before the next lesson
+* Module `what-is-software-engineering` — why this subject exists at all

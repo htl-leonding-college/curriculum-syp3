@@ -1,0 +1,143 @@
+= Working with AI agents, first steps
+:topic-id: ai-basics-prompting
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain in one paragraph what a language model does and does not do
+* [[lo-2]] Formulate a task so that the result is checkable
+* [[lo-3]] Recognise the failure modes — confident wrongness, invented APIs,
+  outdated practice
+* [[lo-4]] Decide what you may hand to an agent and what you may not
+
+== What the thing actually does
+
+A language model predicts likely continuations of text. Everything else — the
+apparent understanding, the plan, the apology — is a consequence of that. Two
+practical implications:
+
+* It has *no source of truth*. It produces what is plausible, which is usually
+  also correct, and when it is not, it is equally fluent.
+* It has *no memory* between sessions beyond what you give it. Every session
+  starts from the text in front of it.
+
+An *agent* is a model plus tools: it can read your files, run commands and edit
+code. That makes it useful and raises the stakes, because now a wrong prediction
+changes your repository.
+
+== Formulating a task
+
+The difference between a useful and a useless answer is almost always in the
+question.
+
+[cols="1,1",options="header"]
+|===
+|Weak |Better
+
+|"Write a booking system."
+|"Add a method `book(memberId, sessionId)` to `BookingService` that refuses a
+ booking when the session is full or already started, and returns the reason.
+ Follow the existing exception style in `MemberService`."
+
+|"Fix the bug."
+|"`GET /sessions` returns 500 when the group has no members. Stack trace below.
+ Fix the cause, not the symptom, and add a test for the empty case."
+
+|"Is this good code?"
+|"Review this file for cases where a null list would crash it. List each with the
+ line number."
+|===
+
+Three ingredients: *what* must be true afterwards, *where* it belongs in the
+existing code, and *how you will check*. The third one is the one people leave
+out, and it is the one that turns a plausible answer into a verified one.
+
+== Failure modes worth expecting
+
+[cols="1,2",options="header"]
+|===
+|Failure |What it looks like
+
+|Confident wrongness
+|a clean, well-argued answer that is simply false; no hedging, no signal
+
+|Invented interfaces
+|a method that does not exist, with an entirely plausible name
+
+|Outdated practice
+|patterns from older versions of a framework, presented as current
+
+|Silent scope creep
+|it also "improves" four other files you did not ask about
+
+|Agreeing with you
+|you push back on a correct answer and it folds
+|===
+
+The countermeasure is not distrust, it is *verification*: run it, test it, read
+the diff. You would not merge a classmate's pull request unread either.
+
+== What you may and may not hand over
+
+* *May*: code in your own repository, public documentation, your own text,
+  generated test data.
+* *Must not*: personal data of other people — names, marks, addresses,
+  attendance records of real members. Anything under the school's data protection
+  rules stays out of a prompt.
+* *Careful*: credentials and tokens. They belong in neither prompts nor
+  repositories.
+
+== Decisions
+
+* Agents are used openly in this course. Hiding their use is not the concern;
+  being unable to explain the result is.
+* You are responsible for what you commit, regardless of who or what wrote it.
+* No personal data in prompts.
+* Every agent result is verified before it is committed — run, test, read.
+
+== Pitfalls
+
+* Committing a diff you have not read. The oral exam finds out, and so does the
+  build.
+* Asking for the whole feature in one prompt. Large answers hide their mistakes;
+  small steps expose them.
+* Taking the first answer. A second attempt with a sharper question is usually
+  much better than an argument with the first one.
+* Believing that a confident tone means a checked answer. There is no correlation.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Sprachmodell
+|language model
+
+|Eingabeaufforderung
+|prompt
+
+|Halluzination
+|hallucination, confident wrongness
+
+|Nachvollziehbarkeit
+|traceability
+
+|personenbezogene Daten
+|personal data
+|===
+
+== Further reading
+
+* Module `ai-context-continuation` — giving the agent the context it lacks
+* Module `ai-result-verification` — checking what came back, systematically

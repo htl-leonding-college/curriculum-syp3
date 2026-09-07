@@ -1,0 +1,149 @@
+= What makes a project a project
+:topic-id: governance-project-basics
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Decide whether a piece of work is a project, using the defining
+  criteria
+* [[lo-2]] Write an initial situation that describes the problem without naming
+  a solution
+* [[lo-3]] Name the three constraints of a project and explain what happens when
+  one of them is fixed
+
+== Project or not a project
+
+A project is a piece of work that is *unique*, *time-bounded*, *resourced* and
+*goal-directed*, and that is complex enough to need organising. Routine work has
+none of that: it repeats, it has no end date, and nobody writes a charter for it.
+
+[cols="2,1,2",options="header"]
+|===
+|Work |Project? |Why
+
+|Your year project
+|yes
+|unique goal, fixed end, a team, a deliverable nobody has built yet
+
+|Weekly homework
+|no
+|repeats, no unique goal
+
+|Migrating the school website to a new host
+|yes
+|one-off, dated, resourced, with a result you can accept or reject
+
+|Answering support mail
+|no
+|continuous operation, not a one-off result
+|===
+
+The distinction is not academic. If it is a project, somebody must be able to
+say afterwards whether it succeeded — and that requires a goal that was written
+down *before* the work started.
+
+== The initial situation
+
+The German form calls it *Ausgangslage*. It describes what exists today and what
+is unsatisfactory about it. It does not describe your solution.
+
+[cols="1,1",options="header"]
+|===
+|Not an initial situation |An initial situation
+
+|"We build an app with Spring Boot and a React frontend."
+|"The club's attendance list is kept on paper. Trainers copy it into a
+ spreadsheet after training, which takes about twenty minutes a week and is
+ often forgotten."
+
+|"There is no digital solution yet."
+|"Members cannot see whether a session is full before they arrive, so about a
+ quarter of them travel for nothing."
+|===
+
+The test: could a person who has never heard of your project recognise the
+problem in the description? If the text only makes sense once your solution is
+known, it is not an initial situation.
+
+[TIP]
+====
+This text goes into `openspec/config.yaml` under `context:` unchanged. The agent
+needs it for the same reason the supervisor does — it is the only place that
+says what the work is *for*.
+====
+
+== The three constraints
+
+[plantuml,magic-triangle,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "SCOPE\nwhat is built" as S
+rectangle "TIME\nwhen it is due" as T
+rectangle "RESOURCES\npeople, money, machines" as R
+S -- T
+T -- R
+R -- S
+note bottom of T : quality is not a fourth corner —\nit is what gets sacrificed silently
+@enduml
+----
+
+In a school year, *time is fixed* and *resources are fixed*: the year ends, and
+you are the team you are. Only scope can move. That is why a project that is
+"almost finished" in June is normally a project whose scope was never cut.
+
+== Decisions
+
+* Every team writes an initial situation before it writes anything else. Without
+  it there is nothing to judge a result against.
+* Scope is the variable in this course. A team that runs late cuts scope and
+  documents the cut as a change — it does not extend the year.
+* The initial situation lives in `openspec/config.yaml` so that it is one text,
+  not two.
+
+== Pitfalls
+
+* Writing the solution into the initial situation. Then every later question
+  about "was this the right solution?" is unanswerable.
+* Choosing a problem nobody has. A project needs someone who is worse off today.
+* Treating quality as negotiable while pretending it is not. When time and scope
+  are both fixed, quality is what actually gives.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Projekt
+|project
+
+|Ausgangslage
+|initial situation
+
+|Zielsetzung
+|objectives
+
+|Rahmenbedingungen
+|constraints
+
+|Projektumfang
+|scope
+|===
+
+== Further reading
+
+* Template `templates/governance/projektantrag.adoc` — the fields you will fill
+* Module `governance-stakeholders-goals` — turning a situation into verifiable
+  goals

@@ -1,0 +1,155 @@
+= Conflicts and remote repositories
+:topic-id: git-conflicts-remotes
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain the relationship between local repository, remote and
+  remote-tracking branch
+* [[lo-2]] Resolve a merge conflict and verify the result
+* [[lo-3]] Explain why a conflict is a normal event and not a failure
+* [[lo-4]] Recover from the common broken states — diverged branches, rejected
+  push, accidental commit on `main`
+
+== Local, remote, and the copy in between
+
+[plantuml,git-remotes,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "working tree" as W
+rectangle "local repository\nmain" as L
+rectangle "remote-tracking branch\norigin/main" as T
+rectangle "remote (GitHub)\nmain" as R
+W -right-> L : commit
+L -right-> R : push
+R -left-> T : fetch
+T -left-> L : merge
+note bottom of T : a local record of\nwhere the remote was\nlast time you looked
+@enduml
+----
+
+`origin/main` is *not* the remote. It is your local note of where the remote's
+`main` was when you last fetched. `git pull` is `git fetch` followed by
+`git merge` — one command doing two things, which is why its failures confuse.
+
+[source,bash]
+----
+git remote -v            # which remotes exist
+git fetch                # update the notes, change nothing else
+git status               # ahead / behind / diverged
+git pull                 # fetch + merge
+git push                 # send your commits
+----
+
+== Conflicts
+
+A conflict happens when two branches changed the *same lines* and git cannot
+decide which version wins. That is not a failure of git — it is git refusing to
+guess.
+
+[source,text]
+----
+<<<<<<< HEAD
+    return members.size() / groups;
+=======
+    return groups == 0 ? 0 : members.size() / groups;
+>>>>>>> feature/guard-empty-groups
+----
+
+Resolving it means: read both sides, decide what the code should do, delete the
+markers, and *test*. Then `git add` the file and continue the merge.
+
+[source,bash]
+----
+git merge feature/guard-empty-groups   # conflict reported
+git status                             # which files conflict
+# edit, remove all <<<<<<< ======= >>>>>>> markers
+git add Attendance.java
+git commit                             # completes the merge
+git merge --abort                      # or: get out and think again
+----
+
+The two rules that prevent most conflicts: short-lived branches, and small
+changes. The rule that makes them harmless: resolve them yourself, at the moment
+they appear, on your own branch — never in a hurry on `main`.
+
+== Common broken states
+
+[cols="1,2",options="header"]
+|===
+|Symptom |What it means and what to do
+
+|`! [rejected] main -> main (fetch first)`
+|the remote has commits you do not have — `git pull`, resolve, push again
+
+|`Your branch and 'origin/main' have diverged`
+|both sides have new commits — merge them; do not force-push
+
+|You committed to `main` by accident
+|`git switch -c feature/x` (takes the commits with you), then
+ `git switch main && git reset --hard origin/main`
+
+|`git push --force` is suggested online
+|do not, on a shared branch. It deletes other people's commits
+|===
+
+== Decisions
+
+* Nobody force-pushes a shared branch. If a history really must be rewritten,
+  the team does it together, on purpose, once.
+* Conflicts are resolved on the feature branch, before the pull request is
+  merged.
+* `git pull` before you start working, and before you push.
+* A resolved conflict is only resolved once the build passes — the markers being
+  gone proves nothing.
+
+== Pitfalls
+
+* Resolving a conflict by taking "your" side wholesale. Half the time the other
+  side contained the fix.
+* Leaving a stray `=======` in the file. It compiles in some languages, which is
+  worse than a syntax error.
+* Believing `git fetch` changed your files. It updates the remote-tracking
+  branch only — that is what makes it the safe command.
+* Pulling with uncommitted changes and then being unable to explain the state.
+  Commit or stash first.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Konflikt
+|conflict
+
+|Gegenstelle, entferntes Repository
+|remote
+
+|holen / zusammenfuehren / senden
+|fetch / merge / push
+
+|auseinandergelaufen
+|diverged
+
+|Konfliktmarkierung
+|conflict marker
+|===
+
+== Further reading
+
+* Pro Git, chapter 3.5 — Remote branches, https://git-scm.com/book
+* Module `gh-actions-pages` — where a green build becomes the condition for a
+  merge

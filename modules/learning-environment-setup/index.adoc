@@ -1,0 +1,216 @@
+= Setting up the learning environment
+:topic-id: learning-environment-setup
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Check a machine against the hardware requirements before touching the
+  partition table
+* [[lo-2]] Explain why the class uses a native Ubuntu partition or macOS instead
+  of WSL2
+* [[lo-3]] Run the class setup script and explain what makes it repeatable
+* [[lo-4]] Recover from a failed or interrupted setup run
+
+== Why one environment for everyone
+
+The gain is not didactic, it is isolation. One clean, identical partition
+instead of twenty differently misconfigured Windows installations. "Works on my
+machine" stops being a category of error, because the machine is the same one.
+
+[cols="1,2",options="header"]
+|===
+|Option |Verdict
+
+|Ubuntu 26.04 LTS as a second partition
+|yes — a real system, independent of the Windows state
+
+|macOS
+|yes — same tools, same package manager story via Homebrew
+
+|WSL2
+|no — it sits on top of Windows and inherits its misconfiguration: BIOS
+ virtualisation, Hyper-V features, antivirus. When Windows breaks, there is no
+ fallback left
+
+|Virtual machine
+|only as a stopgap — the disk and memory overhead shows up exactly when Docker
+ does
+|===
+
+== Before you touch the disk
+
+[WARNING]
+====
+Partitioning rewrites the disk layout. Every item below costs minutes now and
+hours if skipped.
+====
+
+. *BitLocker recovery key* — save it somewhere that is not the machine. Changing
+  the boot configuration can trigger a recovery prompt.
+. *Free space* ≥ 100 GB. Docker images and JDKs are not small.
+. *RAM* ≥ 8 GB, 16 GB recommended.
+. *Virtualisation enabled in the BIOS* (Intel VT-x / AMD-V). Without it, no
+  containers and no minikube.
+. *Windows fast startup off*. It leaves the Windows partition in a hibernated
+  state that Linux cannot mount safely.
+. *SATA mode AHCI*, not Intel RST — otherwise the installer sees no disk.
+. *Secure Boot* — either off, or use signed drivers.
+
+== The order that avoids the afternoon of repair
+
+[plantuml,setup-order,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+start
+:write a live USB with persistence;
+:boot from it;
+if (does the hardware boot Linux?) then (yes)
+  :back up the recovery key;
+  :shrink the Windows partition;
+  :install Ubuntu next to Windows;
+  :run setup-tools.sh;
+  :run setup-identity.sh;
+  stop
+else (no)
+  :keep working from the live USB;
+  :bring the machine to the lab;
+  stop
+endif
+@enduml
+----
+
+The live USB with persistence is not a fallback, it is a *test*. It boots
+independently of the Windows state, needs no partition change, and proves in
+fifteen minutes that this hardware runs Linux at all.
+
+== The class setup
+
+Two scripts in the repository `klassen-setup`, with different jobs:
+
+[cols="1,2",options="header"]
+|===
+|Script |Job
+
+|`setup-tools.sh`
+|installs the toolchain — repeatable, unattended, any number of times
+
+|`setup-identity.sh`
+|name, e-mail, SSH key, GitHub login — once, interactive
+|===
+
+They are separate on purpose. Tool installation is a machine state and must be
+repeatable; identity belongs to a person and cannot be. Mixed together you get a
+script nobody dares to run twice.
+
+*Idempotent* means: running it again produces the same end state, and running it
+after a crash continues instead of breaking things. The first run takes over
+fifteen minutes across a dozen failure sources — network, `apt` lock, aborted
+download — so it *will* fail at some point. Every step therefore checks first
+whether the tool is already there.
+
+[source,bash]
+----
+git clone https://github.com/htl-leonding-college/klassen-setup.git
+cd klassen-setup
+less setup-tools.sh      # read it first — this is the point
+./setup-tools.sh --check # what is missing, without installing
+./setup-tools.sh
+./setup-identity.sh
+----
+
+Note what the instructions do *not* say: `curl … | bash`. Running a foreign
+script unread with elevated rights is the one habit this subject will not teach
+you. The detour is the lesson.
+
+== What gets installed, and why through SDKMAN
+
+[cols="1,2",options="header"]
+|===
+|Tool |How
+
+|git, curl, unzip, zsh, gh
+|`apt` or `brew`
+
+|JDK, Maven, Gradle
+|SDKMAN — one mechanism on both systems, versions pinned, `JAVA_HOME` set for
+ you
+
+|Docker and compose
+|`apt` or Docker Desktop
+
+|kubectl, minikube
+|release binary matching system and architecture
+
+|asciidoctor
+|not installed at all — it runs in a container, so Docker is enough
+|===
+
+The hand-set `JAVA_HOME` was the single most common failure of the previous
+instructions. SDKMAN removes it as a category.
+
+`versions.env` holds the pinned versions — one place, one truth. Each school
+year gets a git tag, so a past state can be reconstructed when a bug turns out
+to be a version difference.
+
+== Decisions
+
+* Ubuntu 26.04 LTS as a dual-boot partition (≥ 100 GB) or macOS. No WSL2.
+* The live USB test happens *before* any partition change.
+* The toolchain comes from `klassen-setup`, not from personal preference.
+  Adding a tool means adding it there, for everyone.
+* No credentials in a repository. The private SSH key never leaves the machine.
+
+== Pitfalls
+
+* Installing first and testing later. If the hardware will not boot Linux you
+  want to know that before the partition table changed.
+* Skipping the recovery key. A BitLocker prompt after a boot change without the
+  key means the Windows installation is gone.
+* Running `setup-tools.sh` with `sudo` in front. It asks for elevation where it
+  needs it; running the whole script as root leaves files owned by root in your
+  home directory.
+* Assuming a failed run has to be restarted from zero. It does not — that is the
+  point of idempotence.
+* Installing asciidoctor locally "to be safe". Then your output differs from the
+  pipeline's, which is exactly the problem the container avoids.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Partition
+|partition
+
+|Wiederherstellungsschluessel
+|recovery key
+
+|idempotent (wiederholbar mit gleichem Endzustand)
+|idempotent
+
+|Werkzeugkette
+|toolchain
+
+|Virtualisierung
+|virtualisation
+|===
+
+== Further reading
+
+* Repository `htl-leonding-college/klassen-setup` — the scripts and the README
+* Ubuntu installation guide, https://ubuntu.com/tutorials
+* Module `docker-basics` — where the word "image" appears again, and why
+  `setup-tools.sh` is a first draft of a `Dockerfile`

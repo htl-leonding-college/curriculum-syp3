@@ -1,0 +1,65 @@
+= Setting up the learning environment — questions
+:topic-id: learning-environment-setup
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Which checks happen before the partition table is touched, and why each one?
+
+covers: lo-1
+
+Expected answer points:
+
+* Recovery key saved off the machine — boot changes can trigger BitLocker
+* ≥ 100 GB free, ≥ 8 GB RAM
+* Virtualisation on in the BIOS — otherwise no containers, no minikube
+* Fast startup off, SATA on AHCI, Secure Boot handled
+* Live USB boot test proves the hardware runs Linux before anything is changed
+
+== Why not WSL2?
+
+covers: lo-2
+
+Expected answer points:
+
+* It sits on Windows and inherits its misconfiguration
+* When Windows breaks there is no fallback
+* A native partition gives isolation, which is the actual goal
+
+== What does idempotent mean, and why is it required here?
+
+covers: lo-3, lo-4
+
+Expected answer points:
+
+* Running again yields the same end state; an interrupted run can be continued
+* The run is long and has many failure sources, so it will be interrupted
+* Every step checks first whether the tool is present
+* The same idea returns with Docker and Kubernetes
+
+== Why are tool installation and identity setup separate scripts?
+
+covers: lo-3
+
+Expected answer points:
+
+* Tool installation is a machine state — repeatable
+* Identity belongs to a person — not repeatable, interactive
+* Mixed, the script cannot be run twice; and no credentials belong in a
+  repository
+
+== Your setup run aborted halfway. What do you do?
+
+covers: lo-4
+
+Expected answer points:
+
+* Run it again — it continues rather than restarting
+* `--check` shows what is still missing
+* Look at the actual error first: network, apt lock, missing disk space
