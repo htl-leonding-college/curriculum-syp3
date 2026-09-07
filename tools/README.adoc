@@ -1,0 +1,73 @@
+= Werkzeuge
+:toc: left
+:toc-title: Inhalt
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Pruefung und Generatoren rund um `curriculum.yaml`. Sprache ist Python; einzige
+Laufzeitabhaengigkeit ist PyYAML. (Das Repository `klassen-setup` ist davon
+unberuehrt und bleibt Bash.)
+
+== Einrichtung
+
+[source,bash]
+----
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r tools/requirements.txt        # Laufzeit
+pip install -r tools/requirements-dev.txt    # zusaetzlich fuer die Tests
+----
+
+== Aufrufe
+
+Alle Werkzeuge werden aus dem Repository-Wurzelverzeichnis aufgerufen und
+finden `curriculum.yaml` selbst.
+
+[cols="2,3",options="header"]
+|===
+|Aufruf |Wirkung
+
+|`python tools/check-curriculum.py`
+|Fuehrt alle Pruefungen aus, meldet Datei, Zeile, Ist- und Sollwert.
+ Exit-Code 1, sobald eine Pruefung fehlschlaegt.
+
+|`python tools/check-curriculum.py --only budget,graph`
+|Fuehrt nur die genannten Pruefungen aus (Namen siehe `--list`).
+
+|`python tools/check-curriculum.py --list`
+|Listet die Pruefungen mit ihrer Nummer aus dem Design.
+
+|`python -m pytest tools/tests`
+|Fixture-Testsuite: je ein roter und ein gruener Fall pro Pruefung.
+|===
+
+== Konventionen
+
+`tools/curriculum.py` ist das gemeinsame Lademodul. Es liest `curriculum.yaml`,
+leitet die Modulpfade aus der Themen-ID ab und meldet fehlende Pflichtfelder mit
+Zeilenangabe.
+
+[source,python]
+----
+import tools.curriculum as c
+
+model = c.load()
+model.topics[0].index_path        # modules/<id>/index.adoc
+model.theory_ue_by_block()        # Summen je Block
+----
+
+Jedes Werkzeug gibt Befunde im selben Format aus:
+
+----
+curriculum.yaml:212: budget: block 'governance' hat 10 UE Theorie, erlaubt sind 9
+----

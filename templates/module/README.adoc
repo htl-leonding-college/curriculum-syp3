@@ -1,0 +1,174 @@
+= Ein Modul schreiben
+:toc: left
+:toc-title: Inhalt
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Ein Modul ist ein Unterricht: 1 UE Theorie oder 2 UE Praxis. Der `index.adoc`
+enthaelt, was in diesem Slot vorgetragen wird — rund ein bis zwei Seiten.
+
+[source,bash]
+----
+python tools/new-module.py git-basics          # Skelett aus dieser Vorlage
+python tools/check-curriculum.py --as-ready git-basics   # Probelauf
+----
+
+Ist das Modul fertig, traegt sein Thema in `curriculum.yaml` `status: ready` —
+ab dann pruefen alle Modulpruefungen hart.
+
+== Aufbau
+
+[cols="1,3",options="header"]
+|===
+|Datei |Inhalt
+
+|`index.adoc`
+|Lerninhalt in fester Abschnittsfolge
+
+|`exercises.adoc`
+|Aufgaben, Loesungen aufklappbar; darf inhaltsleer bleiben
+
+|`questions.adoc`
+|muendliche Pruefungsfragen, je Frage die geprueften Lernziele
+
+|`images/`
+|Bilder dieses Moduls samt bearbeitbarer Quelldatei
+|===
+
+== Abschnittsfolge von index.adoc
+
+. `== Learning outcomes` — *Pflicht*, korrespondiert mit `questions.adoc`
+. fachliche Abschnitte — frei viele
+. `== Decisions` — *Pflicht*: was bei uns gilt
+. `== Pitfalls` — *Pflicht*: was erfahrungsgemaess schiefgeht
+. `== Terminology` — *Pflicht*: deutsch/englische Begriffspaare
+. `== Further reading`
+
+TIP: `Decisions` ist der Abschnitt, den kein Sprachmodell erzeugen kann.
+Erklaertext ist keine knappe Ware mehr — die Festlegung dieses Jahrgangs schon.
+
+Ein Pflichtabschnitt ohne Inhalt traegt eine ausdrueckliche Nullaussage:
+
+[source,adoc]
+----
+== Decisions
+
+None specific to this topic.
+----
+
+Das ist eine bewusste Aussage und vom Vergessen unterscheidbar.
+
+== Lernziele und Fragen
+
+[source,adoc]
+----
+// index.adoc
+== Learning outcomes
+
+* [[lo-1]] Record a change as a commit
+----
+
+[source,adoc]
+----
+// questions.adoc
+== What does a commit contain?
+
+covers: lo-1
+----
+
+Jedes Lernziel braucht mindestens eine Frage, jede Frage ein existierendes
+Lernziel. Die Schueler sehen damit vorab, woran sie gemessen werden.
+
+== Aufgaben
+
+`kind: drill` ist generisch und wiederholbar, `kind: project` bezieht sich auf
+das eigene Projekt und hat keine Musterloesung. Loesungen werden nicht
+verborgen — sie stehen im selben Dokument als `[%collapsible]`, ohne
+Freischaltung und ohne zweiten Zweig.
+
+== Diagramme und Bilder
+
+PlantUML ist Default, inline im Dokument. Ein Bild nur, wo Quelltext nicht
+traegt: Git-Commit-Graphen, Screenshots realer Oberflaechen, freie Skizzen.
+Zu einem selbst erstellten Bild liegt die bearbeitbare Quelldatei daneben.
+
+Jedes Bild traegt seine Herkunft im Bildtitel:
+
+[source,adoc]
+----
+.Zielkreuz (own)
+image::images/zielkreuz.png[Zielkreuz,500]
+
+.Scrum framework (free: CC BY-SA 4.0, https://scrum.org/..., retrieved 2026-09-10)
+image::images/scrum-framework.png[Scrum framework,600]
+
+.Kanban board (unclear: found via web search, rights not checked)
+image::images/kanban.png[Kanban board,600]
+----
+
+WARNING: Die Herkunft ist der einzige Bestandteil, der sich nachtraeglich nicht
+beschaffen laesst. `unclear` blockiert die Veroeffentlichung nicht — der Job
+`rights-check` meldet es sichtbar. Ehrlich zu sein bleibt damit die bequemere
+Option.
+
+== Sprache
+
+Modultext auf Englisch. Governance-Fachbegriffe zusaetzlich deutsch, weil die
+Formulare deutsch sind: `Ausgangslage / Initial situation`. Der Abschnitt
+`Terminology` fuehrt die Paare.
+
+== Was nicht ins Modul gehoert
+
+Kein Unterrichtsverlauf, keine Termine, keine Klassenbezuege. Das Modul ist
+vorbereitet und mehrjaehrig gueltig; der Verlauf wird ausserhalb gefuehrt.
+Struktur — UE, Block, Jahrgang, Voraussetzungen — steht ausschliesslich in
+`curriculum.yaml`; im AsciiDoc steht davon nur `:topic-id:`.
+
+== Woran die Pruefung haengt
+
+[cols="1,3",options="header"]
+|===
+|Pruefung |Greift bei
+
+|`bijection` (1)
+|Thema mit `status: ready` ohne `index.adoc`; Datei ohne `:topic-id:`; ID, die
+ das Modell nicht kennt; Datei im falschen Modulverzeichnis
+
+|`budget` (2)
+|UE-Summen je Art und je Block gegen `meta.budget` und `meta.budget_je_block`
+
+|`graph` (3)
+|`requires` auf unbekannte ID, Zyklus, Vorwaertsreferenz
+
+|`completeness` (4)
+|fehlende Pflichtfelder im Modell; fertiges Praxisthema ohne Pruefungsfrage
+
+|`slots` (5)
+|zwei Themen derselben Art in einem Unterricht, Luecke im Jahresplan, Thema
+ groesser als sein Slot
+
+|`sections` (6)
+|fehlender oder leerer Pflichtabschnitt
+
+|`outcomes` (7)
+|Lernziel ohne Frage, Frage ohne `covers`, `covers` auf unbekanntes Lernziel
+
+|`images` (8)
+|Bild ohne Herkunftsklasse; `free` ohne Lizenzname oder Quelladresse
+
+|`skeleton` (9)
+|fehlende `index.adoc`, `exercises.adoc` oder `questions.adoc`
+
+|`attributes` (Z)
+|Strukturattribut im AsciiDoc (`:ue:`, `:block:`, `:lesson:`, …)
+|===

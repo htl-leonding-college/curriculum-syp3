@@ -48,3 +48,6 @@ venv/
 
 # Arbeitsmaterial mit personenbezogenen Daten (Screenshots DA-Antrag u. ae.)
 assets/
+
+# Artefakt des containerisierten asciidoctor (HOME im Container)
+?/

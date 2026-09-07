@@ -70,6 +70,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4     # ersetzt Foundation / Advanced
     requires: [git-basics, ai-prompting]
+    status: ready             # planned (Default) | ready
     assignment_template: htl-leonding-example/jg03-syp-sdd-why-specs   # optional
 ```
 
@@ -93,6 +94,21 @@ modules/<id>/images/           Bilder des Moduls
 Eine Pfadliste in der yaml waere eine zweite Wahrheit ueber etwas, das die Konvention
 bereits festlegt — und bei rund 50 Themen eine Fehlerquelle ohne Gegenwert. Prueft der
 CI-Check die Bijektion (P2, Pruefung 1), rechnet er die Pfade aus der ID aus.
+
+`status` unterscheidet geplante von fertigen Themen. Default ist `planned`: Das Thema
+ist im Modell vorhanden, erscheint in Jahresplanung, Mindmap und UE-Uebersicht als offen
+und wird noch nicht gegen eine Lernressource geprueft. Erst `ready` macht das Modul zum
+Vertragsgegenstand — dann greifen Bijektion, Pflichtabschnitte, Outcome-Kopplung und
+Modulskelett hart. Ohne diese Unterscheidung stuenden die beiden Anforderungen des
+Modells gegeneinander: Themen sollen planbar sein, bevor ihre Ressource existiert, und
+zugleich soll jedes Thema eine Ressource haben. Der Bruch traefe genau den Anfangszustand
+— 54 geplante Themen, kein Modul — und haette die Veroeffentlichung blockiert, bis alle
+Module geschrieben sind.
+
+*Regel, an der die Entscheidung haengt:* `ready` wird gesetzt, wenn das Modul fertig ist,
+nicht wenn es angelegt wird. Ein Modulverzeichnis zu einem `planned`-Thema ist erlaubt
+und wird als Entwurf behandelt; verwaiste Dateien und unbekannte Themen-IDs fallen
+weiterhin hart auf.
 
 `assignment_template` ist optional und traegt die Zuordnung eines Moduls zu seiner
 Uebungsangabe (P13). Nur dadurch kann die generierte Navigation die Angabe verlinken und
@@ -151,8 +167,10 @@ Ohne ihn ist P1 nur eine zusätzliche Datei. Geprüft wird:
 
 ```
 1  BIJEKTION
-     jedes topic hat >= 1 resource, und die Datei existiert
+     jedes topic mit status: ready hat >= 1 resource, und die Datei
+     existiert
      jede .adoc unter modules/ hat eine topic-id, die in der yaml steht
+     (auch fuer status: planned — verwaiste Dateien fallen immer auf)
 
 2  BUDGET
      Summe ue je kind      gegen meta.budget (25 Theorie / 50 Praxis)
@@ -167,14 +185,14 @@ Ohne ihn ist P1 nur eine zusätzliche Datei. Geprüft wird:
 
 4  VOLLSTAENDIGKEIT
      jedes topic hat taught_in und prerequisite_for
-     jedes topic mit kind: praxis hat >= 1 question
+     jedes topic mit kind: praxis und status: ready hat >= 1 question
 
 5  SLOT-BELEGUNG
      je lesson hoechstens 1 topic mit kind: theorie
      je lesson hoechstens 1 topic mit kind: praxis
      keine Luecke zwischen lesson 1 und der letzten belegten
 
-6  PFLICHTABSCHNITTE
+6  PFLICHTABSCHNITTE   (nur status: ready)
      index.adoc enthaelt  == Learning outcomes
                           == Decisions
                           == Pitfalls
@@ -192,7 +210,7 @@ Ohne ihn ist P1 nur eine zusätzliche Datei. Geprüft wird:
      free verlangt Lizenzname und URL
      Klasse unclear laeuft in den Job rights-check (P11)
 
-9  MODULSKELETT
+9  MODULSKELETT      (nur status: ready)
      jedes Modulverzeichnis enthaelt index.adoc, exercises.adoc
      und questions.adoc
      exercises.adoc darf inhaltsleer sein
@@ -227,7 +245,11 @@ curriculum.yaml
    +--> UE-Uebersicht je Block
 ```
 
-Alle Ausgaben sind generierte Artefakte und werden nicht von Hand bearbeitet.
+Alle Ausgaben sind generierte Artefakte und werden nicht von Hand bearbeitet. Sie liegen
+ausschliesslich unter `build/` — dem ignorierten Bauverzeichnis — und werden bei jedem
+Build neu geschrieben; damit ist eine Handaenderung beim naechsten Lauf verworfen, ohne
+dass erzeugte Dateien im Versionsstand mitgefuehrt werden muessen. Ein Test haelt fest,
+dass keine Datei mit GENERATED-Kopf versioniert ist.
 
 ### P4 — Modulformat: Inhalt, Aufgabe, Lösung und Prüfungsfrage liegen zusammen
 

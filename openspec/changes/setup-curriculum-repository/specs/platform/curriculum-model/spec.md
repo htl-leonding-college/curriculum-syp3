@@ -52,6 +52,25 @@ Themen-IDs ausgedrueckt werden, nicht als Text.
 - **THEN** ist es in Jahresplanung, Mindmap und UE-Uebersicht sichtbar und als offen
   erkennbar
 
+### Requirement: Themen tragen einen Bearbeitungsstand
+Jedes Thema SHALL einen Bearbeitungsstand tragen: geplant oder fertig. Geplant SHALL der
+Standard sein. Die Pruefungen, die eine vollstaendige Lernressource verlangen, SHALL nur
+fuer fertige Themen gelten; Pruefungen auf verwaiste Dateien und unbekannte Themen-IDs
+SHALL unabhaengig vom Bearbeitungsstand gelten.
+
+#### Scenario: Geplantes Thema ohne Lernressource
+- **WHEN** ein Thema geplant ist und seine Lernressource noch nicht existiert
+- **THEN** schlaegt die Pruefung nicht fehl, und das Thema ist in den abgeleiteten
+  Darstellungen als offen erkennbar
+
+#### Scenario: Thema wird auf fertig gesetzt
+- **WHEN** der Bearbeitungsstand eines Themas auf fertig wechselt
+- **THEN** verlangt die Pruefung ab diesem Zeitpunkt die vollstaendige Lernressource
+
+#### Scenario: Datei ohne bekanntes Thema
+- **WHEN** eine Datei unter `modules/` keinem Thema zugeordnet ist
+- **THEN** schlaegt die Pruefung fehl, unabhaengig vom Bearbeitungsstand der Themen
+
 ### Requirement: Das Modell ist die Grundlage abgeleiteter Darstellungen
 Jahresuebersicht, Stoffstruktur-Darstellung, Website-Navigation und Fragenkatalog-Tags
 SHALL aus dem Modell abgeleitet werden und MUST NOT unabhaengig gepflegt werden.

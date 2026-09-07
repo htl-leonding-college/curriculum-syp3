@@ -1,0 +1,3 @@
+-r requirements.txt
+# Nur fuer die Fixture-Testsuite unter tools/tests/.
+pytest>=8.0

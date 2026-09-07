@@ -6,12 +6,18 @@ Abweichungen beim Build auffallen statt im Unterrichtsjahr.
 ## ADDED Requirements
 
 ### Requirement: Bijektion zwischen Modell und Lernressourcen
-Die Pruefung SHALL sicherstellen, dass jedes Thema mindestens eine existierende
-Lernressource hat und jede Lernressource genau einem Thema zugeordnet ist.
+Die Pruefung SHALL sicherstellen, dass jedes fertige Thema mindestens eine existierende
+Lernressource hat und jede Lernressource genau einem Thema zugeordnet ist. Fuer geplante
+Themen SHALL keine Lernressource verlangt werden.
 
-#### Scenario: Thema ohne Datei
-- **WHEN** ein Thema eine Ressource nennt, die im Dateisystem fehlt
+#### Scenario: Fertiges Thema ohne Datei
+- **WHEN** ein als fertig gekennzeichnetes Thema eine Ressource nennt, die im Dateisystem
+  fehlt
 - **THEN** schlaegt die Pruefung fehl und nennt Thema und erwarteten Pfad
+
+#### Scenario: Geplantes Thema ohne Datei
+- **WHEN** ein geplantes Thema noch keine Lernressource hat
+- **THEN** schlaegt die Pruefung nicht fehl
 
 #### Scenario: Verwaiste Lernressource
 - **WHEN** eine Datei unter `modules/` keinem Thema zugeordnet ist
@@ -53,7 +59,8 @@ Unterricht keine Luecke bleibt.
 - **THEN** schlaegt die Pruefung fehl und nennt die Nummer
 
 ### Requirement: Pflichtabschnitte der Lernressource sind vorhanden
-Die Pruefung SHALL sicherstellen, dass jede Lernressource die Pflichtabschnitte
+Die Pruefung SHALL sicherstellen, dass jede Lernressource eines fertigen Themas die
+Pflichtabschnitte
 `Learning outcomes`, `Decisions`, `Pitfalls` und `Terminology` enthaelt und dass keiner
 davon leer ist. Eine ausdrueckliche Nullaussage SHALL als erfuellt gelten.
 
@@ -66,7 +73,8 @@ davon leer ist. Eine ausdrueckliche Nullaussage SHALL als erfuellt gelten.
 - **THEN** gilt die Pruefung als erfuellt
 
 ### Requirement: Lernziele und Pruefungsfragen sind gekoppelt
-Die Pruefung SHALL sicherstellen, dass jedes Lernziel einer Lernressource mindestens
+Die Pruefung SHALL sicherstellen, dass jedes Lernziel einer Lernressource eines fertigen
+Themas mindestens
 eine zugehoerige Pruefungsfrage hat und dass jede Pruefungsfrage auf ein existierendes
 Lernziel verweist.
 
@@ -93,9 +101,10 @@ ungeklaert. Bei freier Lizenz MUST Lizenzname und Quelladresse angegeben sein.
 - **THEN** schlaegt die Pruefung fehl
 
 ### Requirement: Modulskelett ist einheitlich
-Die Pruefung SHALL sicherstellen, dass jedes Modulverzeichnis die Dateien fuer Inhalt,
-Aufgaben und Pruefungsfragen enthaelt. Die Aufgabendatei MAY inhaltsleer sein. Fuer
-Themen der Art Praxis SHALL mindestens eine Pruefungsfrage vorhanden sein.
+Die Pruefung SHALL sicherstellen, dass jedes Modulverzeichnis eines fertigen Themas die
+Dateien fuer Inhalt, Aufgaben und Pruefungsfragen enthaelt. Die Aufgabendatei MAY
+inhaltsleer sein. Fuer fertige Themen der Art Praxis SHALL mindestens eine
+Pruefungsfrage vorhanden sein.
 
 #### Scenario: Datei fehlt im Modul
 - **WHEN** ein Modulverzeichnis keine Aufgabendatei enthaelt

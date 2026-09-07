@@ -8,6 +8,12 @@
 #   * Dateipfade werden aus der id abgeleitet, nicht eingetragen:
 #       modules/<id>/index.adoc | exercises.adoc | questions.adoc
 #       modules/<id>/images/
+#   * status: planned | ready  (Default planned, Zeile entfaellt dann)
+#       planned = Thema ist geplant und in Navigation, Mindmap und
+#                 UE-Uebersicht als offen sichtbar; keine Lernressource
+#                 erwartet, die Modulpruefungen greifen nicht.
+#       ready   = Modul ist vollstaendig; Bijektion, Pflichtabschnitte,
+#                 Outcome-Kopplung und Modulskelett werden hart geprueft.
 #   * Diese Datei wird von Hand gepflegt; alles Abgeleitete (Mindmap,
 #     Navigation, UE-Uebersicht, Fragenkatalog-Tags) ist generiert.
 # ============================================================================

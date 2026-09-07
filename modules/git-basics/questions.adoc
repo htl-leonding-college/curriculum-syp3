@@ -1,0 +1,22 @@
+= Repository, commit, history — questions
+:topic-id: git-basics
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+// Jede Frage ist ein eigener Abschnitt und nennt in der ersten Zeile ihres
+// Rumpfes die Lernziele, die sie prueft:  covers: lo-1, lo-2
+
+== TODO: Pruefungsfrage
+
+covers: lo-1
+
+Erwartete Punkte in der Antwort:
+
+* TODO: erwarteter Punkt

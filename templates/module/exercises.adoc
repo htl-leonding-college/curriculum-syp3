@@ -1,0 +1,28 @@
+= {{TITLE}} — exercises
+:topic-id: {{TOPIC_ID}}
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+// Diese Datei darf inhaltsleer bleiben. Jede Aufgabe traegt ihre Art:
+//   kind: drill    generisch, wiederholbar, Musterloesung moeglich
+//   kind: project  am eigenen Projekt, keine Musterloesung
+
+== {{EXERCISE_TITLE}}
+
+kind: drill
+
+{{EXERCISE_TASK}}
+
+.Solution
+[%collapsible]
+====
+{{EXERCISE_SOLUTION}}
+====

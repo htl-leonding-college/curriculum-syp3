@@ -1,0 +1,53 @@
+= Repository, commit, history
+:topic-id: git-basics
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] TODO: was nach diesem Unterricht gekonnt werden muss
+
+== TODO: Abschnittstitel
+
+Stichpunkte, Diagramme als PlantUML, rund ein bis zwei Seiten — so viel, wie in
+den Slot dieses Themas passt.
+
+[plantuml,git-basics-overview,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+:Beispiel;
+@enduml
+----
+
+== Decisions
+
+None specific to this topic.
+
+== Pitfalls
+
+None specific to this topic.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|TODO
+|TODO
+|===
+
+== Further reading
+
+* TODO: Quelle

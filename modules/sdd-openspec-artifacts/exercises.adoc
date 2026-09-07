@@ -1,0 +1,28 @@
+= The artefacts of spec-driven development — exercises
+:topic-id: sdd-openspec-artifacts
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+// Diese Datei darf inhaltsleer bleiben. Jede Aufgabe traegt ihre Art:
+//   kind: drill    generisch, wiederholbar, Musterloesung moeglich
+//   kind: project  am eigenen Projekt, keine Musterloesung
+
+== TODO: Aufgabentitel
+
+kind: drill
+
+TODO: Arbeitsauftrag
+
+.Solution
+[%collapsible]
+====
+TODO: Loesung oder Abschnitt loeschen
+====

@@ -3,52 +3,58 @@
 > Werkzeugsprache: **Python** (offene Frage aus `design.md` entschieden am 2026-09-07).
 > PyYAML als einzige Fremdabhaengigkeit, Ausfuehrung in Actions ueber `setup-python`.
 > `klassen-setup` bleibt Bash (P9).
+>
+> Waehrend der Umsetzung entschieden (2026-09-07): Themen tragen
+> `status: planned | ready` (Default `planned`). Bijektion, Pflichtabschnitte,
+> Outcome-Kopplung und Modulskelett greifen nur fuer `ready`; verwaiste Dateien und
+> unbekannte Themen-IDs fallen immer auf. Design P1/P2 und die Specs
+> `curriculum-model` und `curriculum-validation` sind nachgezogen.
 
 ## 1. Repository-Geruest
 
-- [ ] 1.1 Verzeichnisse `modules/`, `tools/`, `templates/`, `.github/workflows/` anlegen; Pruefung: `ls` zeigt alle vier, `git status` fuehrt sie (Platzhalterdatei je leerem Verzeichnis)
-- [ ] 1.2 `README.adoc` mit Zweck, Layout aus P6, Verweis auf `curriculum.yaml` als einzige Strukturwahrheit und auf die Zustaendigkeitsregel der beiden Fragenkataloge (P8); Pruefung: Datei rendert mit `local-convert.sh` fehlerfrei
-- [ ] 1.3 Python-Werkzeugbasis: `tools/requirements.txt` (PyYAML), `tools/README.adoc` mit Aufrufkonventionen; Pruefung: `pip install -r tools/requirements.txt` laeuft in frischem venv durch
-- [ ] 1.4 Gemeinsames Lademodul `tools/curriculum.py` (liest `curriculum.yaml`, leitet Modulpfade aus der ID ab, meldet fehlende Pflichtfelder mit Zeilenangabe); Pruefung: `python -c "import tools.curriculum as c; print(len(c.load().topics))"` gibt 54 aus
+- [x] 1.1 Verzeichnisse `modules/`, `tools/`, `templates/`, `.github/workflows/` anlegen; Pruefung: `ls` zeigt alle vier, `git status` fuehrt sie (Platzhalterdatei je leerem Verzeichnis)
+- [x] 1.2 `README.adoc` mit Zweck, Layout aus P6, Verweis auf `curriculum.yaml` als einzige Strukturwahrheit und auf die Zustaendigkeitsregel der beiden Fragenkataloge (P8); Pruefung: Datei rendert mit `local-convert.sh` fehlerfrei
+- [x] 1.3 Python-Werkzeugbasis: `tools/requirements.txt` (PyYAML), `tools/README.adoc` mit Aufrufkonventionen; Pruefung: `pip install -r tools/requirements.txt` laeuft in frischem venv durch
+- [x] 1.4 Gemeinsames Lademodul `tools/curriculum.py` (liest `curriculum.yaml`, leitet Modulpfade aus der ID ab, meldet fehlende Pflichtfelder mit Zeilenangabe); Pruefung: `python -c "import tools.curriculum as c; print(len(c.load().topics))"` gibt 54 aus
 
 ## 2. CI-Check `tools/check-curriculum.py` (P2)
 
-- [ ] 2.1 Grundgeruest mit Pruefungsregistry, Sammel-Reporting (Datei, Zeile, Ist/Soll) und Exit-Code != 0 bei mindestens einem Fehler; Pruefung: Lauf auf einem manipulierten Fixture endet mit Exit-Code 1 und listet alle Fehler, nicht nur den ersten
-- [ ] 2.2 Pruefung 1 Bijektion: jedes Topic hat `index.adoc`, jede `.adoc` unter `modules/` traegt eine in der yaml bekannte `:topic-id:`; Pruefung: Fixture mit fehlender Datei und Fixture mit verwaister Datei schlagen je mit dem erwarteten Text fehl
-- [ ] 2.3 Pruefung 2 Budget: Summe `ue` je `kind` gegen `meta.budget` (26/56) und je Block gegen `meta.budget_je_block`; Pruefung: Fixture mit einem Theorie-Topic zu viel nennt Ist- und Sollwert
-- [ ] 2.4 Pruefung 3 Graph: `requires` zeigt nur auf existierende IDs, keine Zyklen, keine Vorwaertsreferenz ueber `lesson` bzw. `taught_in`; Pruefung: Fixtures fuer unbekannte ID, Zweierzyklus und verschobene Voraussetzung schlagen fehl und nennen beide Topics mit Unterrichtsnummer
-- [ ] 2.5 Pruefung 4 Vollstaendigkeit: `taught_in` und `prerequisite_for` je Topic gesetzt, jedes Topic mit `kind: praxis` hat mindestens eine Frage; Pruefung: Praxis-Fixture ohne Frage schlaegt fehl, Theorie-Fixture ohne Frage nicht
-- [ ] 2.6 Pruefung 5 Slot-Belegung: je `lesson` hoechstens ein Theorie- und ein Praxis-Topic, keine Luecke zwischen Unterricht 1 und dem letzten belegten; Pruefung: Doppelbelegung und Luecke schlagen je mit Nummernangabe fehl
-- [ ] 2.7 Pruefung 6 Pflichtabschnitte: `== Learning outcomes`, `== Decisions`, `== Pitfalls`, `== Terminology` vorhanden und nicht leer, ausdrueckliche Nullaussage gilt als erfuellt; Pruefung: Fixture ohne `Decisions` schlaegt fehl, Fixture mit "None specific to this topic." besteht
-- [ ] 2.8 Pruefung 7 Outcome-Kopplung: jedes Learning outcome hat >= 1 Frage in `questions.adoc`, jede Frage verweist auf ein existierendes Outcome; Pruefung: beide Richtungen als Fixture rot
-- [ ] 2.9 Pruefung 8 Bildherkunft: jedes `image::` unter `modules/` traegt genau eine Klasse `own | free | unclear`, `free` verlangt Lizenzname und URL; Pruefung: Bild ohne Klasse und `free` ohne Quelle schlagen mit Datei und Zeile fehl
-- [ ] 2.10 Pruefung 9 Modulskelett: jedes Modulverzeichnis enthaelt `index.adoc`, `exercises.adoc`, `questions.adoc`; `exercises.adoc` darf inhaltsleer sein; Pruefung: Modul ohne Aufgabendatei schlaegt fehl, Modul mit leerer Aufgabendatei besteht
-- [ ] 2.11 Zusatzpruefung Strukturattribute: `.adoc` unter `modules/` traegt ausser `:topic-id:` kein Attribut mit UE-Zahl, Block, Jahrgang oder Voraussetzung; Pruefung: Fixture mit `:ue: 2` schlaegt fehl und nennt Datei und Attribut
-- [ ] 2.12 Fixture-Testsuite unter `tools/tests/` mit je einem roten und einem gruenen Fall pro Pruefung; Pruefung: `python -m pytest tools/tests` gruen, jede der neun Pruefungen mindestens einmal abgedeckt
+- [x] 2.1 Grundgeruest mit Pruefungsregistry, Sammel-Reporting (Datei, Zeile, Ist/Soll) und Exit-Code != 0 bei mindestens einem Fehler; Pruefung: Lauf auf einem manipulierten Fixture endet mit Exit-Code 1 und listet alle Fehler, nicht nur den ersten
+- [x] 2.2 Pruefung 1 Bijektion: jedes Topic hat `index.adoc`, jede `.adoc` unter `modules/` traegt eine in der yaml bekannte `:topic-id:`; Pruefung: Fixture mit fehlender Datei und Fixture mit verwaister Datei schlagen je mit dem erwarteten Text fehl
+- [x] 2.3 Pruefung 2 Budget: Summe `ue` je `kind` gegen `meta.budget` (26/56) und je Block gegen `meta.budget_je_block`; Pruefung: Fixture mit einem Theorie-Topic zu viel nennt Ist- und Sollwert
+- [x] 2.4 Pruefung 3 Graph: `requires` zeigt nur auf existierende IDs, keine Zyklen, keine Vorwaertsreferenz ueber `lesson` bzw. `taught_in`; Pruefung: Fixtures fuer unbekannte ID, Zweierzyklus und verschobene Voraussetzung schlagen fehl und nennen beide Topics mit Unterrichtsnummer
+- [x] 2.5 Pruefung 4 Vollstaendigkeit: `taught_in` und `prerequisite_for` je Topic gesetzt, jedes Topic mit `kind: praxis` hat mindestens eine Frage; Pruefung: Praxis-Fixture ohne Frage schlaegt fehl, Theorie-Fixture ohne Frage nicht
+- [x] 2.6 Pruefung 5 Slot-Belegung: je `lesson` hoechstens ein Theorie- und ein Praxis-Topic, keine Luecke zwischen Unterricht 1 und dem letzten belegten; Pruefung: Doppelbelegung und Luecke schlagen je mit Nummernangabe fehl
+- [x] 2.7 Pruefung 6 Pflichtabschnitte: `== Learning outcomes`, `== Decisions`, `== Pitfalls`, `== Terminology` vorhanden und nicht leer, ausdrueckliche Nullaussage gilt als erfuellt; Pruefung: Fixture ohne `Decisions` schlaegt fehl, Fixture mit "None specific to this topic." besteht
+- [x] 2.8 Pruefung 7 Outcome-Kopplung: jedes Learning outcome hat >= 1 Frage in `questions.adoc`, jede Frage verweist auf ein existierendes Outcome; Pruefung: beide Richtungen als Fixture rot
+- [x] 2.9 Pruefung 8 Bildherkunft: jedes `image::` unter `modules/` traegt genau eine Klasse `own | free | unclear`, `free` verlangt Lizenzname und URL; Pruefung: Bild ohne Klasse und `free` ohne Quelle schlagen mit Datei und Zeile fehl
+- [x] 2.10 Pruefung 9 Modulskelett: jedes Modulverzeichnis enthaelt `index.adoc`, `exercises.adoc`, `questions.adoc`; `exercises.adoc` darf inhaltsleer sein; Pruefung: Modul ohne Aufgabendatei schlaegt fehl, Modul mit leerer Aufgabendatei besteht
+- [x] 2.11 Zusatzpruefung Strukturattribute: `.adoc` unter `modules/` traegt ausser `:topic-id:` kein Attribut mit UE-Zahl, Block, Jahrgang oder Voraussetzung; Pruefung: Fixture mit `:ue: 2` schlaegt fehl und nennt Datei und Attribut
+- [x] 2.12 Fixture-Testsuite unter `tools/tests/` mit je einem roten und einem gruenen Fall pro Pruefung; Pruefung: `python -m pytest tools/tests` gruen, jede der neun Pruefungen mindestens einmal abgedeckt
 - [ ] 2.13 Lauf gegen den echten Stand: `python tools/check-curriculum.py` meldet ausschliesslich noch nicht angelegte Module und keinen Strukturfehler; Befund im Continuation-Dokument festhalten
 
 ## 3. Generatoren (P3)
 
-- [ ] 3.1 `tools/gen-mindmap.py`: `curriculum.yaml` -> `@startmindmap` je Block und Topic; Pruefung: neues Topic im Fixture erscheint nach dem Lauf als Knoten
-- [ ] 3.2 `tools/gen-nav.py`: Navigation in Unterrichtsreihenfolge, verlinkt `assignment_template` wo gesetzt; Pruefung: geaenderte `lesson` aendert die Reihenfolge ohne Handarbeit
-- [ ] 3.3 `tools/gen-ue-overview.py`: UE-Uebersicht je Block und je Art mit Summen; Pruefung: Ausgabe stimmt mit den Budgettabellen aus `define-syp3-curriculum/design.md` ueberein
-- [ ] 3.4 `tools/gen-questions.py`: Sammellauf ueber alle `questions.adoc`, Tags `block`, `taught_in`, `prerequisite_for`, `topic` aus dem Modell; Pruefung: erzeugter Katalog enthaelt keine Tags aus Ueberschriftentext
-- [ ] 3.5 Erzeugte Artefakte nach `build/` schreiben, jede Datei mit Kopfzeile "GENERATED — do not edit"; Pruefung: `build/` ist in `.gitignore` bzw. als generiert gekennzeichnet
-- [ ] 3.6 CI-Schritt "generators are current": alle Generatoren laufen, danach `git diff --exit-code` ueber eingecheckte generierte Dateien; Pruefung: Handaenderung an einer erzeugten Datei laesst den Build rot werden
+- [x] 3.1 `tools/gen-mindmap.py`: `curriculum.yaml` -> `@startmindmap` je Block und Topic; Pruefung: neues Topic im Fixture erscheint nach dem Lauf als Knoten
+- [x] 3.2 `tools/gen-nav.py`: Navigation in Unterrichtsreihenfolge, verlinkt `assignment_template` wo gesetzt; Pruefung: geaenderte `lesson` aendert die Reihenfolge ohne Handarbeit
+- [x] 3.3 `tools/gen-ue-overview.py`: UE-Uebersicht je Block und je Art mit Summen; Pruefung: Ausgabe stimmt mit den Budgettabellen aus `define-syp3-curriculum/design.md` ueberein
+- [x] 3.4 `tools/gen-questions.py`: Sammellauf ueber alle `questions.adoc`, Tags `block`, `taught_in`, `prerequisite_for`, `topic` aus dem Modell; Pruefung: erzeugter Katalog enthaelt keine Tags aus Ueberschriftentext
+- [x] 3.5 Erzeugte Artefakte nach `build/` schreiben, jede Datei mit Kopfzeile "GENERATED — do not edit"; Pruefung: `build/` ist in `.gitignore` bzw. als generiert gekennzeichnet
+- [x] 3.6 Erzeugte Artefakte bleiben unversioniert: Generatoren schreiben ausschliesslich nach `build/` (in `.gitignore`) und laufen bei jedem Build vor asciidoctor; Pruefung: `test_repo_layout.py` faellt rot, sobald eine Datei mit GENERATED-Kopf im Versionsstand liegt oder `build/` nicht ignoriert wird — ein `git diff`-Vergleich entfaellt damit, weil eine Handaenderung an `build/` den naechsten Lauf ohnehin nicht ueberlebt
 
 ## 4. Modulformat und Skelett (P4)
 
-- [ ] 4.1 `templates/module/` mit `index.adoc` (feste Abschnittsfolge inkl. Pflichtabschnitte), `exercises.adoc` (Kennzeichnung `drill|project`, Loesung als `[%collapsible]`), `questions.adoc` (Verweis auf Outcome-ID); Pruefung: aus der Vorlage erzeugtes Modul besteht die Pruefungen 6, 7, 9
-- [ ] 4.2 `tools/new-module.py <topic-id>`: legt Verzeichnis, drei Dateien und `images/` aus Vorlage und yaml-Daten an; Pruefung: Aufruf fuer ein Topic ohne Modul erzeugt ein Skelett, das `check-curriculum.py` nur wegen fehlender Inhalte, nicht wegen Struktur bemaengelt
-- [ ] 4.3 Modulskelette fuer `git-basics` und `sdd-openspec` anlegen (Einfuehrungsplan Schritt 3); Pruefung: beide Module bestehen alle neun Pruefungen mit ausdruecklichen Nullaussagen, wo noch nichts feststeht
-- [ ] 4.4 Autorenleitfaden `templates/module/README.adoc`: Abschnittszweck, Nullaussage, Aufgabenarten, PlantUML-Default, Bildherkunft, Terminology-Paare; Pruefung: Leitfaden nennt jede der neun CI-Pruefungen mit der Stelle, an der sie greift
+- [x] 4.1 `templates/module/` mit `index.adoc` (feste Abschnittsfolge inkl. Pflichtabschnitte), `exercises.adoc` (Kennzeichnung `drill|project`, Loesung als `[%collapsible]`), `questions.adoc` (Verweis auf Outcome-ID); Pruefung: aus der Vorlage erzeugtes Modul besteht die Pruefungen 6, 7, 9
+- [x] 4.2 `tools/new-module.py <topic-id>`: legt Verzeichnis, drei Dateien und `images/` aus Vorlage und yaml-Daten an; Pruefung: Aufruf fuer ein Topic ohne Modul erzeugt ein Skelett, das `check-curriculum.py` nur wegen fehlender Inhalte, nicht wegen Struktur bemaengelt
+- [x] 4.3 Modulskelette fuer `git-basics` und `sdd-openspec-artifacts` (so heisst das Thema im Modell) anlegen (Einfuehrungsplan Schritt 3); Pruefung: beide Module bestehen alle neun Pruefungen mit ausdruecklichen Nullaussagen, wo noch nichts feststeht
+- [x] 4.4 Autorenleitfaden `templates/module/README.adoc`: Abschnittszweck, Nullaussage, Aufgabenarten, PlantUML-Default, Bildherkunft, Terminology-Paare; Pruefung: Leitfaden nennt jede der neun CI-Pruefungen mit der Stelle, an der sie greift
 
 ## 5. Pipeline und Publikation (P7, P11)
 
-- [ ] 5.1 Containerisiertes asciidoctor-Image um `asciidoctor-diagram` und Graphviz ergaenzen, `local-convert.sh` uebernehmen und anpassen; Pruefung: ein Modul mit PlantUML-Block rendert lokal ohne lokale Ruby-Installation
+- [x] 5.1 Containerisiertes asciidoctor-Image um `asciidoctor-diagram` und Graphviz ergaenzen, `local-convert.sh` uebernehmen und anpassen; Pruefung: ein Modul mit PlantUML-Block rendert lokal ohne lokale Ruby-Installation
 - [ ] 5.2 Workflow `build`: `check-curriculum.py` -> Generatoren -> asciidoctor -> Deploy auf `gh-pages`; Pruefung: Push auf `main` veroeffentlicht, roter Check verhindert das Deploy und die Site bleibt auf dem letzten gueltigen Stand
 - [ ] 5.3 Eigener Job `rights-check`: faellt rot bei `unclear > 0`, listet Datei und Zeile, blockiert das Deploy nicht; Pruefung: Modul mit `unclear`-Bild wird veroeffentlicht und der Job meldet es rot
-- [ ] 5.4 revealjs-Ausgabe aus derselben Quelle erzeugen; Pruefung: Aenderung an einem Modultext erscheint ohne zweite Bearbeitung in der Praesentationsansicht
+- [x] 5.4 revealjs-Ausgabe aus derselben Quelle erzeugen; Pruefung: Aenderung an einem Modultext erscheint ohne zweite Bearbeitung in der Praesentationsansicht
 - [ ] 5.5 `publish.sh` fuer rsync auf den Schulwebspace, lokal ausfuehrbar, keine Zugangsdaten in Actions-Secrets; Pruefung: Lauf legt die Site parallel zur bestehenden Hugo-Site ab, ein Altlink bleibt erreichbar
 - [ ] 5.6 GitHub Pages fuer `htl-leonding-college/curriculum-syp3` aktivieren und Einstiegsseite verlinken (Altsite, bestehender Fragenkatalog); Pruefung: oeffentliche URL liefert die Site ohne Anmeldung
 

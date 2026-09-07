@@ -1,0 +1,2 @@
+# Laufzeitabhaengigkeit der Werkzeuge unter tools/ (Python).
+PyYAML>=6.0

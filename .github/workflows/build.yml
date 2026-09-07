@@ -1,0 +1,76 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Curriculum pruefen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r tools/requirements-dev.txt
+      - name: Pruefungen (P2)
+        run: python tools/check-curriculum.py
+      - name: Fixture-Testsuite
+        run: python -m pytest tools/tests -q
+
+  rights-check:
+    name: Bildrechte melden
+    runs-on: ubuntu-latest
+    # Faellt rot bei ungeklaerten Bildern, blockiert die Veroeffentlichung aber
+    # nicht: deploy haengt nur an check und build.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r tools/requirements.txt
+      - run: python tools/rights-report.py
+
+  build:
+    name: Site bauen
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r tools/requirements.txt
+      - name: Generatoren, asciidoctor und revealjs
+        # Derselbe Ablauf wie lokal — das containerisierte asciidoctor ist die
+        # verbindliche Instanz zwischen Linux- und macOS-Geraeten.
+        run: ./local-convert.sh --skip-check
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+
+  deploy:
+    name: Auf GitHub Pages veroeffentlichen
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

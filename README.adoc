@@ -1,0 +1,116 @@
+= Curriculum SYP 3. Jahrgang
+:toc: left
+:toc-title: Inhalt
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Stoffstruktur, Lernmodule und Publikationsweg fuer den Gegenstand SYP im
+3. Jahrgang der HTL Leonding (Unterrichtssprache Englisch, Schuljahr 2026/27).
+
+== Was hier liegt
+
+[cols="1,3",options="header"]
+|===
+|Pfad |Inhalt
+
+|`curriculum.yaml`
+|Stoffstruktur: Themen, Umfang, Blockzuordnung, Unterrichtsnummer,
+ Jahrgangszuordnung, Voraussetzungen
+
+|`modules/<topic-id>/`
+|Lernmodul: `index.adoc`, `exercises.adoc`, `questions.adoc`, `images/`
+
+|`templates/`
+|Vorlagen fuer Module, Schuelerprojekte und Governance-Artefakte
+
+|`tools/`
+|Pruefung und Generatoren (Python)
+
+|`openspec/`
+|Planung: Proposals, Specs, Designs, Task-Listen
+
+|`continuations/`
+|Arbeitsstand zwischen Sitzungen
+
+|`.github/workflows/`
+|Pipeline: Pruefung, Build, Veroeffentlichung auf GitHub Pages
+|===
+
+== curriculum.yaml ist die einzige Strukturwahrheit
+
+Themenzuschnitt, Umfang in Unterrichtseinheiten, Block, Unterrichtsnummer,
+Jahrgangszuordnung und Voraussetzungen stehen *ausschliesslich* in
+`curriculum.yaml`. Eine Lernressource traegt ausser ihrer `:topic-id:` keine
+Strukturangabe.
+
+[source,adoc]
+----
+= Branching in git
+:topic-id: git-branching
+----
+
+Die Dateipfade werden aus der ID abgeleitet, nicht eingetragen:
+`modules/<topic-id>/index.adoc`.
+
+WARNING: Sobald UE-Zahlen, Blockangaben oder Voraussetzungen zusaetzlich im
+AsciiDoc auftauchen, gibt es zwei Wahrheiten. Die Pruefung meldet solche
+Attribute als Fehler.
+
+Alles Abgeleitete — Mindmap, Website-Navigation, UE-Uebersicht und
+Fragenkatalog-Tags — wird erzeugt und nicht von Hand gepflegt.
+
+== Pruefen und bauen
+
+[source,bash]
+----
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r tools/requirements.txt
+
+python tools/check-curriculum.py     # Struktur- und Modulpruefungen
+----
+
+Details zu den Werkzeugen: `tools/README.adoc`.
+
+== Zwei Fragenkataloge, geteilte Zustaendigkeit
+
+[cols="1,2",options="header"]
+|===
+|Katalog |Zustaendig fuer
+
+|Dieses Repository (erzeugt aus den `questions.adoc` der Module)
+|SYP 3. Jahrgang ab dem Schuljahr 2026/27 — massgeblich
+
+|https://htl-leonding-college.github.io/fragenkatalog[fragenkatalog]
+|uebrige Gegenstaende und Jahrgaenge; bleibt unveraendert als Archiv erhalten
+|===
+
+Der bestehende Katalog wird nicht migriert; seine Adressen und Sprungmarken
+bleiben stabil.
+
+== Quellen und Rechte
+
+Bilder tragen beim Einfuegen ihre Herkunft: `own`, `free` (mit Lizenzname und
+Quelladresse) oder `unclear`. Der Job `rights-check` meldet `unclear` sichtbar,
+verhindert die Veroeffentlichung aber nicht.
+
+Das Manz-Schulbuch bleibt inhaltliche Quelle. Uebernommen werden nur Inhalte in
+eigener Formulierung und eigener Gliederung — keine Abbildungen, keine
+Seitenkopien, keine Weitergabe der PDF-Kapitel, auch nicht digital an einen
+abgegrenzten Kurs.
+
+== Planung
+
+Entscheidungen und offene Punkte stehen in `openspec/changes/`:
+
+* `define-syp3-curriculum` — Inhalt, Jahresrahmen, Sequenz
+* `setup-curriculum-repository` — Repository, Pruefung, Generatoren, Publikation

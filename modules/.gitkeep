@@ -1,0 +1,2 @@
+# Lernmodule — je Topic ein Verzeichnis `modules/<topic-id>/`.
+# Erzeugt mit `python tools/new-module.py <topic-id>` (siehe tools/README.adoc).

@@ -1,0 +1,39 @@
+= Curriculum SYP 3. Jahrgang
+:toc: left
+:toc-title: Inhalt
+:toclevels: 2
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+Lernressourcen fuer den Gegenstand SYP im 3. Jahrgang der HTL Leonding,
+Schuljahr 2026/27. Unterrichtssprache ist Englisch; Fachbegriffe der
+Projekt-Governance werden zusaetzlich deutsch gefuehrt.
+
+== Stoffstruktur
+
+plantuml::stoffstruktur.puml[format=svg]
+
+== Unterrichte
+
+include::nav.adoc[]
+
+== Umfang
+
+include::ue-overview.adoc[leveloffset=+1]
+
+== Weiteres
+
+* link:questions/index.html[Fragenkatalog] — massgeblich fuer SYP 3. Jahrgang
+  ab 2026/27
+* https://htl-leonding-college.github.io/fragenkatalog[Bestehender Fragenkatalog]
+  — uebrige Gegenstaende und Jahrgaenge, bleibt als Archiv erhalten
+* https://edufs.edu.htl-leonding.ac.at/~t.stuetz/hugo/[Aeltere Projektseiten]
+  — unveraendert erreichbar
