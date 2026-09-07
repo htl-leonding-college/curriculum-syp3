@@ -213,37 +213,75 @@ mit genau der Theorie, die erklärt, *warum* jetzt specs statt Pflichtenheft kom
 Die tiefen AI-Themen (Harness Engineering, Loops, agentische Muster) liegen bewusst nach U10,
 wenn die Schüler AI bereits am eigenen Projekt einsetzen.
 
+### D11 — Nutzung des Manz-Schulbuchs
+
+Recherchestand 2026-09-06, keine Rechtsberatung. Die Schulgebrauchs-Ausnahme des § 42
+Abs 6 UrhG nimmt Werke aus, die ihrer Beschaffenheit und Bezeichnung nach für den
+Unterrichtsgebrauch bestimmt sind. Ein Schulbuch ist genau das — die Ausnahme greift
+also **nicht**, auch nicht auf Papier und auch nicht in Klassenstärke. § 42g (digitale
+Nutzung) enthält dieselbe Ausnahme und deckt ohnehin nur einen abgegrenzten
+Teilnehmerkreis, nicht das offene Netz.
+
+Gleichzeitig sind Fakten und Erkenntnisse nie geschützt, nur ihre konkrete sprachliche
+Darstellung.
+
+```
+ZULAESSIG                                UNZULAESSIG
+Inhalte in eigener Formulierung          Seitenkopien, Scans, PDF-Kapitel weitergeben
+eigene Gliederung des Stoffs             Kapitelgliederung 1:1 uebernehmen (§ 6)
+Zitat mit Belegfunktion und Quelle       Abbildungen uebernehmen
+Verweis auf das Buch als Quelle          Verteilung an die Klasse, auch digital
+```
+
+*Folge fuer das Curriculum:* Das Buch bleibt inhaltliche Quelle. Die Gliederung folgt
+ohnehin der Werkzeugkette (D10) und nicht der Kapitelfolge des Buchs, wodurch die
+Sammelwerksfrage aus § 6 gar nicht erst entsteht. Die vorhandenen PDF-Kapitel dienen der
+eigenen Vorbereitung und werden nicht verteilt.
+
+*Verweis:* Die entsprechende Regelung für Bilder auf der öffentlichen Site steht in
+`../setup-curriculum-repository/design.md` — P11.
+
 ## Jahresrahmen
 
 ```
 30 Unterrichte x 3 UE = 90 UE geplant
-   U1     Vorstellungseinheit                    3 UE
-   U2-U25 Kernbetrieb                           72 UE  = 24 T / 48 P
-   U26-30 Reserve / Ausfallpuffer               15 UE
+   U1      Einfuehrung                            3 UE  =  1 T /  2 P
+   U2-U25  Kernbetrieb                           72 UE  = 24 T / 48 P
+   U26-U30 Reserve / Ausfallpuffer               15 UE  (davon 7 UE belegt)
 ```
 
-**Theorie ~25 UE**
+Ein Unterricht besteht aus einem Theorieslot (1 UE) und einem Praxisslot (2 UE); ein
+Thema fuellt genau einen Slot (`setup-curriculum-repository` — P1). Alle UE-Zahlen sind
+daher Vielfache dieser Slotgroesse. **Verbindlich ist `curriculum.yaml`**; die Tabellen
+hier sind die Vorgabe, gegen die der CI-Check prueft (P2, Pruefung 2).
 
-| Block | UE |
-|---|---|
-| Governance (Projektbegriff, Ausgangslage, Kreativitätstechniken, Nutzwertanalyse, Stakeholder, Zielsetzung, Projektauftrag, Schätz-Hygiene, Meilensteinplanung, Abnahme) | 8 |
-| Vorgehensmodelle-Überblick (Wasserfall / Scrum / SDD) | 3 |
-| SDD / openspec vertieft | 5 |
-| Brücke Governance ↔ SDD | 2 |
-| Was ist Software-Engineering | 1 |
-| UML | 5 |
-| Reserve / Leistungsfeststellung | 1 |
+**Theorie 26 UE = 26 Themen**
 
-**Praxis ~50 UE**
+| Block | UE | Inhalt |
+|---|---|---|
+| `governance` | 9 | Projektbegriff, Ausgangslage, Kreativitätstechniken, Nutzwertanalyse, Stakeholder, Zielsetzung, Projektauftrag, Schätz-Hygiene, Meilensteinplanung, Abnahme (8) + Leistungsfeststellung in der Reserve (1) |
+| `vorgehen` | 10 | Vorgehensmodelle-Überblick, Wasserfall, Scrum (3) + SDD / openspec vertieft (5) + Brücke Governance ↔ SDD (2) |
+| `modellierung` | 5 | UML: Überblick, Use-Case, Klassen/Objekt, Aktivität, Zustand im Überblick |
+| `werkzeuge` | 2 | Kursüberblick U1 (1) + Was ist Software-Engineering (1) |
 
-| Block | UE |
-|---|---|
-| git + asciidoctor + gh-actions/Pages | 14 |
-| AI (Grundlagen + Vertiefung) | 15 |
-| Docker (inkl. Multi-Arch) | 8 |
-| docker compose | 6 |
-| Projektbetreuung / Meilenstein-Reviews | 7 |
-| minikube *(Reserve-Zone)* | 6 |
+**Praxis 56 UE = 28 Themen à 2 UE**
+
+| Block | UE | Inhalt |
+|---|---|---|
+| Lernumgebung | 2 | Einrichtung in U1 |
+| git + asciidoctor + gh-actions/Pages + revealjs | 14 | 7 Themen |
+| AI inkl. openspec-Praxis | 14 | 7 Themen; die openspec-Praxis (U10) war in der ersten Fassung ohne Budgetposten |
+| Docker (inkl. Multi-Arch) | 8 | 4 Themen |
+| docker compose | 6 | 3 Themen |
+| Meilenstein-Reviews | 6 | 3 Themen |
+| minikube *(Reserve-Zone)* | 6 | 3 Themen |
+
+*Abweichung gegenüber der ersten Fassung:* AI 15 → 14 UE und Reviews 7 → 6 UE. Beide
+Zahlen waren ungerade und passen nicht in ein Raster aus Zwei-UE-Slots. Die frei
+gewordene UE deckt den openspec-Praxisslot mit ab.
+
+*Ungenutzt:* U29 und U30 sowie die Theorieslots von U27 und U28 — 8 UE reiner Puffer
+am Jahresende (D9).
 
 ## Eröffnungssequenz
 

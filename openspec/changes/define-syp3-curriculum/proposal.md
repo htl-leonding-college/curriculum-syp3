@@ -69,8 +69,8 @@ abgelegt werden.
 
 ### Offen
 
-- Urheberrechtliche Bedingungen für die Verwendung des Manz-Schulbuchs — und damit
-  zusammenhängend für Bilder aus dem Web auf einer öffentlich zugänglichen Site (P11).
+Keine. Die urheberrechtlichen Bedingungen sind in D11 (Manz-Schulbuch) und
+`setup-curriculum-repository` — P11 (Bilder auf öffentlicher Site) festgehalten.
 
 ## Capabilities
 
@@ -104,8 +104,10 @@ noch keine Capabilities.
 - **Unterrichtsmaterial**: Lernressourcen werden auf Englisch neu erstellt. Bestehende
   Keynote-/PDF-Materialien (`01.Vorgehensmodelle`, PUMA-Kreativitätstechniken,
   PUMA-Nutzwertanalyse, UML Uni Heidelberg) werden weiterverwendet bzw. abgelöst.
-- **Manz-Schulbuch**: Weiterhin Quelle, aber nur Aufzählungen und Texte in eigener
-  Formulierung; keine Abbildungen oder Seitenkopien (rechtliche Prüfung offen).
+- **Manz-Schulbuch**: Weiterhin inhaltliche Quelle, aber nur Texte in eigener
+  Formulierung und eigener Gliederung; keine Abbildungen, keine Seitenkopien, keine
+  Weitergabe der PDF-Kapitel — auch nicht digital an einen abgegrenzten Kurs. Die
+  Schulgebrauchs-Ausnahme des UrhG nimmt Schulbücher ausdrücklich aus (D11).
 - **Schülerprojekte**: Repository-Struktur mit openspec, Projektdokumentation als
   AsciiDoc, Publikation über GitHub Pages.
 - **Fragenkatalog** (htl-leonding-college.github.io/fragenkatalog): **keine Änderung.**

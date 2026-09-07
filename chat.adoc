@@ -185,7 +185,12 @@ vorgetragen habe und wie weit ich gekommen bin. Ich kann ruhig anhand eines Text
 
 Fazit: Ich muss nicht unbedingt Foliensätze haben.
 
+//--
 
+Würde dieses Repo gerne in github einchecken. Soll ich es in der Organisation "htl-leonding-college" speichern oder soll ich eine eigene Organisation für dieses Repo und die anderen, die später dazukommen?
+
+
+Nimme keine 4. Klasse quote auf und schließe "unclear" nicht von der auslieferung aus
 
 
 

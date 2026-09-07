@@ -70,12 +70,6 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4     # ersetzt Foundation / Advanced
     requires: [git-basics, ai-prompting]
-    resources:
-      - modules/sdd-why-specs/index.adoc
-    exercises:
-      - modules/sdd-why-specs/exercises.adoc
-    questions:
-      - modules/sdd-why-specs/questions.adoc
 ```
 
 ```adoc
@@ -85,6 +79,19 @@ topics:
 
 ...Inhalt...
 ```
+
+**Dateipfade werden abgeleitet, nicht eingetragen.** Aus der ID folgt:
+
+```
+modules/<id>/index.adoc        Lerninhalt
+modules/<id>/exercises.adoc    Aufgaben
+modules/<id>/questions.adoc    Pruefungsfragen
+modules/<id>/images/           Bilder des Moduls
+```
+
+Eine Pfadliste in der yaml waere eine zweite Wahrheit ueber etwas, das die Konvention
+bereits festlegt — und bei rund 50 Themen eine Fehlerquelle ohne Gegenwert. Prueft der
+CI-Check die Bijektion (P2, Pruefung 1), rechnet er die Pfade aus der ID aus.
 
 *Begründung:* Reine Attribute in den `.adoc` (Variante 1) erlauben keine Planung von
 Themen, für die noch keine Ressource existiert, und keine Gesamtsicht ohne Scan. Eine
@@ -581,11 +588,49 @@ Job "rights-check"  faellt rot bei unclear > 0, listet Datei und Zeile
 ungeklärten Bild aufhängen — mit der Folge, dass die Klasse `unclear` gemieden und das
 Feld wertlos wird. Ehrlich zu sein muss die bequemere Option bleiben.
 
-*Rechtliche Einordnung offen:* Die Site ist öffentlich. § 42 UrhG deckt Vervielfältigung
-für den eigenen Schulgebrauch, nicht öffentliche Zugänglichmachung im Web. Das betrifft
-die bestehenden Lecture-Notes-Sites bereits heute. Belastbar geklärt wird das zusammen
-mit der Manz-Frage; hier wird nur die Struktur festgelegt, die eine spätere Bereinigung
-möglich macht.
+**Rechtliche Grundlage** (Recherchestand 2026-09-06, keine Rechtsberatung). Die
+entscheidende Trennlinie ist nicht „Unterricht oder nicht", sondern **öffentlich oder
+abgegrenzt**:
+
+```
+Moodle (Login, abgegrenzter Kursteilnehmerkreis)  -> § 42g UrhG greift
+gh-pages / Schulwebspace (oeffentlich)            -> § 42g UrhG greift NICHT
+```
+
+| Bestimmung | Inhalt | Folge für diese Site |
+|---|---|---|
+| § 42 Abs 6 | Vervielfältigung zum Schulgebrauch in Klassenstärke — **ausgenommen Werke, die ihrer Beschaffenheit und Bezeichnung nach für den Unterrichtsgebrauch bestimmt sind** | deckt Schulbücher nicht; deckt keine Web-Veröffentlichung |
+| § 42g | digitale Nutzung für einen **abgegrenzten Kreis von Unterrichtsteilnehmern**, als Intranet-Regel gedacht | deckt Moodle, nicht das offene Netz; dieselbe Schulbuch-Ausnahme |
+| § 42f | Zitat, ausdrücklich auch bei öffentlicher Zugänglichmachung — verlangt **Belegfunktion**, inneren Zusammenhang, verhältnismäßigen Umfang, Quellenangabe | einziger Weg für fremdes Material ohne Lizenz |
+| § 6 | Sammelwerke: Auswahl und Anordnung sind schutzfähig, wenn eigentümlich | Gliederungen nicht 1:1 übernehmen |
+| — | Fakten und Erkenntnisse sind nie geschützt, nur ihre konkrete sprachliche Darstellung | Inhalte in eigener Formulierung sind frei |
+
+Zur Abgrenzung beim Bildzitat: Ein Bild, das den Text *illustriert*, ist kein Zitat. Ein
+Bild, mit dem sich der Text erkennbar auseinandersetzt, kann eines sein.
+
+```
+"Grafik, weil sie Scrum gut zeigt"          -> Illustration, kein Zitat
+"So stellt Quelle X den Ablauf dar; hier
+ liegt der Review vor der Retro, waehrend"  -> Belegfunktion, Zitat
+```
+
+Screenshots von Software-Oberflächen aus Piktogrammen, Menüs und Navigationselementen
+gelten weithin als unkritisch und tragen im erklärenden Zusammenhang zusätzlich als
+Bildzitat.
+
+**Zwei Auswege, die nichts kosten:** ein Link auf eine frei zugängliche Seite ist keine
+Vervielfältigung; und Material, das § 42g deckt, kann in Moodle statt auf der
+öffentlichen Site liegen.
+
+**Bewusst getragenes Restrisiko:** Bilder der Klasse `unclear` werden trotz ungeklärter
+Rechtelage ausgeliefert. Eine vierte Klasse für Bildzitate und ein Ausschluss von
+`unclear` aus der Auslieferung wurden erwogen und verworfen — die Herkunftsangabe macht
+eine Bereinigung jederzeit möglich, und die Klassifikation soll die Arbeit nicht
+verlangsamen.
+
+Quellen: § 42, § 42f, § 42g und § 6 UrhG (jusline.at); „Urheberrecht und Schule",
+Bildungsdirektion Tirol; Saferinternet.at; OGH-Judikatur zum Bildzitat (jusguide.at);
+FAQ Copyright Universität Innsbruck.
 
 ### P12 — Sprache: Englisch, Governance-Begriffe zweisprachig
 

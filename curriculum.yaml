@@ -1,0 +1,607 @@
+# ============================================================================
+# Stoffstruktur SYP 3. Jahrgang — einzige Wahrheit fuer Struktur.
+#
+# Regeln (setup-curriculum-repository/design.md — P1):
+#   * Ein Topic entspricht einem Unterrichtsslot:
+#       kind: theorie -> ue: 1     kind: praxis -> ue: 2
+#   * Die Lernressource traegt ausser :topic-id: keine Strukturangabe.
+#   * Dateipfade werden aus der id abgeleitet, nicht eingetragen:
+#       modules/<id>/index.adoc | exercises.adoc | questions.adoc
+#       modules/<id>/images/
+#   * Diese Datei wird von Hand gepflegt; alles Abgeleitete (Mindmap,
+#     Navigation, UE-Uebersicht, Fragenkatalog-Tags) ist generiert.
+# ============================================================================
+
+meta:
+  jahrgang: jg3
+  gegenstand: SYP
+  schuljahr: "2026/27"
+  unterrichte: 30
+  ue_je_unterricht: 3
+  slots_je_unterricht:
+    theorie: 1        # 1 UE
+    praxis: 1         # 2 UE
+  zonen:
+    einfuehrung: [1]
+    kernbetrieb: [2, 25]
+    reserve: [26, 30]
+  budget:
+    theorie: 26       # 1 Einfuehrung + 24 Kernbetrieb + 1 Reserve
+    praxis: 56        # 2 Einfuehrung + 48 Kernbetrieb + 6 Reserve
+  # Theorie-UE je Block. Feingliederung aus define-syp3-curriculum/design.md:
+  #   governance  = 8 Governance + 1 Leistungsfeststellung (Reserve)
+  #   vorgehen    = 3 Vorgehensmodelle + 5 SDD + 2 Bruecke
+  #   modellierung= 5 UML
+  #   werkzeuge   = 1 Kursueberblick (U1) + 1 Was ist Software-Engineering
+  budget_je_block:
+    governance: 9
+    vorgehen: 10
+    modellierung: 5
+    werkzeuge: 2
+
+blocks:
+  - id: governance
+    title: Project governance
+  - id: vorgehen
+    title: Process models and spec-driven development
+  - id: modellierung
+    title: Modelling with UML
+  - id: werkzeuge
+    title: Tools and practice
+
+# ============================================================================
+# U1 — Einfuehrung
+# ============================================================================
+
+topics:
+  - id: course-overview
+    title: Course overview, organisation and assessment
+    block: werkzeuge
+    kind: theorie
+    ue: 1
+    lesson: 1
+    taught_in: jg3
+    prerequisite_for: none
+    requires: []
+
+  - id: learning-environment-setup
+    title: Setting up the learning environment
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 1
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: []
+
+# ============================================================================
+# Kernbetrieb U2-U25 — Theorie
+# ============================================================================
+
+  - id: governance-project-basics
+    title: What makes a project a project
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 2
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: []
+
+  - id: governance-idea-generation
+    title: Generating ideas with structured techniques
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 3
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [governance-project-basics]
+
+  - id: governance-weighted-scoring
+    title: Choosing a project with weighted scoring
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 4
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [governance-idea-generation]
+
+  - id: governance-stakeholders-goals
+    title: Stakeholders and verifiable project goals
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 5
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [governance-weighted-scoring]
+
+  - id: governance-project-charter
+    title: Structure of the project application and charter
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 6
+    taught_in: jg3
+    prerequisite_for: jg5
+    requires: [governance-stakeholders-goals]
+
+  - id: process-models-overview
+    title: Process models as three tempos of one pattern
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 7
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [governance-project-charter]
+
+  - id: sdd-why-specs
+    title: Why specifications instead of a requirements document
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 8
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [process-models-overview]
+
+  - id: bridge-charter-to-specs
+    title: From project charter to specifications
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 9
+    taught_in: jg3
+    prerequisite_for: jg5
+    requires: [governance-project-charter, sdd-why-specs]
+
+  - id: what-is-software-engineering
+    title: What software engineering is
+    block: werkzeuge
+    kind: theorie
+    ue: 1
+    lesson: 10
+    taught_in: jg3
+    prerequisite_for: none
+    requires: [process-models-overview]
+
+  - id: sdd-openspec-artifacts
+    title: The artefacts of spec-driven development
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 11
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [sdd-why-specs]
+
+  - id: sdd-change-lifecycle
+    title: The life cycle of a change
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 12
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [sdd-openspec-artifacts]
+
+  - id: bridge-progress-and-milestones
+    title: Reading project progress from changes
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 13
+    taught_in: jg3
+    prerequisite_for: jg5
+    requires: [bridge-charter-to-specs, sdd-change-lifecycle]
+
+  - id: sdd-specs-replace-requirements
+    title: The living target state replaces the requirements document
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 14
+    taught_in: jg3
+    prerequisite_for: jg5
+    requires: [sdd-change-lifecycle]
+
+  - id: governance-estimation-hygiene
+    title: Estimation hygiene instead of estimation methods
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 15
+    taught_in: jg3
+    prerequisite_for: jg5
+    requires: [governance-project-charter]
+
+  - id: governance-milestones
+    title: Planning milestones that can be verified
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 16
+    taught_in: jg3
+    prerequisite_for: jg5
+    requires: [governance-estimation-hygiene]
+
+  - id: governance-acceptance
+    title: Acceptance and handover
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 17
+    taught_in: jg3
+    prerequisite_for: jg5
+    requires: [governance-milestones]
+
+  - id: sdd-principle-not-tool
+    title: The principle is the subject, not the tool
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 18
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [sdd-specs-replace-requirements]
+
+  - id: process-waterfall
+    title: Waterfall and the V-model
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 19
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [process-models-overview]
+
+  - id: process-scrum
+    title: Scrum in outline
+    block: vorgehen
+    kind: theorie
+    ue: 1
+    lesson: 20
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [process-waterfall]
+
+  - id: uml-overview
+    title: UML diagram types and when to use them
+    block: modellierung
+    kind: theorie
+    ue: 1
+    lesson: 21
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [what-is-software-engineering]
+
+  - id: uml-use-case
+    title: Use case diagrams
+    block: modellierung
+    kind: theorie
+    ue: 1
+    lesson: 22
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [uml-overview, governance-stakeholders-goals]
+
+  - id: uml-class-object
+    title: Class and object diagrams
+    block: modellierung
+    kind: theorie
+    ue: 1
+    lesson: 23
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [uml-overview]
+
+  - id: uml-activity
+    title: Activity diagrams
+    block: modellierung
+    kind: theorie
+    ue: 1
+    lesson: 24
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [uml-overview]
+
+  - id: uml-state-overview
+    title: State diagrams in outline
+    block: modellierung
+    kind: theorie
+    ue: 1
+    lesson: 25
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [uml-overview]
+
+# ============================================================================
+# Kernbetrieb U2-U25 — Praxis
+# ============================================================================
+
+  - id: git-basics
+    title: Repository, commit, history
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 2
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [learning-environment-setup]
+
+  - id: git-branching
+    title: Branching and merging
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 3
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [git-basics]
+
+  - id: git-pull-requests
+    title: Pull requests and review
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 4
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [git-branching]
+
+  - id: git-conflicts-remotes
+    title: Conflicts and remote repositories
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 5
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [git-pull-requests]
+
+  - id: asciidoctor-basics
+    title: Documentation as text with AsciiDoc
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 6
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [git-basics]
+
+  - id: gh-actions-pages
+    title: From push to published page
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 7
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [asciidoctor-basics, git-conflicts-remotes]
+
+  - id: ai-basics-prompting
+    title: Working with AI agents, first steps
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 8
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [git-basics]
+
+  - id: ai-context-continuation
+    title: Providing context and continuing across sessions
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 9
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [ai-basics-prompting]
+
+  - id: openspec-hands-on
+    title: Running a change end to end
+    block: vorgehen
+    kind: praxis
+    ue: 2
+    lesson: 10
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [ai-context-continuation, sdd-why-specs, git-conflicts-remotes]
+
+  - id: ai-harness-engineering
+    title: Shaping the agent's working environment
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 11
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [openspec-hands-on]
+
+  - id: ai-agentic-loops
+    title: Repeating workflows and stop conditions
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 12
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [ai-harness-engineering]
+
+  - id: review-milestone-1
+    title: First milestone review
+    block: governance
+    kind: praxis
+    ue: 2
+    lesson: 13
+    taught_in: jg3
+    prerequisite_for: none
+    requires: [openspec-hands-on, bridge-charter-to-specs]
+
+  - id: docker-basics
+    title: What containers solve
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 14
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [learning-environment-setup]
+
+  - id: docker-images
+    title: Building an image from a description
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 15
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [docker-basics]
+
+  - id: docker-volumes-config
+    title: Data and configuration outside the container
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 16
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [docker-images]
+
+  - id: docker-multiarch
+    title: Images for more than one processor architecture
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 17
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [docker-images]
+
+  - id: review-milestone-2
+    title: Second milestone review
+    block: governance
+    kind: praxis
+    ue: 2
+    lesson: 18
+    taught_in: jg3
+    prerequisite_for: none
+    requires: [review-milestone-1, governance-milestones]
+
+  - id: compose-basics
+    title: Describing an application of several services
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 19
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [docker-volumes-config]
+
+  - id: compose-multi-service
+    title: Application with a database
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 20
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [compose-basics]
+
+  - id: compose-networks-dependencies
+    title: Networks, dependencies and start order
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 21
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [compose-multi-service]
+
+  - id: revealjs-presentations
+    title: Presentations from the same source
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 22
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [gh-actions-pages]
+
+  - id: ai-result-verification
+    title: Checking what the agent produced
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 23
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [ai-agentic-loops]
+
+  - id: review-milestone-3
+    title: Third milestone review
+    block: governance
+    kind: praxis
+    ue: 2
+    lesson: 24
+    taught_in: jg3
+    prerequisite_for: none
+    requires: [review-milestone-2, governance-acceptance]
+
+  - id: ai-project-integration
+    title: Agents in the running project
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 25
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [ai-result-verification]
+
+# ============================================================================
+# Reserve U26-U30 — faellt bei Terminausfaellen zuerst weg (D9)
+# ============================================================================
+
+  - id: assessment-oral-exams
+    title: Oral assessment and how it is conducted
+    block: governance
+    kind: theorie
+    ue: 1
+    lesson: 26
+    taught_in: jg3
+    prerequisite_for: none
+    requires: [governance-acceptance]
+
+  - id: minikube-basics
+    title: Container orchestration, first look
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 26
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [compose-networks-dependencies]
+
+  - id: minikube-deploy
+    title: Running an application on the orchestrator
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 27
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [minikube-basics]
+
+  - id: minikube-services
+    title: Reaching an application from outside
+    block: werkzeuge
+    kind: praxis
+    ue: 2
+    lesson: 28
+    taught_in: jg3
+    prerequisite_for: jg4
+    requires: [minikube-deploy]
