@@ -22,7 +22,7 @@ Das Curriculum sieht derzeit so
 
 * Theorie
 
-** Grundlagen der klassischen Projektentwicklung (Wasserfallmodell). Hierfür wird Momentan wird folgendes Buch verwendet im Folder "/Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/eBooks/SYP-Buch.Manz.Aufl_2013" (Zum Buch muss ich anmerken, dass ich dort nur Teile der Lernkapitel verwende und keine Übungen des Buches):
+** Grundlagen der klassischen Projektentwicklung (Wasserfallmodell). Hierfür wird Momentan wird folgendes Buch verwendet im Folder "pre.syp.itp.3jg/eBooks/SYP-Buch.Manz.Aufl_2013" (Zum Buch muss ich anmerken, dass ich dort nur Teile der Lernkapitel verwende und keine Übungen des Buches):
 
 *** Projektbegriff
 *** Kreativitätstechniken
@@ -33,8 +33,8 @@ Das Curriculum sieht derzeit so
 *** Was ist Software-Engineering? (eher sehr, sehr kurz)
 *** Phasenkonzepte und Phasenmodelle
 *** Prozessmodelle
-*** Klassische und agile Vorgehensmodelle (hier Konzentration auf Scrum) Verwende hier /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/01.Vorgehensmodelle.key
-*** kurz UML: Verwende hier Auszüge (speziell die Beispiele) aus /Users/stuetz/SynologyDrive/htl/skripten/pre.syp.itp.3jg/uml/Uni Heidelberg/UML1.1. Dabei konzentriere ich mich auf Klassendiagramme, Anwendungsfalldiagramme, Zustandsdiagramme (State diagram), Aktivitätsdiagramme, Klassen- und Objektdiagramme, Deployment diagram. Der Detaillierungsgrad ist eher übersichtsmäßig. Als Darstellung verwende ich https://plantuml.com/en/
+*** Klassische und agile Vorgehensmodelle (hier Konzentration auf Scrum) Verwende hier pre.syp.itp.3jg/01.Vorgehensmodelle.key
+*** kurz UML: Verwende hier Auszüge (speziell die Beispiele) aus pre.syp.itp.3jg/uml/Uni Heidelberg/UML1.1. Dabei konzentriere ich mich auf Klassendiagramme, Anwendungsfalldiagramme, Zustandsdiagramme (State diagram), Aktivitätsdiagramme, Klassen- und Objektdiagramme, Deployment diagram. Der Detaillierungsgrad ist eher übersichtsmäßig. Als Darstellung verwende ich https://plantuml.com/en/
 
 IMPORTANT: Da durch die Verwendung der AI weder klassisch noch mittels scrum vorgegangen wird, möchte ich mich hier eher auf openspec (https://openspec.dev/) bzw spec-driven-development konzentrieren und die anderen Vorgehensweisen, sehr, sehr kurz halten. Darüber müssen wir diskutieren.
 
@@ -192,9 +192,12 @@ Würde dieses Repo gerne in github einchecken. Soll ich es in der Organisation "
 
 Nimme keine 4. Klasse quote auf und schließe "unclear" nicht von der auslieferung aus
 
+Bis 2526 habe ich "github classroom" verwendet, das jetzt geschlossen wurde. Ab diesem Jahr verwende ich "classroom 50". Dort ist die Repo-Struktur unterschiedlich. Es gibt "Classroom 50 organizations" in welchem die "Classrooms" enthalten sind. Die Metadaten der classrooms werden in einem repo "classroom50" gespeichert. Die repos der assignments sind mW parallel dazu
+
+Grundsätzlich ist das so in Ordnung. "curriculum-syp3" kann ruhig public sein. Natürlich kann ich der org "htl-leonding-college" einen pro-org status geben, falls notwendig. Habe noch eine Frage: was enthält "student-project-template"? Normalerweise erstelle ich die Angaben für Beispiele (Assignments, exams, ...) als eigene template-repos.
 
 
-
+Wie sieht das aber für die angaben für exams aus. sind die auch public. Das möchte ich eigentlich nicht
 
 
 

@@ -70,6 +70,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4     # ersetzt Foundation / Advanced
     requires: [git-basics, ai-prompting]
+    assignment_template: htl-leonding-example/jg03-syp-sdd-why-specs   # optional
 ```
 
 ```adoc
@@ -92,6 +93,11 @@ modules/<id>/images/           Bilder des Moduls
 Eine Pfadliste in der yaml waere eine zweite Wahrheit ueber etwas, das die Konvention
 bereits festlegt — und bei rund 50 Themen eine Fehlerquelle ohne Gegenwert. Prueft der
 CI-Check die Bijektion (P2, Pruefung 1), rechnet er die Pfade aus der ID aus.
+
+`assignment_template` ist optional und traegt die Zuordnung eines Moduls zu seiner
+Uebungsangabe (P13). Nur dadurch kann die generierte Navigation die Angabe verlinken und
+der Check pruefen, ob das Repository existiert; ohne das Feld liegt die Zuordnung wieder
+nur im Kopf.
 
 *Begründung:* Reine Attribute in den `.adoc` (Variante 1) erlauben keine Planung von
 Themen, für die noch keine Ressource existiert, und keine Gesamtsicht ohne Scan. Eine
@@ -670,6 +676,75 @@ zweisprachige Site ist inkonsistent, und die Unterrichtssprache ist Englisch.
 die Feldstruktur die des DA-Antrags ist. Damit ist die dortige offene Frage entschieden —
 siehe D2.
 
+### P13 — Ablage auf GitHub: drei Organisationen nach Lebensdauer
+
+Der Account führt rund 77 Organisationen nach dem Muster `<jahr>-<klasse>-<gegenstand>`,
+seit 2026/27 verkürzt auf `<jahr>-<klasse>`. Diese Organisationen sind jahresgebunden und
+werden nach dem Schuljahr nicht mehr gepflegt. Daneben bestehen `htl-leonding-college`
+(themenbezogenes Material: Fragenkatalog, diverse `*-lecture-notes`) und
+`htl-leonding-example` (Angaben zu Übungen und Tests, rund 93 Repositories nach dem
+Muster `jg<NN>-<gegenstand>-<thema>`).
+
+Die Zuordnung folgt der Lebensdauer des Inhalts, nicht seiner Zugehörigkeit zu einer
+Klasse:
+
+```
+htl-leonding-college/       mehrjaehrig, klassenunabhaengig, public
+  curriculum-syp3           Module, curriculum.yaml, Generatoren, Site
+  student-project-template  Jahresprojekt-Geruest: openspec, docs, CI
+  klassen-setup             P9
+  fragenkatalog             bestehend, unangetastet
+
+htl-leonding-example/       Uebungsangaben, public
+  jg03-syp-<topic-id>       je Uebung mit Startercode
+  <Altbestand>              ueberwiegend privat, bleibt unveraendert
+
+<jahr>-<klasse>/            ein Schuljahr, eine Klasse, Classroom 50
+  classroom50               Konfiguration und Roster
+  <exam-templates>          privat
+  <assignment-repos>        entstehen je Schueler
+```
+
+*Begründung gegen die Klassen-Organisation als Stoffablage:* `curriculum-syp3` ist per P6
+jahrgangsweit und mehrjährig. Eine Organisation, die im Juli des Folgejahres nicht mehr
+gepflegt wird, ist der falsche Ort dafür. `htl-leonding-college` trägt bereits den
+Fragenkatalog, an den P8 den neuen Katalog koppelt.
+
+**Classroom 50 als Randbedingung.** Das Werkzeug hat keinen eigenen Server; Klassenlisten,
+Assignments und Ergebnisse liegen als Organisations- und Team-Mitgliedschaft, Repositories
+und Konfigurationsdateien in GitHub. Daraus folgen zwei Regeln:
+
+```
+oeffentliches Template   darf in einer FREMDEN Organisation liegen
+privates Template        muss in DERSELBEN Organisation liegen wie das Classroom
+```
+
+Deshalb liegen Übungsangaben öffentlich in `htl-leonding-example` und sind über Jahre
+und Klassen hinweg wiederverwendbar, ohne jährliche Kopie.
+
+**Übungsangabe und Prüfungsangabe werden getrennt behandelt.**
+
+| | Übung | Prüfung |
+|---|---|---|
+| Sichtbarkeit | public | privat |
+| Ort | `htl-leonding-example` | Classroom-Organisation des Jahres |
+| Begründung | Lösungen dürfen bekannt sein (P5); der Nachweis ist die mündliche Prüfung | die Angabe ist wertlos, wenn sie vorab lesbar ist |
+| Zugriffssteuerung | keine | Freischaltung des Assignments in Classroom 50 |
+| Wiederverwendung | über Jahre | keine — Angaben werden jährlich geändert |
+
+Nach der Durchführung kann eine Prüfungsangabe öffentlich werden und als
+`<jahr>-exam-<thema>` ins Archiv wandern; ab dann greift wieder die P5-Logik, und alte
+Angaben sind Lernmaterial.
+
+*Namensschema für Übungsangaben:* `jg03-syp-<topic-id>`. Der Jahrgangspräfix folgt dem
+Bestand, der Gegenstand unterscheidet SYP von ITP mit denselben Themen, und die
+`topic-id` ist stabil — eine fortlaufende Nummerierung würde genau dann brechen, wenn im
+Jahresplan etwas verschoben wird, also im Fall, für den Prüfung 5 existiert.
+
+*Sichtbarkeit von `curriculum-syp3`:* public. GitHub Pages liefert öffentliche
+Repositories ohne weitere Voraussetzung aus; ein Pro-Status der Organisation wird erst
+nötig, wenn ein privates Repository Pages liefern soll.
+
 ## Risks / Trade-offs
 
 | Risiko | Mitigation |
@@ -687,6 +762,8 @@ siehe D2.
 | Pflichtabschnitte (`Decisions`, `Pitfalls`, `Terminology`) erzeugen Füllfloskeln | Ausdrückliche Nullaussage ist erlaubt und erfüllt die Prüfung (P4); eine bewusste Leermeldung ist informativer als ein fehlender Abschnitt |
 | Bilder der Klasse `unclear` gehen öffentlich live | Bewusst akzeptiert (P11): `rights-check` meldet sie rot und macht sie auffindbar, statt die Veröffentlichung zu blockieren; endgültige Klärung mit der Manz-Rechtsfrage |
 | 48 Modulverzeichnisse statt 13 erhöhen den Pflegeaufwand | Textmenge unverändert, nur anders geschnitten (P1); Skelett und Navigation kommen aus den Generatoren (P3), Prüfung 9 hält die Struktur einheitlich |
+| Prüfungsangaben liegen in der jahresgebundenen Classroom-Organisation und sind nicht wiederverwendbar | Bewusst (P13): Angaben werden ohnehin jährlich geändert; nach der Durchführung wandern sie öffentlich ins Archiv und bleiben als Lernmaterial erhalten |
+| Übungsangaben sind öffentlich einsehbar, bevor die Klasse sie bearbeitet | Bewusst (P5/P13): Verbergen ist bei Agentenverfügbarkeit wirkungslos, der Nachweis ist die mündliche Prüfung |
 | Unterrichtsverlauf ist im Repository nicht mehr nachvollziehbar | Bewusst (P10): Verlauf ist klassenspezifisch und wird außerhalb geführt; das Modul bleibt dafür mehrjährig gültig |
 
 ## Einführungsplan
@@ -711,12 +788,8 @@ siehe D2.
   bewusst Bash ist (P9).
 - Welche JDK-Version gepinnt wird — abhängig davon, was die übrigen Gegenstände im
   4./5. Jahrgang verwenden.
-- Ob `templates/student-project/` im selben Repository liegt oder ein eigenes
-  Template-Repository wird — Letzteres wäre für „classroom 50" bequemer.
 - Ob Theoriethemen ebenfalls Pflichtfragen bekommen (CI-Prüfung 4 ausweiten), sobald die
   Theorieseite des neuen Katalogs existiert.
 - Wie das containerisierte asciidoctor-Image um `asciidoctor-diagram` und Graphviz
   ergänzt wird — betrifft auch `local-convert.sh` (P11).
-- Ob der neue Katalog als eigener Bereich der Curriculum-Site publiziert wird oder als
-  eigenes Repository mit eigener Adresse.
 - Zeitpunkt und Umfang der Hugo-Ablösung.

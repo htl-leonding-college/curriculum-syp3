@@ -1,8 +1,9 @@
 # Continuation Prompt — Curriculum SYP 3. Jahrgang
 
 **Stand:** 2026-09-07 · Threads 1, 2, 4 und 5 abgeschlossen · Specs beider Changes
-geschrieben · `curriculum.yaml` befüllt
-**Repo:** `curriculum-syp3` · **Changes:** `define-syp3-curriculum`, `setup-curriculum-repository`
+geschrieben · `curriculum.yaml` befüllt · GitHub-Ablage entschieden und Repo angelegt
+**Repo:** `github.com/htl-leonding-college/curriculum-syp3` (public)
+**Changes:** `define-syp3-curriculum`, `setup-curriculum-repository`
 
 > Löst `2026-09-06-thread-5-abgeschlossen.md` ab. Die älteren bleiben als Historie liegen.
 
@@ -24,8 +25,9 @@ Dann diesen Prompt einfügen:
 > liegt in `curriculum.yaml` (54 Themen, U1–U28 belegt). Lies das, bevor du antwortest,
 > und frage nicht nach Fakten, die dort stehen. Der ursprüngliche Auftrag liegt in
 > `chat.adoc`.
-> Alle inhaltlichen Threads sind durch. Als Nächstes: **Ablage des Repositories auf
-> GitHub**, danach `tasks.md`, `tools/check-curriculum.*` und die ersten Module.
+> Alle inhaltlichen Threads sind durch, die GitHub-Ablage steht (P13). Als Nächstes:
+> **`tasks.md` für beide Changes**, dann `tools/check-curriculum.*` und die
+> Actions-Pipeline, dann die ersten Module.
 
 ---
 
@@ -112,6 +114,7 @@ Antrags ist in `define-syp3-curriculum/design.md` (D2) festgehalten.
 | P10 | Kein Unterrichtsjournal im Repo; Module sind vorbereitet, stabil, klassenunabhängig |
 | P11 | PlantUML als Diagramm-Default; Bilder erlaubt bei `modules/<id>/images/`, Keynote-Quelle daneben; Herkunftsklassen `own`/`free`/`unclear`; `rights-check`-Job meldet, blockiert nicht; `unclear` wird trotzdem ausgeliefert (bewusst getragenes Restrisiko) |
 | P12 | Englisch mit zweisprachigem Governance-Wortschatz; Pflichtabschnitt `Terminology` |
+| **P13** | **Ablage auf GitHub nach Lebensdauer:** Stoff und Vorlagen public in `htl-leonding-college`, Übungsangaben public in `htl-leonding-example` als `jg03-syp-<topic-id>`, Prüfungsangaben privat in der jahresgebundenen Classroom-Organisation mit Freischaltung über Classroom 50 |
 
 ### Thread 4 — Rechtslage (Recherchestand 2026-09-06, keine Rechtsberatung)
 
@@ -197,14 +200,35 @@ U30 --                              --
 
 ---
 
+## GitHub-Ablage (P13)
+
+```
+htl-leonding-college/       mehrjaehrig, klassenunabhaengig, public
+  curriculum-syp3           ANGELEGT  dieses Repo
+  student-project-template  offen     Jahresprojekt-Geruest
+  klassen-setup             offen     P9
+  fragenkatalog             bestehend unangetastet
+
+htl-leonding-example/       Uebungsangaben, public, 93 Repos Altbestand
+  jg03-syp-<topic-id>       offen     je Uebung mit Startercode
+
+2627-3ihif/                 Classroom 50, ein Schuljahr, eine Klasse
+  classroom50               bestehend Config und Roster
+  <exam-templates>          offen     privat, Freischaltung ueber Classroom 50
+  <assignment-repos>                  entstehen je Schueler
+```
+
+Randbedingung von Classroom 50: öffentliche Templates dürfen in einer fremden
+Organisation liegen, private müssen in derselben Organisation liegen wie das Classroom.
+Deshalb Übungsangaben public und über Jahre wiederverwendbar, Prüfungsangaben privat und
+jahresgebunden. Classroom 50 hat keinen eigenen Server — alles liegt als
+Organisations- und Team-Mitgliedschaft, Repositories und Konfigurationsdateien in GitHub.
+
+Zum Curriculum-Repo: Es ist public. `chat.adoc` und die Continuation-Dokumente sind
+mitveröffentlicht — bewusst, weil sie die Begründungen tragen, die ein nachnutzender
+Kollege braucht. Kein Personenbezug enthalten; `assets/` ist ignoriert.
+
 ## Offen
-
-### Ablage auf GitHub *(nächster Schritt)*
-
-Noch nicht besprochen: Organisation oder persönlicher Account, Sichtbarkeit,
-Namensschema im Verhältnis zu den bestehenden `<jahr>-<klasse>-<gegenstand>`-Repos,
-Verhältnis zu `htl-leonding-college`, Umgang mit den Repos für `klassen-setup` und
-`templates/student-project/`.
 
 ### Thread 3 — Ablösung der Hugo-Site
 
@@ -224,9 +248,6 @@ Offen nur, wann und ob abgelöst wird.
 - Netzplantechnik (PUMA-Material) — noch nicht durchgesprochen.
 - Sprache der Werkzeuge in `tools/` (Python, Node, Shell).
 - Welche JDK-Version in `versions.env` gepinnt wird.
-- Ob `templates/student-project/` im Curriculum-Repo liegt oder ein eigenes
-  Template-Repository wird (für „classroom 50" bequemer).
-- Ob der neue Fragenkatalog Teil der Curriculum-Site wird oder ein eigenes Repo bekommt.
 - Ob Theoriethemen ebenfalls Pflichtfragen bekommen (CI-Prüfung 4 ausweiten).
 - Wie das containerisierte asciidoctor-Image um `asciidoctor-diagram` und Graphviz
   ergänzt wird — betrifft auch `local-convert.sh`.
@@ -235,14 +256,15 @@ Offen nur, wann und ob abgelöst wird.
 
 ## Umsetzung
 
-1. Repository auf GitHub ablegen, Sichtbarkeit und Namensschema festlegen
-2. `tasks.md` für beide Changes ableiten
-3. `tools/check-curriculum.*` mit den neun Prüfungen schreiben und in die Pipeline
+1. `tasks.md` für beide Changes ableiten
+2. `tools/check-curriculum.*` mit den neun Prüfungen schreiben und in die Pipeline
    hängen — **vor** den ersten Lernressourcen, damit der Vertrag von Beginn an greift
-4. `.github/workflows/` für adoc → HTML → gh-pages, plus `rights-check`-Job
-5. Modulgerüst für die ersten Themen (`git-basics`, `sdd-why-specs`)
-6. Generatoren (Mindmap, Navigation, UE-Übersicht, Katalog-Tags)
-7. `templates/student-project/` mit zweisprachigen Feldbezeichnern
-7a. Repo `klassen-setup` anlegen, auf frischem Ubuntu und macOS durchtesten
-8. Neuen Fragenkatalog aufbauen
-9. Lernressourcen inhaltlich erstellen — eigener Change
+3. `.github/workflows/` für adoc → HTML → gh-pages, plus `rights-check`-Job
+4. Modulgerüst für die ersten Themen (`git-basics`, `sdd-why-specs`)
+5. Generatoren (Mindmap, Navigation, UE-Übersicht, Katalog-Tags)
+6. Repo `htl-leonding-college/student-project-template` mit zweisprachigen
+   Feldbezeichnern anlegen
+6a. Repo `htl-leonding-college/klassen-setup` anlegen, auf frischem Ubuntu und macOS
+   durchtesten
+7. Neuen Fragenkatalog aufbauen — als Bereich der Curriculum-Site
+8. Lernressourcen inhaltlich erstellen — eigener Change

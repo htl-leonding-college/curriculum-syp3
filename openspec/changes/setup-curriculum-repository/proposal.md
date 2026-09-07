@@ -75,6 +75,12 @@ Jahrgänge hinweg.
   personenbezogen). Bash mit einer Betriebssystem-Weiche statt zweier Scripts, SDKMAN für
   JDK/Maven/Gradle statt Einzelinstallation mit manuellem `JAVA_HOME`, gepinnte Versionen
   in `versions.env`.
+- **Ablage auf GitHub nach Lebensdauer, nicht nach Klasse.** `curriculum-syp3`,
+  `student-project-template` und `klassen-setup` liegen öffentlich in
+  `htl-leonding-college`, wo bereits der Fragenkatalog liegt. Übungsangaben liegen
+  öffentlich in `htl-leonding-example` als `jg03-syp-<topic-id>` und sind dadurch über
+  Jahre wiederverwendbar. Prüfungsangaben bleiben privat in der jahresgebundenen
+  Classroom-Organisation und werden über Classroom 50 freigeschaltet.
 - **Hugo-Site bleibt vorerst unangetastet.** Sie enthält Altdaten früherer Projekte, die
   erhalten bleiben sollen. Die neue Site entsteht parallel; über eine Ablösung wird später
   entschieden.
