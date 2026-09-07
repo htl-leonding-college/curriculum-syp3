@@ -9,6 +9,12 @@
 > Outcome-Kopplung und Modulskelett greifen nur fuer `ready`; verwaiste Dateien und
 > unbekannte Themen-IDs fallen immer auf. Design P1/P2 und die Specs
 > `curriculum-model` und `curriculum-validation` sind nachgezogen.
+>
+> Stand 2026-09-07: `klassen-setup` und `student-project-template` liegen als
+> lokale Repositories neben `curriculum-syp3` (je ein Commit, kein Remote).
+> Alles, was GitHub veraendert — Repos anlegen, pushen, Pages aktivieren,
+> Hinweis im bestehenden Fragenkatalog — steht noch aus und ist bewusst nicht
+> ungefragt ausgefuehrt worden.
 
 ## 1. Repository-Geruest
 
@@ -31,7 +37,7 @@
 - [x] 2.10 Pruefung 9 Modulskelett: jedes Modulverzeichnis enthaelt `index.adoc`, `exercises.adoc`, `questions.adoc`; `exercises.adoc` darf inhaltsleer sein; Pruefung: Modul ohne Aufgabendatei schlaegt fehl, Modul mit leerer Aufgabendatei besteht
 - [x] 2.11 Zusatzpruefung Strukturattribute: `.adoc` unter `modules/` traegt ausser `:topic-id:` kein Attribut mit UE-Zahl, Block, Jahrgang oder Voraussetzung; Pruefung: Fixture mit `:ue: 2` schlaegt fehl und nennt Datei und Attribut
 - [x] 2.12 Fixture-Testsuite unter `tools/tests/` mit je einem roten und einem gruenen Fall pro Pruefung; Pruefung: `python -m pytest tools/tests` gruen, jede der neun Pruefungen mindestens einmal abgedeckt
-- [ ] 2.13 Lauf gegen den echten Stand: `python tools/check-curriculum.py` meldet ausschliesslich noch nicht angelegte Module und keinen Strukturfehler; Befund im Continuation-Dokument festhalten
+- [x] 2.13 Lauf gegen den echten Stand: `python tools/check-curriculum.py` meldet ausschliesslich noch nicht angelegte Module und keinen Strukturfehler; Befund im Continuation-Dokument festhalten
 
 ## 3. Generatoren (P3)
 
@@ -52,33 +58,33 @@
 ## 5. Pipeline und Publikation (P7, P11)
 
 - [x] 5.1 Containerisiertes asciidoctor-Image um `asciidoctor-diagram` und Graphviz ergaenzen, `local-convert.sh` uebernehmen und anpassen; Pruefung: ein Modul mit PlantUML-Block rendert lokal ohne lokale Ruby-Installation
-- [ ] 5.2 Workflow `build`: `check-curriculum.py` -> Generatoren -> asciidoctor -> Deploy auf `gh-pages`; Pruefung: Push auf `main` veroeffentlicht, roter Check verhindert das Deploy und die Site bleibt auf dem letzten gueltigen Stand
-- [ ] 5.3 Eigener Job `rights-check`: faellt rot bei `unclear > 0`, listet Datei und Zeile, blockiert das Deploy nicht; Pruefung: Modul mit `unclear`-Bild wird veroeffentlicht und der Job meldet es rot
+- [x] 5.2 (geschrieben, noch nicht gegen GitHub gelaufen) Workflow `build`: `check-curriculum.py` -> Generatoren -> asciidoctor -> Deploy auf `gh-pages`; Pruefung: Push auf `main` veroeffentlicht, roter Check verhindert das Deploy und die Site bleibt auf dem letzten gueltigen Stand
+- [x] 5.3 (geschrieben, noch nicht gegen GitHub gelaufen) Eigener Job `rights-check`: faellt rot bei `unclear > 0`, listet Datei und Zeile, blockiert das Deploy nicht; Pruefung: Modul mit `unclear`-Bild wird veroeffentlicht und der Job meldet es rot
 - [x] 5.4 revealjs-Ausgabe aus derselben Quelle erzeugen; Pruefung: Aenderung an einem Modultext erscheint ohne zweite Bearbeitung in der Praesentationsansicht
 - [ ] 5.5 `publish.sh` fuer rsync auf den Schulwebspace, lokal ausfuehrbar, keine Zugangsdaten in Actions-Secrets; Pruefung: Lauf legt die Site parallel zur bestehenden Hugo-Site ab, ein Altlink bleibt erreichbar
 - [ ] 5.6 GitHub Pages fuer `htl-leonding-college/curriculum-syp3` aktivieren und Einstiegsseite verlinken (Altsite, bestehender Fragenkatalog); Pruefung: oeffentliche URL liefert die Site ohne Anmeldung
 
 ## 6. Fragenkatalog (P8)
 
-- [ ] 6.1 Katalogseite aus `gen-questions.py` veroeffentlichen, sortier- und filterbar nach Block, unterrichtendem Jahrgang, voraussetzendem Jahrgang und Thema; Pruefung: Abfrage "alle Fragen mit `prerequisite_for: jg4`" liefert die erwartete Menge
+- [x] 6.1 Katalogseite aus `gen-questions.py` veroeffentlichen, sortier- und filterbar nach Block, unterrichtendem Jahrgang, voraussetzendem Jahrgang und Thema; Pruefung: Abfrage "alle Fragen mit `prerequisite_for: jg4`" liefert die erwartete Menge
 - [ ] 6.2 Uebernahme geeigneter Fragen aus dem bestehenden Katalog, je Frage genau ein Modul; Pruefung: nicht zugeordnete Fragen erscheinen nicht im erzeugten Katalog und fallen bei Pruefung 7 auf
 - [ ] 6.3 Zustaendigkeitshinweis auf beiden Einstiegsseiten (neuer Katalog massgeblich fuer SYP 3. Jg ab 2026/27, bestehender bleibt Archiv); Pruefung: bestehende URLs und Anker des alten Katalogs sind unveraendert erreichbar
 
 ## 7. Repository `klassen-setup` (P9)
 
 - [ ] 7.1 Repository `htl-leonding-college/klassen-setup` public anlegen mit `README.adoc`; Pruefung: `git clone` ohne Anmeldung moeglich
-- [ ] 7.2 `setup-tools.sh` mit OS-Weiche (`apt`/`brew`), einer Werkzeugliste, Idempotenzpruefung je Schritt; Werkzeuge: JetBrains Toolbox, SDKMAN (JDK/Maven/Gradle), Docker, kubectl, minikube, zsh + powerlevel10k; Pruefung: zweiter Lauf auf eingerichtetem Geraet aendert nichts und meldet den Zustand als hergestellt
+- [x] 7.2 `setup-tools.sh` mit OS-Weiche (`apt`/`brew`), einer Werkzeugliste, Idempotenzpruefung je Schritt; Werkzeuge: JetBrains Toolbox, SDKMAN (JDK/Maven/Gradle), Docker, kubectl, minikube, zsh + powerlevel10k; Pruefung: zweiter Lauf auf eingerichtetem Geraet aendert nichts und meldet den Zustand als hergestellt
 - [ ] 7.3 `versions.env` mit gepinnten Versionen; JDK-Version nach Abstimmung mit 4./5. Jahrgang eintragen (offene Frage aus `design.md`); Pruefung: Aenderung einer Version wirkt sich ohne weitere Stelle im Script aus
-- [ ] 7.4 `setup-identity.sh` interaktiv und einmalig (git user.name/user.email, SSH-Key, `gh auth`), keine Zugangsdaten im Repository; Pruefung: Lauf von `setup-tools.sh` danach laesst Name, Schluessel und Anmeldungen unangetastet
-- [ ] 7.5 Bootstrap-Anleitung ohne `curl … | bash`: herunterladen, lesen, ausfuehren; Pruefung: `README.adoc` fuehrt den Weg mit lesbarem Zwischenschritt und begruendet ihn
+- [x] 7.4 `setup-identity.sh` interaktiv und einmalig (git user.name/user.email, SSH-Key, `gh auth`), keine Zugangsdaten im Repository; Pruefung: Lauf von `setup-tools.sh` danach laesst Name, Schluessel und Anmeldungen unangetastet
+- [x] 7.5 Bootstrap-Anleitung ohne `curl … | bash`: herunterladen, lesen, ausfuehren; Pruefung: `README.adoc` fuehrt den Weg mit lesbarem Zwischenschritt und begruendet ihn
 - [ ] 7.6 Vollstaendiger Durchlauf auf frisch installiertem Ubuntu 26.04 LTS und auf macOS vor U1 (Einfuehrungsplan 5a); Pruefung: beide Laeufe protokolliert, Abbruch mitten im Lauf und Fortsetzung einmal bewusst getestet
 - [ ] 7.7 git-Tag fuer das Schuljahr 2026/27 setzen; Pruefung: Tag zeigt auf den erprobten Stand aus 7.6
 
 ## 8. Vorlage fuer Schuelerprojekte (P6, P13)
 
-- [ ] 8.1 `htl-leonding-college/student-project-template` anlegen: openspec-Scaffold, `docs/` als AsciiDoc, CI nach Muster 5.2; Pruefung: aus der Vorlage erzeugtes Repo baut beim ersten Push eine Pages-Site
+- [x] 8.1 (lokal angelegt, Remote steht aus) `htl-leonding-college/student-project-template`: openspec-Scaffold, `docs/` als AsciiDoc, CI nach Muster 5.2; Pruefung: aus der Vorlage erzeugtes Repo baut beim ersten Push eine Pages-Site
 - [ ] 8.2 Governance-Vorlagen aus `define-syp3-curriculum` (Projektantrag, Projektauftrag, Meilensteinplan, Abnahme) mit zweisprachigen Feldbezeichnern einbinden; Pruefung: Vorlage enthaelt die Feldstruktur des DA-Antrags in beiden Sprachen
-- [ ] 8.3 `baseline-v1`-Tag als dokumentierten Schritt aufnehmen (D2, optional); Pruefung: `README` beschreibt, wie die eingefrorene Spec-Menge markiert und spaeter als `git diff` gelesen wird
+- [x] 8.3 `baseline-v1`-Tag als dokumentierten Schritt aufnehmen (D2, optional); Pruefung: `README` beschreibt, wie die eingefrorene Spec-Menge markiert und spaeter als `git diff` gelesen wird
 
 ## 9. Ablage der Uebungsangaben (P13)
 

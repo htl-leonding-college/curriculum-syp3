@@ -147,3 +147,53 @@ def test_new_module_skeleton_passes_all_checks(repo: Repo) -> None:
     written = new_module.create(model.by_id("git-basics"))
     assert [p.name for p in written] == ["index.adoc", "exercises.adoc", "questions.adoc"]
     assert repo.run() == []
+
+
+def test_questions_can_be_selected_by_model_attributes(repo: Repo) -> None:
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1, status="ready"),
+            topic("git-basics", kind="praxis", lesson=1, status="ready", prerequisite_for="jg5"),
+        ]
+    )
+    repo.write_module("git-basics", index=GOOD_INDEX, questions=GOOD_QUESTIONS)
+    repo.write_module(
+        "course-overview",
+        index=GOOD_INDEX.replace("git-basics", "course-overview"),
+        questions=GOOD_QUESTIONS.replace("git-basics", "course-overview").replace(
+            "What does a commit contain?", "How is the year organised?"
+        ),
+    )
+    rows = questions.collect(repo.model())
+    assert len(rows) == 2
+    assert [r["topic"] for r in questions.select(rows, prerequisite_for="jg5")] == ["git-basics"]
+    assert [r["topic"] for r in questions.select(rows, prerequisite_for="jg4")] == ["course-overview"]
+    assert questions.select(rows, block="werkzeuge", kind="praxis")[0]["question"] == (
+        "What does a commit contain?"
+    )
+
+
+def test_filter_ui_carries_the_tags_as_data_attributes(repo: Repo) -> None:
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1),
+            topic("git-basics", kind="praxis", lesson=1, status="ready"),
+        ]
+    )
+    repo.write_module("git-basics", index=GOOD_INDEX, questions=GOOD_QUESTIONS)
+    model = repo.model()
+    rendered = questions.render(model, questions.collect(model))
+    assert 'data-prerequisite_for="jg4"' in rendered
+    assert 'data-topic="git-basics"' in rendered
+    assert "<select data-field=\"block\">" in rendered
+
+
+def test_questions_of_planned_modules_stay_out_of_the_catalogue(repo: Repo) -> None:
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1),
+            topic("git-basics", kind="praxis", lesson=1),  # planned
+        ]
+    )
+    repo.write_module("git-basics", index=GOOD_INDEX, questions=GOOD_QUESTIONS)
+    assert questions.collect(repo.model()) == []

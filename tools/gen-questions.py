@@ -24,7 +24,9 @@ DATA_OUTPUT = "questions/questions.json"
 def collect(model: Curriculum) -> list[dict]:
     rows: list[dict] = []
     for topic in model.topics:
-        if not topic.questions_path.is_file():
+        # Nur fertige Module: ein Skelett traegt Platzhalterfragen, die im
+        # Katalog nichts verloren haben.
+        if not topic.is_ready or not topic.questions_path.is_file():
             continue
         for question in adoc.read(topic.questions_path).questions():
             rows.append(
@@ -43,6 +45,113 @@ def collect(model: Curriculum) -> list[dict]:
                 }
             )
     return rows
+
+
+FILTER_FIELDS = ("block", "taught_in", "prerequisite_for", "topic", "kind")
+
+
+def select(rows: list[dict], **criteria: str) -> list[dict]:
+    """Fragen nach den Merkmalen des Modells auswaehlen.
+
+    Dieselbe Auswahl, die die erzeugte Seite im Browser anbietet — hier fuer
+    Abfragen auf der Kommandozeile und fuer die Tests.
+    """
+    unknown = set(criteria) - set(FILTER_FIELDS)
+    if unknown:
+        raise ValueError(f"unbekanntes Merkmal: {', '.join(sorted(unknown))}")
+    return [
+        row
+        for row in rows
+        if all(str(row.get(field)) == str(value) for field, value in criteria.items())
+    ]
+
+
+def _filter_ui(rows: list[dict]) -> str:
+    """Auswahlfelder und Tabelle als HTML — die Merkmale sind Datenattribute."""
+    options = {
+        field: sorted({str(row[field]) for row in rows}) for field in FILTER_FIELDS
+    }
+    selects = "\n".join(
+        "<label>{label}: <select data-field=\"{field}\">"
+        "<option value=\"\">alle</option>{opts}</select></label>".format(
+            label=field.replace("_", " "),
+            field=field,
+            opts="".join(f'<option value="{value}">{value}</option>' for value in values),
+        )
+        for field, values in options.items()
+    )
+    body = "\n".join(
+        "<tr {attrs}><td>{lesson}</td><td>{topic_title}</td><td>{question}</td>"
+        "<td>{covers}</td></tr>".format(
+            attrs=" ".join(f'data-{field}="{row[field]}"' for field in FILTER_FIELDS),
+            lesson=f"U{row['lesson']}",
+            topic_title=row["topic_title"],
+            question=row["question"],
+            covers=", ".join(row["covers"]) or "—",
+        )
+        for row in rows
+    )
+    return f"""++++
+<div class="question-filter">
+{selects}
+<span class="count"></span>
+</div>
+<table class="questions" id="question-table">
+<thead><tr>
+<th data-sort="lesson">Unterricht</th>
+<th data-sort="topic_title">Thema</th>
+<th data-sort="question">Frage</th>
+<th>Lernziele</th>
+</tr></thead>
+<tbody>
+{body}
+</tbody>
+</table>
+<script>
+(function () {{
+  var table = document.getElementById('question-table');
+  if (!table) return;
+  var rows = Array.prototype.slice.call(table.tBodies[0].rows);
+  var selects = document.querySelectorAll('.question-filter select');
+  var count = document.querySelector('.question-filter .count');
+
+  function apply() {{
+    var visible = 0;
+    rows.forEach(function (row) {{
+      var show = Array.prototype.every.call(selects, function (select) {{
+        return !select.value ||
+          row.getAttribute('data-' + select.dataset.field) === select.value;
+      }});
+      row.hidden = !show;
+      if (show) visible++;
+    }});
+    count.textContent = visible + ' von ' + rows.length + ' Fragen';
+  }}
+
+  Array.prototype.forEach.call(selects, function (select) {{
+    select.addEventListener('change', apply);
+  }});
+
+  Array.prototype.forEach.call(table.tHead.rows[0].cells, function (cell) {{
+    if (!cell.dataset.sort) return;
+    cell.style.cursor = 'pointer';
+    cell.addEventListener('click', function () {{
+      var index = cell.cellIndex;
+      var descending = cell.dataset.direction === 'asc';
+      rows.sort(function (a, b) {{
+        var left = a.cells[index].textContent, right = b.cells[index].textContent;
+        return (descending ? -1 : 1) * left.localeCompare(right, 'de', {{numeric: true}});
+      }});
+      cell.dataset.direction = descending ? 'desc' : 'asc';
+      rows.forEach(function (row) {{ table.tBodies[0].appendChild(row); }});
+    }});
+  }});
+
+  apply();
+}})();
+</script>
+++++
+"""
 
 
 def render(model: Curriculum, rows: list[dict]) -> str:
@@ -71,6 +180,17 @@ def render(model: Curriculum, rows: list[dict]) -> str:
     ]
     if not rows:
         lines += ["Noch keine Fragen — die Module tragen ihre Fragen selbst.", ""]
+    else:
+        lines += [
+            "== Alle Fragen",
+            "",
+            "Sortieren durch Klick auf eine Spaltenueberschrift, filtern ueber die "
+            "Auswahlfelder. Die Merkmale stammen aus `curriculum.yaml` und stehen "
+            "nicht im Fragentext.",
+            "",
+            _filter_ui(rows),
+            "",
+        ]
 
     for block in model.blocks:
         block_rows = [r for r in rows if r["block"] == block.id]
