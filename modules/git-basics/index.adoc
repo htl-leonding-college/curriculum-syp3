@@ -79,8 +79,9 @@ burns down.
 Two consequences you feel on the first day:
 
 * `git add`, `git commit`, `git log` and `git diff` never touch the network.
-  Committing on a train works. Only `git push`, `git fetch`, `git pull` and
-  `git clone` cross the line in the picture.
+  Committing offline works — on a plane, in a cellar, with the wifi switched
+  off. Only `git push`, `git fetch`, `git pull` and `git clone` cross the line
+  in the picture.
 * A commit that exists only in your local repository exists for nobody else.
   "It is committed" and "the others have it" are two different statements — the
   second one needs a push.
@@ -106,29 +107,103 @@ git diff --staged           # index vs last commit
 Because a commit is a state, you can always go back to one. That is the actual
 promise of version control: you can experiment because you can return.
 
-== Commit messages
+== Commit messages follow Conventional Commits
 
 The message is written for a person reading the history later — usually you, and
-usually while looking for the moment something broke.
+usually while looking for the moment something broke. The school project
+guidelines prescribe the *Conventional Commits* format, so we use it from the
+first commit rather than switching later.
+
+----
+<type>(<scope>): <subject>          # scope is optional
+
+<body: why, not what — optional>
+
+<footer: task id, BREAKING CHANGE — optional>
+----
+
+[cols="1,3",options="header"]
+|===
+|Type |Used for
+
+|`feat`
+|a new feature
+
+|`fix`
+|a bug fix
+
+|`docs`
+|documentation only
+
+|`refactor`
+|restructuring without changed behaviour
+
+|`test`
+|tests added or corrected
+
+|`style`
+|formatting only, no meaning changed
+
+|`perf`
+|performance
+
+|`chore`
+|everything outside source and tests, dependency and version bumps
+
+|`ci` / `build`
+|pipeline and build system
+
+|`revert`
+|takes an earlier commit back
+|===
 
 [cols="1,1",options="header"]
 |===
 |Useless |Useful
 
 |`update`
-|`Fix off-by-one in attendance count`
+|`fix(attendance): correct off-by-one in the day count`
 
 |`stuff`
-|`Add initial situation to config.yaml`
+|`docs(charter): add the initial situation`
 
 |`fix bug`
-|`Reject bookings for slots that already started`
+|`fix(booking): reject slots that already started`
+
+|`did the tests`
+|`test(export): cover the empty-list case`
 |===
 
-Rule of thumb: the subject line says *what changes for the reader*, in the
-imperative, under about fifty characters. If you need to explain *why*, add a
-blank line and a paragraph — that is where the reasoning belongs, not in the
+The subject says *what changes for the reader*, in the imperative, under about
+fifty characters, and it does not end with a full stop. The type is the part
+that makes the history machine-readable: `git log --oneline | grep '^....... feat'`
+answers "what did we build in this sprint" without anyone writing a report.
+
+Two rules come from the project guidelines rather than from the specification
+itself:
+
+* Every commit carries the id of its task in the message, so a line of history
+  and a board entry can be traced to each other.
+* A breaking change is marked — either as `feat!:` or with a `BREAKING CHANGE:`
+  line in the footer.
+
+The *why* belongs in the body, one blank line under the subject — not in the
 code as a comment nobody updates.
+
+[source]
+----
+feat(export): write attendance to CSV
+
+The class teachers need the list in the school administration system, which
+imports CSV and nothing else. XLSX was rejected because it drags in a library
+for one feature.
+
+Task: SYP-42
+----
+
+TIP: Later in the year the agent writes these messages for you. It follows the
+convention reliably; what it cannot know is the task id and whether the change
+is really a `feat` or in truth a `fix`. Both stay your check before the commit.
 
 == What does not belong in a repository
 
@@ -156,12 +231,17 @@ you commit.
   repository, same history.
 * Generated output is never committed. If it can be rebuilt, it is not a source.
 * Commit messages are in English, imperative mood, subject under fifty
-  characters.
+  characters, and follow Conventional Commits — `type(scope): subject` — as
+  required by the school project guidelines.
+* Every commit message carries the id of the task it belongs to.
 
 == Pitfalls
 
 * One giant commit at the end of the evening. The history then says nothing, and
-  bisecting a bug is impossible.
+  bisecting a bug is impossible. It is also the commit whose type you cannot
+  name — a change that is `feat` and `fix` and `chore` at once is too large.
+* `chore` as a catch-all. If the type is hard to choose, the reason is usually
+  the change, not the list of types.
 * `git add .` without looking. That is how `node_modules` and `.env` get in.
 * Committing generated HTML next to the AsciiDoc source. Two truths, and the
   diff becomes unreadable.
@@ -191,6 +271,12 @@ you commit.
 |Repository, Ablage
 |repository
 
+|Art der Änderung
+|commit type
+
+|Aufgabenkennung
+|task id
+
 |entferntes Repository, Gegenstelle
 |remote repository
 
@@ -204,4 +290,7 @@ you commit.
 == Further reading
 
 * Pro Git, chapters 1–2, https://git-scm.com/book
+* Conventional Commits 1.0.0, https://www.conventionalcommits.org
+* Projektrichtlinien HTL Leonding — Commit Messages,
+  https://htl-leo-projekte.github.io/project-checklist/#_commit_messages
 * Module `git-branching` — the next step, once one line of history is not enough

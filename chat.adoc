@@ -307,7 +307,7 @@ Bitte die Mindmap in diesem Stil erstellen, oder mache einen Vorschlag:
 //--
 
 * Ändere in "git add, git commit, git log and git diff never touch the network. Committing on a train works. Only git push, git fetch, git pull and git clone cross the line in the picture." das "Committing on a train works." auf offline und nimm als Beispiel ein Flugzeug. Jeder Zug hat heute Internet
-
+* Wie in meinen Projektrichtlinien https://htl-leo-projekte.github.io/project-checklist/ angeführt, möchte ich gerne bei den commits messages https://htl-leo-projekte.github.io/project-checklist/#_commit_messages mich an die Conventional Messages orientieren. Könnte man in der aufgabe "Rewrite five bad commit messages" bei den Solutions das noch anführen bzw auch in der Lerneinheit. Für später soll ja sowieso der AI-Agent die Commit-Messages eintragen
 
 
 

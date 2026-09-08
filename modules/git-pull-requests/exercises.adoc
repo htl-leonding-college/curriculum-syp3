@@ -24,7 +24,7 @@ questions.
 [source,bash]
 ----
 git switch -c fix/typo-readme
-git commit -am "Fix broken link in README"
+git commit -am "docs(readme): repair the broken setup link"
 git push -u origin fix/typo-readme
 gh pr create --fill
 ----

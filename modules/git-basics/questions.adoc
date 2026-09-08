@@ -38,10 +38,26 @@ covers: lo-3
 Expected answer points:
 
 * Written for someone reading the history later, imperative, what changes for
-  the reader, under about fifty characters
-* Bad: `update`, `fix bug`; good: `Reject bookings for slots that already
-  started`
+  the reader, under about fifty characters, no full stop
+* Conventional Commits form: `type(scope): subject`, for example
+  `fix(booking): reject slots that already started` against `update` or
+  `fix bug`
 * The "why" goes in the body, not into a code comment
+* The task id belongs in the message — the project guidelines require it
+
+== Name five commit types and say what each is for
+
+covers: lo-3
+
+Expected answer points:
+
+* `feat` new feature, `fix` bug fix, `docs` documentation, `refactor`
+  restructuring without changed behaviour, `test` tests; also `style`, `perf`,
+  `chore`, `ci`, `build`, `revert`
+* `refactor` must not change behaviour — otherwise it is `feat` or `fix`
+* The type makes the history machine-readable: what was built, fixed or
+  maintained can be read from `git log` without asking anyone
+* A breaking change is marked with `!` or a `BREAKING CHANGE:` footer
 
 == Which files must not be committed, and why does deleting them later not help?
 

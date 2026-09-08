@@ -46,19 +46,54 @@ was already committed, `git restore --source=HEAD~1 report.adoc` reaches one
 commit further back.
 ====
 
-== Rewrite five bad commit messages
+== Rewrite five bad commit messages in Conventional Commits form
 
 kind: drill
 
-Rewrite: `update`, `asdf`, `fixed it`, `changes to the file`, `work`.
+Rewrite: `update`, `asdf`, `fixed it`, `changes to the file`, `work`. Assume
+they belonged to: a CSV export you added, a crash on an empty member list, a
+renamed field, an updated dependency, and a corrected README. Give each one a
+type and, where it helps, a scope.
 
 .Solution
 [%collapsible]
 ====
-There is no single right wording, but each one must answer "what changes for the
-reader": `Add attendance export to CSV`, `Fix crash on empty member list`,
-`Rename Booking.date to Booking.startsAt`, and so on. If you cannot say what
-changed, the commit is probably too large.
+[source]
+----
+feat(export): write attendance to CSV
+fix(members): stop the crash on an empty list
+refactor(booking): rename date to startsAt
+chore(deps): update asciidoctor to 1.83
+docs(readme): correct the setup command
+----
+There is no single right wording, but each line must answer "what changes for
+the reader", and its type must be the one an outsider would pick. Two checks
+worth doing: `refactor` may not change behaviour — if it does, it is a `feat`
+or a `fix`; and a commit whose type you cannot decide is usually too large. In
+the team project the task id belongs in each message as well, as the project
+guidelines require.
+====
+
+== Read a history by type
+
+kind: drill
+
+In a repository with a few dozen commits, answer with `git log` alone: which
+features were added, which bugs were fixed, and what was pure housekeeping.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+git log --oneline | grep -E '^[0-9a-f]+ feat'
+git log --oneline | grep -E '^[0-9a-f]+ fix'
+git log --oneline | grep -E '^[0-9a-f]+ (chore|style|ci|build)'
+----
+This is the payoff of the convention: the question is answered from the history
+itself, without asking anyone. In a repository whose messages read `update`,
+`work`, `asdf`, the same question needs a meeting. Convention over reporting is
+the whole idea.
 ====
 
 == Sort the commands by where they act
