@@ -8,6 +8,9 @@
 #   * Dateipfade werden aus der id abgeleitet, nicht eingetragen:
 #       modules/<id>/index.adoc | exercises.adoc | questions.adoc
 #       modules/<id>/images/
+#   * theme: fasst Themen eines Blocks zu einem Strang zusammen (Git,
+#     Container, Meilenstein-Reviews ...). Reine Darstellungsgruppe der
+#     Mindmap; Budget und Reihenfolge bleiben unberuehrt.
 #   * status: planned | ready  (Default planned, Zeile entfaellt dann)
 #       planned = Thema ist geplant und in Navigation, Mindmap und
 #                 UE-Uebersicht als offen sichtbar; keine Lernressource
@@ -63,6 +66,7 @@ topics:
   - id: course-overview
     title: Course overview, organisation and assessment
     block: werkzeuge
+    theme: Course frame
     kind: theorie
     ue: 1
     lesson: 1
@@ -74,6 +78,7 @@ topics:
   - id: learning-environment-setup
     title: Setting up the learning environment
     block: werkzeuge
+    theme: Course frame
     kind: praxis
     ue: 2
     lesson: 1
@@ -89,6 +94,7 @@ topics:
   - id: governance-project-basics
     title: What makes a project a project
     block: governance
+    theme: Project start
     kind: theorie
     ue: 1
     lesson: 2
@@ -100,6 +106,7 @@ topics:
   - id: governance-idea-generation
     title: Generating ideas with structured techniques
     block: governance
+    theme: Project start
     kind: theorie
     ue: 1
     lesson: 3
@@ -111,6 +118,7 @@ topics:
   - id: governance-weighted-scoring
     title: Choosing a project with weighted scoring
     block: governance
+    theme: Project start
     kind: theorie
     ue: 1
     lesson: 4
@@ -122,6 +130,7 @@ topics:
   - id: governance-stakeholders-goals
     title: Stakeholders and verifiable project goals
     block: governance
+    theme: Goals and charter
     kind: theorie
     ue: 1
     lesson: 5
@@ -133,6 +142,7 @@ topics:
   - id: governance-project-charter
     title: Structure of the project application and charter
     block: governance
+    theme: Goals and charter
     kind: theorie
     ue: 1
     lesson: 6
@@ -144,6 +154,7 @@ topics:
   - id: process-models-overview
     title: Process models as three tempos of one pattern
     block: vorgehen
+    theme: Process models
     kind: theorie
     ue: 1
     lesson: 7
@@ -155,6 +166,7 @@ topics:
   - id: sdd-why-specs
     title: Why specifications instead of a requirements document
     block: vorgehen
+    theme: Spec-driven development
     kind: theorie
     ue: 1
     lesson: 8
@@ -166,6 +178,7 @@ topics:
   - id: bridge-charter-to-specs
     title: From project charter to specifications
     block: vorgehen
+    theme: Bridge to the project
     kind: theorie
     ue: 1
     lesson: 9
@@ -177,6 +190,7 @@ topics:
   - id: what-is-software-engineering
     title: What software engineering is
     block: werkzeuge
+    theme: Course frame
     kind: theorie
     ue: 1
     lesson: 10
@@ -188,6 +202,7 @@ topics:
   - id: sdd-openspec-artifacts
     title: The artefacts of spec-driven development
     block: vorgehen
+    theme: Spec-driven development
     kind: theorie
     ue: 1
     lesson: 11
@@ -198,6 +213,7 @@ topics:
   - id: sdd-change-lifecycle
     title: The life cycle of a change
     block: vorgehen
+    theme: Spec-driven development
     kind: theorie
     ue: 1
     lesson: 12
@@ -208,6 +224,7 @@ topics:
   - id: bridge-progress-and-milestones
     title: Reading project progress from changes
     block: vorgehen
+    theme: Bridge to the project
     kind: theorie
     ue: 1
     lesson: 13
@@ -218,6 +235,7 @@ topics:
   - id: sdd-specs-replace-requirements
     title: The living target state replaces the requirements document
     block: vorgehen
+    theme: Spec-driven development
     kind: theorie
     ue: 1
     lesson: 14
@@ -228,6 +246,7 @@ topics:
   - id: governance-estimation-hygiene
     title: Estimation hygiene instead of estimation methods
     block: governance
+    theme: Planning and control
     kind: theorie
     ue: 1
     lesson: 15
@@ -238,6 +257,7 @@ topics:
   - id: governance-milestones
     title: Planning milestones that can be verified
     block: governance
+    theme: Planning and control
     kind: theorie
     ue: 1
     lesson: 16
@@ -248,6 +268,7 @@ topics:
   - id: governance-acceptance
     title: Acceptance and handover
     block: governance
+    theme: Planning and control
     kind: theorie
     ue: 1
     lesson: 17
@@ -258,6 +279,7 @@ topics:
   - id: sdd-principle-not-tool
     title: The principle is the subject, not the tool
     block: vorgehen
+    theme: Spec-driven development
     kind: theorie
     ue: 1
     lesson: 18
@@ -268,6 +290,7 @@ topics:
   - id: process-waterfall
     title: Waterfall and the V-model
     block: vorgehen
+    theme: Process models
     kind: theorie
     ue: 1
     lesson: 19
@@ -278,6 +301,7 @@ topics:
   - id: process-scrum
     title: Scrum in outline
     block: vorgehen
+    theme: Process models
     kind: theorie
     ue: 1
     lesson: 20
@@ -288,6 +312,7 @@ topics:
   - id: uml-overview
     title: UML diagram types and when to use them
     block: modellierung
+    theme: UML foundations
     kind: theorie
     ue: 1
     lesson: 21
@@ -298,6 +323,7 @@ topics:
   - id: uml-use-case
     title: Use case diagrams
     block: modellierung
+    theme: Diagram types
     kind: theorie
     ue: 1
     lesson: 22
@@ -308,6 +334,7 @@ topics:
   - id: uml-class-object
     title: Class and object diagrams
     block: modellierung
+    theme: Diagram types
     kind: theorie
     ue: 1
     lesson: 23
@@ -318,6 +345,7 @@ topics:
   - id: uml-activity
     title: Activity diagrams
     block: modellierung
+    theme: Diagram types
     kind: theorie
     ue: 1
     lesson: 24
@@ -328,6 +356,7 @@ topics:
   - id: uml-state-overview
     title: State diagrams in outline
     block: modellierung
+    theme: Diagram types
     kind: theorie
     ue: 1
     lesson: 25
@@ -342,6 +371,7 @@ topics:
   - id: git-basics
     title: Repository, commit, history
     block: werkzeuge
+    theme: Git
     kind: praxis
     ue: 2
     lesson: 2
@@ -353,6 +383,7 @@ topics:
   - id: git-branching
     title: Branching and merging
     block: werkzeuge
+    theme: Git
     kind: praxis
     ue: 2
     lesson: 3
@@ -364,6 +395,7 @@ topics:
   - id: git-pull-requests
     title: Pull requests and review
     block: werkzeuge
+    theme: Git
     kind: praxis
     ue: 2
     lesson: 4
@@ -375,6 +407,7 @@ topics:
   - id: git-conflicts-remotes
     title: Conflicts and remote repositories
     block: werkzeuge
+    theme: Git
     kind: praxis
     ue: 2
     lesson: 5
@@ -386,6 +419,7 @@ topics:
   - id: asciidoctor-basics
     title: Documentation as text with AsciiDoc
     block: werkzeuge
+    theme: Documentation and publishing
     kind: praxis
     ue: 2
     lesson: 6
@@ -397,6 +431,7 @@ topics:
   - id: gh-actions-pages
     title: From push to published page
     block: werkzeuge
+    theme: Documentation and publishing
     kind: praxis
     ue: 2
     lesson: 7
@@ -408,6 +443,7 @@ topics:
   - id: ai-basics-prompting
     title: Working with AI agents, first steps
     block: werkzeuge
+    theme: Working with AI agents
     kind: praxis
     ue: 2
     lesson: 8
@@ -419,6 +455,7 @@ topics:
   - id: ai-context-continuation
     title: Providing context and continuing across sessions
     block: werkzeuge
+    theme: Working with AI agents
     kind: praxis
     ue: 2
     lesson: 9
@@ -430,6 +467,7 @@ topics:
   - id: openspec-hands-on
     title: Running a change end to end
     block: vorgehen
+    theme: Bridge to the project
     kind: praxis
     ue: 2
     lesson: 10
@@ -441,6 +479,7 @@ topics:
   - id: ai-harness-engineering
     title: Shaping the agent's working environment
     block: werkzeuge
+    theme: Working with AI agents
     kind: praxis
     ue: 2
     lesson: 11
@@ -451,6 +490,7 @@ topics:
   - id: ai-agentic-loops
     title: Repeating workflows and stop conditions
     block: werkzeuge
+    theme: Working with AI agents
     kind: praxis
     ue: 2
     lesson: 12
@@ -461,6 +501,7 @@ topics:
   - id: review-milestone-1
     title: First milestone review
     block: governance
+    theme: Milestone reviews
     kind: praxis
     ue: 2
     lesson: 13
@@ -471,6 +512,7 @@ topics:
   - id: docker-basics
     title: What containers solve
     block: werkzeuge
+    theme: Containers
     kind: praxis
     ue: 2
     lesson: 14
@@ -481,6 +523,7 @@ topics:
   - id: docker-images
     title: Building an image from a description
     block: werkzeuge
+    theme: Containers
     kind: praxis
     ue: 2
     lesson: 15
@@ -491,6 +534,7 @@ topics:
   - id: docker-volumes-config
     title: Data and configuration outside the container
     block: werkzeuge
+    theme: Containers
     kind: praxis
     ue: 2
     lesson: 16
@@ -501,6 +545,7 @@ topics:
   - id: docker-multiarch
     title: Images for more than one processor architecture
     block: werkzeuge
+    theme: Containers
     kind: praxis
     ue: 2
     lesson: 17
@@ -511,6 +556,7 @@ topics:
   - id: review-milestone-2
     title: Second milestone review
     block: governance
+    theme: Milestone reviews
     kind: praxis
     ue: 2
     lesson: 18
@@ -521,6 +567,7 @@ topics:
   - id: compose-basics
     title: Describing an application of several services
     block: werkzeuge
+    theme: Multi-service with Compose
     kind: praxis
     ue: 2
     lesson: 19
@@ -531,6 +578,7 @@ topics:
   - id: compose-multi-service
     title: Application with a database
     block: werkzeuge
+    theme: Multi-service with Compose
     kind: praxis
     ue: 2
     lesson: 20
@@ -541,6 +589,7 @@ topics:
   - id: compose-networks-dependencies
     title: Networks, dependencies and start order
     block: werkzeuge
+    theme: Multi-service with Compose
     kind: praxis
     ue: 2
     lesson: 21
@@ -551,6 +600,7 @@ topics:
   - id: revealjs-presentations
     title: Presentations from the same source
     block: werkzeuge
+    theme: Documentation and publishing
     kind: praxis
     ue: 2
     lesson: 22
@@ -561,6 +611,7 @@ topics:
   - id: ai-result-verification
     title: Checking what the agent produced
     block: werkzeuge
+    theme: Working with AI agents
     kind: praxis
     ue: 2
     lesson: 23
@@ -571,6 +622,7 @@ topics:
   - id: review-milestone-3
     title: Third milestone review
     block: governance
+    theme: Milestone reviews
     kind: praxis
     ue: 2
     lesson: 24
@@ -581,6 +633,7 @@ topics:
   - id: ai-project-integration
     title: Agents in the running project
     block: werkzeuge
+    theme: Working with AI agents
     kind: praxis
     ue: 2
     lesson: 25
@@ -595,6 +648,7 @@ topics:
   - id: assessment-oral-exams
     title: Oral assessment and how it is conducted
     block: governance
+    theme: Assessment
     kind: theorie
     ue: 1
     lesson: 26
@@ -605,6 +659,7 @@ topics:
   - id: minikube-basics
     title: Container orchestration, first look
     block: werkzeuge
+    theme: Orchestration
     kind: praxis
     ue: 2
     lesson: 26
@@ -615,6 +670,7 @@ topics:
   - id: minikube-deploy
     title: Running an application on the orchestrator
     block: werkzeuge
+    theme: Orchestration
     kind: praxis
     ue: 2
     lesson: 27
@@ -625,6 +681,7 @@ topics:
   - id: minikube-services
     title: Reaching an application from outside
     block: werkzeuge
+    theme: Orchestration
     kind: praxis
     ue: 2
     lesson: 28

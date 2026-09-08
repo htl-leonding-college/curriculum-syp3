@@ -49,6 +49,7 @@ def topic(
     status: str | None = None,
     requires: list[str] | None = None,
     ue: int | None = None,
+    theme: str | None = None,
     taught_in: str = "jg3",
     prerequisite_for: str = "jg4",
 ) -> dict:
@@ -65,6 +66,8 @@ def topic(
     }
     if status is not None:
         entry["status"] = status
+    if theme is not None:
+        entry["theme"] = theme
     return entry
 
 

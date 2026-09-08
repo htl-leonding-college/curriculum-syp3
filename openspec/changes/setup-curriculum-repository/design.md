@@ -64,6 +64,7 @@ topics:
   - id: sdd-why-specs
     title: Why specifications instead of a requirements document
     block: vorgehen           # governance | vorgehen | modellierung | werkzeuge
+    theme: Spec-driven development   # optional, Strang innerhalb des Blocks
     kind: theorie             # theorie | praxis
     ue: 1                     # 1 UE Theorie bzw. 2 UE Praxis = ein Unterricht
     lesson: 8                 # Nummer des Unterrichts

@@ -49,6 +49,34 @@ def test_mindmap_contains_new_topic(repo: Repo) -> None:
     assert "Git branching" in mindmap.render(repo.model())
 
 
+def test_mindmap_groups_topics_by_theme(repo: Repo) -> None:
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1),
+            topic("git-basics", kind="praxis", lesson=1, theme="Git"),
+        ]
+    )
+    lines = mindmap.render(repo.model()).splitlines()
+    assert "*** Git" in lines
+    assert any(line.startswith("****_ ") and "Git basics" in line for line in lines)
+    # Ohne theme haengt das Thema eine Ebene hoeher, direkt unter seinem Block.
+    assert any(line.startswith("***_ ") and "Course overview" in line for line in lines)
+
+
+def test_mindmap_marks_planned_topics(repo: Repo) -> None:
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1, status="ready"),
+            topic("git-basics", kind="praxis", lesson=1),
+        ]
+    )
+    text = mindmap.render(repo.model())
+    planned = [line for line in text.splitlines() if "Git basics" in line]
+    ready = [line for line in text.splitlines() if "Course overview" in line]
+    assert planned and "(offen)" in planned[0] and "<color:" in planned[0]
+    assert ready and "(offen)" not in ready[0] and "<color:" not in ready[0]
+
+
 def test_nav_order_follows_lesson(repo: Repo) -> None:
     repo.write_model(
         [

@@ -30,7 +30,11 @@ REQUIRED_TOPIC_FIELDS = (
     "requires",
 )
 
-OPTIONAL_TOPIC_FIELDS = ("assignment_template", "note", "status")
+#: ``theme`` fasst Themen eines Blocks zu einem Strang zusammen (Git, Container,
+#: Meilenstein-Reviews …). Es ist eine reine Darstellungsgruppe der Mindmap und
+#: aendert weder Budget noch Reihenfolge; Themen ohne ``theme`` haengen direkt
+#: unter ihrem Block.
+OPTIONAL_TOPIC_FIELDS = ("assignment_template", "note", "status", "theme")
 
 #: Bearbeitungsstand eines Themas. ``planned`` ist der Default: das Thema ist
 #: geplant und in allen abgeleiteten Darstellungen als offen sichtbar, seine
@@ -107,6 +111,7 @@ class Topic:
     line: int
     root: Path
     assignment_template: str | None = None
+    theme: str | None = None
     status: str = DEFAULT_STATUS
     unknown_fields: tuple[str, ...] = ()
 
@@ -274,6 +279,7 @@ def _as_topic(raw: dict[str, Any], root: Path, path: Path) -> tuple[Topic | None
         assignment_template=(
             str(raw["assignment_template"]) if raw.get("assignment_template") else None
         ),
+        theme=str(raw["theme"]) if raw.get("theme") else None,
         status=status,
         unknown_fields=unknown,
     )
