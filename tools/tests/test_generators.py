@@ -1,4 +1,4 @@
-"""Generatoren: eine Aenderung im Modell wirkt ohne Handarbeit (P3)."""
+"""Generatoren: eine Änderung im Modell wirkt ohne Handarbeit (P3)."""
 
 from __future__ import annotations
 
@@ -59,7 +59,7 @@ def test_mindmap_groups_topics_by_theme(repo: Repo) -> None:
     lines = mindmap.render(repo.model()).splitlines()
     assert "*** Git" in lines
     assert any(line.startswith("****_ ") and "Git basics" in line for line in lines)
-    # Ohne theme haengt das Thema eine Ebene hoeher, direkt unter seinem Block.
+    # Ohne theme hängt das Thema eine Ebene höher, direkt unter seinem Block.
     assert any(line.startswith("***_ ") and "Course overview" in line for line in lines)
 
 
@@ -163,7 +163,7 @@ def test_generated_files_carry_the_marker(repo: Repo, tmp_path: Path) -> None:
 
 
 def test_new_module_skeleton_passes_all_checks(repo: Repo) -> None:
-    """Ein frisches Skelett faellt nur inhaltlich auf, nicht strukturell."""
+    """Ein frisches Skelett fällt nur inhaltlich auf, nicht strukturell."""
     new_module = _script("new-module")
     repo.write_model(
         [

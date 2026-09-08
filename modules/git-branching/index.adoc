@@ -111,7 +111,7 @@ as a ritual rather than as a tool.
 |Zweig
 |branch
 
-|Zusammenfuehren
+|Zusammenführen
 |merge
 
 |Vorspulen

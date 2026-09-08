@@ -11,9 +11,9 @@ ifdef::env-github[]
 endif::[]
 
 // Jede Frage ist ein eigener Abschnitt und nennt in der ersten Zeile ihres
-// Rumpfes die Lernziele, die sie prueft:  covers: lo-1, lo-2
+// Rumpfes die Lernziele, die sie prüft:  covers: lo-1, lo-2
 
-== TODO: Pruefungsfrage
+== TODO: Prüfungsfrage
 
 covers: lo-1
 

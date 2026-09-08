@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Baut die Site lokal — derselbe Ablauf wie in der Pipeline.
 #
-#   ./local-convert.sh              pruefen, erzeugen, konvertieren
-#   ./local-convert.sh --skip-check nur bauen (waehrend des Schreibens)
+#   ./local-convert.sh              prüfen, erzeugen, konvertieren
+#   ./local-convert.sh --skip-check nur bauen (während des Schreibens)
 #
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -12,7 +12,7 @@ SKIP_CHECK=0
 [[ "${1:-}" == "--skip-check" ]] && SKIP_CHECK=1
 
 if [[ "${SKIP_CHECK}" -eq 0 ]]; then
-  echo "==> Pruefung"
+  echo "==> Prüfung"
   "${PYTHON}" tools/check-curriculum.py
 fi
 
@@ -44,7 +44,7 @@ docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -v "${PWD}:/documents" -w /d
     "${SITE_DIR}/index.adoc" "${SITE_DIR}"/questions/index.adoc \
     $(find "${SITE_DIR}/modules" -name '*.adoc' 2>/dev/null | tr '\n' ' ')
 
-echo "==> Praesentationen (revealjs)"
+echo "==> Präsentationen (revealjs)"
 mkdir -p "${SITE_DIR}/slides"
 while IFS= read -r module; do
   [[ -z "${module}" ]] && continue

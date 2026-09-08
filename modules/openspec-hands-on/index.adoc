@@ -131,7 +131,7 @@ checkable: not "we worked on it", but "this change is in the archive, dated".
 |===
 |Deutsch |English
 
-|Aenderungsvorhaben
+|Änderungsvorhaben
 |change
 
 |Vorschlag

@@ -14,13 +14,13 @@ ifdef::env-github[]
 endif::[]
 
 // Der Projektauftrag wird eingefroren. Er ist der Anker, gegen den am Ende
-// beurteilt wird - nicht der Endstand, sonst waeren alle per Definition fertig.
-// Gebaut wird gegen openspec/specs/, die weiterleben duerfen.
+// beurteilt wird - nicht der Endstand, sonst wären alle per Definition fertig.
+// Gebaut wird gegen openspec/specs/, die weiterleben dürfen.
 
 [IMPORTANT]
 ====
-Nach der Freigabe wird dieses Dokument nicht mehr geaendert. Aenderungen am
-Vorhaben laufen ueber `openspec/changes/` und werden dort sichtbar; die Differenz
+Nach der Freigabe wird dieses Dokument nicht mehr geändert. Änderungen am
+Vorhaben laufen über `openspec/changes/` und werden dort sichtbar; die Differenz
 zwischen Auftrag und Endstand ist selbst Lerngegenstand (Scope-Management).
 ====
 
@@ -32,7 +32,7 @@ TODO
 
 [cols="2,2,3",options="header"]
 |===
-|Name |Rolle / Role |Verantwortlich fuer / Responsible for
+|Name |Rolle / Role |Verantwortlich für / Responsible for
 
 |TODO
 |TODO
@@ -41,16 +41,16 @@ TODO
 
 == Ausgangslage / Initial situation
 
-TODO: uebernommen aus dem Projektantrag, ggf. praezisiert.
+TODO: übernommen aus dem Projektantrag, ggf. präzisiert.
 
 == Zielsetzung / Objectives
 
-TODO: Was soll erreicht werden? Jedes Ziel pruefbar formuliert — woran erkennt
-ein Aussenstehender, dass es erreicht ist?
+TODO: Was soll erreicht werden? Jedes Ziel prüfbar formuliert — woran erkennt
+ein Außenstehender, dass es erreicht ist?
 
 [cols="1,3,2",options="header"]
 |===
-|Nr. |Ziel / Objective |Pruefbar an / Verified by
+|Nr. |Ziel / Objective |Prüfbar an / Verified by
 
 |Z1
 |TODO
@@ -83,7 +83,7 @@ Siehe `meilensteinplan.adoc`.
 
 == Rahmenbedingungen / Constraints
 
-TODO: Zeit, Geraete, Zugaenge, rechtliche Vorgaben.
+TODO: Zeit, Geräte, Zugänge, rechtliche Vorgaben.
 
 == Freigabe / Approval
 

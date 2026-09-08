@@ -149,7 +149,7 @@ nothing, so the site always shows the last state that passed.
 |Artefakt
 |artefact
 
-|Veroeffentlichung
+|Veröffentlichung
 |deployment
 |===
 

@@ -1,24 +1,24 @@
 # ============================================================================
-# Stoffstruktur SYP 3. Jahrgang — einzige Wahrheit fuer Struktur.
+# Stoffstruktur SYP 3. Jahrgang — einzige Wahrheit für Struktur.
 #
 # Regeln (setup-curriculum-repository/design.md — P1):
 #   * Ein Topic entspricht einem Unterrichtsslot:
 #       kind: theorie -> ue: 1     kind: praxis -> ue: 2
-#   * Die Lernressource traegt ausser :topic-id: keine Strukturangabe.
+#   * Die Lernressource trägt außer :topic-id: keine Strukturangabe.
 #   * Dateipfade werden aus der id abgeleitet, nicht eingetragen:
 #       modules/<id>/index.adoc | exercises.adoc | questions.adoc
 #       modules/<id>/images/
 #   * theme: fasst Themen eines Blocks zu einem Strang zusammen (Git,
 #     Container, Meilenstein-Reviews ...). Reine Darstellungsgruppe der
-#     Mindmap; Budget und Reihenfolge bleiben unberuehrt.
-#   * status: planned | ready  (Default planned, Zeile entfaellt dann)
+#     Mindmap; Budget und Reihenfolge bleiben unberührt.
+#   * status: planned | ready  (Default planned, Zeile entfällt dann)
 #       planned = Thema ist geplant und in Navigation, Mindmap und
-#                 UE-Uebersicht als offen sichtbar; keine Lernressource
-#                 erwartet, die Modulpruefungen greifen nicht.
-#       ready   = Modul ist vollstaendig; Bijektion, Pflichtabschnitte,
-#                 Outcome-Kopplung und Modulskelett werden hart geprueft.
+#                 UE-Übersicht als offen sichtbar; keine Lernressource
+#                 erwartet, die Modulprüfungen greifen nicht.
+#       ready   = Modul ist vollständig; Bijektion, Pflichtabschnitte,
+#                 Outcome-Kopplung und Modulskelett werden hart geprüft.
 #   * Diese Datei wird von Hand gepflegt; alles Abgeleitete (Mindmap,
-#     Navigation, UE-Uebersicht, Fragenkatalog-Tags) ist generiert.
+#     Navigation, UE-Übersicht, Fragenkatalog-Tags) ist generiert.
 # ============================================================================
 
 meta:
@@ -31,17 +31,17 @@ meta:
     theorie: 1        # 1 UE
     praxis: 1         # 2 UE
   zonen:
-    einfuehrung: [1]
+    einführung: [1]
     kernbetrieb: [2, 25]
     reserve: [26, 30]
   budget:
-    theorie: 26       # 1 Einfuehrung + 24 Kernbetrieb + 1 Reserve
-    praxis: 56        # 2 Einfuehrung + 48 Kernbetrieb + 6 Reserve
+    theorie: 26       # 1 Einführung + 24 Kernbetrieb + 1 Reserve
+    praxis: 56        # 2 Einführung + 48 Kernbetrieb + 6 Reserve
   # Theorie-UE je Block. Feingliederung aus define-syp3-curriculum/design.md:
   #   governance  = 8 Governance + 1 Leistungsfeststellung (Reserve)
-  #   vorgehen    = 3 Vorgehensmodelle + 5 SDD + 2 Bruecke
+  #   vorgehen    = 3 Vorgehensmodelle + 5 SDD + 2 Brücke
   #   modellierung= 5 UML
-  #   werkzeuge   = 1 Kursueberblick (U1) + 1 Was ist Software-Engineering
+  #   werkzeuge   = 1 Kursüberblick (U1) + 1 Was ist Software-Engineering
   budget_je_block:
     governance: 9
     vorgehen: 10
@@ -59,7 +59,7 @@ blocks:
     title: Tools and practice
 
 # ============================================================================
-# U1 — Einfuehrung
+# U1 — Einführung
 # ============================================================================
 
 topics:
@@ -642,7 +642,7 @@ topics:
     requires: [ai-result-verification]
 
 # ============================================================================
-# Reserve U26-U30 — faellt bei Terminausfaellen zuerst weg (D9)
+# Reserve U26-U30 — fällt bei Terminausfällen zuerst weg (D9)
 # ============================================================================
 
   - id: assessment-oral-exams

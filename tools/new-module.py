@@ -25,8 +25,8 @@ PLACEHOLDERS = {
     "SOURCE": "TODO: Quelle",
     "EXERCISE_TITLE": "TODO: Aufgabentitel",
     "EXERCISE_TASK": "TODO: Arbeitsauftrag",
-    "EXERCISE_SOLUTION": "TODO: Loesung oder Abschnitt loeschen",
-    "QUESTION": "TODO: Pruefungsfrage",
+    "EXERCISE_SOLUTION": "TODO: Lösung oder Abschnitt löschen",
+    "QUESTION": "TODO: Prüfungsfrage",
     "ANSWER_POINT": "TODO: erwarteter Punkt",
 }
 
@@ -64,7 +64,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("topic_id", nargs="+")
     parser.add_argument("--curriculum", type=Path, default=DEFAULT_PATH)
-    parser.add_argument("--force", action="store_true", help="vorhandene Dateien ueberschreiben")
+    parser.add_argument("--force", action="store_true", help="vorhandene Dateien überschreiben")
     args = parser.parse_args(argv)
 
     model = load(args.curriculum)
@@ -80,7 +80,7 @@ def main(argv: list[str] | None = None) -> int:
             for path in written:
                 print(path.relative_to(model.root))
         else:
-            print(f"{topic_id}: Modul existiert bereits (--force ueberschreibt)")
+            print(f"{topic_id}: Modul existiert bereits (--force überschreibt)")
     print(
         "\nHinweis: status bleibt 'planned'. Erst wenn das Modul fertig ist, "
         "'status: ready' in curriculum.yaml setzen.",

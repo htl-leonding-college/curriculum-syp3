@@ -129,7 +129,7 @@ that was hard.
 |Nachvollziehbarkeit
 |traceability
 
-|Praxis, bewaehrtes Vorgehen
+|Praxis, bewährtes Vorgehen
 |practice
 |===
 

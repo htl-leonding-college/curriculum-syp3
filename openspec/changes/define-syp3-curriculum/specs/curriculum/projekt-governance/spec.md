@@ -1,101 +1,101 @@
 ## Purpose
 
-Vermittelt die verpflichtende aeussere Ebene eines Projekts — von der Ideenfindung ueber
-Projektantrag und Projektauftrag bis zu Meilensteinplanung und Abnahme — unabhaengig vom
-gewaehlten Vorgehensmodell.
+Vermittelt die verpflichtende äußere Ebene eines Projekts — von der Ideenfindung über
+Projektantrag und Projektauftrag bis zu Meilensteinplanung und Abnahme — unabhängig vom
+gewählten Vorgehensmodell.
 
 ## ADDED Requirements
 
 ### Requirement: Projektbegriff und Ausgangslage
-Der Schueler SHALL ein Projekt von laufender Taetigkeit unterscheiden und die
-Ausgangslage eines Vorhabens so beschreiben koennen, dass daraus ein Handlungsbedarf
+Der Schüler SHALL ein Projekt von laufender Tätigkeit unterscheiden und die
+Ausgangslage eines Vorhabens so beschreiben können, dass daraus ein Handlungsbedarf
 erkennbar wird.
 
-#### Scenario: Muendliche Pruefung
-- **WHEN** der Schueler gefragt wird, was ein Vorhaben zu einem Projekt macht
+#### Scenario: Mündliche Prüfung
+- **WHEN** der Schüler gefragt wird, was ein Vorhaben zu einem Projekt macht
 - **THEN** nennt er Merkmale wie Einmaligkeit, Zielvorgabe, Ressourcen- und
-  Terminbegrenzung und grenzt gegen Linientaetigkeit ab
+  Terminbegrenzung und grenzt gegen Linientätigkeit ab
 
-### Requirement: Ideenfindung mit einer tatsaechlich durchgefuehrten Technik
-Der Schueler SHALL mindestens eine Kreativitaetstechnik nicht nur benennen, sondern in
-der Gruppe durchgefuehrt haben und ihr Ergebnis in schriftlicher Form vorweisen koennen.
+### Requirement: Ideenfindung mit einer tatsächlich durchgeführten Technik
+Der Schüler SHALL mindestens eine Kreativitätstechnik nicht nur benennen, sondern in
+der Gruppe durchgeführt haben und ihr Ergebnis in schriftlicher Form vorweisen können.
 Weitere Techniken SHALL benannt und eingeordnet werden.
 
 #### Scenario: Ideenfindung im Unterricht
-- **WHEN** die Klasse die Technik im Unterricht durchfuehrt
-- **THEN** liegen schriftliche Ideen vor, die als Rohmaterial fuer die Projektantraege
-  dienen, und jeder Schueler hat beigetragen
+- **WHEN** die Klasse die Technik im Unterricht durchführt
+- **THEN** liegen schriftliche Ideen vor, die als Rohmaterial für die Projektanträge
+  dienen, und jeder Schüler hat beigetragen
 
 ### Requirement: Projektauswahl ist kriterienbasiert und nachvollziehbar
-Der Schueler SHALL eine Nutzwertanalyse aufstellen und anwenden koennen: Kriterien
-festlegen, gewichten, Alternativen bewerten und das Ergebnis begruenden.
+Der Schüler SHALL eine Nutzwertanalyse aufstellen und anwenden können: Kriterien
+festlegen, gewichten, Alternativen bewerten und das Ergebnis begründen.
 
 #### Scenario: Auswahl unter mehreren Projektideen
 - **WHEN** ein Team sich zwischen mehreren Ideen entscheidet
 - **THEN** liegt eine nachvollziehbare Bewertung mit Kriterien und Gewichten vor, und die
-  Entscheidung ist gegen Rueckfragen begruendbar
+  Entscheidung ist gegen Rückfragen begründbar
 
 ### Requirement: Stakeholder und Zielsetzung
-Der Schueler SHALL die Beteiligten eines Projekts benennen und deren Interessen
-unterscheiden koennen sowie ein Projektziel so formulieren, dass seine Erreichung
-ueberpruefbar ist.
+Der Schüler SHALL die Beteiligten eines Projekts benennen und deren Interessen
+unterscheiden können sowie ein Projektziel so formulieren, dass seine Erreichung
+überprüfbar ist.
 
 #### Scenario: Ziel wird formuliert
 - **WHEN** ein Projektziel im Antrag steht
-- **THEN** laesst sich am Projektende feststellen, ob es erreicht wurde
+- **THEN** lässt sich am Projektende feststellen, ob es erreicht wurde
 
 ### Requirement: Projektantrag und Projektauftrag erstellen
-Der Schueler SHALL einen Projektantrag und einen Projektauftrag mit den geforderten
-Feldern erstellen koennen: Ausgangslage, Zielsetzung, Untersuchungsanliegen, geplantes
-Ergebnis, Meilensteine mit Terminen, Aufwandsschaetzung und Verantwortlichkeit je
+Der Schüler SHALL einen Projektantrag und einen Projektauftrag mit den geforderten
+Feldern erstellen können: Ausgangslage, Zielsetzung, Untersuchungsanliegen, geplantes
+Ergebnis, Meilensteine mit Terminen, Aufwandsschätzung und Verantwortlichkeit je
 Teammitglied.
 
-#### Scenario: Antrag im hoeheren Jahrgang
-- **WHEN** derselbe Schueler spaeter einen Diplomarbeitsantrag ausfuellt
+#### Scenario: Antrag im höheren Jahrgang
+- **WHEN** derselbe Schüler später einen Diplomarbeitsantrag ausfüllt
 - **THEN** ist ihm die Feldstruktur vertraut, weil die Vorlage des dritten Jahrgangs ihr
   folgt
 
 ### Requirement: Der Projektauftrag ist eingefroren und bleibt Beurteilungsanker
-Der Projektauftrag SHALL nach seiner Annahme unveraendert bleiben. Der Schueler SHALL
-erklaeren koennen, warum ohne festen Vergleichspunkt keine Beurteilung moeglich ist und
+Der Projektauftrag SHALL nach seiner Annahme unverändert bleiben. Der Schüler SHALL
+erklären können, warum ohne festen Vergleichspunkt keine Beurteilung möglich ist und
 wie Abweichungen davon nachgewiesen werden.
 
-#### Scenario: Umfang aendert sich waehrend des Projekts
-- **WHEN** ein Team seinen Umfang im Lauf des Jahres aendert
-- **THEN** bleibt der urspruengliche Auftrag unveraendert, und die Abweichung ist als
-  bewusste, dokumentierte Aenderung erkennbar
+#### Scenario: Umfang ändert sich während des Projekts
+- **WHEN** ein Team seinen Umfang im Lauf des Jahres ändert
+- **THEN** bleibt der ursprüngliche Auftrag unverändert, und die Abweichung ist als
+  bewusste, dokumentierte Änderung erkennbar
 
-### Requirement: Schaetz-Hygiene statt Schaetzverfahren
-Der Schueler SHALL Aufwaende als Bandbreite statt als Punktwert angeben, groessere
-Vorhaben vor dem Schaetzen zerlegen und zwischen Schaetzung, Zusage und Zielvorgabe
-unterscheiden koennen. Klassische Schaetzverfahren SHALL er benennen und einordnen, aber
-MUST NOT anwenden muessen.
+### Requirement: Schätz-Hygiene statt Schätzverfahren
+Der Schüler SHALL Aufwände als Bandbreite statt als Punktwert angeben, größere
+Vorhaben vor dem Schätzen zerlegen und zwischen Schätzung, Zusage und Zielvorgabe
+unterscheiden können. Klassische Schätzverfahren SHALL er benennen und einordnen, aber
+MUST NOT anwenden müssen.
 
 #### Scenario: Aufwand wird angegeben
-- **WHEN** der Schueler einen Aufwand fuer einen Arbeitsschritt angibt
+- **WHEN** der Schüler einen Aufwand für einen Arbeitsschritt angibt
 - **THEN** nennt er eine Bandbreite und benennt, was die Unsicherheit verursacht
 
 #### Scenario: Frage nach einem klassischen Verfahren
-- **WHEN** der Schueler nach Function Points, COCOMO oder Planning Poker gefragt wird
+- **WHEN** der Schüler nach Function Points, COCOMO oder Planning Poker gefragt wird
 - **THEN** kann er das Verfahren einordnen und sagen, welche Voraussetzung ihm im
   Schulprojekt fehlt
 
 ### Requirement: Meilensteinplanung und Abnahme
-Der Schueler SHALL Meilensteine mit ueberpruefbarem Ergebnis und Termin festlegen und bei
-Erreichen die Abweichung zwischen geschaetztem und tatsaechlichem Aufwand feststellen
-koennen.
+Der Schüler SHALL Meilensteine mit überprüfbarem Ergebnis und Termin festlegen und bei
+Erreichen die Abweichung zwischen geschätztem und tatsächlichem Aufwand feststellen
+können.
 
 #### Scenario: Meilenstein-Review
-- **WHEN** ein Meilenstein faellig ist
+- **WHEN** ein Meilenstein fällig ist
 - **THEN** ist ohne Diskussion feststellbar, ob er erreicht ist, und die Abweichung zur
-  Schaetzung wird festgehalten
+  Schätzung wird festgehalten
 
-### Requirement: Governance ist unabhaengig vom Vorgehensmodell
-Der Schueler SHALL erklaeren koennen, dass die Governance-Artefakte kein bestimmtes
-Vorgehensmodell voraussetzen und dass die Wahl des Durchfuehrungsmodells davon getrennt
+### Requirement: Governance ist unabhängig vom Vorgehensmodell
+Der Schüler SHALL erklären können, dass die Governance-Artefakte kein bestimmtes
+Vorgehensmodell voraussetzen und dass die Wahl des Durchführungsmodells davon getrennt
 ist.
 
-#### Scenario: Frage nach dem Verhaeltnis von Antrag und Vorgehensmodell
-- **WHEN** der Schueler gefragt wird, welches Vorgehensmodell der Antrag verlangt
-- **THEN** erkennt er, dass er keines verlangt, und begruendet die Trennung von aeusserer
+#### Scenario: Frage nach dem Verhältnis von Antrag und Vorgehensmodell
+- **WHEN** der Schüler gefragt wird, welches Vorgehensmodell der Antrag verlangt
+- **THEN** erkennt er, dass er keines verlangt, und begründet die Trennung von äußerer
   und innerer Ebene

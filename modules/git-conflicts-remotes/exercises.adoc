@@ -69,4 +69,4 @@ kind: project
 Agree in your team on when everyone pulls, how conflicts are resolved and who
 merges, and write it into the project README.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

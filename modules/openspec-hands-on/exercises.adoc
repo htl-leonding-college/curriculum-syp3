@@ -65,4 +65,4 @@ kind: project
 Propose, implement and archive the first change of your own project, and record
 the archived change as the evidence for your first milestone.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

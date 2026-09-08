@@ -1,21 +1,21 @@
 ## Purpose
 
 Vermittelt Containerisierung als reproduzierbare Beschreibung einer Laufzeitumgebung —
-vom einzelnen Abbild ueber Anwendungen aus mehreren Diensten bis zum lokalen Betrieb
+vom einzelnen Abbild über Anwendungen aus mehreren Diensten bis zum lokalen Betrieb
 eines Orchestrierers.
 
 ## ADDED Requirements
 
 ### Requirement: Container-Grundlagen
-Der Schueler SHALL erklaeren koennen, welches Problem Container loesen, und ein Abbild
-aus einer Beschreibungsdatei erzeugen und ausfuehren koennen.
+Der Schüler SHALL erklären können, welches Problem Container lösen, und ein Abbild
+aus einer Beschreibungsdatei erzeugen und ausführen können.
 
-#### Scenario: Anwendung auf fremdem Geraet
-- **WHEN** eine Anwendung auf einem Geraet laufen soll, auf dem sie nie eingerichtet wurde
-- **THEN** genuegt das Abbild, und keine Einrichtung von Hand ist noetig
+#### Scenario: Anwendung auf fremdem Gerät
+- **WHEN** eine Anwendung auf einem Gerät laufen soll, auf dem sie nie eingerichtet wurde
+- **THEN** genügt das Abbild, und keine Einrichtung von Hand ist nötig
 
-### Requirement: Daten und Konfiguration ueberleben den Container
-Der Schueler SHALL unterscheiden koennen, was im Abbild liegt und was ausserhalb gehalten
+### Requirement: Daten und Konfiguration überleben den Container
+Der Schüler SHALL unterscheiden können, was im Abbild liegt und was außerhalb gehalten
 werden muss, und beides entsprechend einrichten.
 
 #### Scenario: Container wird ersetzt
@@ -24,33 +24,33 @@ werden muss, und beides entsprechend einrichten.
   werden
 
 ### Requirement: Abbilder laufen auf unterschiedlichen Prozessorarchitekturen
-Der Schueler SHALL erkennen koennen, dass ein Abbild an die Architektur des erzeugenden
-Geraets gebunden sein kann, und ein Abbild fuer mehrere Architekturen erzeugen koennen.
+Der Schüler SHALL erkennen können, dass ein Abbild an die Architektur des erzeugenden
+Geräts gebunden sein kann, und ein Abbild für mehrere Architekturen erzeugen können.
 
-#### Scenario: Abbild vom Notebook laeuft auf dem Server nicht
-- **WHEN** ein auf einem Geraet mit anderer Architektur erzeugtes Abbild anderswo starten
+#### Scenario: Abbild vom Notebook läuft auf dem Server nicht
+- **WHEN** ein auf einem Gerät mit anderer Architektur erzeugtes Abbild anderswo starten
   soll
-- **THEN** erkennt der Schueler die Ursache und erzeugt ein Abbild fuer beide
+- **THEN** erkennt der Schüler die Ursache und erzeugt ein Abbild für beide
   Architekturen
 
 ### Requirement: Anwendungen aus mehreren Diensten
-Der Schueler SHALL eine Anwendung aus mehreren zusammenwirkenden Diensten als eine
-Beschreibung definieren und gemeinsam starten koennen, einschliesslich Netzwerk,
-Abhaengigkeiten und Startreihenfolge.
+Der Schüler SHALL eine Anwendung aus mehreren zusammenwirkenden Diensten als eine
+Beschreibung definieren und gemeinsam starten können, einschließlich Netzwerk,
+Abhängigkeiten und Startreihenfolge.
 
 #### Scenario: Anwendung mit Datenbank
-- **WHEN** eine Anwendung eine Datenbank benoetigt
+- **WHEN** eine Anwendung eine Datenbank benötigt
 - **THEN** startet ein einziger Befehl beide Dienste in der richtigen Reihenfolge
 
-### Requirement: Orchestrierung im lokalen Ueberblick
-Der Schueler SHALL die Grundbegriffe eines Orchestrierers benennen und eine Anwendung
-lokal darauf betreiben koennen, sofern die Reservezone des Jahresplans nicht durch
-Terminausfaelle aufgebraucht ist.
+### Requirement: Orchestrierung im lokalen Überblick
+Der Schüler SHALL die Grundbegriffe eines Orchestrierers benennen und eine Anwendung
+lokal darauf betreiben können, sofern die Reservezone des Jahresplans nicht durch
+Terminausfälle aufgebraucht ist.
 
 #### Scenario: Reservezone bleibt erhalten
 - **WHEN** keine wesentlichen Termine ausgefallen sind
-- **THEN** betreibt der Schueler eine Anwendung lokal auf dem Orchestrierer
+- **THEN** betreibt der Schüler eine Anwendung lokal auf dem Orchestrierer
 
-#### Scenario: Reservezone entfaellt
+#### Scenario: Reservezone entfällt
 - **WHEN** Termine ausgefallen sind und die Reservezone aufgebraucht ist
-- **THEN** entfaellt dieser Inhalt, ohne dass Kerninhalte des Jahres betroffen sind
+- **THEN** entfällt dieser Inhalt, ohne dass Kerninhalte des Jahres betroffen sind

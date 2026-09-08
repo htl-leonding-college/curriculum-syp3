@@ -1,64 +1,64 @@
 ## Purpose
 
-Vermittelt den beruflich tragfaehigen Umgang mit KI-Agenten in der Softwareentwicklung —
-vom Formulieren einer Aufgabe ueber die Steuerung des Arbeitsumfelds bis zur Verantwortung
-fuer das Ergebnis.
+Vermittelt den beruflich tragfähigen Umgang mit KI-Agenten in der Softwareentwicklung —
+vom Formulieren einer Aufgabe über die Steuerung des Arbeitsumfelds bis zur Verantwortung
+für das Ergebnis.
 
 ## ADDED Requirements
 
 ### Requirement: Grundlagen und Aufgabenformulierung
-Der Schueler SHALL eine Aufgabe so formulieren koennen, dass Ziel, Randbedingungen und
-erwartete Form des Ergebnisses darin stehen, und die Auswirkung praeziserer Formulierung
-auf das Ergebnis beurteilen koennen.
+Der Schüler SHALL eine Aufgabe so formulieren können, dass Ziel, Randbedingungen und
+erwartete Form des Ergebnisses darin stehen, und die Auswirkung präziserer Formulierung
+auf das Ergebnis beurteilen können.
 
 #### Scenario: Unbrauchbares Ergebnis
 - **WHEN** ein Ergebnis nicht brauchbar ist
-- **THEN** verbessert der Schueler zuerst die Aufgabenstellung, statt dasselbe erneut zu
+- **THEN** verbessert der Schüler zuerst die Aufgabenstellung, statt dasselbe erneut zu
   versuchen
 
 ### Requirement: Kontext bewusst bereitstellen
-Der Schueler SHALL beurteilen koennen, welche Angaben ein Agent fuer eine Aufgabe
-braucht, und diesen Kontext gezielt bereitstellen statt vollstaendig oder zufaellig.
+Der Schüler SHALL beurteilen können, welche Angaben ein Agent für eine Aufgabe
+braucht, und diesen Kontext gezielt bereitstellen statt vollständig oder zufällig.
 
-#### Scenario: Aufgabe in einem groesseren Projekt
+#### Scenario: Aufgabe in einem größeren Projekt
 - **WHEN** eine Aufgabe nur einen Teil des Projekts betrifft
-- **THEN** stellt der Schueler die dafuer noetigen Teile bereit und begruendet die Auswahl
+- **THEN** stellt der Schüler die dafür nötigen Teile bereit und begründet die Auswahl
 
-### Requirement: Arbeit ueber eine Sitzungsgrenze hinweg fortsetzen
-Der Schueler SHALL den Stand einer laengeren Arbeit so festhalten koennen, dass sie in
+### Requirement: Arbeit über eine Sitzungsgrenze hinweg fortsetzen
+Der Schüler SHALL den Stand einer längeren Arbeit so festhalten können, dass sie in
 einer neuen Sitzung ohne Wiederholung der Vorgeschichte fortgesetzt werden kann.
 
 #### Scenario: Arbeit wird unterbrochen
-- **WHEN** eine Arbeit ueber mehrere Tage laeuft
-- **THEN** genuegt der festgehaltene Stand, um ohne Rueckfragen fortzusetzen
+- **WHEN** eine Arbeit über mehrere Tage läuft
+- **THEN** genügt der festgehaltene Stand, um ohne Rückfragen fortzusetzen
 
 ### Requirement: Das Arbeitsumfeld des Agenten gestalten
-Der Schueler SHALL beschreiben koennen, wie Werkzeuge, Zugriffsrechte und verbindliche
-Vorgaben das Ergebnis eines Agenten beeinflussen, und diese Rahmenbedingungen fuer sein
+Der Schüler SHALL beschreiben können, wie Werkzeuge, Zugriffsrechte und verbindliche
+Vorgaben das Ergebnis eines Agenten beeinflussen, und diese Rahmenbedingungen für sein
 Projekt festlegen.
 
 #### Scenario: Wiederkehrende Vorgabe
-- **WHEN** dieselbe Vorgabe in jeder Sitzung wiederholt werden muesste
-- **THEN** legt der Schueler sie dauerhaft im Projekt ab, statt sie jedes Mal zu nennen
+- **WHEN** dieselbe Vorgabe in jeder Sitzung wiederholt werden müsste
+- **THEN** legt der Schüler sie dauerhaft im Projekt ab, statt sie jedes Mal zu nennen
 
-### Requirement: Wiederholende Ablaeufe erkennen und begrenzen
-Der Schueler SHALL einen sich wiederholenden Arbeitsablauf einrichten und ein
-Abbruchkriterium dafuer angeben koennen.
+### Requirement: Wiederholende Abläufe erkennen und begrenzen
+Der Schüler SHALL einen sich wiederholenden Arbeitsablauf einrichten und ein
+Abbruchkriterium dafür angeben können.
 
 #### Scenario: Ablauf kommt nicht zum Ende
 - **WHEN** ein wiederholender Ablauf sein Ziel nicht erreicht
 - **THEN** bricht er anhand des festgelegten Kriteriums ab, statt endlos zu laufen
 
-### Requirement: Verantwortung fuer das Ergebnis bleibt beim Schueler
-Der Schueler SHALL von einem Agenten erzeugte Ergebnisse pruefen, bevor er sie uebernimmt,
-und fuer jede uebernommene Stelle erklaeren koennen, was sie tut und warum sie so
+### Requirement: Verantwortung für das Ergebnis bleibt beim Schüler
+Der Schüler SHALL von einem Agenten erzeugte Ergebnisse prüfen, bevor er sie übernimmt,
+und für jede übernommene Stelle erklären können, was sie tut und warum sie so
 aussieht.
 
-#### Scenario: Muendliche Pruefung ueber eigenen Projektcode
-- **WHEN** der Schueler zu einer Stelle seines Projekts befragt wird
-- **THEN** erklaert er Zweck und Funktionsweise, unabhaengig davon, wer oder was sie
+#### Scenario: Mündliche Prüfung über eigenen Projektcode
+- **WHEN** der Schüler zu einer Stelle seines Projekts befragt wird
+- **THEN** erklärt er Zweck und Funktionsweise, unabhängig davon, wer oder was sie
   erzeugt hat
 
 #### Scenario: Ergebnis wirkt plausibel, ist aber falsch
-- **WHEN** ein erzeugtes Ergebnis ueberzeugend aussieht
-- **THEN** prueft der Schueler es gegen die Anforderung, bevor er es uebernimmt
+- **WHEN** ein erzeugtes Ergebnis überzeugend aussieht
+- **THEN** prüft der Schüler es gegen die Anforderung, bevor er es übernimmt

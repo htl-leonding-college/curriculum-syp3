@@ -49,7 +49,7 @@ covers: lo-4
 
 Expected answer points:
 
-* Untersuchungsanliegen, Geplantes Ergebnis, Aufwandsschaetzung
+* Untersuchungsanliegen, Geplantes Ergebnis, Aufwandsschätzung
 * The form in year five is German; the vocabulary is learned in both languages
   for that reason
 

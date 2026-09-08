@@ -118,7 +118,7 @@ hundred are the price of finding them.
 |===
 |Deutsch |English
 
-|Kreativitaetstechnik
+|Kreativitätstechnik
 |creativity technique
 
 |Ideenfindung
@@ -136,5 +136,5 @@ hundred are the price of finding them.
 
 == Further reading
 
-* PUMA 8/12, Kreativitaetstechniken — the source used for this module
+* PUMA 8/12, Kreativitätstechniken — the source used for this module
 * Module `governance-weighted-scoring` — the converging half

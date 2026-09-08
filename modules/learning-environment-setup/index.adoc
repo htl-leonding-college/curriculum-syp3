@@ -195,7 +195,7 @@ to be a version difference.
 |Partition
 |partition
 
-|Wiederherstellungsschluessel
+|Wiederherstellungsschlüssel
 |recovery key
 
 |idempotent (wiederholbar mit gleichem Endzustand)

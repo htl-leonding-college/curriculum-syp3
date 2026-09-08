@@ -49,4 +49,4 @@ kind: project
 Score your three candidate ideas with criteria and weights your team agrees on,
 fix the weights first, and put the table into your project proposal.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

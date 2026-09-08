@@ -142,7 +142,7 @@ scope for *this* project, in *this* year.
 |Nicht-Ziel
 |non-goal
 
-|ueberpruefbar
+|überprüfbar
 |verifiable
 
 |Einflussnahme

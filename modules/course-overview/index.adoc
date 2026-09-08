@@ -140,7 +140,7 @@ the module is for, which is more useful than reading the text twice.
 |Leistungsfeststellung
 |assessment
 
-|muendliche Pruefung
+|mündliche Prüfung
 |oral examination
 
 |Jahresprojekt

@@ -1,8 +1,8 @@
 """Gemeinsames Schreiben erzeugter Artefakte (P3).
 
-Erzeugte Dateien landen ausschliesslich unter ``build/``, tragen einen
-Kopfhinweis und werden bei jedem Build neu geschrieben. Eine Handaenderung ist
-damit beim naechsten Lauf verworfen.
+Erzeugte Dateien landen ausschließlich unter ``build/``, tragen einen
+Kopfhinweis und werden bei jedem Build neu geschrieben. Eine Handänderung ist
+damit beim nächsten Lauf verworfen.
 """
 
 from __future__ import annotations

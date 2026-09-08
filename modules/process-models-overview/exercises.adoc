@@ -50,4 +50,4 @@ kind: project
 Write one paragraph for your charter: which tempo your team works at and why the
 cost of being wrong justifies it.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

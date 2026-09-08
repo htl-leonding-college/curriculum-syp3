@@ -138,7 +138,7 @@ they appear, on your own branch — never in a hurry on `main`.
 |Gegenstelle, entferntes Repository
 |remote
 
-|holen / zusammenfuehren / senden
+|holen / zusammenführen / senden
 |fetch / merge / push
 
 |auseinandergelaufen

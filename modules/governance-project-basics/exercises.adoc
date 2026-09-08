@@ -51,4 +51,4 @@ kind: project
 Write the initial situation for your own project idea, at most one paragraph,
 and put it into `openspec/config.yaml` under `context:`.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

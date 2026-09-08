@@ -14,7 +14,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-Stoffstruktur, Lernmodule und Publikationsweg fuer den Gegenstand SYP im
+Stoffstruktur, Lernmodule und Publikationsweg für den Gegenstand SYP im
 3. Jahrgang der HTL Leonding (Unterrichtssprache Englisch, Schuljahr 2026/27).
 
 == Was hier liegt
@@ -31,10 +31,10 @@ Stoffstruktur, Lernmodule und Publikationsweg fuer den Gegenstand SYP im
 |Lernmodul: `index.adoc`, `exercises.adoc`, `questions.adoc`, `images/`
 
 |`templates/`
-|Vorlagen fuer Module, Schuelerprojekte und Governance-Artefakte
+|Vorlagen für Module, Schülerprojekte und Governance-Artefakte
 
 |`tools/`
-|Pruefung und Generatoren (Python)
+|Prüfung und Generatoren (Python)
 
 |`openspec/`
 |Planung: Proposals, Specs, Designs, Task-Listen
@@ -43,14 +43,14 @@ Stoffstruktur, Lernmodule und Publikationsweg fuer den Gegenstand SYP im
 |Arbeitsstand zwischen Sitzungen
 
 |`.github/workflows/`
-|Pipeline: Pruefung, Build, Veroeffentlichung auf GitHub Pages
+|Pipeline: Prüfung, Build, Veröffentlichung auf GitHub Pages
 |===
 
 == curriculum.yaml ist die einzige Strukturwahrheit
 
 Themenzuschnitt, Umfang in Unterrichtseinheiten, Block, Unterrichtsnummer,
-Jahrgangszuordnung und Voraussetzungen stehen *ausschliesslich* in
-`curriculum.yaml`. Eine Lernressource traegt ausser ihrer `:topic-id:` keine
+Jahrgangszuordnung und Voraussetzungen stehen *ausschließlich* in
+`curriculum.yaml`. Eine Lernressource trägt außer ihrer `:topic-id:` keine
 Strukturangabe.
 
 [source,adoc]
@@ -62,36 +62,36 @@ Strukturangabe.
 Die Dateipfade werden aus der ID abgeleitet, nicht eingetragen:
 `modules/<topic-id>/index.adoc`.
 
-WARNING: Sobald UE-Zahlen, Blockangaben oder Voraussetzungen zusaetzlich im
-AsciiDoc auftauchen, gibt es zwei Wahrheiten. Die Pruefung meldet solche
+WARNING: Sobald UE-Zahlen, Blockangaben oder Voraussetzungen zusätzlich im
+AsciiDoc auftauchen, gibt es zwei Wahrheiten. Die Prüfung meldet solche
 Attribute als Fehler.
 
-Alles Abgeleitete — Mindmap, Website-Navigation, UE-Uebersicht und
+Alles Abgeleitete — Mindmap, Website-Navigation, UE-Übersicht und
 Fragenkatalog-Tags — wird erzeugt und nicht von Hand gepflegt.
 
-== Pruefen und bauen
+== Prüfen und bauen
 
 [source,bash]
 ----
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r tools/requirements.txt
 
-python tools/check-curriculum.py     # Struktur- und Modulpruefungen
+python tools/check-curriculum.py     # Struktur- und Modulprüfungen
 ----
 
 Details zu den Werkzeugen: `tools/README.adoc`.
 
-== Zwei Fragenkataloge, geteilte Zustaendigkeit
+== Zwei Fragenkataloge, geteilte Zuständigkeit
 
 [cols="1,2",options="header"]
 |===
-|Katalog |Zustaendig fuer
+|Katalog |Zuständig für
 
 |Dieses Repository (erzeugt aus den `questions.adoc` der Module)
-|SYP 3. Jahrgang ab dem Schuljahr 2026/27 — massgeblich
+|SYP 3. Jahrgang ab dem Schuljahr 2026/27 — maßgeblich
 
 |https://htl-leonding-college.github.io/fragenkatalog[fragenkatalog]
-|uebrige Gegenstaende und Jahrgaenge; bleibt unveraendert als Archiv erhalten
+|übrige Gegenstände und Jahrgänge; bleibt unverändert als Archiv erhalten
 |===
 
 Der bestehende Katalog wird nicht migriert; seine Adressen und Sprungmarken
@@ -99,20 +99,20 @@ bleiben stabil.
 
 == Quellen und Rechte
 
-Bilder tragen beim Einfuegen ihre Herkunft: `own`, `free` (mit Lizenzname und
+Bilder tragen beim Einfügen ihre Herkunft: `own`, `free` (mit Lizenzname und
 Quelladresse) oder `unclear`. Der Job `rights-check` meldet `unclear` sichtbar,
-verhindert die Veroeffentlichung aber nicht.
+verhindert die Veröffentlichung aber nicht.
 
-Das Manz-Schulbuch bleibt inhaltliche Quelle. Uebernommen werden nur Inhalte in
+Das Manz-Schulbuch bleibt inhaltliche Quelle. Übernommen werden nur Inhalte in
 eigener Formulierung und eigener Gliederung — keine Abbildungen, keine
 Seitenkopien, keine Weitergabe der PDF-Kapitel, auch nicht digital an einen
 abgegrenzten Kurs.
 
-== Uebungs- und Pruefungsangaben
+== Übungs- und Prüfungsangaben
 
 [cols="1,2,2",options="header"]
 |===
-| |Uebung |Pruefung
+| |Übung |Prüfung
 
 |Sichtbarkeit
 |public
@@ -122,19 +122,19 @@ abgegrenzten Kurs.
 |`htl-leonding-example/jg03-syp-<topic-id>`
 |Classroom-Organisation des Schuljahres
 
-|Begruendung
-|Loesungen duerfen bekannt sein; der Nachweis ist die muendliche Pruefung
+|Begründung
+|Lösungen dürfen bekannt sein; der Nachweis ist die mündliche Prüfung
 |die Angabe ist wertlos, wenn sie vorab lesbar ist
 
 |Wiederverwendung
-|ueber Jahre
-|keine — Angaben werden jaehrlich geaendert
+|über Jahre
+|keine — Angaben werden jährlich geändert
 |===
 
-Nach der Durchfuehrung kann eine Pruefungsangabe oeffentlich werden und als
+Nach der Durchführung kann eine Prüfungsangabe öffentlich werden und als
 `<jahr>-exam-<thema>` ins Archiv wandern; ab dann ist sie Lernmaterial.
 
-Die Zuordnung eines Moduls zu seiner Uebungsangabe steht als
+Die Zuordnung eines Moduls zu seiner Übungsangabe steht als
 `assignment_template` in `curriculum.yaml` — nur dadurch kann die erzeugte
 Navigation sie verlinken.
 
@@ -143,4 +143,4 @@ Navigation sie verlinken.
 Entscheidungen und offene Punkte stehen in `openspec/changes/`:
 
 * `define-syp3-curriculum` — Inhalt, Jahresrahmen, Sequenz
-* `setup-curriculum-repository` — Repository, Pruefung, Generatoren, Publikation
+* `setup-curriculum-repository` — Repository, Prüfung, Generatoren, Publikation

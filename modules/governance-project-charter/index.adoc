@@ -72,7 +72,7 @@ The same fields appear in both. The application argues; the charter commits.
 |Verantwortlich / responsible
 |one named person per work package
 
-|Aufwandsschaetzung / effort estimate
+|Aufwandsschätzung / effort estimate
 |hours, as a range, per work package
 |===
 
@@ -152,7 +152,7 @@ management, and it is only visible because one side does not move.
 |Verantwortlich
 |responsible
 
-|Aufwandsschaetzung
+|Aufwandsschätzung
 |effort estimate
 |===
 

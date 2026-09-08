@@ -1,10 +1,10 @@
 # Continuation Prompt — Curriculum SYP 3. Jahrgang
 
 **Stand:** 2026-09-07 · Plattform-Change **42/51**, Curriculum-Change **19/21**
-**Site live:** https://htl-leonding-college.github.io/curriculum-syp3/ (Pipeline gruen)
-**Module:** U1–U10 vollstaendig geschrieben, 20 Themen auf `status: ready`, 97 Fragen
+**Site live:** https://htl-leonding-college.github.io/curriculum-syp3/ (Pipeline grün)
+**Module:** U1–U10 vollständig geschrieben, 20 Themen auf `status: ready`, 97 Fragen
 
-> Loest `2026-09-07-implementierung-gruppen-1-8.md` ab.
+> Löst `2026-09-07-implementierung-gruppen-1-8.md` ab.
 
 ---
 
@@ -21,16 +21,16 @@ Struktur steht in `curriculum.yaml` (54 Themen, U1–U28), Entscheidungen in
 ## Was steht
 
 ```
-curriculum-syp3/                 Pipeline gruen, Pages veroeffentlicht
-  tools/                         Pruefungen 1-9 + Strukturattribut-Verbot,
+curriculum-syp3/                 Pipeline grün, Pages veröffentlicht
+  tools/                         Prüfungen 1-9 + Strukturattribut-Verbot,
                                  4 Generatoren, new-module.py, rights-report.py
-                                 50 Tests (je Pruefung rot und gruen)
+                                 50 Tests (je Prüfung rot und grün)
   modules/                       20 fertige Module (U1-U10) + 1 Skelett
   templates/module/              Vorlage und Autorenleitfaden
   templates/governance/          Projektantrag, Projektauftrag, Meilensteinplan,
                                  Abnahme, Antragsfelder->openspec (zweisprachig)
-  site/index.adoc                Landing Page (Mindmap, Navigation, UE-Uebersicht)
-  local-convert.sh               Pruefung -> Generatoren -> asciidoctor -> revealjs
+  site/index.adoc                Landing Page (Mindmap, Navigation, UE-Übersicht)
+  local-convert.sh               Prüfung -> Generatoren -> asciidoctor -> revealjs
   publish.sh                     rsync auf den Schulwebspace (noch nie gelaufen)
 
 ../klassen-setup/                lokal, 1 Commit, kein Remote
@@ -50,7 +50,7 @@ covers: lo-1
 image::images/scrum.png[Scrum framework,600]
 ```
 
-`status: ready` erst setzen, wenn das Modul fertig ist — dann pruefen Bijektion,
+`status: ready` erst setzen, wenn das Modul fertig ist — dann prüfen Bijektion,
 Pflichtabschnitte, Outcome-Kopplung und Modulskelett hart. Probelauf vorher:
 `python tools/check-curriculum.py --as-ready <topic-id>`.
 
@@ -71,19 +71,19 @@ PYTHON=.venv/bin/python ./local-convert.sh          # build/site/index.html
 - `htl-leonding-example/jg03-syp-git-basics` anlegen, `assignment_template` eintragen,
   Check um "Repository existiert" erweitern (9.1, 9.2)
 - Hinweis auf den jeweils anderen Katalog auf beiden Einstiegsseiten (6.3)
-- Uebernahme geeigneter Fragen aus dem bestehenden Katalog mit Modulzuordnung (6.2)
+- Übernahme geeigneter Fragen aus dem bestehenden Katalog mit Modulzuordnung (6.2)
 
-**Braucht Geraete oder Absprachen:**
+**Braucht Geräte oder Absprachen:**
 
 - `setup-tools.sh` auf frischem Ubuntu 26.04 und auf macOS durchlaufen, dann git-Tag
   2026/27 (7.6, 7.7)
-- JDK-Version mit 4./5. Jahrgang abstimmen — `versions.env` traegt `25.0.1-tem` mit TODO
+- JDK-Version mit 4./5. Jahrgang abstimmen — `versions.env` trägt `25.0.1-tem` mit TODO
   (7.3, Curriculum-Change 4.2)
 - Deployment-Diagramm und Kubernetes-Vertiefung mit 4./5. Jahrgang abstimmen
   (Curriculum-Change 4.1)
 - `publish.sh` einmal gegen den Schulwebspace laufen lassen (5.5)
 
-**Naechster inhaltlicher Schritt:** Module U11–U18 schreiben — `sdd-openspec-artifacts`
+**Nächster inhaltlicher Schritt:** Module U11–U18 schreiben — `sdd-openspec-artifacts`
 (Skelett liegt schon), `ai-harness-engineering`, `sdd-change-lifecycle`,
 `ai-agentic-loops`, `bridge-progress-and-milestones`, `review-milestone-1`, danach der
 Docker-Block. Reihenfolge wie im Jahresplan, jedes fertige Modul auf `status: ready`.

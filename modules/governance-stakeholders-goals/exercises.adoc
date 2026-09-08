@@ -51,4 +51,4 @@ Fill in the goals table and the non-goals section of your charter — at least
 three goals, each with the evidence that verifies it, and at least three
 non-goals.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

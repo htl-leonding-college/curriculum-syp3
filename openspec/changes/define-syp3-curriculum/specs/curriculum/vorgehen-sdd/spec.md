@@ -1,66 +1,66 @@
 ## Purpose
 
 Vermittelt Vorgehensmodelle als Instanzen eines gemeinsamen Musters mit
-unterschiedlichem Takt und fuehrt spezifikationsgetriebene Entwicklung als das Modell
-ein, nach dem im Projekt tatsaechlich gearbeitet wird.
+unterschiedlichem Takt und führt spezifikationsgetriebene Entwicklung als das Modell
+ein, nach dem im Projekt tatsächlich gearbeitet wird.
 
 ## ADDED Requirements
 
 ### Requirement: Vorgehensmodelle als drei Taktfrequenzen desselben Musters
-Der Schueler SHALL Wasserfall, Scrum und spezifikationsgetriebene Entwicklung als
-Auspraegungen desselben Musters beschreiben koennen — Ziel klaeren, Umfang abgrenzen,
-Anforderung praezise formulieren, bauen, verifizieren, Aenderung kontrolliert einbringen
-— und ihren Unterschied als Taktlaenge benennen.
+Der Schüler SHALL Wasserfall, Scrum und spezifikationsgetriebene Entwicklung als
+Ausprägungen desselben Musters beschreiben können — Ziel klären, Umfang abgrenzen,
+Anforderung präzise formulieren, bauen, verifizieren, Änderung kontrolliert einbringen
+— und ihren Unterschied als Taktlänge benennen.
 
 #### Scenario: Vergleich zweier Modelle
-- **WHEN** der Schueler Wasserfall und Scrum vergleichen soll
+- **WHEN** der Schüler Wasserfall und Scrum vergleichen soll
 - **THEN** benennt er den gemeinsamen Musterkern und den Unterschied im Takt, statt zwei
-  unverbundene Schulen aufzuzaehlen
+  unverbundene Schulen aufzuzählen
 
 ### Requirement: Vokabular der klassischen Modelle
-Der Schueler SHALL die gaengigen Begriffe der klassischen Modelle verstehen und
-einordnen koennen, auch wenn im Projekt nicht danach gearbeitet wird.
+Der Schüler SHALL die gängigen Begriffe der klassischen Modelle verstehen und
+einordnen können, auch wenn im Projekt nicht danach gearbeitet wird.
 
 #### Scenario: Begriff aus der Berufspraxis
-- **WHEN** dem Schueler ein Begriff wie Sprint, Backlog oder Phase begegnet
-- **THEN** kann er ihn einordnen und dem zugehoerigen Modell zuweisen
+- **WHEN** dem Schüler ein Begriff wie Sprint, Backlog oder Phase begegnet
+- **THEN** kann er ihn einordnen und dem zugehörigen Modell zuweisen
 
 ### Requirement: Spezifikationsgetriebene Entwicklung anwenden
-Der Schueler SHALL eine Aenderung nach dem spezifikationsgetriebenen Ablauf durchfuehren
-koennen: Anliegen und Umfang beschreiben, gewuenschtes Verhalten als pruefbare
-Anforderung formulieren, umsetzen, und die abgeschlossene Aenderung in den Sollstand
-ueberfuehren.
+Der Schüler SHALL eine Änderung nach dem spezifikationsgetriebenen Ablauf durchführen
+können: Anliegen und Umfang beschreiben, gewünschtes Verhalten als prüfbare
+Anforderung formulieren, umsetzen, und die abgeschlossene Änderung in den Sollstand
+überführen.
 
 #### Scenario: Neue Funktion im Projekt
-- **WHEN** ein Team eine Funktion ergaenzt
-- **THEN** existiert dazu eine beschriebene Aenderung mit pruefbaren Anforderungen,
+- **WHEN** ein Team eine Funktion ergänzt
+- **THEN** existiert dazu eine beschriebene Änderung mit prüfbaren Anforderungen,
   bevor gebaut wird
 
 ### Requirement: Der Sollzustand ersetzt das Pflichtenheft
-Der Schueler SHALL erklaeren koennen, warum ein fortgeschriebener Sollzustand ein
+Der Schüler SHALL erklären können, warum ein fortgeschriebener Sollzustand ein
 einmalig verfasstes Pflichtenheft ersetzt und wodurch die Beurteilbarkeit trotzdem
 erhalten bleibt.
 
 #### Scenario: Frage nach dem Pflichtenheft
-- **WHEN** der Schueler gefragt wird, wo im Projekt das Pflichtenheft steckt
-- **THEN** nennt er den Sollzustand als lebendes Gegenstueck und den eingefrorenen
+- **WHEN** der Schüler gefragt wird, wo im Projekt das Pflichtenheft steckt
+- **THEN** nennt er den Sollzustand als lebendes Gegenstück und den eingefrorenen
   Projektauftrag als Beurteilungsanker
 
-### Requirement: Bruecke zwischen Governance und Durchfuehrung
-Der Schueler SHALL jedes Feld des Projektantrags einem Artefakt der
-spezifikationsgetriebenen Arbeitsweise zuordnen koennen und umgekehrt aus dem Stand des
-Projekts den Fortschritt gegenueber dem Antrag ableiten.
+### Requirement: Brücke zwischen Governance und Durchführung
+Der Schüler SHALL jedes Feld des Projektantrags einem Artefakt der
+spezifikationsgetriebenen Arbeitsweise zuordnen können und umgekehrt aus dem Stand des
+Projekts den Fortschritt gegenüber dem Antrag ableiten.
 
 #### Scenario: Nachweis eines Meilensteins
 - **WHEN** ein Meilenstein nachgewiesen werden soll
-- **THEN** zeigt der Schueler die zugehoerige abgeschlossene Aenderung und ihren Bezug
+- **THEN** zeigt der Schüler die zugehörige abgeschlossene Änderung und ihren Bezug
   zum Antragsfeld
 
 ### Requirement: Das Prinzip ist der Lerngegenstand, nicht das Werkzeug
-Der Schueler SHALL das zugrunde liegende Prinzip vom eingesetzten Werkzeug unterscheiden
-koennen.
+Der Schüler SHALL das zugrunde liegende Prinzip vom eingesetzten Werkzeug unterscheiden
+können.
 
-#### Scenario: Werkzeug aendert sich
+#### Scenario: Werkzeug ändert sich
 - **WHEN** das verwendete Werkzeug durch ein anderes ersetzt wird
-- **THEN** bleibt das Gelernte anwendbar, weil der Schueler das Prinzip und nicht die
+- **THEN** bleibt das Gelernte anwendbar, weil der Schüler das Prinzip und nicht die
   Befehlsfolge gelernt hat

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Meldet Bilder mit ungeklaerter Rechtelage (P11).
+"""Meldet Bilder mit ungeklärter Rechtelage (P11).
 
 Eigener Schritt, nicht Teil des Builds: `unclear` soll sichtbar sein, aber die
-Veroeffentlichung von 48 Modulen nicht an einem einzigen Bild aufhaengen —
+Veröffentlichung von 48 Modulen nicht an einem einzigen Bild aufhängen —
 sonst wird die Klasse gemieden und das Feld wertlos.
 """
 
@@ -35,7 +35,7 @@ def main(argv: list[str] | None = None) -> int:
                 relative = path.relative_to(model.root)
                 unclear.append(
                     f"{relative}:{image.line}: {image.target} "
-                    f"({image.provenance_detail or 'ohne Begruendung'})"
+                    f"({image.provenance_detail or 'ohne Begründung'})"
                 )
 
     total = sum(counts.values())
@@ -45,8 +45,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if unclear:
         print(
-            f"\n{len(unclear)} Bilder mit ungeklaerter Rechtelage. "
-            "Die Veroeffentlichung laeuft weiter; die Klaerung steht aus.",
+            f"\n{len(unclear)} Bilder mit ungeklärter Rechtelage. "
+            "Die Veröffentlichung läuft weiter; die Klärung steht aus.",
             file=sys.stderr,
         )
         return 1

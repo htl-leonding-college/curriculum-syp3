@@ -11,9 +11,9 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-// Diese Datei darf inhaltsleer bleiben. Jede Aufgabe traegt ihre Art:
-//   kind: drill    generisch, wiederholbar, Musterloesung moeglich
-//   kind: project  am eigenen Projekt, keine Musterloesung
+// Diese Datei darf inhaltsleer bleiben. Jede Aufgabe trägt ihre Art:
+//   kind: drill    generisch, wiederholbar, Musterlösung möglich
+//   kind: project  am eigenen Projekt, keine Musterlösung
 
 == {{EXERCISE_TITLE}}
 

@@ -130,7 +130,7 @@ know anything; the text was in its window, and the window is gone.
 |Fortsetzungsprompt
 |continuation prompt
 
-|Uebergabe
+|Übergabe
 |handover
 
 |Projektwissen

@@ -72,4 +72,4 @@ kind: project
 Enable branch protection on your project repository so `main` requires a pull
 request and a passing CI run.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

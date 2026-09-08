@@ -1,1 +1,1 @@
-"""Werkzeuge rund um curriculum.yaml (Pruefung und Generatoren)."""
+"""Werkzeuge rund um curriculum.yaml (Prüfung und Generatoren)."""

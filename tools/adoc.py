@@ -1,6 +1,6 @@
-"""Lesen der Lernressourcen — so viel AsciiDoc, wie die Pruefungen brauchen.
+"""Lesen der Lernressourcen — so viel AsciiDoc, wie die Prüfungen brauchen.
 
-Kein vollstaendiger Parser: Attribute, Abschnitte, Lernziele, Pruefungsfragen
+Kein vollständiger Parser: Attribute, Abschnitte, Lernziele, Prüfungsfragen
 und Bilder mit Herkunftsangabe. Alles zeilenbasiert, damit jeder Befund eine
 Zeilennummer nennen kann.
 """
@@ -128,7 +128,7 @@ class Document:
                     delimiter = stripped
                     continue
             else:
-                # Ein Block endet nur an seiner eigenen Begrenzung; laengere
+                # Ein Block endet nur an seiner eigenen Begrenzung; längere
                 # Begrenzer schachteln (Beispiel im Beispiel).
                 if stripped == delimiter:
                     delimiter = None

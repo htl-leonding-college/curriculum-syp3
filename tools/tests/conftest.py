@@ -1,4 +1,4 @@
-"""Fixtures: ein Miniatur-Repository je Test, nur so gross wie noetig."""
+"""Fixtures: ein Miniatur-Repository je Test, nur so groß wie nötig."""
 
 from __future__ import annotations
 

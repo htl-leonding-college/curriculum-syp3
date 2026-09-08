@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Rollt die gebaute Site zusaetzlich auf den Schulwebspace aus.
+# Rollt die gebaute Site zusätzlich auf den Schulwebspace aus.
 #
-# Bewusst lokal und manuell: Zugangsdaten fuer fremde Infrastruktur gehoeren
-# nicht in die Automatisierung. Der Zugang haengt am SSH-Schluessel des
-# Ausfuehrenden.
+# Bewusst lokal und manuell: Zugangsdaten für fremde Infrastruktur gehören
+# nicht in die Automatisierung. Der Zugang hängt am SSH-Schlüssel des
+# Ausführenden.
 #
 #   ./publish.sh            baut und rollt aus
-#   ./publish.sh --dry-run  zeigt nur, was uebertragen wuerde
+#   ./publish.sh --dry-run  zeigt nur, was übertragen würde
 #
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -22,4 +22,4 @@ rsync -avz --delete "${DRY_RUN[@]}" \
   "${SITE_DIR}/" \
   "${WEBSPACE_USER}@${WEBSPACE_HOST}:${WEBSPACE_PATH}/"
 
-echo "==> Die bestehende Hugo-Site liegt daneben und bleibt unberuehrt."
+echo "==> Die bestehende Hugo-Site liegt daneben und bleibt unberührt."

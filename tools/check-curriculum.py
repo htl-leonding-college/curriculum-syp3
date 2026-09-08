@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Der CI-Check ist der Vertrag zwischen Modell und Lernressourcen (P2).
 
-Alle Pruefungen laufen immer; gemeldet wird gesammelt, damit ein Lauf alle
+Alle Prüfungen laufen immer; gemeldet wird gesammelt, damit ein Lauf alle
 Fehler zeigt und nicht nur den ersten. Exit-Code 1, sobald ein Befund vorliegt.
 """
 
@@ -30,7 +30,7 @@ from tools.curriculum import (  # noqa: E402
 Check = Callable[[Curriculum], list[Finding]]
 
 #: Attribute, die Struktur transportieren und deshalb nicht im AsciiDoc stehen
-#: duerfen — sonst gibt es zwei Wahrheiten (P1).
+#: dürfen — sonst gibt es zwei Wahrheiten (P1).
 FORBIDDEN_ATTRIBUTES = (
     "ue",
     "block",
@@ -91,7 +91,7 @@ def check_bijection(model: Curriculum) -> list[Finding]:
     for path in _module_adocs(model):
         document = adoc.read(path)
         if not any(line.strip() for line in document.lines):
-            # Die Aufgabendatei darf inhaltsleer sein (Pruefung 9); eine leere
+            # Die Aufgabendatei darf inhaltsleer sein (Prüfung 9); eine leere
             # Datei kann keine Themen-ID tragen.
             continue
         topic_id = document.topic_id
@@ -99,7 +99,7 @@ def check_bijection(model: Curriculum) -> list[Finding]:
             findings.append(
                 Finding(
                     check="bijection",
-                    message="Datei traegt keine :topic-id:",
+                    message="Datei trägt keine :topic-id:",
                     path=path,
                     line=1,
                 )
@@ -183,7 +183,7 @@ def check_budget(model: Curriculum) -> list[Finding]:
     return findings
 
 
-@check("graph", "3 Voraussetzungsgraph: Existenz, Zyklen, Vorwaertsreferenzen")
+@check("graph", "3 Voraussetzungsgraph: Existenz, Zyklen, Vorwärtsreferenzen")
 def check_graph(model: Curriculum) -> list[Finding]:
     findings: list[Finding] = []
     known = {topic.id: topic for topic in model.topics}
@@ -208,7 +208,7 @@ def check_graph(model: Curriculum) -> list[Finding]:
                         check="graph",
                         message=(
                             f"'{topic.id}' ({topic.taught_in}) setzt '{other.id}' "
-                            f"({other.taught_in}) voraus — spaeterer Jahrgang"
+                            f"({other.taught_in}) voraus — späterer Jahrgang"
                         ),
                         path=model.path,
                         line=topic.line,
@@ -219,7 +219,7 @@ def check_graph(model: Curriculum) -> list[Finding]:
                     Finding(
                         check="graph",
                         message=(
-                            f"Vorwaertsreferenz: '{topic.id}' (U{topic.lesson}) setzt "
+                            f"Vorwärtsreferenz: '{topic.id}' (U{topic.lesson}) setzt "
                             f"'{other.id}' (U{other.lesson}) voraus"
                         ),
                         path=model.path,
@@ -270,7 +270,7 @@ def check_completeness(model: Curriculum) -> list[Finding]:
             findings.append(
                 Finding(
                     check="completeness",
-                    message=f"Praxisthema '{topic.id}' hat keine Pruefungsfrage",
+                    message=f"Praxisthema '{topic.id}' hat keine Prüfungsfrage",
                     path=topic.questions_path,
                     line=1,
                 )
@@ -313,7 +313,7 @@ def check_slots(model: Curriculum) -> list[Finding]:
                 Finding(
                     check="slots",
                     message=(
-                        f"U{lesson} traegt {len(topics)} Themen der Art {kind}: "
+                        f"U{lesson} trägt {len(topics)} Themen der Art {kind}: "
                         + ", ".join(t.id for t in topics)
                     ),
                     path=model.path,
@@ -327,7 +327,7 @@ def check_slots(model: Curriculum) -> list[Finding]:
             findings.append(
                 Finding(
                     check="slots",
-                    message=f"U{lesson} traegt kein Thema — Luecke im Jahresplan",
+                    message=f"U{lesson} trägt kein Thema — Lücke im Jahresplan",
                     path=model.path,
                 )
             )
@@ -357,8 +357,8 @@ def check_sections(model: Curriculum) -> list[Finding]:
                     Finding(
                         check="sections",
                         message=(
-                            f"Abschnitt '{title}' ist leer — eine ausdrueckliche "
-                            "Nullaussage genuegt"
+                            f"Abschnitt '{title}' ist leer — eine ausdrückliche "
+                            "Nullaussage genügt"
                         ),
                         path=topic.index_path,
                         line=section.line,
@@ -367,7 +367,7 @@ def check_sections(model: Curriculum) -> list[Finding]:
     return findings
 
 
-@check("outcomes", "7 Kopplung von Lernzielen und Pruefungsfragen")
+@check("outcomes", "7 Kopplung von Lernzielen und Prüfungsfragen")
 def check_outcomes(model: Curriculum) -> list[Finding]:
     findings: list[Finding] = []
     for topic in model.ready:
@@ -413,7 +413,7 @@ def check_outcomes(model: Curriculum) -> list[Finding]:
                 findings.append(
                     Finding(
                         check="outcomes",
-                        message=f"Lernziel '{outcome.id}' hat keine Pruefungsfrage",
+                        message=f"Lernziel '{outcome.id}' hat keine Prüfungsfrage",
                         path=topic.index_path,
                         line=outcome.line,
                     )
@@ -455,7 +455,7 @@ def check_images(model: Curriculum) -> list[Finding]:
     return findings
 
 
-@check("skeleton", "9 Modulskelett: Inhalt, Aufgaben, Pruefungsfragen")
+@check("skeleton", "9 Modulskelett: Inhalt, Aufgaben, Prüfungsfragen")
 def check_skeleton(model: Curriculum) -> list[Finding]:
     findings: list[Finding] = []
     for topic in model.ready:
@@ -475,7 +475,7 @@ def check_skeleton(model: Curriculum) -> list[Finding]:
     return findings
 
 
-@check("attributes", "Z Strukturangaben gehoeren nicht ins AsciiDoc")
+@check("attributes", "Z Strukturangaben gehören nicht ins AsciiDoc")
 def check_attributes(model: Curriculum) -> list[Finding]:
     findings: list[Finding] = []
     for path in _module_adocs(model):
@@ -486,8 +486,8 @@ def check_attributes(model: Curriculum) -> list[Finding]:
                     Finding(
                         check="attributes",
                         message=(
-                            f"Attribut ':{name}:' traegt Struktur — die steht "
-                            "ausschliesslich in curriculum.yaml"
+                            f"Attribut ':{name}:' trägt Struktur — die steht "
+                            "ausschließlich in curriculum.yaml"
                         ),
                         path=path,
                         line=line,
@@ -502,7 +502,7 @@ def run(model: Curriculum, only: tuple[str, ...] | None = None) -> list[Finding]
     findings: list[Finding] = []
     for name in selected:
         if name not in CHECKS:
-            raise SystemExit(f"unbekannte Pruefung: {name} (bekannt: {', '.join(CHECKS)})")
+            raise SystemExit(f"unbekannte Prüfung: {name} (bekannt: {', '.join(CHECKS)})")
         findings.extend(CHECKS[name][1](model))
     return findings
 
@@ -510,13 +510,13 @@ def run(model: Curriculum, only: tuple[str, ...] | None = None) -> list[Finding]
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--curriculum", type=Path, default=DEFAULT_PATH)
-    parser.add_argument("--only", help="Kommaliste von Pruefungen (siehe --list)")
-    parser.add_argument("--list", action="store_true", help="Pruefungen auflisten")
+    parser.add_argument("--only", help="Kommaliste von Prüfungen (siehe --list)")
+    parser.add_argument("--list", action="store_true", help="Prüfungen auflisten")
     parser.add_argument(
         "--as-ready",
         help=(
-            "Kommaliste von Themen, die fuer diesen Lauf als fertig gelten — "
-            "prueft ein Skelett, bevor es in curriculum.yaml auf ready gesetzt wird"
+            "Kommaliste von Themen, die für diesen Lauf als fertig gelten — "
+            "prüft ein Skelett, bevor es in curriculum.yaml auf ready gesetzt wird"
         ),
     )
     args = parser.parse_args(argv)

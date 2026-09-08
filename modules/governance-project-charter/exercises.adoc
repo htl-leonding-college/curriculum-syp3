@@ -48,4 +48,4 @@ kind: project
 Complete the charter for your project from the template, have it reviewed, and
 freeze it with a `baseline-v1` tag once it is approved.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

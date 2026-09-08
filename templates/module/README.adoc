@@ -15,7 +15,7 @@ ifdef::env-github[]
 endif::[]
 
 Ein Modul ist ein Unterricht: 1 UE Theorie oder 2 UE Praxis. Der `index.adoc`
-enthaelt, was in diesem Slot vorgetragen wird — rund ein bis zwei Seiten.
+enthält, was in diesem Slot vorgetragen wird — rund ein bis zwei Seiten.
 
 [source,bash]
 ----
@@ -23,8 +23,8 @@ python tools/new-module.py git-basics          # Skelett aus dieser Vorlage
 python tools/check-curriculum.py --as-ready git-basics   # Probelauf
 ----
 
-Ist das Modul fertig, traegt sein Thema in `curriculum.yaml` `status: ready` —
-ab dann pruefen alle Modulpruefungen hart.
+Ist das Modul fertig, trägt sein Thema in `curriculum.yaml` `status: ready` —
+ab dann prüfen alle Modulprüfungen hart.
 
 == Aufbau
 
@@ -36,10 +36,10 @@ ab dann pruefen alle Modulpruefungen hart.
 |Lerninhalt in fester Abschnittsfolge
 
 |`exercises.adoc`
-|Aufgaben, Loesungen aufklappbar; darf inhaltsleer bleiben
+|Aufgaben, Lösungen aufklappbar; darf inhaltsleer bleiben
 
 |`questions.adoc`
-|muendliche Pruefungsfragen, je Frage die geprueften Lernziele
+|mündliche Prüfungsfragen, je Frage die geprüften Lernziele
 
 |`images/`
 |Bilder dieses Moduls samt bearbeitbarer Quelldatei
@@ -50,14 +50,14 @@ ab dann pruefen alle Modulpruefungen hart.
 . `== Learning outcomes` — *Pflicht*, korrespondiert mit `questions.adoc`
 . fachliche Abschnitte — frei viele
 . `== Decisions` — *Pflicht*: was bei uns gilt
-. `== Pitfalls` — *Pflicht*: was erfahrungsgemaess schiefgeht
+. `== Pitfalls` — *Pflicht*: was erfahrungsgemäß schiefgeht
 . `== Terminology` — *Pflicht*: deutsch/englische Begriffspaare
 . `== Further reading`
 
 TIP: `Decisions` ist der Abschnitt, den kein Sprachmodell erzeugen kann.
-Erklaertext ist keine knappe Ware mehr — die Festlegung dieses Jahrgangs schon.
+Erklärtext ist keine knappe Ware mehr — die Festlegung dieses Jahrgangs schon.
 
-Ein Pflichtabschnitt ohne Inhalt traegt eine ausdrueckliche Nullaussage:
+Ein Pflichtabschnitt ohne Inhalt trägt eine ausdrückliche Nullaussage:
 
 [source,adoc]
 ----
@@ -87,22 +87,22 @@ covers: lo-1
 ----
 
 Jedes Lernziel braucht mindestens eine Frage, jede Frage ein existierendes
-Lernziel. Die Schueler sehen damit vorab, woran sie gemessen werden.
+Lernziel. Die Schüler sehen damit vorab, woran sie gemessen werden.
 
 == Aufgaben
 
 `kind: drill` ist generisch und wiederholbar, `kind: project` bezieht sich auf
-das eigene Projekt und hat keine Musterloesung. Loesungen werden nicht
+das eigene Projekt und hat keine Musterlösung. Lösungen werden nicht
 verborgen — sie stehen im selben Dokument als `[%collapsible]`, ohne
 Freischaltung und ohne zweiten Zweig.
 
 == Diagramme und Bilder
 
 PlantUML ist Default, inline im Dokument. Ein Bild nur, wo Quelltext nicht
-traegt: Git-Commit-Graphen, Screenshots realer Oberflaechen, freie Skizzen.
+trägt: Git-Commit-Graphen, Screenshots realer Oberflächen, freie Skizzen.
 Zu einem selbst erstellten Bild liegt die bearbeitbare Quelldatei daneben.
 
-Jedes Bild traegt seine Herkunft im Bildtitel:
+Jedes Bild trägt seine Herkunft im Bildtitel:
 
 [source,adoc]
 ----
@@ -116,29 +116,29 @@ image::images/scrum-framework.png[Scrum framework,600]
 image::images/kanban.png[Kanban board,600]
 ----
 
-WARNING: Die Herkunft ist der einzige Bestandteil, der sich nachtraeglich nicht
-beschaffen laesst. `unclear` blockiert die Veroeffentlichung nicht — der Job
+WARNING: Die Herkunft ist der einzige Bestandteil, der sich nachträglich nicht
+beschaffen lässt. `unclear` blockiert die Veröffentlichung nicht — der Job
 `rights-check` meldet es sichtbar. Ehrlich zu sein bleibt damit die bequemere
 Option.
 
 == Sprache
 
-Modultext auf Englisch. Governance-Fachbegriffe zusaetzlich deutsch, weil die
+Modultext auf Englisch. Governance-Fachbegriffe zusätzlich deutsch, weil die
 Formulare deutsch sind: `Ausgangslage / Initial situation`. Der Abschnitt
-`Terminology` fuehrt die Paare.
+`Terminology` führt die Paare.
 
-== Was nicht ins Modul gehoert
+== Was nicht ins Modul gehört
 
-Kein Unterrichtsverlauf, keine Termine, keine Klassenbezuege. Das Modul ist
-vorbereitet und mehrjaehrig gueltig; der Verlauf wird ausserhalb gefuehrt.
-Struktur — UE, Block, Jahrgang, Voraussetzungen — steht ausschliesslich in
+Kein Unterrichtsverlauf, keine Termine, keine Klassenbezüge. Das Modul ist
+vorbereitet und mehrjährig gültig; der Verlauf wird außerhalb geführt.
+Struktur — UE, Block, Jahrgang, Voraussetzungen — steht ausschließlich in
 `curriculum.yaml`; im AsciiDoc steht davon nur `:topic-id:`.
 
-== Woran die Pruefung haengt
+== Woran die Prüfung hängt
 
 [cols="1,3",options="header"]
 |===
-|Pruefung |Greift bei
+|Prüfung |Greift bei
 
 |`bijection` (1)
 |Thema mit `status: ready` ohne `index.adoc`; Datei ohne `:topic-id:`; ID, die
@@ -148,14 +148,14 @@ Struktur — UE, Block, Jahrgang, Voraussetzungen — steht ausschliesslich in
 |UE-Summen je Art und je Block gegen `meta.budget` und `meta.budget_je_block`
 
 |`graph` (3)
-|`requires` auf unbekannte ID, Zyklus, Vorwaertsreferenz
+|`requires` auf unbekannte ID, Zyklus, Vorwärtsreferenz
 
 |`completeness` (4)
-|fehlende Pflichtfelder im Modell; fertiges Praxisthema ohne Pruefungsfrage
+|fehlende Pflichtfelder im Modell; fertiges Praxisthema ohne Prüfungsfrage
 
 |`slots` (5)
-|zwei Themen derselben Art in einem Unterricht, Luecke im Jahresplan, Thema
- groesser als sein Slot
+|zwei Themen derselben Art in einem Unterricht, Lücke im Jahresplan, Thema
+ größer als sein Slot
 
 |`sections` (6)
 |fehlender oder leerer Pflichtabschnitt

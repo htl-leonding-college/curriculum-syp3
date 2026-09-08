@@ -13,7 +13,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-Governance und Durchfuehrung sind zwei Ebenen, nicht zwei Meinungen. Der Antrag
+Governance und Durchführung sind zwei Ebenen, nicht zwei Meinungen. Der Antrag
 schreibt kein Vorgehensmodell vor — er fragt nach Ausgangslage, Zielen,
 Ergebnissen und Terminen. Wie ihr dorthin kommt, ist eure Sache.
 
@@ -22,8 +22,8 @@ Ergebnissen und Terminen. Wie ihr dorthin kommt, ist eure Sache.
 @startuml
 skinparam monochrome true
 skinparam shadowing false
-rectangle "GOVERNANCE (aussen, eingefroren)\nProjektauftrag, Ziele, Stakeholder,\nMeilensteinplan, Abnahme" as G
-rectangle "DURCHFUEHRUNG (innen, frei)\nspecs, changes, Code" as D
+rectangle "GOVERNANCE (außen, eingefroren)\nProjektauftrag, Ziele, Stakeholder,\nMeilensteinplan, Abnahme" as G
+rectangle "DURCHFÜHRUNG (innen, frei)\nspecs, changes, Code" as D
 G -down-> D : setzt Rahmen
 D -up-> G : liefert Nachweise
 @enduml
@@ -41,15 +41,15 @@ D -up-> G : liefert Nachweise
 
 |Zielsetzung / Objectives
 |Menge der `openspec/specs/`
-|Jede Capability ist ein Ziel in pruefbarer Form
+|Jede Capability ist ein Ziel in prüfbarer Form
 
 |Individuelle Themenstellung / Individual assignment
-|Zuschnitt der `changes/` je Schueler
+|Zuschnitt der `changes/` je Schüler
 |Wer welchen Change besitzt, steht im Change
 
 |Untersuchungsanliegen / Research objective
 |`proposal.md` -> Why und offene Fragen
-|Die Frage steht vor der Loesung
+|Die Frage steht vor der Lösung
 
 |Geplantes Ergebnis / Planned deliverable
 |`spec.md` -> Requirements und Scenarios
@@ -61,14 +61,14 @@ D -up-> G : liefert Nachweise
 
 |Verantwortlich / Responsible
 |Change-Ownership plus git-Historie
-|`git log --author` je Schueler
+|`git log --author` je Schüler
 
 |Projektfortschritt / Progress
 |`openspec list`, `openspec status`
 |Kein Statusbericht von Hand
 |===
 
-== Was das *nicht* heisst
+== Was das *nicht* heißt
 
 Die openspec-Artefakte ersetzen die Governance-Dokumente nicht. Beide bestehen
 nebeneinander: Der Projektauftrag wird eingefroren und bleibt der

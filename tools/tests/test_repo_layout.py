@@ -1,9 +1,9 @@
 """Erzeugte Artefakte bleiben unversioniert (P3).
 
-Der Ersatz fuer einen Diff-Vergleich: Sie liegen ausschliesslich unter
+Der Ersatz für einen Diff-Vergleich: Sie liegen ausschließlich unter
 ``build/``, das ignoriert wird, und werden bei jedem Build neu geschrieben.
-Eine Handaenderung ist damit beim naechsten Lauf verworfen — versioniert
-duerfte sie ueberleben, deshalb faellt genau das hier auf.
+Eine Handänderung ist damit beim nächsten Lauf verworfen — versioniert
+dürfte sie überleben, deshalb fällt genau das hier auf.
 """
 
 from __future__ import annotations

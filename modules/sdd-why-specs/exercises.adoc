@@ -49,4 +49,4 @@ kind: project
 Write one `openspec/specs/<capability>/spec.md` for your project with at least
 two requirements, each with a scenario.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

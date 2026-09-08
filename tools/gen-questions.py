@@ -24,7 +24,7 @@ DATA_OUTPUT = "questions/questions.json"
 def collect(model: Curriculum) -> list[dict]:
     rows: list[dict] = []
     for topic in model.topics:
-        # Nur fertige Module: ein Skelett traegt Platzhalterfragen, die im
+        # Nur fertige Module: ein Skelett trägt Platzhalterfragen, die im
         # Katalog nichts verloren haben.
         if not topic.is_ready or not topic.questions_path.is_file():
             continue
@@ -51,10 +51,10 @@ FILTER_FIELDS = ("block", "taught_in", "prerequisite_for", "topic", "kind")
 
 
 def select(rows: list[dict], **criteria: str) -> list[dict]:
-    """Fragen nach den Merkmalen des Modells auswaehlen.
+    """Fragen nach den Merkmalen des Modells auswählen.
 
-    Dieselbe Auswahl, die die erzeugte Seite im Browser anbietet — hier fuer
-    Abfragen auf der Kommandozeile und fuer die Tests.
+    Dieselbe Auswahl, die die erzeugte Seite im Browser anbietet — hier für
+    Abfragen auf der Kommandozeile und für die Tests.
     """
     unknown = set(criteria) - set(FILTER_FIELDS)
     if unknown:
@@ -173,7 +173,7 @@ def render(model: Curriculum, rows: list[dict]) -> str:
         "endif::[]",
         "",
         f"{len(rows)} Fragen aus {len({r['topic'] for r in rows})} Modulen. "
-        "Massgeblich fuer SYP 3. Jahrgang ab dem Schuljahr 2026/27; der bestehende "
+        "Maßgeblich für SYP 3. Jahrgang ab dem Schuljahr 2026/27; der bestehende "
         "https://htl-leonding-college.github.io/fragenkatalog[Fragenkatalog] bleibt "
         "als Archiv erhalten.",
         "",
@@ -184,7 +184,7 @@ def render(model: Curriculum, rows: list[dict]) -> str:
         lines += [
             "== Alle Fragen",
             "",
-            "Sortieren durch Klick auf eine Spaltenueberschrift, filtern ueber die "
+            "Sortieren durch Klick auf eine Spaltenüberschrift, filtern über die "
             "Auswahlfelder. Die Merkmale stammen aus `curriculum.yaml` und stehen "
             "nicht im Fragentext.",
             "",

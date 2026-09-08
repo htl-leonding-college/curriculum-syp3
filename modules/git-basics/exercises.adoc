@@ -80,6 +80,36 @@ plus working tree), `fetch` (remote → local repository, your files untouched),
 is why almost everything works without a server.
 ====
 
+== Publish your practice repository on GitHub
+
+kind: drill
+
+Until now your repository exists on one disk. Create an empty repository in your
+GitHub account, connect it as `origin`, push `main`, and check in the browser
+that the commits and their messages are there. Then clone the repository into a
+second directory and compare `git log` on both sides.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+gh repo create syp-practice --private --source=. --remote=origin --push
+
+# without gh, after creating the empty repository in the web interface:
+git remote add origin git@github.com:<account>/syp-practice.git
+git push -u origin main
+git remote -v
+
+git clone git@github.com:<account>/syp-practice.git ~/tmp/copy
+----
+`-u` records `origin/main` as the upstream branch, so later `git push` and
+`git pull` work without arguments. The clone carries the same commits with the
+same hashes — the history is copied, not summarised. `Permission denied
+(publickey)` means the SSH key created by `setup-tools.sh` is not registered in
+your GitHub account; add it under Settings → SSH and GPG keys and push again.
+====
+
 == Set up your project repository
 
 kind: project
@@ -87,4 +117,4 @@ kind: project
 Create the repository for your team project from the template, add a
 `.gitignore` that fits your stack, and make the first commit.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

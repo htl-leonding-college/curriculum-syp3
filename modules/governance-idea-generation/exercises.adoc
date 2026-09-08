@@ -49,4 +49,4 @@ kind: project
 From your own round, write down the three candidates your team would actually be
 willing to work on for a year.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

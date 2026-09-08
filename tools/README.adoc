@@ -14,9 +14,9 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-Pruefung und Generatoren rund um `curriculum.yaml`. Sprache ist Python; einzige
-Laufzeitabhaengigkeit ist PyYAML. (Das Repository `klassen-setup` ist davon
-unberuehrt und bleibt Bash.)
+Prüfung und Generatoren rund um `curriculum.yaml`. Sprache ist Python; einzige
+Laufzeitabhängigkeit ist PyYAML. (Das Repository `klassen-setup` ist davon
+unberührt und bleibt Bash.)
 
 == Einrichtung
 
@@ -25,7 +25,7 @@ unberuehrt und bleibt Bash.)
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r tools/requirements.txt        # Laufzeit
-pip install -r tools/requirements-dev.txt    # zusaetzlich fuer die Tests
+pip install -r tools/requirements-dev.txt    # zusätzlich für die Tests
 ----
 
 == Aufrufe
@@ -38,17 +38,17 @@ finden `curriculum.yaml` selbst.
 |Aufruf |Wirkung
 
 |`python tools/check-curriculum.py`
-|Fuehrt alle Pruefungen aus, meldet Datei, Zeile, Ist- und Sollwert.
- Exit-Code 1, sobald eine Pruefung fehlschlaegt.
+|Führt alle Prüfungen aus, meldet Datei, Zeile, Ist- und Sollwert.
+ Exit-Code 1, sobald eine Prüfung fehlschlägt.
 
 |`python tools/check-curriculum.py --only budget,graph`
-|Fuehrt nur die genannten Pruefungen aus (Namen siehe `--list`).
+|Führt nur die genannten Prüfungen aus (Namen siehe `--list`).
 
 |`python tools/check-curriculum.py --list`
-|Listet die Pruefungen mit ihrer Nummer aus dem Design.
+|Listet die Prüfungen mit ihrer Nummer aus dem Design.
 
 |`python -m pytest tools/tests`
-|Fixture-Testsuite: je ein roter und ein gruener Fall pro Pruefung.
+|Fixture-Testsuite: je ein roter und ein grüner Fall pro Prüfung.
 |===
 
 == Konventionen

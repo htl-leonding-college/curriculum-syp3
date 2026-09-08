@@ -1,4 +1,4 @@
-"""Je Pruefung ein roter und ein gruener Fall (P2, Aufgabe 2.12)."""
+"""Je Prüfung ein roter und ein grüner Fall (P2, Aufgabe 2.12)."""
 
 from __future__ import annotations
 
@@ -36,7 +36,7 @@ def test_bijection_orphan_file(repo: Repo) -> None:
 def test_bijection_file_without_topic_id(repo: Repo) -> None:
     repo.write_model(base_topics())
     repo.write_module("git-basics", index="= Git basics\n\nNo attribute here.\n")
-    assert "traegt keine :topic-id:" in repo.messages("bijection")
+    assert "trägt keine :topic-id:" in repo.messages("bijection")
 
 
 # --- 2 Budget -------------------------------------------------------------
@@ -71,7 +71,7 @@ def test_graph_forward_reference(repo: Repo) -> None:
             topic("git-basics", kind="praxis", lesson=2),
         ]
     )
-    assert "Vorwaertsreferenz: 'course-overview' (U1) setzt 'git-basics' (U2)" in repo.messages("graph")
+    assert "Vorwärtsreferenz: 'course-overview' (U1) setzt 'git-basics' (U2)" in repo.messages("graph")
 
 
 def test_graph_cycle(repo: Repo) -> None:
@@ -94,7 +94,7 @@ def test_graph_valid_chain(repo: Repo) -> None:
     assert [f for f in repo.run("graph")] == []
 
 
-# --- 4 Vollstaendigkeit ---------------------------------------------------
+# --- 4 Vollständigkeit ---------------------------------------------------
 def test_completeness_missing_required_field(repo: Repo) -> None:
     entry = topic("git-basics")
     del entry["taught_in"]
@@ -105,7 +105,7 @@ def test_completeness_missing_required_field(repo: Repo) -> None:
 def test_completeness_practice_topic_without_question(repo: Repo) -> None:
     repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])
     repo.write_module("git-basics", index=GOOD_INDEX, questions="= Questions\n:topic-id: git-basics\n")
-    assert "hat keine Pruefungsfrage" in repo.messages("completeness")
+    assert "hat keine Prüfungsfrage" in repo.messages("completeness")
 
 
 def test_completeness_theory_topic_without_question_is_fine(repo: Repo) -> None:
@@ -132,7 +132,7 @@ def test_slots_double_booking(repo: Repo) -> None:
             topic("git-basics", kind="praxis", lesson=1),
         ]
     )
-    assert "U1 traegt 2 Themen der Art theorie" in repo.messages("slots")
+    assert "U1 trägt 2 Themen der Art theorie" in repo.messages("slots")
 
 
 def test_slots_gap(repo: Repo) -> None:
@@ -142,7 +142,7 @@ def test_slots_gap(repo: Repo) -> None:
             topic("git-basics", kind="praxis", lesson=3),
         ]
     )
-    assert "U2 traegt kein Thema" in repo.messages("slots")
+    assert "U2 trägt kein Thema" in repo.messages("slots")
 
 
 def test_slots_oversized_topic(repo: Repo) -> None:
@@ -186,7 +186,7 @@ def test_outcomes_without_question(repo: Repo) -> None:
         "* [[lo-1]] Record a change as a commit\n    * [[lo-2]] Read the log",
     )
     repo.write_module("git-basics", index=index, questions=GOOD_QUESTIONS)
-    assert "Lernziel 'lo-2' hat keine Pruefungsfrage" in repo.messages("outcomes")
+    assert "Lernziel 'lo-2' hat keine Prüfungsfrage" in repo.messages("outcomes")
 
 
 def test_outcomes_question_without_outcome(repo: Repo) -> None:
@@ -258,7 +258,7 @@ def test_attributes_structure_in_adoc(repo: Repo) -> None:
     repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])
     index = GOOD_INDEX.replace(":topic-id: git-basics", ":topic-id: git-basics\n    :ue: 2")
     repo.write_module("git-basics", index=index, questions=GOOD_QUESTIONS)
-    assert "Attribut ':ue:' traegt Struktur" in repo.messages("attributes")
+    assert "Attribut ':ue:' trägt Struktur" in repo.messages("attributes")
 
 
 def test_attributes_only_topic_id(repo: Repo) -> None:
@@ -305,7 +305,7 @@ def test_bijection_reports_non_empty_file_without_topic_id(repo: Repo) -> None:
         exercises="= Exercises\n\nWrite a commit message.\n",
         questions=GOOD_QUESTIONS,
     )
-    assert "traegt keine :topic-id:" in repo.messages("bijection")
+    assert "trägt keine :topic-id:" in repo.messages("bijection")
 
 
 def test_images_inside_listing_blocks_are_examples(repo: Repo) -> None:

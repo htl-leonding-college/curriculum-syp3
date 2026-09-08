@@ -13,11 +13,11 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-Ein Meilenstein ist ein *pruefbares Ergebnis zu einem Termin*, keine Taetigkeit.
+Ein Meilenstein ist ein *prüfbares Ergebnis zu einem Termin*, keine Tätigkeit.
 "Datenbank angefangen" ist kein Meilenstein; "Anmeldung funktioniert
 end-to-end, Change archiviert" ist einer.
 
-== Uebersicht / Overview
+== Übersicht / Overview
 
 [cols="1,2,1,2,2",options="header"]
 |===
@@ -73,15 +73,15 @@ Project starts 2026-09-14
 @endgantt
 ----
 
-TIP: Der Plan wird nicht schoener, wenn er frueh perfekt ist. Er wird brauchbar,
-wenn beim Review geschaetzter und tatsaechlicher Aufwand nebeneinander stehen —
+TIP: Der Plan wird nicht schöner, wenn er früh perfekt ist. Er wird brauchbar,
+wenn beim Review geschätzter und tatsächlicher Aufwand nebeneinander stehen —
 das ist eure Kalibrierung, und sie kostet nichts extra.
 
 == Abweichungen / Deviations
 
 [cols="1,2,2,2",options="header"]
 |===
-|Nr. |Geplant / Planned |Tatsaechlich / Actual |Grund / Reason
+|Nr. |Geplant / Planned |Tatsächlich / Actual |Grund / Reason
 
 |M1
 |TODO

@@ -53,8 +53,8 @@ SDD konkurriert, sondern eine eigene Ebene.
 @startuml
 skinparam monochrome true
 skinparam shadowing false
-rectangle "GOVERNANCE (aussen, eingefroren)\nProjektauftrag, Ziele, Stakeholder,\nMeilensteinplan, Abnahme, Dokumentation" as G
-rectangle "DURCHFUEHRUNG (innen, frei)\nfrueher: Scrum\njetzt: SDD / openspec" as D
+rectangle "GOVERNANCE (außen, eingefroren)\nProjektauftrag, Ziele, Stakeholder,\nMeilensteinplan, Abnahme, Dokumentation" as G
+rectangle "DURCHFÜHRUNG (innen, frei)\nfrüher: Scrum\njetzt: SDD / openspec" as D
 G -down-> D : setzt Rahmen
 D -up-> G : liefert Nachweise
 @enduml
@@ -183,7 +183,7 @@ beachten, Partition ≥ 100 GB, RAM ≥ 8 GB (16 empfohlen), Virtualisierung im 
 git I-IV               8 UE   Repo/Commit/Push, Branch/Merge, PR/Review, Konflikte
 asciidoctor            2 UE   Syntax, Struktur, PlantUML-Einbindung
 gh-actions + gh-pages  2 UE   Pipeline adoc -> HTML -> Pages
-revealjs               2 UE   just-in-time vor der ersten Praesentation
+revealjs               2 UE   just-in-time vor der ersten Präsentation
 ```
 
 *Begründung:* CI ohne Anwendungsfall bleibt abstrakt; „mein `.adoc` wird beim Push zur
@@ -226,14 +226,14 @@ Gleichzeitig sind Fakten und Erkenntnisse nie geschützt, nur ihre konkrete spra
 Darstellung.
 
 ```
-ZULAESSIG                                UNZULAESSIG
+ZULÄSSIG                                 UNZULÄSSIG
 Inhalte in eigener Formulierung          Seitenkopien, Scans, PDF-Kapitel weitergeben
-eigene Gliederung des Stoffs             Kapitelgliederung 1:1 uebernehmen (§ 6)
-Zitat mit Belegfunktion und Quelle       Abbildungen uebernehmen
+eigene Gliederung des Stoffs             Kapitelgliederung 1:1 übernehmen (§ 6)
+Zitat mit Belegfunktion und Quelle       Abbildungen übernehmen
 Verweis auf das Buch als Quelle          Verteilung an die Klasse, auch digital
 ```
 
-*Folge fuer das Curriculum:* Das Buch bleibt inhaltliche Quelle. Die Gliederung folgt
+*Folge für das Curriculum:* Das Buch bleibt inhaltliche Quelle. Die Gliederung folgt
 ohnehin der Werkzeugkette (D10) und nicht der Kapitelfolge des Buchs, wodurch die
 Sammelwerksfrage aus § 6 gar nicht erst entsteht. Die vorhandenen PDF-Kapitel dienen der
 eigenen Vorbereitung und werden nicht verteilt.
@@ -245,15 +245,15 @@ eigenen Vorbereitung und werden nicht verteilt.
 
 ```
 30 Unterrichte x 3 UE = 90 UE geplant
-   U1      Einfuehrung                            3 UE  =  1 T /  2 P
+   U1      Einführung                             3 UE  =  1 T /  2 P
    U2-U25  Kernbetrieb                           72 UE  = 24 T / 48 P
    U26-U30 Reserve / Ausfallpuffer               15 UE  (davon 7 UE belegt)
 ```
 
 Ein Unterricht besteht aus einem Theorieslot (1 UE) und einem Praxisslot (2 UE); ein
-Thema fuellt genau einen Slot (`setup-curriculum-repository` — P1). Alle UE-Zahlen sind
-daher Vielfache dieser Slotgroesse. **Verbindlich ist `curriculum.yaml`**; die Tabellen
-hier sind die Vorgabe, gegen die der CI-Check prueft (P2, Pruefung 2).
+Thema füllt genau einen Slot (`setup-curriculum-repository` — P1). Alle UE-Zahlen sind
+daher Vielfache dieser Slotgröße. **Verbindlich ist `curriculum.yaml`**; die Tabellen
+hier sind die Vorgabe, gegen die der CI-Check prüft (P2, Prüfung 2).
 
 **Theorie 26 UE = 26 Themen**
 
@@ -283,39 +283,39 @@ gewordene UE deckt den openspec-Praxisslot mit ab.
 *Ungenutzt:* U29 und U30 sowie die Theorieslots von U27 und U28 — 8 UE reiner Puffer
 am Jahresende (D9).
 
-## Eröffnungssequenz
+## Eröffnungsseqünz
 
 ```
 U1   VORSTELLUNGSEINHEIT (3 UE)
-     Ueberblick Stoffgebiet (PlantUML-Mindmap), Organisation, Bewertung,
+     Überblick Stoffgebiet (PlantUML-Mindmap), Organisation, Bewertung,
      Werkzeugkette (warum Linux, warum git, warum Doku als Code),
      Linux: Live-USB-Test -> Installation -> setup.sh,
      Hardware-Checkliste (RAM, Platz, Virtualisierung, Recovery-Key)
-     HUE: Live-USB testen, dann installieren
+     HÜ: Live-USB testen, dann installieren
 
-U    THEORIE (1 UE)                    PRAXIS (2 UE)                HUE
+U    THEORIE (1 UE)                    PRAXIS (2 UE)                HÜ
 --   --------------------------------  ---------------------------  --------------
  2   Projektbegriff, Ausgangslage      git I  (+30 min Trouble-      --
                                        shooting Setup)
- 3   Kreativitaetstechniken (6-3-5)    git II: branch, merge        Projektantrag
+ 3   Kreativitätstechniken (6-3-5)     git II: branch, merge        Projektantrag
  4   Nutzwertanalyse -> Auswahl,       git III: PR, review          --
      Teambildung
  5   Stakeholder + Zielsetzung         git IV: conflicts, remotes   --
  6   Projektauftragsstruktur           asciidoctor Grundlagen       Projektauftrag
- 7   Vorgehensmodelle-Ueberblick       gh-actions -> gh-pages       --
+ 7   Vorgehensmodelle-Überblick        gh-actions -> gh-pages       --
  8   SDD: warum specs                  AI I: Grundlagen, Prompting  --
- 9   BRUECKE Auftrag <-> specs         AI II: Kontext, Continuation --
+ 9   BRÜCKE Auftrag <-> specs          AI II: Kontext, Continuation --
 10   Was ist Software-Engineering      openspec I+II                Baseline-specs
 --------------------------------------------------------------------------------
-     ab U11: Projekt laeuft, restliche Theorie just-in-time
+     ab U11: Projekt läuft, restliche Theorie just-in-time
 ```
 
 Der Projektantrag wird als `.adoc` im eigenen Repo geschrieben — git-Praxis und
 Governance-Hausübung fallen zusammen.
 
-*Nachtrag 2026-09-07:* Der Theorieslot von U10 war in der ersten Fassung frei. Er traegt
+*Nachtrag 2026-09-07:* Der Theorieslot von U10 war in der ersten Fassung frei. Er trägt
 jetzt `what-is-software-engineering`, weil das Theoriebudget (26 UE) sonst nicht aufgeht
-und der Begriff genau dort hingehoert, wo die Schueler zum ersten Mal spezifizieren
+und der Begriff genau dort hingehört, wo die Schüler zum ersten Mal spezifizieren
 statt zu programmieren.
 
 ## Stoffstruktur (Übersicht)
@@ -325,22 +325,22 @@ statt zu programmieren.
 * SYP 3. Jahrgang
 ** Governance
 *** Projektbegriff / Ausgangslage
-*** Kreativitaetstechniken
+*** Kreativitätstechniken
 *** Nutzwertanalyse
 *** Stakeholder / Zielsetzung
 *** Projektantrag / Projektauftrag
-*** Schaetz-Hygiene
+*** Schätz-Hygiene
 *** Meilensteinplanung / Abnahme
 ** Vorgehen
-*** Wasserfall (Ueberblick)
-*** Scrum (Ueberblick)
+*** Wasserfall (Überblick)
+*** Scrum (Überblick)
 *** SDD / openspec
-*** Bruecke Governance <-> SDD
+*** Brücke Governance <-> SDD
 ** Modellierung
 *** Use-Case-Diagramm
 *** Klassen- / Objektdiagramm
-*** Aktivitaetsdiagramm
-*** Zustandsdiagramm (Ueberblick)
+*** Aktivitätsdiagramm
+*** Zustandsdiagramm (Überblick)
 ** Werkzeuge
 *** Lernumgebung (Ubuntu / macOS, setup.sh)
 *** git

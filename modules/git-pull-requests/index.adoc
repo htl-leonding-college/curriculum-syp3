@@ -117,7 +117,7 @@ a statement about your reading, not about your trust in the author.
 |===
 |Deutsch |English
 
-|Zusammenfuehrungsantrag
+|Zusammenführungsantrag
 |pull request
 
 |Begutachtung, Durchsicht
@@ -126,10 +126,10 @@ a statement about your reading, not about your trust in the author.
 |Freigabe
 |approval
 
-|Rueckmeldung
+|Rückmeldung
 |feedback
 
-|Aenderungsumfang
+|Änderungsumfang
 |scope of the change
 |===
 

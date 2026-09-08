@@ -88,32 +88,32 @@ topics:
 ```
 modules/<id>/index.adoc        Lerninhalt
 modules/<id>/exercises.adoc    Aufgaben
-modules/<id>/questions.adoc    Pruefungsfragen
+modules/<id>/questions.adoc    Prüfungsfragen
 modules/<id>/images/           Bilder des Moduls
 ```
 
-Eine Pfadliste in der yaml waere eine zweite Wahrheit ueber etwas, das die Konvention
-bereits festlegt — und bei rund 50 Themen eine Fehlerquelle ohne Gegenwert. Prueft der
-CI-Check die Bijektion (P2, Pruefung 1), rechnet er die Pfade aus der ID aus.
+Eine Pfadliste in der yaml wäre eine zweite Wahrheit über etwas, das die Konvention
+bereits festlegt — und bei rund 50 Themen eine Fehlerquelle ohne Gegenwert. Prüft der
+CI-Check die Bijektion (P2, Prüfung 1), rechnet er die Pfade aus der ID aus.
 
 `status` unterscheidet geplante von fertigen Themen. Default ist `planned`: Das Thema
-ist im Modell vorhanden, erscheint in Jahresplanung, Mindmap und UE-Uebersicht als offen
-und wird noch nicht gegen eine Lernressource geprueft. Erst `ready` macht das Modul zum
+ist im Modell vorhanden, erscheint in Jahresplanung, Mindmap und UE-Übersicht als offen
+und wird noch nicht gegen eine Lernressource geprüft. Erst `ready` macht das Modul zum
 Vertragsgegenstand — dann greifen Bijektion, Pflichtabschnitte, Outcome-Kopplung und
-Modulskelett hart. Ohne diese Unterscheidung stuenden die beiden Anforderungen des
+Modulskelett hart. Ohne diese Unterscheidung stünden die beiden Anforderungen des
 Modells gegeneinander: Themen sollen planbar sein, bevor ihre Ressource existiert, und
-zugleich soll jedes Thema eine Ressource haben. Der Bruch traefe genau den Anfangszustand
-— 54 geplante Themen, kein Modul — und haette die Veroeffentlichung blockiert, bis alle
+zugleich soll jedes Thema eine Ressource haben. Der Bruch träfe genau den Anfangszustand
+— 54 geplante Themen, kein Modul — und hätte die Veröffentlichung blockiert, bis alle
 Module geschrieben sind.
 
-*Regel, an der die Entscheidung haengt:* `ready` wird gesetzt, wenn das Modul fertig ist,
+*Regel, an der die Entscheidung hängt:* `ready` wird gesetzt, wenn das Modul fertig ist,
 nicht wenn es angelegt wird. Ein Modulverzeichnis zu einem `planned`-Thema ist erlaubt
 und wird als Entwurf behandelt; verwaiste Dateien und unbekannte Themen-IDs fallen
 weiterhin hart auf.
 
-`assignment_template` ist optional und traegt die Zuordnung eines Moduls zu seiner
-Uebungsangabe (P13). Nur dadurch kann die generierte Navigation die Angabe verlinken und
-der Check pruefen, ob das Repository existiert; ohne das Feld liegt die Zuordnung wieder
+`assignment_template` ist optional und trägt die Zuordnung eines Moduls zu seiner
+Übungsangabe (P13). Nur dadurch kann die generierte Navigation die Angabe verlinken und
+der Check prüfen, ob das Repository existiert; ohne das Feld liegt die Zuordnung wieder
 nur im Kopf.
 
 *Begründung:* Reine Attribute in den `.adoc` (Variante 1) erlauben keine Planung von
@@ -171,7 +171,7 @@ Ohne ihn ist P1 nur eine zusätzliche Datei. Geprüft wird:
      jedes topic mit status: ready hat >= 1 resource, und die Datei
      existiert
      jede .adoc unter modules/ hat eine topic-id, die in der yaml steht
-     (auch fuer status: planned — verwaiste Dateien fallen immer auf)
+     (auch für status: planned — verwaiste Dateien fallen immer auf)
 
 2  BUDGET
      Summe ue je kind      gegen meta.budget (25 Theorie / 50 Praxis)
@@ -181,38 +181,38 @@ Ohne ihn ist P1 nur eine zusätzliche Datei. Geprüft wird:
 3  GRAPH
      requires zeigt nur auf existierende ids
      keine Zyklen
-     keine Vorwaertsreferenz: jede Voraussetzung liegt in einem
-     frueheren lesson bzw. einem frueheren taught_in
+     keine Vorwärtsreferenz: jede Voraussetzung liegt in einem
+     früheren lesson bzw. einem früheren taught_in
 
-4  VOLLSTAENDIGKEIT
+4  VOLLSTÄNDIGKEIT
      jedes topic hat taught_in und prerequisite_for
      jedes topic mit kind: praxis und status: ready hat >= 1 question
 
 5  SLOT-BELEGUNG
-     je lesson hoechstens 1 topic mit kind: theorie
-     je lesson hoechstens 1 topic mit kind: praxis
-     keine Luecke zwischen lesson 1 und der letzten belegten
+     je lesson höchstens 1 topic mit kind: theorie
+     je lesson höchstens 1 topic mit kind: praxis
+     keine Lücke zwischen lesson 1 und der letzten belegten
 
 6  PFLICHTABSCHNITTE   (nur status: ready)
-     index.adoc enthaelt  == Learning outcomes
+     index.adoc enthält  == Learning outcomes
                           == Decisions
                           == Pitfalls
                           == Terminology
-     jeder Abschnitt ist nicht leer; eine ausdrueckliche Nullaussage
-     ("None specific to this topic.") gilt als erfuellt
+     jeder Abschnitt ist nicht leer; eine ausdrückliche Nullaussage
+     ("None specific to this topic.") gilt als erfüllt
 
 7  OUTCOME-KOPPLUNG
      jedes Learning outcome hat >= 1 Frage in questions.adoc
      jede Frage verweist auf ein existierendes Outcome
 
 8  BILDHERKUNFT
-     jedes image:: unter modules/ traegt eine Herkunftsklasse
+     jedes image:: unter modules/ trägt eine Herkunftsklasse
        own | free | unclear
      free verlangt Lizenzname und URL
-     Klasse unclear laeuft in den Job rights-check (P11)
+     Klasse unclear läuft in den Job rights-check (P11)
 
 9  MODULSKELETT      (nur status: ready)
-     jedes Modulverzeichnis enthaelt index.adoc, exercises.adoc
+     jedes Modulverzeichnis enthält index.adoc, exercises.adoc
      und questions.adoc
      exercises.adoc darf inhaltsleer sein
 ```
@@ -243,13 +243,13 @@ curriculum.yaml
    +--> PlantUML-Mindmap der Stoffstruktur   (@startmindmap)
    +--> Navigation der Website
    +--> Fragenkatalog-Tags
-   +--> UE-Uebersicht je Block
+   +--> UE-Übersicht je Block
 ```
 
 Alle Ausgaben sind generierte Artefakte und werden nicht von Hand bearbeitet. Sie liegen
-ausschliesslich unter `build/` — dem ignorierten Bauverzeichnis — und werden bei jedem
-Build neu geschrieben; damit ist eine Handaenderung beim naechsten Lauf verworfen, ohne
-dass erzeugte Dateien im Versionsstand mitgefuehrt werden muessen. Ein Test haelt fest,
+ausschließlich unter `build/` — dem ignorierten Bauverzeichnis — und werden bei jedem
+Build neu geschrieben; damit ist eine Handänderung beim nächsten Lauf verworfen, ohne
+dass erzeugte Dateien im Versionsstand mitgeführt werden müssen. Ein Test hält fest,
 dass keine Datei mit GENERATED-Kopf versioniert ist.
 
 ### P4 — Modulformat: Inhalt, Aufgabe, Lösung und Prüfungsfrage liegen zusammen
@@ -257,8 +257,8 @@ dass keine Datei mit GENERATED-Kopf versioniert ist.
 ```
 modules/<topic-id>/
   index.adoc        Lerninhalt          (:topic-id:)
-  exercises.adoc    Aufgaben + Loesungen als [%collapsible]
-  questions.adoc    muendliche Pruefungsfragen
+  exercises.adoc    Aufgaben + Lösungen als [%collapsible]
+  questions.adoc    mündliche Prüfungsfragen
 ```
 
 *Begründung:* Wenn die Lösung ohnehin verfügbar ist — mitgeliefert oder vom Agenten
@@ -271,7 +271,7 @@ aus den Modulen, statt separat gepflegt zu werden — auch für die Theorieseite
 keine Fragen hat.
 
 ```
-Uebungsaufgabe --> Loesung --> Pruefungsfragen --> Fragenkatalog
+Übungsaufgabe --> Lösung --> Prüfungsfragen --> Fragenkatalog
       |                              |
       +------ ein Modul, eine topic-id ------+
 ```
@@ -293,7 +293,7 @@ hängt an nichts.
 == Decisions             PFLICHT  was BEI UNS gilt: no-flow, kein rebase
                                   auf main, Ubuntu statt WSL2
 
-== Pitfalls              PFLICHT  was erfahrungsgemaess schiefgeht
+== Pitfalls              PFLICHT  was erfahrungsgemäß schiefgeht
 
 == Terminology           PFLICHT  dt./engl. Begriffspaare (P12)
 
@@ -324,10 +324,10 @@ trivial.
 ```
 DRILL                              PROJECT
 generisch, wiederholbar            am eigenen Projekt
-"erzeuge einen Merge-Konflikt      "erstellt die Nutzwertanalyse fuer
- und loese ihn auf"                 eure drei Projektideen"
+"erzeuge einen Merge-Konflikt      "erstellt die Nutzwertanalyse für
+ und löse ihn auf"                  eure drei Projektideen"
 
-Musterloesung moeglich             Musterloesung existiert nicht
+Musterlösung möglich               Musterlösung existiert nicht
 ```
 
 `kind=drill|project` ist eine **Kennzeichnung, kein CI-Zwang**. Weder `.Solution` noch ein
@@ -363,7 +363,7 @@ curriculum-syp3/                    (public)
   modules/<topic-id>/               index.adoc, exercises.adoc, questions.adoc
   templates/student-project/        Vorlage: openspec, adoc, CI
   tools/
-    check-curriculum.*              CI-Pruefungen aus P2
+    check-curriculum.*              CI-Prüfungen aus P2
     gen-mindmap.*                   curriculum.yaml -> PlantUML
     gen-nav.*                       curriculum.yaml -> Navigation
   openspec/                         Planung
@@ -395,11 +395,11 @@ Fall, dass 3./4./5. Jahrgang zu einer Site verschmelzen sollen.
 ```
    curriculum-syp3 (GitHub)
         |
-        +-- GitHub Actions --> gh-pages          (primaer, automatisch)
+        +-- GitHub Actions --> gh-pages          (primär, automatisch)
         |
         +-- publish.sh (lokal) --> Schulwebspace (optional, manuell)
 
-   Hugo-Site auf dem Schulwebspace: bleibt unveraendert bestehen
+   Hugo-Site auf dem Schulwebspace: bleibt unverändert bestehen
 ```
 
 *Begründung für `publish.sh` statt CI-Deployment auf den Schulserver:* SSH-Zugangsdaten
@@ -420,7 +420,7 @@ Der neue Katalog wird von Beginn an aus den `questions.adoc` der Module generier
 ```
 modules/<topic-id>/questions.adoc
         |
-        |  Sammellauf ueber curriculum.yaml
+        |  Sammellauf über curriculum.yaml
         v
    Fragenkatalog (generiert)
         sortierbar nach Block, Jahrgang, Voraussetzung, Technologie
@@ -520,9 +520,9 @@ Vorgängerjahrgänge: 20–31 Kapitel, je ein Unterrichtstermin). Dieses Dokumen
 drei Dinge gleichzeitig.
 
 ```
-1  Stoff erklaeren         --> gehoert ins Modul   (stabil, mehrjaehrig)
-2  Verlauf protokollieren  --> klassenspezifisch   (fluechtig)
-3  Spontanes festhalten    --> fluechtig, manches spaeter wertvoll
+1  Stoff erklären          --> gehört ins Modul    (stabil, mehrjährig)
+2  Verlauf protokollieren  --> klassenspezifisch   (flüchtig)
+3  Spontanes festhalten    --> flüchtig, manches später wertvoll
 ```
 
 Nur (1) gehört ins Curriculum-Repository. `modules/<topic-id>/index.adoc` ist jahrgangs-
@@ -571,7 +571,7 @@ Git-Workflows, V-Modell, Scrum-Framework, Kubernetes-Architektur, Docker-Volumes
 
 ```
 PlantUML ist Default, inline im .adoc, kein separates File.
-Bild nur, wo PlantUML nicht traegt.
+Bild nur, wo PlantUML nicht trägt.
 Bilder liegen beim Modul:   modules/<topic-id>/images/
 Keynote-Quelle liegt daneben (.key), sonst ist der Export tot.
 Screenshots tragen die Werkzeugversion im Dateinamen.
@@ -609,8 +609,8 @@ woher kam; eine spätere Bereinigung würde zur Vollprüfung. Mit Feld ist sie e
 **`unclear` blockiert nicht.**
 
 ```
-Job "build"         baut und deployt        -> laeuft auch bei unclear
-Job "rights-check"  faellt rot bei unclear > 0, listet Datei und Zeile
+Job "build"         baut und deployt        -> läuft auch bei unclear
+Job "rights-check"  fällt rot bei unclear > 0, listet Datei und Zeile
 ```
 
 *Begründung:* Ein hartes Fail würde die Veröffentlichung von 48 Modulen an einem einzigen
@@ -623,7 +623,7 @@ abgegrenzt**:
 
 ```
 Moodle (Login, abgegrenzter Kursteilnehmerkreis)  -> § 42g UrhG greift
-gh-pages / Schulwebspace (oeffentlich)            -> § 42g UrhG greift NICHT
+gh-pages / Schulwebspace (öffentlich)             -> § 42g UrhG greift NICHT
 ```
 
 | Bestimmung | Inhalt | Folge für diese Site |
@@ -640,7 +640,7 @@ Bild, mit dem sich der Text erkennbar auseinandersetzt, kann eines sein.
 ```
 "Grafik, weil sie Scrum gut zeigt"          -> Illustration, kein Zitat
 "So stellt Quelle X den Ablauf dar; hier
- liegt der Review vor der Retro, waehrend"  -> Belegfunktion, Zitat
+ liegt der Review vor der Retro, während"  -> Belegfunktion, Zitat
 ```
 
 Screenshots von Software-Oberflächen aus Piktogrammen, Menüs und Navigationselementen
@@ -712,20 +712,20 @@ Die Zuordnung folgt der Lebensdauer des Inhalts, nicht seiner Zugehörigkeit zu 
 Klasse:
 
 ```
-htl-leonding-college/       mehrjaehrig, klassenunabhaengig, public
+htl-leonding-college/       mehrjährig, klassenunabhängig, public
   curriculum-syp3           Module, curriculum.yaml, Generatoren, Site
-  student-project-template  Jahresprojekt-Geruest: openspec, docs, CI
+  student-project-template  Jahresprojekt-Gerüst: openspec, docs, CI
   klassen-setup             P9
   fragenkatalog             bestehend, unangetastet
 
-htl-leonding-example/       Uebungsangaben, public
-  jg03-syp-<topic-id>       je Uebung mit Startercode
-  <Altbestand>              ueberwiegend privat, bleibt unveraendert
+htl-leonding-example/       Übungsangaben, public
+  jg03-syp-<topic-id>       je Übung mit Startercode
+  <Altbestand>              überwiegend privat, bleibt unverändert
 
 <jahr>-<klasse>/            ein Schuljahr, eine Klasse, Classroom 50
   classroom50               Konfiguration und Roster
   <exam-templates>          privat
-  <assignment-repos>        entstehen je Schueler
+  <assignment-repos>        entstehen je Schüler
 ```
 
 *Begründung gegen die Klassen-Organisation als Stoffablage:* `curriculum-syp3` ist per P6
@@ -738,7 +738,7 @@ Assignments und Ergebnisse liegen als Organisations- und Team-Mitgliedschaft, Re
 und Konfigurationsdateien in GitHub. Daraus folgen zwei Regeln:
 
 ```
-oeffentliches Template   darf in einer FREMDEN Organisation liegen
+öffentliches Template    darf in einer FREMDEN Organisation liegen
 privates Template        muss in DERSELBEN Organisation liegen wie das Classroom
 ```
 

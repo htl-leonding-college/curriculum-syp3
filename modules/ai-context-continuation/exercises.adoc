@@ -62,4 +62,4 @@ kind: project
 Agree in your team where continuation notes live in the repository, and write the
 first one at the end of today's session.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

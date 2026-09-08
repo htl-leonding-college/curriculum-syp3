@@ -298,9 +298,9 @@ Bitte die Mindmap in diesem Stil erstellen, oder mache einen Vorschlag:
 ***_ Mosquitto aufsetzen und mit Quarkus subscriben
 @endmindmap
 
+//--
 
-
-
+Die Stoffstruktur-Minmap hätte ich gerne einseitig, da sonst die Schrift so kein wird
 
 
 

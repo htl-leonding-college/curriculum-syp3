@@ -1,6 +1,6 @@
-"""Lademodul fuer curriculum.yaml — die einzige Strukturwahrheit (P1).
+"""Lademodul für curriculum.yaml — die einzige Strukturwahrheit (P1).
 
-Alle Werkzeuge unter ``tools/`` lesen das Modell ausschliesslich hierueber.
+Alle Werkzeuge unter ``tools/`` lesen das Modell ausschließlich hierüber.
 Modulpfade werden aus der Themen-ID abgeleitet, nicht aus der yaml gelesen.
 """
 
@@ -32,14 +32,14 @@ REQUIRED_TOPIC_FIELDS = (
 
 #: ``theme`` fasst Themen eines Blocks zu einem Strang zusammen (Git, Container,
 #: Meilenstein-Reviews …). Es ist eine reine Darstellungsgruppe der Mindmap und
-#: aendert weder Budget noch Reihenfolge; Themen ohne ``theme`` haengen direkt
+#: ändert weder Budget noch Reihenfolge; Themen ohne ``theme`` hängen direkt
 #: unter ihrem Block.
 OPTIONAL_TOPIC_FIELDS = ("assignment_template", "note", "status", "theme")
 
 #: Bearbeitungsstand eines Themas. ``planned`` ist der Default: das Thema ist
 #: geplant und in allen abgeleiteten Darstellungen als offen sichtbar, seine
-#: Lernressource wird noch nicht erwartet. ``ready`` heisst: das Modul ist
-#: vollstaendig und wird hart geprueft.
+#: Lernressource wird noch nicht erwartet. ``ready`` heißt: das Modul ist
+#: vollständig und wird hart geprüft.
 TOPIC_STATUS = ("planned", "ready")
 DEFAULT_STATUS = "planned"
 
@@ -50,7 +50,7 @@ LINE_KEY = "__line__"
 
 
 class CurriculumError(Exception):
-    """Das Modell ist so defekt, dass keine Pruefung darauf sinnvoll ist."""
+    """Das Modell ist so defekt, dass keine Prüfung darauf sinnvoll ist."""
 
 
 @dataclass(frozen=True)
@@ -117,7 +117,7 @@ class Topic:
 
     @property
     def is_ready(self) -> bool:
-        """Wird die Lernressource bereits erwartet und hart geprueft?"""
+        """Wird die Lernressource bereits erwartet und hart geprüft?"""
         return self.status == "ready"
 
     @property
@@ -178,7 +178,7 @@ class Curriculum:
 
     @property
     def ready(self) -> tuple[Topic, ...]:
-        """Themen, deren Lernressource vollstaendig sein muss."""
+        """Themen, deren Lernressource vollständig sein muss."""
         return tuple(t for t in self.topics if t.is_ready)
 
     @property
@@ -193,7 +193,7 @@ class Curriculum:
         return totals
 
     def theory_ue_by_block(self) -> dict[str, int]:
-        """UE-Summen je Block ueber die Theoriethemen.
+        """UE-Summen je Block über die Theoriethemen.
 
         ``meta.budget_je_block`` ist als Theorie-Budget definiert
         (define-syp3-curriculum/design.md — Jahresrahmen).
@@ -290,7 +290,7 @@ def load(path: Path | str = DEFAULT_PATH, root: Path | None = None) -> Curriculu
     """Liest das Modell.
 
     Fehlende Pflichtfelder werden als :class:`Finding` mit Zeilenangabe
-    gemeldet, nicht geworfen — die Pruefung soll alle Fehler auf einmal zeigen.
+    gemeldet, nicht geworfen — die Prüfung soll alle Fehler auf einmal zeigen.
     """
     path = Path(path)
     root = Path(root) if root is not None else path.resolve().parent

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""UE-Uebersicht je Block und je Art (P3)."""
+"""UE-Übersicht je Block und je Art (P3)."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ def render(model: Curriculum) -> str:
     by_kind = model.ue_by_kind()
     theory_by_block = model.theory_ue_by_block()
 
-    # Kein Dokumenttitel: die Uebersicht wird eingebunden, nicht einzeln gebaut.
+    # Kein Dokumenttitel: die Übersicht wird eingebunden, nicht einzeln gebaut.
     lines = [
         "== Je Art",
         "",

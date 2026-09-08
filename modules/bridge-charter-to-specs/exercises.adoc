@@ -20,7 +20,7 @@ would carry it.
 .Solution
 [%collapsible]
 ====
-The fields that regularly cause discussion are "Aufwandsschaetzung" and
+The fields that regularly cause discussion are "Aufwandsschätzung" and
 "Rahmenbedingungen": neither has an openspec artefact, and both stay in the
 charter. Not every field needs a counterpart — the mapping exists where a field
 has a living counterpart, not for symmetry.
@@ -49,4 +49,4 @@ kind: project
 For each milestone in your charter, name the change that must be archived and by
 when, and record it in the milestone plan.
 
-// Aufgabe am eigenen Projekt — keine Musterloesung.
+// Aufgabe am eigenen Projekt — keine Musterlösung.

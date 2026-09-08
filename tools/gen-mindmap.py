@@ -2,7 +2,7 @@
 """Stoffstruktur als PlantUML-Mindmap (P3).
 
 Vier Ebenen: Gegenstand -> Block -> Strang (``theme``) -> Thema. Ein Thema ohne
-``theme`` haengt direkt unter seinem Block. Fertige Themen stehen schwarz,
+``theme`` hängt direkt unter seinem Block. Fertige Themen stehen schwarz,
 geplante grau — der Stand ist damit auf einen Blick sichtbar.
 """
 
@@ -21,7 +21,7 @@ OUTPUT = "stoffstruktur.puml"
 
 ROOT_COLOR = "#lightblue"
 
-#: Farbe je Block. Ein unbekannter Block faellt auf FALLBACK_COLOR zurueck,
+#: Farbe je Block. Ein unbekannter Block fällt auf FALLBACK_COLOR zurück,
 #: damit ein neuer Block die Mindmap nicht bricht.
 BLOCK_COLORS = {
     "governance": "#lightgreen",
@@ -31,7 +31,7 @@ BLOCK_COLORS = {
 }
 FALLBACK_COLOR = "#whitesmoke"
 
-#: Bloecke der linken Haelfte — sonst waechst die Karte einseitig nach rechts.
+#: Blöcke der linken Hälfte — sonst wächst die Karte einseitig nach rechts.
 LEFT_BLOCKS = ("werkzeuge", "modellierung")
 
 PLANNED_COLOR = "#808080"
@@ -49,7 +49,7 @@ def _sorted_topics(topics: list[Topic]) -> list[Topic]:
 
 
 def _themes(topics: list[Topic]) -> list[str]:
-    """Straenge in der Reihenfolge ihres ersten Unterrichts."""
+    """Stränge in der Reihenfolge ihres ersten Unterrichts."""
     first: dict[str, int] = {}
     for topic in topics:
         if topic.theme and topic.lesson < first.get(topic.theme, 10**6):
