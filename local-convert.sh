@@ -56,4 +56,9 @@ while IFS= read -r module; do
       -o "${SITE_DIR}/slides/${topic}.html" "${module}"
 done < <(find "${SITE_DIR}/modules" -name 'index.adoc' 2>/dev/null)
 
+# asciidoctor-diagram legt neben jeder Quelle einen .asciidoctor-Cache an. Er
+# gehoert nicht in die Site — und upload-pages-artifact laesst Dotfiles ohnehin
+# seit v4 weg.
+find "${SITE_DIR}" -type d -name '.asciidoctor' -prune -exec rm -rf {} +
+
 echo "==> fertig: ${SITE_DIR}/index.html"
