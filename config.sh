@@ -4,7 +4,7 @@
 
 # Containerisiertes asciidoctor — enthält asciidoctor-diagram, PlantUML,
 # Graphviz und asciidoctor-revealjs. Nichts davon wird lokal installiert.
-ASCIIDOCTOR_IMAGE="asciidoctor/docker-asciidoctor:1.83"
+ASCIIDOCTOR_IMAGE="asciidoctor/docker-asciidoctor:1.107"
 
 # Bauverzeichnis (ignoriert, wird bei jedem Lauf neu geschrieben)
 BUILD_DIR="build"

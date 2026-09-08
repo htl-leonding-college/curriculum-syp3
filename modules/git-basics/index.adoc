@@ -107,6 +107,31 @@ git diff --staged           # index vs last commit
 Because a commit is a state, you can always go back to one. That is the actual
 promise of version control: you can experiment because you can return.
 
+== The same history in IntelliJ
+
+The IDE shows nothing the commands do not — it shows it faster. In IntelliJ the
+kbd:[Git] tool window (kbd:[Alt+9]) has a *Log* tab with the graph, the branches
+of the local repository and those of the remote, and the changed files of the
+selected commit.
+
+.Git log in IntelliJ IDEA 2026.2 (own)
+image::images/git-log-intellij-2026.2.png[Git log in IntelliJ,700]
+
+Three things are worth reading off this window from the first lesson:
+
+* Under *Local* stands `main`, under *Remote* stands `origin/main`. Both labels
+  appear in the picture of the four places — the tool window is that picture,
+  filled with your project.
+* `↗ 6` next to `main` means six commits are committed but not pushed. That is
+  the difference between "it is committed" and "the others have it", made
+  visible.
+* The subjects read `feat: …`, `docs: …`. A history in Conventional Commits form
+  can be scanned in the IDE exactly as it can with `git log --oneline`.
+
+The buttons do the same thing as the commands, and knowing both is deliberate:
+in the IDE you work faster, on the command line you can say what actually
+happened — which is what the oral examination asks for.
+
 == Commit messages follow Conventional Commits
 
 The message is written for a person reading the history later — usually you, and
