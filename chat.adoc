@@ -316,7 +316,7 @@ Bitte die Mindmap in diesem Stil erstellen, oder mache einen Vorschlag:
 
 //--
 
-* Im Abschnitt "Assessment"  
+* Im Abschnitt "Assessment" im Abschnitt "Course overview, organisation and assessment" schreibst du nur von mündlichen Assessents. Im Normalfall gibt es zusätzlich 4 schriftliche Exams
 
 
 
