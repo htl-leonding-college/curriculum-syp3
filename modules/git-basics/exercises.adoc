@@ -61,6 +61,25 @@ reader": `Add attendance export to CSV`, `Fix crash on empty member list`,
 changed, the commit is probably too large.
 ====
 
+== Sort the commands by where they act
+
+kind: drill
+
+Sort into "works offline" and "needs the network":
+`git add`, `git commit`, `git clone`, `git diff`, `git fetch`, `git log`,
+`git push`, `git status`. Then say for each network command which two places in
+the picture it connects.
+
+.Solution
+[%collapsible]
+====
+Offline: `add`, `commit`, `diff`, `log`, `status` — they only touch the working
+tree, the index and `.git`. Network: `clone` (remote → a new local repository
+plus working tree), `fetch` (remote → local repository, your files untouched),
+`push` (local repository → remote). The full history lies on both sides, which
+is why almost everything works without a server.
+====
+
 == Set up your project repository
 
 kind: project

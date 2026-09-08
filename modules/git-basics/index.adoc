@@ -15,28 +15,44 @@ endif::[]
 == Learning outcomes
 
 * [[lo-1]] Create a repository, record changes as commits and read the history
-* [[lo-2]] Explain the three places a file can be in — working tree, index,
-  repository — and move a file between them
+* [[lo-2]] Explain the three local places a file can be in — working tree,
+  index, local repository — and move a file between them
 * [[lo-3]] Write a commit message that is useful to somebody reading it in six
   months
 * [[lo-4]] Keep generated and secret files out of the repository
+* [[lo-5]] Locate the remote repository in the picture and say which commands
+  cross the network
 
-== Three places, not one
+== Four places, not one
 
 Most confusion with git comes from believing a file is simply "saved or not".
-There are three states.
+A change passes through four places, and every git command you will type moves
+it between two of them.
 
-[plantuml,git-three-states,svg]
+[plantuml,git-architecture,svg]
 ----
 @startuml
 skinparam monochrome true
 skinparam shadowing false
-rectangle "working tree\nyour files as you edit them" as W
-rectangle "index (staging area)\nwhat the next commit will contain" as I
-rectangle "repository\nthe recorded history" as R
+skinparam defaultTextAlignment center
+
+rectangle "your machine" {
+  rectangle "working tree\nyour files as you edit them" as W
+  rectangle "index (staging area)\nwhat the next commit will contain" as I
+  rectangle "local repository\n.git — the full history" as L
+}
+
+rectangle "server (GitHub)" {
+  rectangle "remote repository\norigin — the full history again" as R
+}
+
 W -right-> I : git add
-I -right-> R : git commit
-R -left-> W : git checkout
+I -right-> L : git commit
+L -right-> R : git push
+R -[dashed]left-> L : git fetch / git pull
+
+note bottom of L : everything up to here\nworks without a network
+note bottom of R : git clone creates\nthe left three from this one
 @enduml
 ----
 
@@ -45,12 +61,33 @@ R -left-> W : git checkout
 git init                    # start a repository in this directory
 git status                  # which files are where
 git add report.adoc         # working tree -> index
-git commit -m "Add report"  # index -> repository
+git commit -m "Add report"  # index -> local repository
 git log --oneline           # read the history
+git restore report.adoc     # index -> working tree, throw the edits away
 ----
 
 `git status` answers the only question that matters while you work: what is in
 which state right now. Run it more often than you think you need to.
+
+== The remote is a repository, not a headquarters
+
+`origin` on the server holds the same kind of history as `.git` on your machine
+— a full copy, not a master version that yours is a fragment of. This is what
+*distributed* means: any clone can be used to continue the work if the server
+burns down.
+
+Two consequences you feel on the first day:
+
+* `git add`, `git commit`, `git log` and `git diff` never touch the network.
+  Committing on a train works. Only `git push`, `git fetch`, `git pull` and
+  `git clone` cross the line in the picture.
+* A commit that exists only in your local repository exists for nobody else.
+  "It is committed" and "the others have it" are two different statements — the
+  second one needs a push.
+
+NOTE: How the two sides are kept in step — remote-tracking branches, conflicts,
+rejected pushes — is the subject of `git-conflicts-remotes`. Here it is enough
+to see where the line runs.
 
 == What a commit is
 
@@ -130,6 +167,8 @@ you commit.
   diff becomes unreadable.
 * Believing a file is "in git" because you saved it. Saving writes the working
   tree; only `git commit` records it.
+* Believing a commit is safe because it is committed. It lives on one disk until
+  it is pushed — the machine in room 3 is not a backup of itself.
 
 == Terminology
 
@@ -151,6 +190,15 @@ you commit.
 
 |Repository, Ablage
 |repository
+
+|entferntes Repository, Gegenstelle
+|remote repository
+
+|klonen
+|clone
+
+|hochladen / holen
+|push / fetch
 |===
 
 == Further reading

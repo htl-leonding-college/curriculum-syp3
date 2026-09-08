@@ -62,3 +62,17 @@ Expected answer points:
 * `git log --oneline --graph` to find it, `git show <hash>` to read it
 * `git diff` compares working tree and index, `git diff --staged` index and last
   commit
+
+== Where does the network start in the git picture, and what follows from that?
+
+covers: lo-5
+
+Expected answer points:
+
+* Working tree, index and local repository are on your machine; the remote
+  repository (`origin`) is on the server
+* `add`, `commit`, `log`, `diff` are local; only `push`, `fetch`, `pull` and
+  `clone` cross the network
+* The remote holds a full history as well — it is a peer copy, not a master
+  version
+* A commit exists for nobody else until it is pushed
