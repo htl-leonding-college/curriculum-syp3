@@ -77,6 +77,25 @@ def test_mindmap_marks_planned_topics(repo: Repo) -> None:
     assert ready and "(offen)" not in ready[0] and "<color:" not in ready[0]
 
 
+def test_nav_links_exercises_and_questions(repo: Repo) -> None:
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1),
+            topic("git-basics", kind="praxis", lesson=1, status="ready"),
+        ]
+    )
+    text = nav.render(repo.model())
+    assert "modules/git-basics/exercises.adoc" in text
+    assert "modules/git-basics/questions.adoc" in text
+    # Ein geplantes Thema hat keine Lernressource und damit auch keine Verweise.
+    assert "course-overview/exercises.adoc" not in text
+
+
+def test_mindmap_stays_on_one_side(repo: Repo) -> None:
+    base(repo)
+    assert "left side" not in mindmap.render(repo.model())
+
+
 def test_nav_order_follows_lesson(repo: Repo) -> None:
     repo.write_model(
         [

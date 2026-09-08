@@ -28,7 +28,13 @@ def render(model: Curriculum) -> str:
         for topic in sorted(by_lesson[lesson], key=lambda t: t.kind, reverse=True):
             label = f"{KIND_LABEL.get(topic.kind, topic.kind)}: {topic.title}"
             if topic.is_ready:
-                entry = f"** xref:modules/{topic.id}/index.adoc[{label}]"
+                # Neben dem Lerninhalt stehen Aufgaben und Fragen; ohne diese
+                # Verweise waeren beide Seiten nur ueber ihre Adresse zu finden.
+                entry = (
+                    f"** xref:modules/{topic.id}/index.adoc[{label}]"
+                    f" — xref:modules/{topic.id}/exercises.adoc[Übungen]"
+                    f" · xref:modules/{topic.id}/questions.adoc[Fragen]"
+                )
             else:
                 entry = f"** {label} _(offen)_"
             if topic.assignment_template:

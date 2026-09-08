@@ -31,9 +31,6 @@ BLOCK_COLORS = {
 }
 FALLBACK_COLOR = "#whitesmoke"
 
-#: Blöcke der linken Hälfte — sonst wächst die Karte einseitig nach rechts.
-LEFT_BLOCKS = ("werkzeuge", "modellierung")
-
 PLANNED_COLOR = "#808080"
 
 
@@ -90,14 +87,10 @@ def render(model: Curriculum) -> str:
         "skinparam defaultFontName Helvetica",
         f"*[{ROOT_COLOR}] {root}",
     ]
-    right = [b for b in model.blocks if b.id not in LEFT_BLOCKS]
-    left = [b for b in model.blocks if b.id in LEFT_BLOCKS]
-    for block in right:
+    # Alles auf einer Seite: zweiseitig wird die Karte so breit, dass die
+    # Schrift beim Skalieren auf Seitenbreite unlesbar klein wird.
+    for block in model.blocks:
         lines.extend(_block_lines(model, block))
-    if left:
-        lines.append("left side")
-        for block in left:
-            lines.extend(_block_lines(model, block))
     lines.append("legend right")
     lines.append(f"  <color:{PLANNED_COLOR}>grau</color> = geplant, Modul offen")
     lines.append("endlegend")

@@ -300,9 +300,13 @@ Bitte die Mindmap in diesem Stil erstellen, oder mache einen Vorschlag:
 
 //--
 
-Die Stoffstruktur-Minmap hätte ich gerne einseitig, da sonst die Schrift so kein wird
+* wo finde ich die Drill-Aufgaben?
+* Die Stoffstruktur-Minmap hätte ich gerne einseitig, da sonst die Schrift so kein wird
+* Kannst du die Verwendung von local-convert.sh und publish.sh in der README.adoc dokumentieren
 
+//--
 
+* Ändere in "git add, git commit, git log and git diff never touch the network. Committing on a train works. Only git push, git fetch, git pull and git clone cross the line in the picture." das "Committing on a train works." auf offline und nimm als Beispiel ein Flugzeug. Jeder Zug hat heute Internet
 
 
 

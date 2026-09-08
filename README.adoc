@@ -74,12 +74,80 @@ Fragenkatalog-Tags — wird erzeugt und nicht von Hand gepflegt.
 [source,bash]
 ----
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r tools/requirements.txt
+pip install -r tools/requirements-dev.txt
 
 python tools/check-curriculum.py     # Struktur- und Modulprüfungen
+python -m pytest tools/tests -q      # Fixture-Testsuite der Werkzeuge
 ----
 
 Details zu den Werkzeugen: `tools/README.adoc`.
+
+=== local-convert.sh — die Site lokal bauen
+
+Derselbe Ablauf wie in der Pipeline: prüfen, generieren, konvertieren. Python
+läuft lokal, asciidoctor im Container — dadurch bauen Linux- und macOS-Geräte
+dasselbe Ergebnis. Voraussetzung ist ein laufender Docker-Daemon.
+
+[source,bash]
+----
+./local-convert.sh                        # prüfen, erzeugen, konvertieren
+./local-convert.sh --skip-check           # nur bauen, während man schreibt
+PYTHON=.venv/bin/python ./local-convert.sh   # ohne aktiviertes venv
+----
+
+Der Lauf in vier Schritten:
+
+. `tools/check-curriculum.py` — bricht bei Befunden ab (außer mit `--skip-check`)
+. Generatoren: Mindmap, Navigation, UE-Übersicht, Fragenkatalog nach `build/`
+. Quellen sammeln: `site/index.adoc`, das Erzeugte und die Module mit
+  `status: ready` nach `build/site/`
+. asciidoctor und asciidoctor-revealjs im Container
+
+Ergebnis ist `build/site/index.html`; die Foliensätze liegen unter
+`build/site/slides/<topic-id>.html`. `build/` ist wegwerfbar und wird nicht
+versioniert.
+
+=== publish.sh — zusätzlich auf den Schulwebspace
+
+Die Veröffentlichung auf GitHub Pages erledigt die Pipeline bei jedem Push auf
+`main`. `publish.sh` ist der zweite, bewusst manuelle Weg auf den Schulwebspace:
+Zugangsdaten für fremde Infrastruktur gehören nicht in die Automatisierung, der
+Zugang hängt am SSH-Schlüssel des Ausführenden.
+
+[source,bash]
+----
+./publish.sh --dry-run    # zeigt nur, was übertragen würde
+./publish.sh              # baut bei Bedarf und rollt aus
+----
+
+Fehlt `build/site/index.html`, ruft das Skript vorher `local-convert.sh` auf.
+Übertragen wird mit `rsync --delete`, das Ziel ist also ein Abbild von
+`build/site/`. Ziel und Zugang stehen als überschreibbare Vorgaben in
+`config.sh`:
+
+[cols="1,2",options="header"]
+|===
+|Variable |Vorgabe
+
+|`WEBSPACE_HOST`
+|`edufs.edu.htl-leonding.ac.at`
+
+|`WEBSPACE_USER`
+|`t.stuetz`
+
+|`WEBSPACE_PATH`
+|`~/public_html/curriculum-syp3`
+|===
+
+[source,bash]
+----
+WEBSPACE_USER=x.mustermann ./publish.sh --dry-run
+----
+
+CAUTION: `--delete` löscht im Zielverzeichnis alles, was lokal nicht existiert.
+Vor dem ersten echten Lauf `--dry-run` lesen — die bestehende Hugo-Site liegt
+daneben und bleibt unberührt, solange `WEBSPACE_PATH` auf das eigene
+Unterverzeichnis zeigt.
 
 == Zwei Fragenkataloge, geteilte Zuständigkeit
 
