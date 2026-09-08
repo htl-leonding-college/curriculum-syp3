@@ -206,7 +206,7 @@ def test_outcomes_coupled(repo: Repo) -> None:
 IMAGE_BLOCK = """
 
     .Kanban board
-    image::images/kanban.png[Kanban board,600]
+    image::kanban.png[Kanban board,600]
     """
 
 
@@ -306,6 +306,16 @@ def test_bijection_reports_non_empty_file_without_topic_id(repo: Repo) -> None:
         questions=GOOD_QUESTIONS,
     )
     assert "trägt keine :topic-id:" in repo.messages("bijection")
+
+
+def test_images_with_imagesdir_in_path(repo: Repo) -> None:
+    """':imagesdir: images' im Kopf plus 'images/' im Pfad ergibt images/images/."""
+    repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])
+    block = IMAGE_BLOCK.replace(".Kanban board", ".Kanban board (own)").replace(
+        "image::kanban.png", "image::images/kanban.png"
+    )
+    repo.write_module("git-basics", index=GOOD_INDEX + block, questions=GOOD_QUESTIONS)
+    assert "Pfad ohne 'images/' angeben" in repo.messages("images")
 
 
 def test_images_inside_listing_blocks_are_examples(repo: Repo) -> None:

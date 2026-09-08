@@ -107,14 +107,19 @@ Jedes Bild trägt seine Herkunft im Bildtitel:
 [source,adoc]
 ----
 .Zielkreuz (own)
-image::images/zielkreuz.png[Zielkreuz,500]
+image::zielkreuz.png[Zielkreuz,500]
 
 .Scrum framework (free: CC BY-SA 4.0, https://scrum.org/..., retrieved 2026-09-10)
-image::images/scrum-framework.png[Scrum framework,600]
+image::scrum-framework.png[Scrum framework,600]
 
 .Kanban board (unclear: found via web search, rights not checked)
-image::images/kanban.png[Kanban board,600]
+image::kanban.png[Kanban board,600]
 ----
+
+Der Dateiname steht ohne Verzeichnis: der Kopf des Moduls setzt
+`:imagesdir: images`, und beide Seiten — die gebaute Site und die Ansicht auf
+GitHub — lösen ihn damit gleich auf. `image::images/…` würde im Build zu
+`images/images/…` und ins Leere zeigen.
 
 WARNING: Die Herkunft ist der einzige Bestandteil, der sich nachträglich nicht
 beschaffen lässt. `unclear` blockiert die Veröffentlichung nicht — der Job

@@ -3,6 +3,7 @@
 :icons: font
 :source-highlighter: rouge
 :experimental:
+:imagesdir: images
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -115,7 +116,7 @@ of the local repository and those of the remote, and the changed files of the
 selected commit.
 
 .Git log in IntelliJ IDEA 2026.2 (own)
-image::images/git-log-intellij-2026.2.png[Git log in IntelliJ,700]
+image::git-log-intellij-2026.2.png[Git log in IntelliJ,700]
 
 Three things are worth reading off this window from the first lesson:
 

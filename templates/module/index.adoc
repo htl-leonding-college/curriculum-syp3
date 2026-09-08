@@ -3,6 +3,7 @@
 :icons: font
 :source-highlighter: rouge
 :experimental:
+:imagesdir: images
 
 ifdef::env-github[]
 :tip-caption: :bulb:

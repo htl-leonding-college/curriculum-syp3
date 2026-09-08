@@ -438,8 +438,22 @@ def check_images(model: Curriculum) -> list[Finding]:
                         line=image.line,
                     )
                 )
-            elif image.provenance == "free" and not adoc.free_licence_is_complete(
-                image.provenance_detail
+            if image.target.startswith("images/"):
+                findings.append(
+                    Finding(
+                        check="images",
+                        message=(
+                            f"Bild '{image.target}': Pfad ohne 'images/' angeben — "
+                            "der Modulkopf setzt ':imagesdir: images', sonst zeigt "
+                            "die gebaute Seite auf 'images/images/…'"
+                        ),
+                        path=path,
+                        line=image.line,
+                    )
+                )
+            if image.provenance is not None and (
+                image.provenance == "free"
+                and not adoc.free_licence_is_complete(image.provenance_detail)
             ):
                 findings.append(
                     Finding(

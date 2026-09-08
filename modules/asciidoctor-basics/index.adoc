@@ -84,7 +84,7 @@ Multi-line admonition.
 link:https://example.org[Link text]
 
 .Screenshot of the booking page (own)
-image::images/screenshot.png[Alt text,600]
+image::screenshot.png[Alt text,600]
 ------
 
 The header attributes matter more than they look: `:toc:` builds the table of
