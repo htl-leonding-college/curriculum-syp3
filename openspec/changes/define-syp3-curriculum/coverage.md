@@ -22,7 +22,7 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 | Projektarbeit findet außerhalb des Unterrichts statt | `review-milestone-1`, `review-milestone-2`, `review-milestone-3` | — |
 | Die Eröffnungssequenz stellt Arbeitsfähigkeit her | `course-overview`, `learning-environment-setup`, `git-basics` … `openspec-hands-on` (U1–U10) | — |
 | *(neu)* Der Gegenstand wird zu Beginn eingeordnet | `course-overview`, `what-is-software-engineering` | Manz Kap. 1 (eigene Formulierung) |
-| *(neu)* Die Leistungsfeststellung ist vorab bekannt | `assessment-oral-exams`, `questions.adoc` jedes Moduls | — |
+| *(neu)* Die Leistungsfeststellung ist vorab bekannt | `assessment-written-and-oral`, `questions.adoc` jedes Moduls | — |
 
 ## curriculum/lernumgebung
 
@@ -73,7 +73,7 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 | Requirement | Themen | Quelle |
 |---|---|---|
 | Projektbegriff und Ausgangslage | `governance-project-basics` | Manz Kap. 1–2 (eigene Formulierung) |
-| Ideenfindung mit einer tatsächlich durchgeführten Technik | `governance-idea-generation` | PUMA8_12 Kreativitätstechniken |
+| Ideenfindung mit sechs Techniken, eine davon durchgeführt | `governance-idea-generation` | PUMA8_12 Kreativitätstechniken (Brainstorming, 6-3-5, Morphologischer Kasten, Mindmapping, Bionik, Delphi) |
 | Projektauswahl ist kriterienbasiert und nachvollziehbar | `governance-weighted-scoring` | PUMA8_05 Nutzwertanalyse |
 | Stakeholder und Zielsetzung | `governance-stakeholders-goals` | Manz Kap. 3 (eigene Formulierung) |
 | Projektantrag und Projektauftrag erstellen | `governance-project-charter` | DA-Antragsformular der Schule |
@@ -106,6 +106,6 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 ## Gegenprobe
 
 Alle 54 Themen kommen oben vor. Zwei Themen hatten anfangs kein Requirement —
-`what-is-software-engineering` und `assessment-oral-exams`; dafür sind die beiden mit
+`what-is-software-engineering` und `assessment-written-and-oral`; dafür sind die beiden mit
 *(neu)* markierten Requirements in `specs/curriculum/jahresplanung/spec.md` ergänzt
 worden (Aufgabe 1.2). Kein Requirement blieb ohne Thema.

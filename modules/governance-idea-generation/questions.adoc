@@ -14,39 +14,266 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because they run under opposite rules, and the rules cancel each other out.
+
+[cols="1,1",options="header"]
+|===
+|Diverging |Converging
+
+|as many ideas as possible
+|as few as necessary
+
+|no evaluation
+|evaluation is the whole point
+
+|quantity, variety, building on others
+|criteria, weights, a decision
+|===
+
+What happens when they are mixed is observable within a minute: somebody says
+"that will never work", and from that point on the group *defends* ideas instead
+of producing them. Every further idea is now offered with a justification
+attached, the wild ones stop coming — and the wild ones are the reason for the
+exercise, because a wild idea can be tamed while a tame one cannot be enlivened.
+
+So the separation is *in time*: a diverging hour with its own rules, announced as
+such, and a separate session later in which the criteria are applied. In this
+course the second half is the next module, weighted scoring.
+
+Points the answer must contain:
 
 * Opposite rules: quantity without evaluation versus evaluation against criteria
 * Evaluating early makes the group defend ideas instead of producing them
 * Separation is in time, not only in intention
+====
 
 == Describe the 6-3-5 procedure and say what it produces
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+*Six* people, *three* ideas each, *five* minutes per round; then the sheet is
+passed one seat on and the next person reads what is there before writing. Six
+rounds, so 6 · 3 · 6 = *108 written ideas* in half an hour.
+
+Four properties are built into the procedure rather than left to discipline:
+
+* *Everyone contributes.* In a discussion two people talk and four agree; here
+  every sheet has to be filled.
+* *The result is written.* No transcription step, no "what did we say?" — the
+  sheets go straight into the project proposals as raw material.
+* *It is time-boxed by construction.* The round ends because the sheet moves, not
+  because somebody decides it does.
+* *Building on others is forced.* You read three ideas before writing your own,
+  which is the part a group discussion never reliably achieves.
+
+The honest expectation: not 108 good ideas, but perhaps five worth pursuing. The
+other hundred are the price of finding those five, and rounds three to six
+produce them — round one is everybody's obvious first thought.
+
+Points the answer must contain:
 
 * Six people, three ideas, five minutes, sheet passes on, six rounds
 * 108 written ideas, of which a handful are worth pursuing
 * Written output, everyone contributes, time-boxed by construction, forced
   building on others
+====
 
-== Name two other techniques and the situation each suits
+== Name the six techniques and the situation each one suits
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,1,2",options="header"]
+|===
+|Technique |Works by |Reach for it when
 
-* Mind mapping — one person or a pair, unclear structure, visual
-* SCAMPER — a stuck group with an existing solution, forces variation
-* Neither is practised in this course; 6-3-5 is
+|*Brainstorming*
+|association, spoken
+|a group, a warm-up, a broad question, fifteen minutes
+
+|*Methode 6-3-5*
+|association, written
+|a group in which not everybody speaks up; you need written results
+
+|*Mind mapping*
+|association, structuring
+|one person or a pair; the area is unclear and needs ordering
+
+|*Morphologischer Kasten*
+|systematic combination
+|the problem has clearly separable characteristics; you want completeness
+
+|*Bionik*
+|analogy from nature
+|a technical function that resists direct attack
+
+|*Delphi-Methode*
+|structured expert opinion in rounds
+|assessing what nobody can know for certain — a forecast, an estimate
+|===
+
+The middle column is the part worth remembering, because it is what decides the
+choice. Three of the six work by *association* and differ only in the social
+setting: spoken in a group, written in a group, alone with a structure.
+`Morphologischer Kasten` is the only one aiming at *completeness* rather than
+inspiration, Bionik is the only one that imports a solution from outside the
+problem domain, and Delphi is the only one whose purpose is to *narrow* a spread
+rather than widen it.
+
+The four rules of brainstorming are worth being able to recite: no criticism,
+quantity before quality, wild ideas welcome, build on what has been said.
+
+Points the answer must contain:
+
+* Brainstorming, Methode 6-3-5, Mind mapping, Morphologischer Kasten, Bionik,
+  Delphi-Methode
+* Three work by association, one by systematic combination, one by analogy, one
+  by structured expert opinion
+* The situation decides: group or alone, spoken or written, inspiration or
+  completeness
+====
+
+== Build a morphological box for a small problem and read a solution out of it
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+Break the problem into *independent characteristics*, list the possible *values*
+of each, then read a path across the rows.
+
+.Attendance recording, decomposed into four characteristics
+[cols="1,1,1,1,1",options="header"]
+|===
+|Characteristic |Value A |Value B |Value C |Value D
+
+|Recording by
+|the trainer
+|the member
+|a card reader
+|automatic via wifi
+
+|Device
+|paper
+|phone
+|tablet at the door
+|web page
+
+|Time of recording
+|before training
+|during
+|afterwards
+|—
+
+|Result goes to
+|a file
+|the club database
+|the school system
+|an e-mail
+|===
+
+Every path is a candidate solution: *member + phone + before training + club
+database* is one, *trainer + tablet + during + club database* is another. The
+count is the product of the row lengths — 4 · 4 · 3 · 4 = 192 here — which is far
+more than any group proposes freely. That is the whole point of the technique:
+it surfaces the combinations nobody would have thought of, because it does not
+depend on anybody thinking of them.
+
+Two rules keep it honest. The characteristics must be genuinely *independent* —
+if choosing "card reader" already fixes the device row, those two rows are one
+characteristic and the 192 is fiction. And five to seven rows is the practical
+limit; beyond that the combination count stops carrying information.
+
+Reading it out is not automatic either: most of the 192 are nonsense, and the
+technique's job is finished when it has put three or four plausible ones in front
+of you that would otherwise not have been on the list.
+
+Points the answer must contain:
+
+* Decompose into characteristics, list values per characteristic, combine one
+  value per row
+* The number of combinations is the product of the row lengths
+* The characteristics must be independent, otherwise the combinations are fiction
+====
+
+== How do Bionik and the Delphi method differ from the intuitive techniques?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Brainstorming, 6-3-5 and mind mapping all draw on *what the people in the room
+already know*, and organise how it comes out. The other two do something
+different.
+
+*Bionik imports a solution from outside the problem domain.* It works through an
+abstraction: the technical problem is turned into a functional question ("how
+does a surface stay clean?"), an answer is looked for in a living system (the
+lotus leaf), and the *principle* — not the shape — is transferred back. The
+burdock burr became the hook-and-loop fastener, shark skin became drag-reducing
+riblet films, termite mounds became passive building ventilation. Skipping the
+abstraction is the standard failure: copying the shape of a wing gives you a bad
+wing.
+
+*Delphi narrows an assessment instead of widening a field.* Experts answer a
+written question anonymously, the answers are summarised with their reasons and
+fed back, and everybody answers again. Anonymity removes the effect that the
+loudest or most senior voice decides; the fed-back summary lets people revise on
+reasons rather than on status, which is why the spread usually narrows over two or
+three rounds. It costs days rather than minutes and needs people who actually
+know the subject.
+
+So: five techniques diverge, Delphi converges; five look inward, Bionik looks
+outward.
+
+Points the answer must contain:
+
+* Bionik transfers a principle from nature through an abstraction step, not a
+  shape
+* Delphi is written, anonymous and runs in rounds with the summary fed back
+* Delphi sharpens an assessment (it converges), the others produce ideas (they
+  diverge)
+====
 
 == Why is "ask an agent for fifty ideas" not a replacement?
 
 covers: lo-1, lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because what comes back is the *average of everything that has been written about
+the subject*. It is fluent, it is plausible, and it is nobody's idea in
+particular — including nobody in your room.
+
+That matters for a reason that has nothing to do with quality: a year project has
+to survive February, and what carries it through February is that somebody in the
+team actually wants this thing to exist. An idea the team produced has that
+attachment; an idea from a list does not, and the list has no way of knowing
+which of the fifty anybody cares about.
+
+The techniques also produce something the list does not: *written raw material
+with a history*. The 6-3-5 sheets show which ideas came from building on which
+others, the morphological box shows the combinations that were considered and
+dropped — and that record feeds directly into the proposals and the weighted
+scoring in the next module.
+
+The reasonable use is afterwards, in the converging half: as a second opinion on
+criteria, or to check whether an obvious candidate has been missed.
+
+Points the answer must contain:
 
 * Produces plausible averages, not ideas the team cares about
 * Commitment matters for a project that has to survive the whole year
 * The technique also produces the written raw material for the proposals
+====

@@ -16,7 +16,12 @@ endif::[]
 
 * [[lo-1]] Explain why idea generation and idea selection are separated
 * [[lo-2]] Run a 6-3-5 brainwriting round and produce written results from it
-* [[lo-3]] Name two further techniques and say what situation each suits
+* [[lo-3]] Name the six techniques of this course and say which situation each
+  one suits
+* [[lo-4]] Build a morphological box for a given problem and read combinations
+  out of it
+* [[lo-5]] Explain how Bionik and the Delphi method differ from the intuitive
+  techniques
 
 == Diverge first, converge later
 
@@ -40,13 +45,70 @@ Two activities, opposite rules, and the classic mistake is doing both at once:
 |===
 
 The moment somebody says "that's not feasible" during the diverging phase, the
-group stops producing ideas and starts defending them. That is why the phases
-are separated in time, not just in intention.
+group stops producing ideas and starts defending them. That is why the phases are
+separated *in time*, not just in intention: different hour, different rules,
+announced as such.
 
-== 6-3-5 brainwriting
+== The six techniques
+
+They are not six variants of the same thing. Three of them work by *association*,
+one by *systematic combination*, one by *analogy*, and one by *structured expert
+opinion* — and that is what decides which one you reach for.
+
+[cols="1,1,2",options="header"]
+|===
+|Technique |Works by |Reach for it when
+
+|*Brainstorming*
+|association, spoken
+|a group, a warm-up, a broad question, fifteen minutes
+
+|*Methode 6-3-5*
+|association, written
+|a group in which not everybody speaks up; you need written results
+
+|*Mind mapping*
+|association, structuring
+|one person or a pair; the area is unclear and needs ordering
+
+|*Morphologischer Kasten*
+|systematic combination
+|the problem has clearly separable characteristics; you want completeness
+
+|*Bionik*
+|analogy from nature
+|a technical problem that resists direct attack; nature has solved it already
+
+|*Delphi-Methode*
+|structured expert opinion, several rounds
+|assessing something nobody can know for certain — a forecast, an estimate
+|===
+
+=== Brainstorming
+
+The classic, and the one most often done badly. Five to twelve people, a
+moderator, somebody who writes everything down where all can see it, and about
+fifteen to thirty minutes. Four rules carry it:
+
+. *No criticism.* Not even "yes, but". Evaluation comes later, in a separate
+  session.
+. *Quantity before quality.* The tenth idea is more interesting than the first,
+  because the first three were everybody's first three.
+. *Wild ideas are welcome.* It is easier to tame a wild idea than to enliven a
+  tame one.
+. *Build on what has been said.* Combining and developing other people's ideas is
+  the point, not a lapse of originality.
+
+Two weaknesses are worth naming, because they decide when you use a different
+technique. Only one person can speak at a time, so ideas are lost while waiting —
+*Bewertungsangst* and *Produktionsblockierung* are the German terms for the two
+effects. And a group with a strong personality in it produces that person's
+ideas. Both are exactly what 6-3-5 removes.
+
+=== Methode 6-3-5 (Brainwriting)
 
 Six people, three ideas each, five minutes per round, six rounds. Every round the
-sheet moves one seat on, and you build on what is already written.
+sheet moves one seat on, and you read what is there before you write.
 
 [plantuml,brainwriting,svg]
 ----
@@ -66,48 +128,210 @@ stop
 @enduml
 ----
 
-Why this one and not a group discussion:
+Why this one rather than a discussion:
 
 * *Everyone contributes.* In a discussion two people talk and four agree.
 * *The result is written.* No transcription step, no "what did we say?", and the
   sheets are raw material for the project proposals directly.
-* *It is time-boxed by construction.* Five minutes per round, and the round ends
-  because the sheet moves, not because somebody decides it does.
+* *It is time-boxed by construction.* The round ends because the sheet moves, not
+  because somebody decides it does.
 * *Building on others is forced.* You read three ideas before writing your own.
 
-The output is not 108 good ideas. It is maybe five worth pursuing, and the other
+The output is not 108 good ideas. It is perhaps five worth pursuing, and the other
 hundred are the price of finding them.
 
-== Two more techniques worth knowing
+=== Mind mapping
 
-[cols="1,2",options="header"]
+The topic in the centre, main branches radiating outwards, one keyword per
+branch, sub-branches for detail. Colour and small drawings are not decoration:
+they are what makes the map re-readable a week later.
+
+It is the technique for a single person or a pair, and its strength is that it
+generates and *orders* at the same time — you can see which area is thin and
+which is overgrown. Its weakness follows from the same property: the branch you
+started with attracts the most detail, whether or not it deserves it. In a group
+it degenerates quickly, because the person holding the pen decides the structure.
+
+In this course you meet mind maps a second time as a *representation* rather than
+a technique — the curriculum overview on the start page is one.
+
+=== Morphologischer Kasten
+
+The systematic one, and the only one of the six that aims at *completeness*
+rather than inspiration. Fritz Zwicky's idea: break the problem into its
+independent characteristics, list the possible values of each, and then read
+combinations across the rows.
+
+.Attendance recording, decomposed into four characteristics
+[cols="1,1,1,1,1",options="header"]
 |===
-|Technique |Suits
+|Characteristic |Value A |Value B |Value C |Value D
 
-|*Mind mapping*
-|one person or a pair, exploring an area where the structure is still unclear;
- fast, visual, but the loudest branch tends to win
+|Recording by
+|the trainer
+|the member
+|a card reader
+|automatic via wifi
 
-|*SCAMPER* (substitute, combine, adapt, modify, put to other use, eliminate,
- reverse)
-|a stuck group with an existing solution — it forces variation on something
- concrete instead of asking for inspiration from nothing
+|Device
+|paper
+|phone
+|tablet at the door
+|web page
+
+|Time of recording
+|before training
+|during
+|afterwards
+|—
+
+|Result goes to
+|a file
+|the club database
+|the school system
+|an e-mail
+|===
+
+Each row is a decision that can be taken independently of the others, so every
+path across the rows is a possible solution: *member + phone + before training +
+club database* is one, *trainer + tablet + during + club database* is another.
+Four rows with four, four, three and four values give 4 · 4 · 3 · 4 = 192
+combinations — far more than a group would ever propose freely, and that is the
+point: the box makes you see the combinations nobody thought of.
+
+Two rules keep it usable. The characteristics must be genuinely *independent* —
+if choosing a value in one row forces a value in another, they are one
+characteristic, not two. And five to seven rows is the practical limit; beyond
+that the number of combinations stops being informative.
+
+=== Bionik
+
+Nature has been running a very long optimisation process, and its results are
+free to look at. Bionik transfers them: abstract your problem until it is a
+functional question, find a living system that answers that question, and
+transfer the principle back — not the shape.
+
+.The transfer runs through the abstraction, not directly
+[graphviz,bionik-loop,svg]
+----
+digraph bionik {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  P [label="technical problem\n\"surfaces get dirty\""];
+  A [label="functional question\n\"how does a surface\nstay clean?\""];
+  N [label="analogue in nature\nlotus leaf:\nmicro-rough and water-repellent"];
+  T [label="transferred principle\nself-cleaning facade paint"];
+
+  P -> A [label="abstract"];
+  A -> N [label="search"];
+  N -> T [label="transfer the principle"];
+}
+----
+
+The standard examples are worth knowing because each shows a different kind of
+transfer: the *burdock burr* became the hook-and-loop fastener (a mechanism), the
+*lotus leaf* became self-cleaning surfaces (a surface property), *shark skin*
+became riblet films that reduce drag on aircraft (a texture), *termite mounds*
+became passive building ventilation (a system principle).
+
+The step people skip is the abstraction. Copying the shape of a bird's wing gives
+you a bad wing; asking "how is lift produced with little energy" gives you
+something usable. In a school project the same move works on a smaller scale:
+"how does an anthill distribute work without a central plan" is a real question
+about a scheduling problem.
+
+=== Delphi-Methode
+
+The odd one out: it does not produce ideas out of nothing, it *sharpens an
+assessment* that no single person can make reliably — how long something will
+take, how a technology will develop, whether an approach carries.
+
+.Written, anonymous, several rounds, with the summary fed back
+[graphviz,delphi-rounds,svg]
+----
+digraph delphi {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  Q [label="written question\nto the experts"];
+  R1 [label="round 1\neveryone answers\nanonymously"];
+  S [label="summary\nmedian, spread,\nreasons given"];
+  R2 [label="round 2\nanswer again,\nknowing the summary"];
+  E [label="result\nconverged estimate\n+ the reasons for outliers"];
+
+  Q -> R1 -> S -> R2 -> E;
+  R2 -> S [label="further rounds\nif the spread stays wide", style=dashed,
+           constraint=false];
+}
+----
+
+Two properties do the work. *Anonymity* removes the effect that the loudest or
+most senior voice decides — nobody knows whose estimate is whose. And the *fed-back
+summary* lets each expert revise in the light of the others' reasons rather than
+their status, which is why the spread usually narrows over two or three rounds.
+
+The price is time: written rounds take days, not minutes, and the method needs
+people who actually know something about the question. For a school project this
+matters mostly as a model — the milestone estimates in this course use the same
+two ideas in miniature, when everybody writes an estimate down *before* they are
+discussed.
+
+== Which technique for which situation
+
+[cols="2,1",options="header"]
+|===
+|Situation |Technique
+
+|Fifteen minutes at the start, broad question, group is awake
+|Brainstorming
+
+|Group of six, quiet members, you need the result on paper
+|Methode 6-3-5
+
+|You alone, an area you do not yet have a structure for
+|Mind mapping
+
+|The solution space has clear characteristics and you want all combinations
+|Morphologischer Kasten
+
+|A technical function you cannot solve directly
+|Bionik
+
+|An estimate or a forecast where opinions differ and nobody can prove theirs
+|Delphi-Methode
 |===
 
 == Decisions
 
-* 6-3-5 is the one technique actually carried out in this course; the others are
-  named and placed, not practised.
+* 6-3-5 is the technique actually carried out in this course. Brainstorming and
+  the morphological box are practised in short form; Bionik and Delphi are
+  understood and placed, not run.
 * Idea generation happens in the theory unit, without machines. It needs paper,
   not an IDE.
-* The sheets are kept. They become the raw material for the project proposals in
-  the following lessons.
+* The sheets and the box are kept. They become the raw material for the project
+  proposals in the following lessons.
+* SCAMPER is deliberately not part of this course. Six techniques that are
+  actually used beat a seventh that is only listed.
 
 == Pitfalls
 
 * Evaluating during the diverging phase. It ends the phase.
-* Skipping the reading step and just writing your own three ideas again. The
-  method then degenerates into six people writing alone.
+* Skipping the reading step in 6-3-5 and just writing your own three ideas again.
+  The method then degenerates into six people writing alone.
+* A morphological box whose rows are not independent. If choosing "card reader"
+  already fixes the device row, the two rows are one characteristic and the
+  combination count is fiction.
+* Copying the shape in Bionik instead of the principle. The abstraction step is
+  the method; without it you get decoration.
+* Running Delphi with three classmates and calling them experts. Anonymity does
+  not create knowledge.
 * Asking an agent for "50 project ideas" and calling it done. You get plausible
   averages, not ideas anybody in the room cares about — and caring is what gets a
   project through February.
@@ -127,8 +351,26 @@ hundred are the price of finding them.
 |divergieren / konvergieren
 |diverge / converge
 
-|Brainwriting
-|brainwriting
+|Brainstorming
+|brainstorming
+
+|Methode 6-3-5, Brainwriting
+|6-3-5 method, brainwriting
+
+|Mindmapping
+|mind mapping
+
+|Morphologischer Kasten
+|morphological box
+
+|Merkmal / Ausprägung
+|characteristic / value
+
+|Bionik
+|biomimetics
+
+|Delphi-Methode
+|Delphi method
 
 |zeitlich begrenzt
 |time-boxed
@@ -137,4 +379,5 @@ hundred are the price of finding them.
 == Further reading
 
 * PUMA 8/12, Kreativitätstechniken — the source used for this module
+* Zwicky, F. — the morphological method, for the box
 * Module `governance-weighted-scoring` — the converging half

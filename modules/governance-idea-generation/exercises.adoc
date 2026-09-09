@@ -10,43 +10,149 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-== Run one 6-3-5 round on a given topic
+== Run a brainstorming round under the four rules
 
 kind: drill
 
-Topic: "something at this school that wastes people's time every week". Six
-people, three ideas, five minutes, pass on. Do at least three rounds.
+Fifteen minutes, one moderator, one person writing on the board where everybody
+can see it. Topic: "something at this school that wastes people's time every
+week". Afterwards, name the moment at which one of the four rules was broken.
+
+.Solution
+[%collapsible]
+====
+The rule that breaks first is almost always "no criticism", and it rarely breaks
+as an insult — it breaks as "yes, but that would need the administration's
+approval". Watch what happens in the next two minutes: ideas start arriving with
+justifications attached, and the wild ones stop.
+
+The second observation is the production block. Only one person can speak at a
+time, so while somebody explains their idea, three others are holding on to
+theirs and forgetting them. That is exactly the weakness the next exercise
+removes.
+====
+
+== Run one 6-3-5 round on the same topic
+
+kind: drill
+
+Six people, three ideas, five minutes, pass on. Do at least three rounds, then
+compare the yield with the brainstorming round above.
 
 .Solution
 [%collapsible]
 ====
 No model solution — but two observations are reliable. Round one produces the
 obvious ideas everybody already had; rounds three and later produce the ones
-worth discussing, because by then the obvious ones are used up and you are
-forced to build on what is on the sheet. If a round produces nothing, it is
-usually because people stopped reading before writing.
+worth discussing, because by then the obvious ones are used up and you are forced
+to build on what is on the sheet. If a round produces nothing, it is usually
+because people stopped reading before writing.
+
+The comparison with brainstorming is the point of doing both: 6-3-5 produces more
+ideas per person and from more people, and the result is already written down.
+Brainstorming is faster to set up and better when the group needs warming up.
 ====
 
-== Collect and cluster the sheets
+== Build a morphological box for the lab-slot problem
 
 kind: drill
 
-Collect the sheets from the exercise above and group the ideas into clusters of
-related ones. Count how many distinct clusters remain.
+Problem: lab slots are handed out on a printed sheet outside the lab. Build a
+morphological box with four to six characteristics, list three or four values per
+characteristic, and read out three combinations — one obvious, one that nobody
+would have proposed freely, and one that is nonsense.
 
 .Solution
 [%collapsible]
 ====
-Typically five to ten clusters from a hundred ideas. That reduction is the
-hand-over point to the next module: clusters are candidates, and the weighted
-scoring decides between them.
+One possible box:
+
+[cols="1,1,1,1",options="header"]
+|===
+|Characteristic |Value A |Value B |Value C
+
+|Who reserves
+|the student
+|the teacher
+|first come, first served at the door
+
+|Where
+|paper sheet
+|web page
+|phone app
+
+|When it is decided
+|a week ahead
+|the day before
+|on the spot
+
+|Conflict is resolved by
+|first booking wins
+|the teacher decides
+|a queue with priority
+|===
+
+Obvious: student + web page + a week ahead + first booking wins. Not proposed
+freely: teacher + phone app + on the spot + queue with priority — which turns out
+to describe a triage situation that actually happens before an exam week.
+Nonsense: first come at the door + a week ahead — the two values contradict each
+other, and that is the signal that the two rows are not independent.
+
+The check on independence matters more than the count: if two rows constrain each
+other, the product overstates the number of real combinations.
+====
+
+== Find an analogy in nature for a scheduling problem
+
+kind: drill
+
+Take "how do you distribute work over people without a central plan?" Abstract it
+into a functional question, find one analogue in nature, and say what the
+transferred *principle* would be — not the picture.
+
+.Solution
+[%collapsible]
+====
+Functional question: how is work allocated in a system with no central
+coordinator and only local information?
+
+Analogue: an ant colony. No ant has the plan; each follows local signals
+(pheromone traces) that are strengthened by success and evaporate over time.
+
+Transferred principle: allocate work by local signals with decay — a task that
+nobody picks up becomes more attractive over time, one that is already being
+worked on becomes less so. That is a scheduling rule you can implement; "make it
+look like an anthill" is not. The abstraction step is the method.
+====
+
+== Estimate one number Delphi-style
+
+kind: drill
+
+Everybody writes down, without discussion, how many hours the team's first
+milestone will take. Collect the numbers, show the median and the spread, let the
+two most extreme estimators state their reasons in writing, then everybody
+estimates again.
+
+.Solution
+[%collapsible]
+====
+The spread almost always narrows in round two, and the interesting part is *why*.
+The outliers usually knew something the others did not — a dependency, a piece of
+setup work, an exam week — and the anonymity is what makes it possible for a
+quiet team member's number to change everyone else's.
+
+What must not happen is a discussion before round one. As soon as somebody says a
+number out loud, the rest of the estimates cluster around it, and the exercise
+produces the loudest person's estimate with extra steps.
 ====
 
 == Produce your team's candidate list
 
 kind: project
 
-From your own round, write down the three candidates your team would actually be
-willing to work on for a year.
+From your own rounds — brainstorming, 6-3-5 and the box — write down the three
+candidates your team would actually be willing to work on for a year, and say
+which technique produced each.
 
 // Aufgabe am eigenen Projekt — keine Musterlösung.
