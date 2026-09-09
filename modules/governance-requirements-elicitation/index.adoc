@@ -261,6 +261,11 @@ project: an assumption that is written down can be corrected in a five-minute
 conversation, an assumption that lives in somebody's head is discovered at the
 acceptance.
 
+Classically these findings are written into a *Lastenheft* — the client's
+statement of what is needed — which the contractor answers with a
+*Pflichtenheft*. Both documents, and where their content lives in this course,
+are the subject of `sdd-why-specs`.
+
 == Decisions
 
 * Every team runs a document analysis *before* its first interview, and brings

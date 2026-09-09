@@ -19,6 +19,8 @@ endif::[]
 * [[lo-2]] Write a requirement with a scenario that can be checked
 * [[lo-3]] Explain why a precise statement of intent became the scarce resource
 * [[lo-4]] Say what stays frozen and what stays alive, and why both are needed
+* [[lo-5]] Explain what a Lastenheft and a Pflichtenheft are, who writes each,
+  and which parts of them survive in this course
 
 == The scarce resource moved
 
@@ -42,6 +44,103 @@ type it. What it cannot do is decide *what should be true*.
 
 A specification is where that decision is written down — in a form precise enough
 to build from and to check against.
+
+== Lastenheft and Pflichtenheft
+
+Before comparing them with specifications, the two documents themselves. They
+are the classical pair of the German-speaking engineering world, they are what a
+client, a tender and the Manz textbook will call things, and DIN 69901-5 defines
+both.
+
+[cols="1,2,2",options="header"]
+|===
+| |*Lastenheft* |*Pflichtenheft*
+
+|Written by
+|the client (Auftraggeber)
+|the contractor (Auftragnehmer)
+
+|Answers
+|*what* is needed and *what for*
+|*how* and *with what* it will be realised
+
+|Written when
+|before the tender, before any offer
+|after the contract is awarded, before building
+
+|Serves as
+|the basis for the tender and for comparing offers
+|the basis of the contract and of the acceptance
+
+|Contains
+|requirements from the user's world, no technology
+|realisation requirements: functions, data, interfaces, quality, test cases
+|===
+
+The order is the point: *Anforderungserhebung → Lastenheft → offer →
+Pflichtenheft → build → acceptance against the Pflichtenheft*. The client says
+what they need; the contractor answers with what they will build, in enough
+detail that both sides can later agree on whether it was delivered.
+
+.The classical structure of a Pflichtenheft
+[cols="1,3",options="header"]
+|===
+|Abschnitt |Inhalt
+
+|Zielbestimmung
+|Musskriterien, Wunschkriterien, *Abgrenzungskriterien* — what the product
+ explicitly will not do
+
+|Produkteinsatz
+|application area, target groups, operating conditions
+
+|Produktfunktionen
+|numbered: `/F10/`, `/F20/` … — one function per number
+
+|Produktdaten
+|numbered: `/D10/`, `/D20/` … — the data to be stored permanently
+
+|Produktleistungen
+|numbered: `/L10/` … — times, volumes, accuracy
+
+|Qualitätsanforderungen
+|numbered: `/Q10/` … — reliability, usability, maintainability
+
+|Benutzeroberfläche, Technische Umgebung
+|interaction and the systems it must run on
+
+|Testfälle, Entwicklungsplan, Glossar
+|how each requirement is checked, in which order it is built, what the words mean
+|===
+
+The numbering is not decoration. It is what makes a requirement referable: a
+test case, a review comment and an acceptance protocol can all point at `/F30/`
+and mean the same sentence. That is the same job an id in `openspec/specs/`
+does today.
+
+[cols="1,1",options="header"]
+|===
+|Classical |In this course
+
+|Lastenheft
+|Ausgangslage and Zielsetzung in Projektantrag and Projektauftrag — frozen
+
+|Abgrenzungskriterien
+|the non-goals section of the charter
+
+|Pflichtenheft
+|`openspec/specs/` — the living target state
+
+|`/F10/` und Testfälle
+|a requirement with its scenarios, in one file per capability
+
+|Muss- und Wunschkriterien
+|what is in the current change, and what is a later one
+|===
+
+Nothing in that list was abolished. What changed is the *form*: instead of one
+document written once, the same content lives in small files that are updated
+with every change and checked by the build.
 
 == Requirements document vs. specification
 
@@ -128,8 +227,17 @@ both, and keeping the difference visible, is the whole arrangement.
 |===
 |Deutsch |English
 
+|Lastenheft
+|customer requirements specification
+
 |Pflichtenheft
-|requirements document
+|(system) requirements specification
+
+|Abgrenzungskriterium
+|non-goal, exclusion criterion
+
+|Musskriterium / Wunschkriterium
+|mandatory / desirable requirement
 
 |Spezifikation
 |specification
@@ -148,3 +256,6 @@ both, and keeping the difference visible, is the whole arrangement.
 
 * Module `sdd-openspec-artifacts` — the concrete files and their roles
 * Module `bridge-charter-to-specs` — which charter field maps to which artefact
+* Module `governance-requirements-elicitation` — where the content of a
+  Lastenheft comes from in the first place
+* DIN 69901-5 — the definitions of Lastenheft and Pflichtenheft

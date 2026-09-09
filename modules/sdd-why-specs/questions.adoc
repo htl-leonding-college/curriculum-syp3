@@ -54,6 +54,79 @@ Points the answer must contain:
 * Drift becomes visible instead of silent
 ====
 
+== What are Lastenheft and Pflichtenheft, who writes each, and what is in them?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+[cols="1,2,2",options="header"]
+|===
+| |*Lastenheft* |*Pflichtenheft*
+
+|Written by
+|the client (Auftraggeber)
+|the contractor (Auftragnehmer)
+
+|Answers
+|*what* is needed and *what for*
+|*how* and *with what* it will be realised
+
+|Written when
+|before the tender, before any offer
+|after the contract is awarded, before building
+
+|Serves as
+|basis for the tender and for comparing offers
+|basis of the contract and of the acceptance
+|===
+
+The sequence is what makes the pair make sense: *elicitation → Lastenheft →
+offer → Pflichtenheft → build → acceptance against the Pflichtenheft*. The client
+states the need in the language of their own world, without prescribing
+technology; the contractor answers with what will be built, in enough detail that
+both sides can later agree on whether it was delivered.
+
+A Pflichtenheft is classically structured as *Zielbestimmung* (Muss-, Wunsch- and
+Abgrenzungskriterien), *Produkteinsatz*, *Produktfunktionen* `/F10/`,
+*Produktdaten* `/D10/`, *Produktleistungen* `/L10/`, *Qualitätsanforderungen*
+`/Q10/`, user interface, technical environment, test cases, development plan and
+glossary.
+
+The numbering matters more than it looks: it makes a requirement *referable*, so
+a test case, a review comment and an acceptance protocol can all point at `/F30/`
+and mean the same sentence — the job an id in `openspec/specs/` does today.
+
+[cols="1,1",options="header"]
+|===
+|Classical |In this course
+
+|Lastenheft
+|Ausgangslage and Zielsetzung in the charter — frozen
+
+|Abgrenzungskriterien
+|the non-goals section
+
+|Pflichtenheft
+|`openspec/specs/` — the living target state
+
+|`/F10/` plus test cases
+|a requirement with its scenarios, one file per capability
+|===
+
+Points the answer must contain:
+
+* Lastenheft: written by the client, says what is needed and what for, basis for
+  the tender
+* Pflichtenheft: written by the contractor, says how it will be realised, basis
+  of the contract and of the acceptance
+* Structure: Zielbestimmung with Muss-, Wunsch- and Abgrenzungskriterien,
+  numbered functions, data, performance and quality requirements, test cases
+* Nothing of it was abolished — the same content lives in charter and specs, in
+  another form
+====
+
 == Write a requirement with a scenario for "sessions have a capacity limit"
 
 covers: lo-2
