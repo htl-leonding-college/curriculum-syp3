@@ -3,6 +3,7 @@
 :icons: font
 :source-highlighter: rouge
 :experimental:
+:imagesdir: images
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -19,6 +20,24 @@ endif::[]
 * [[lo-3]] Recognise the failure modes — confident wrongness, invented APIs,
   outdated practice
 * [[lo-4]] Decide what you may hand to an agent and what you may not
+
+== What this chapter is about
+
+Two rockets, both on the pad, both apparently ready. What separates them is
+underground, where nobody looks until something has to be changed.
+
+.Vibe coding against software engineering (unclear: Wasserzeichen "@fromcodetocloud", Urheber nicht kontaktiert, Rechte ungeklärt)
+image::vibe-coding-vs-software-engineering.jpeg[Vibe coding against software engineering: the same rocket over a tangle of taped pipes and over an ordered machine room,700]
+
+An agent will build you the left-hand side quickly and cheerfully. It works —
+until the second feature, the first bug report, the first classmate who has to
+read it. The right-hand side takes the same agent and the same afternoon; the
+difference is that somebody stated what was to be built, checked what came back
+and kept the result in a shape the next change can land in.
+
+That is the whole point of the chapter. You are not learning to type prompts.
+You are learning to stay the engineer while a very fast, very confident
+apprentice does the typing.
 
 == What the thing actually does
 
