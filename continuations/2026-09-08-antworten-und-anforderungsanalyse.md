@@ -1,6 +1,6 @@
 # Continuation Prompt — Curriculum SYP 3. Jahrgang
 
-**Stand:** 2026-09-08 (zweite Sitzung des Tages) · Plattform-Change **42/51**,
+**Stand:** 2026-09-08, committet am 2026-09-09 · Plattform-Change **42/51**,
 Curriculum-Change **19/21**
 **Site live:** https://htl-leonding-college.github.io/curriculum-syp3/
 **Module:** U1–U10 Praxis und U1–U11 Theorie fertig — **21 Module ready**,
@@ -78,28 +78,40 @@ Struktur steht in `curriculum.yaml` (55 Themen), Entscheidungen in
 
 ## Arbeitsstand im Git
 
-**Nichts davon ist committet.** Letzter Commit ist `438448b fix: make the module
-screenshot resolve in the built site`; der gesamte Stand dieser Sitzung liegt
-unversioniert im Arbeitsverzeichnis (42 Pfade, darunter das neue Modul
-`modules/governance-requirements-elicitation/` und
-`templates/site/docinfo-footer.html`).
+Alles committet auf dem Branch **`feature/answers-elicitation-and-forks`**,
+neun Commits auf `438448b` aufgesetzt. **`main` ist unberührt, nichts ist
+gepusht** — die Pipeline hat diesen Stand also noch nie gebaut.
 
-Vorgeschlagene Aufteilung, falls noch nicht geschehen:
+```
+8c8b5f9 feat(idea-generation): teach the six techniques of the textbook
+c637304 feat(curriculum): teach requirements elicitation as U6
+abd47f5 docs(course-overview): name the four written exams next to the oral one
+5532cfc feat(questions): answer every exam question in the module
+e3f2777 feat(site): expand every answer on a page with one switch
+d68c4ad feat(sdd): teach Lastenheft and Pflichtenheft, not just cite them
+0375183 feat(pull-requests): a fork is needed where you cannot push
+6f0da2a docs: continuation prompt for the answers and elicitation session
+1b2284d docs: append the latest exchange to chat.adoc
+```
 
-1. `feat(questions): answer blocks with explanations and diagrams` — die 21
-   `questions.adoc`, `tools/adoc.py`, Prüfung 10 in `check-curriculum.py`,
-   Tests, `templates/module/*`, `tools/new-module.py`
-2. `feat(site): shared docinfo with an expand-all switch` —
-   `templates/site/docinfo-footer.html`, `local-convert.sh`, `README.adoc`
-3. `feat(idea-generation): six techniques from the textbook` — das Modul
-   `governance-idea-generation`, `coverage.md`
-4. `feat(curriculum): teach requirements elicitation as U6` — neues Modul,
-   `curriculum.yaml` (Renummerierung, Budget), `course-overview` mit den vier
-   schriftlichen Prüfungen, `coverage.md`
-5. `feat(sdd): teach Lastenheft and Pflichtenheft` — `sdd-why-specs`,
-   Querverweis in `governance-requirements-elicitation`
-6. `feat(pull-requests): fork workflow for repositories you cannot push to` —
-   `git-pull-requests` (index, questions, exercises)
+Jeder Commit einzeln geprüft — `check-curriculum.py` und `pytest` in einem
+Worktree je Commit, alle grün.
+
+Weiter mit `git switch main && git merge --ff-only
+feature/answers-elicitation-and-forks` oder über einen Pull Request.
+
+### Zwei Dinge, die beim Committen aufgefallen sind
+
+* **`.gitignore` hätte das docinfo verschluckt.** `*.html` ist als Erzeugnis
+  ausgeschlossen, `templates/site/docinfo-footer.html` ist aber Quelle. Ohne die
+  neue Ausnahme `!templates/site/*.html` checkt die Pipeline ein Repository aus,
+  dessen Build kein docinfo hat — Schalter und Katalogstil wären nur lokal da.
+* **Commit-Reihenfolge ist nicht beliebig.** Prüfung 10 darf erst nach den
+  Modulen kommen, deren Antwortblöcke in eigenen Commits liegen
+  (`governance-idea-generation`, `course-overview`) — sonst ist der Commit rot.
+  Deshalb sind `git-pull-requests/questions.adoc` und
+  `sdd-why-specs/questions.adoc` zweigeteilt: Antwortblöcke im Fragen-Commit,
+  die neuen Fork- beziehungsweise Pflichtenheft-Fragen in ihrem eigenen.
 
 ## Entscheidungen dieser Sitzung
 
@@ -159,8 +171,8 @@ PYTHON=.venv/bin/python ./local-convert.sh    # build/site/index.html
 - Deployment-Diagramm und Kubernetes-Vertiefung mit 4./5. Jahrgang abstimmen
 - `publish.sh` einmal gegen den Schulwebspace laufen lassen, zuerst `--dry-run`
 
-**Zuerst, falls offen:** die sechs Commits oben setzen und pushen — die Pipeline
-hat den Stand dieser Sitzung noch nie gebaut.
+**Zuerst, falls offen:** `feature/answers-elicitation-and-forks` nach `main`
+bringen und pushen — die Pipeline hat diesen Stand noch nie gebaut.
 
 **Nächster inhaltlicher Schritt:** Module U11–U18 schreiben —
 `sdd-openspec-artifacts` (Skelett liegt, Fragen-Skelett trägt schon den
