@@ -1,0 +1,252 @@
+= Acceptance and handover
+:topic-id: governance-acceptance
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain what acceptance is, and what changes at the moment it happens
+* [[lo-2]] Derive acceptance criteria from charter objectives before the work
+  starts
+* [[lo-3]] Run an acceptance test with the client and record its outcome
+* [[lo-4]] Distinguish acceptance with defects from refusal, and handle both
+* [[lo-5]] Name what a handover must contain for somebody else to take over
+
+== Acceptance is a moment, not a mood
+
+*Abnahme* is the point at which the client declares that what was delivered is
+what was ordered. It is a formal act with consequences, and in a diploma-thesis
+context it is the moment the project becomes a result rather than an activity.
+
+What changes at that moment:
+
+[cols="1,1",options="header"]
+|===
+|Before |After
+
+|the team decides what is finished
+|the client has said what they accept
+
+|defects are ordinary work
+|defects are either accepted, listed, or a reason for refusal
+
+|the target state is grown by changes
+|the target state describes something somebody has signed off
+
+|responsibility for operating it is the team's
+|responsibility passes with the handover
+|===
+
+The reason to make it a *moment* rather than a fading-out is that a project which
+never ends never gets assessed and never gets handed over. Somebody, on a date,
+says yes or no.
+
+== The criteria are written at the start
+
+The single structural rule of this module: *acceptance criteria are derived from
+the charter objectives before the work begins, and they do not move.*
+
+[plantuml,acceptance-chain,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "charter objective\n(frozen)" as O
+rectangle "acceptance criterion\n(frozen, derived at the start)" as A
+rectangle "capabilities in specs/\n(alive)" as C
+rectangle "scenarios\n(run at acceptance)" as S
+
+O -down-> A : "derived once"
+O -right-> C : "answered by"
+C -down-> S
+S -up-> A : "demonstrates"
+@enduml
+----
+
+If they were written at the end, they would be written against what was built,
+and the project would be measuring its own output against itself. That is the
+failure mode that makes acceptance meaningless while looking entirely rigorous.
+
+A usable criterion has the same shape as a milestone criterion, with one addition
+— the *observer is the client*:
+
+[cols="1,1",options="header"]
+|===
+|Not usable |Usable
+
+|"The system works reliably."
+|"A trainer records a full session, including one excused absence, on the
+ deployed system, unaided, within five minutes."
+
+|"Attendance is implemented."
+|"For a past session, an attendance entry is refused with a message the trainer
+ can act on."
+
+|"Good performance."
+|"The member list of 500 people loads in under two seconds on the club's laptop."
+|===
+
+Each names an action, an observable result and the conditions under which it is
+tried. "On the club's laptop" is not pedantry — it is where the acceptance will
+actually happen, and it is where surprises live.
+
+== Running the acceptance
+
+The session itself has a fixed shape, and it is short when the work has been
+done:
+
+. *The client operates the system*, not the team. The team may not touch the
+  keyboard; that rule alone finds more defects than any test plan.
+. *Every criterion is tried*, in order, including the refusals.
+. *Each outcome is recorded* immediately as passed, passed with a defect, or
+  failed.
+. *The defect list is agreed in the room*, with a severity per entry.
+. *A written record is signed* by both sides — the *Abnahmeprotokoll*.
+
+The protocol contains: what was tested, on which version — a tag or commit, not
+"the current one" — who was present, the result per criterion, the defect list
+with severities and agreed deadlines, and the declaration of acceptance,
+acceptance with defects, or refusal.
+
+NOTE: Naming the exact version is what makes the protocol worth anything later.
+"It worked at the acceptance" is only checkable if somebody wrote down which
+build was in the room.
+
+== Accepted with defects, or refused
+
+Almost nothing is accepted without defects, and treating that as a failure is a
+misunderstanding of the instrument.
+
+[cols="1,2",options="header"]
+|===
+|Outcome |When
+
+|*accepted*
+|every criterion passes; small defects may still be listed
+
+|*accepted with defects*
+|the system is usable for its purpose; the defects are listed, prioritised and
+ given deadlines. The normal outcome
+
+|*refused*
+|a criterion that carries the purpose fails — the trainer cannot record a
+ session at all
+|===
+
+The distinction is not the *number* of defects but whether the *purpose is
+served*. Twenty cosmetic issues are an acceptance with defects; one broken
+central function is a refusal, no matter how good everything else is.
+
+Refusal is not a catastrophe either. It is a documented state with a next step: a
+list of what must be true, and a new date. What is genuinely damaging is the
+third option teams reach for — an acceptance nobody quite declared, where the
+client is vaguely satisfied and nothing is written down. Six months later nobody
+can say whether the project was delivered.
+
+== The handover
+
+Acceptance says the software is right. Handover makes it *somebody else's*, and
+it is the part that is regularly forgotten in school projects — where "somebody
+else" is next year's team, or a club with one volunteer.
+
+A handover contains:
+
+* *the running system*, with its access — the deployed instance, the accounts;
+* *the source*, with the repository and its history, and the right to use it
+  settled in writing;
+* *how to build and run it* — the `Dockerfile`, the compose file, the pipeline,
+  and a `README` somebody has followed on a clean machine;
+* *the configuration*, without secrets, plus the list of secrets that must be
+  set and where they come from;
+* *the data*, with the backup and — tested — the restore;
+* *the target state*: `specs/` and the archive, which is the documentation that
+  did not have to be written separately;
+* *the open questions and known defects*, with their severity;
+* *one named contact* and until when they answer.
+
+The test for all of it is one sentence: *can somebody who was not in this project
+run it, change it and deploy it, using only what is written down?* Try it on a
+person, not on your own imagination.
+
+CAUTION: Credentials are handed over through a channel the recipient controls,
+never in a chat message and never in the repository. Anything that was ever in
+the repository is rotated as part of the handover.
+
+== Decisions
+
+* Acceptance criteria are derived from the charter objectives at the start of the
+  project and are not changed afterwards.
+* The client operates the system at the acceptance. The team does not touch the
+  keyboard.
+* Every acceptance produces a written protocol naming the exact version, the
+  result per criterion and the agreed defect list.
+* Acceptance with defects is the expected outcome and is recorded as such;
+  criteria are not relaxed to reach a clean result.
+* Every project performs a handover, including projects that end at school. The
+  README is verified by somebody outside the team on a clean machine.
+* Secrets are rotated at handover, and no secret is transferred in writing
+  outside a channel the recipient controls.
+
+== Pitfalls
+
+* Writing acceptance criteria at the end. The project then measures itself
+  against itself.
+* The team demonstrating instead of the client operating. A demonstration finds
+  the paths the team already knows work.
+* No version recorded in the protocol, so "it worked at the acceptance" cannot be
+  checked.
+* Treating defects as a failure and quietly relaxing a criterion instead.
+* No acceptance at all — the project fades out and nobody can say whether it was
+  delivered.
+* A handover of the code only. Without the deployment, the data and the
+  configuration, the recipient has a source tree, not a system.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Abnahme
+|acceptance
+
+|Abnahmeprotokoll
+|acceptance record, protocol
+
+|Abnahmekriterium
+|acceptance criterion
+
+|Abnahme unter Vorbehalt
+|acceptance with defects
+
+|Mängelliste
+|defect list
+
+|Übergabe
+|handover
+
+|Gewährleistung
+|warranty
+
+|Betrieb
+|operation
+|===
+
+== Further reading
+
+* Module `sdd-specs-replace-requirements` — why scenarios replace the document
+  comparison
+* Module `governance-milestones` — the criteria this one inherits its shape from
+* Module `docker-volumes-config` — the backup and restore the handover requires

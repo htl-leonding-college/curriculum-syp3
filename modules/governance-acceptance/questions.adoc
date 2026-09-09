@@ -1,0 +1,222 @@
+= Acceptance and handover — questions
+:topic-id: governance-acceptance
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is acceptance, and what changes at that moment?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+*Abnahme* is the point at which the client declares that what was delivered is
+what was ordered. It is a formal act on a date, not a mood.
+
+|===
+|Before |After
+
+|the team decides what is finished |the client has said what they accept
+|defects are ordinary work |defects are accepted, listed, or grounds for refusal
+|the target state grows by changes |the target state describes something signed
+ off
+|operating it is the team's job |responsibility passes with the handover
+|===
+
+The reason it must be a *moment* rather than a fading-out: a project that never
+ends never gets assessed and never gets handed over. Somebody, on a date, says
+yes or no — and in a diploma-thesis context that is the moment the work becomes a
+result rather than an activity.
+
+Points the answer must contain:
+
+* A formal declaration by the client on a date
+* Decision authority moves from team to client
+* Defects change status; responsibility for operation transfers
+* Without the moment, the project cannot be assessed or handed over
+====
+
+== Why are acceptance criteria written at the start?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+Because criteria written at the end are written *against what was built*, and
+then the project measures its own output against itself. That failure looks
+entirely rigorous from the outside, which is what makes it dangerous.
+
+[plantuml,q-acceptance-chain,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "charter objective (frozen)" as O
+rectangle "acceptance criterion (frozen)" as A
+rectangle "capabilities in specs/ (alive)" as C
+rectangle "scenarios" as S
+O -down-> A : derived once
+O -right-> C : answered by
+C -down-> S
+S -up-> A : demonstrates
+@enduml
+----
+
+A usable criterion has the shape of a milestone criterion with the *client* as
+observer: "a trainer records a full session including one excused absence, on the
+deployed system, unaided, within five minutes" — an action, an observable result
+and the conditions it is tried under.
+
+"On the club's laptop" is not pedantry. It names where the acceptance actually
+happens, which is where the surprises are.
+
+Points the answer must contain:
+
+* Derived from frozen charter objectives before the work begins
+* Criteria written afterwards measure the project against itself
+* Action, observable result, conditions — with the client as observer
+* Name the real environment, because that is where it will be tried
+====
+
+== How is an acceptance session run?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+. *The client operates the system* — the team does not touch the keyboard. That
+  single rule finds more defects than any test plan, because a demonstration only
+  exercises the paths the team already knows work.
+. *Every criterion is tried*, in order, including the refusals.
+. *Each outcome is recorded* immediately: passed, passed with a defect, failed.
+. *The defect list is agreed in the room*, with a severity per entry.
+. *A written protocol is signed* by both sides.
+
+The protocol names what was tested, *on which version* — a tag or a commit, not
+"the current one" — who was present, the result per criterion, the defect list
+with severities and deadlines, and the declaration.
+
+The version is what makes it worth anything later: "it worked at the acceptance"
+can only be checked if somebody wrote down which build was in the room.
+
+Points the answer must contain:
+
+* The client operates; the team does not demonstrate
+* Every criterion tried, including refusals, recorded immediately
+* Defect list with severities agreed in the room
+* Signed protocol naming the exact version tested
+====
+
+== What is the difference between acceptance with defects and refusal?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+Whether the *purpose is served* — not how many defects there are.
+
+|===
+|Outcome |When
+
+|accepted |every criterion passes; small defects may still be listed
+|accepted with defects |usable for its purpose; defects listed, prioritised, with
+ deadlines. The normal outcome
+|refused |a criterion carrying the purpose fails — a trainer cannot record a
+ session at all
+|===
+
+Twenty cosmetic issues are an acceptance with defects. One broken central
+function is a refusal however good the rest is.
+
+Refusal is not a catastrophe either: it is a documented state with a next step —
+a list of what must become true, and a new date. The genuinely damaging outcome
+is the third one teams drift into: an acceptance nobody declared, where the
+client is vaguely satisfied and nothing is written down. Six months later nobody
+can say whether the project was delivered.
+
+Points the answer must contain:
+
+* The criterion is whether the purpose is served, not the defect count
+* Acceptance with defects is the normal and expected outcome
+* Refusal is documented, with what must be true and a new date
+* The undeclared, unwritten acceptance is the worst of the three
+====
+
+== What must a handover contain?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Everything somebody who was not in the project needs to run it, change it and
+deploy it:
+
+* the *running system* and its access — deployed instance, accounts;
+* the *source*, its history, and the right to use it settled in writing;
+* *how to build and run it* — Dockerfile, compose file, pipeline, and a README
+  somebody has followed on a clean machine;
+* the *configuration* without secrets, plus the list of secrets and where they
+  come from;
+* the *data*, with a backup and a *tested* restore;
+* the *target state* — `specs/` and the archive, the documentation that never had
+  to be written separately;
+* the *open questions and known defects* with severities;
+* *one named contact*, and until when they answer.
+
+The test is one sentence: can somebody outside the project run it, change it and
+deploy it from what is written down? Try that on a person, not on your own
+imagination.
+
+Credentials go through a channel the recipient controls — never a chat message,
+never the repository — and anything that was ever in the repository is rotated as
+part of the handover.
+
+Points the answer must contain:
+
+* System and access, source and rights, build and run instructions
+* Configuration plus the list of secrets; data with a tested restore
+* specs/ and archive as the documentation; open defects with severities
+* A named contact; verify with an outsider; rotate secrets
+====
+
+== Why must the team not operate the system during acceptance?
+
+covers: lo-3, lo-1
+
+.Answer
+[%collapsible]
+====
+Because a demonstration is not a test. The team walks the paths it knows work —
+in the order it always uses, with the data it always uses — and the result proves
+that the team can operate the system, which nobody doubted.
+
+The client takes different paths. They click the thing the team never clicks,
+type a name with an umlaut, go back a page, and try the case that only exists at
+their club. That is precisely the input the acceptance is supposed to sample, and
+it cannot be simulated by people who have been staring at the software for six
+months.
+
+There is a second, governance reason. Acceptance is the moment the *client*
+declares that what was delivered is what was ordered. A declaration about
+something they never touched is not a declaration about the system; it is a
+declaration about a performance. If it later turns out the software cannot do
+what was accepted, nobody can say whether it was ever tried.
+
+Points the answer must contain:
+
+* A demonstration only exercises known-good paths
+* The client's paths and data are what the acceptance is sampling
+* Acceptance is the client's declaration, so the client must have used it
+* Otherwise "it was accepted" says nothing about the system
+====

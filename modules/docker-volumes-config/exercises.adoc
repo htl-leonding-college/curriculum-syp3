@@ -1,0 +1,146 @@
+= Data and configuration outside the container — exercises
+:topic-id: docker-volumes-config
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Lose a database, then keep one
+
+kind: drill
+
+[source,bash]
+----
+docker run -d --name db -e POSTGRES_PASSWORD=demo postgres:17-alpine
+docker exec -it db psql -U postgres -c "create table t(x int); insert into t values (1);"
+docker exec -it db psql -U postgres -c "select * from t;"
+docker stop db && docker rm db
+docker run -d --name db -e POSTGRES_PASSWORD=demo postgres:17-alpine
+docker exec -it db psql -U postgres -c "select * from t;"
+----
+
+. Explain the last error.
+. Repeat the whole sequence with a named volume so that the row survives.
+. Then remove the container with `docker rm -v db` and check whether the row is
+  still there.
+
+.Solution
+[%collapsible]
+====
+. The table lived in the container's writable layer, which was removed with the
+  container. The second `postgres` starts from the image with an empty data
+  directory. No error occurred anywhere — the data simply never existed for the
+  new container, which is why this failure mode is quiet.
+. With `-v bookingdata:/var/lib/postgresql/data` on both `run` commands the row
+  survives, because the data directory is the volume rather than the writable
+  layer.
+. `docker rm -v` removes *anonymous* volumes attached to the container. A named
+  volume survives it — which is the third argument for naming them. Try
+  `docker volume rm bookingdata` afterwards to see the data actually disappear,
+  and note that nothing asked for confirmation.
+
+The sequence is worth doing once with your own hands. Reading that a writable
+layer is ephemeral is not the same experience as watching a table vanish.
+====
+
+== Run one image against two configurations
+
+kind: drill
+
+Take any image that reads configuration from the environment — your own, or
+`nginx` with a mounted config.
+
+. Start it once with `-e` values for a "development" setting.
+. Start a second container from the *same image* with an `--env-file` for a
+  "test" setting, on a different published port.
+. Mount a configuration file read-only into the third and change it on the host
+  while the container runs. Observe whether the container notices.
+. Try to change the mounted file *from inside* the container, with and without
+  `:ro`.
+
+.Solution
+[%collapsible]
+====
+Steps 1 and 2 are the point of the module in two commands: the same image
+digest, two behaviours, nothing rebuilt.
+
+Step 3 usually shows that the container does *not* notice — most programs read
+their configuration once at start-up. That is worth knowing before you conclude a
+config change "did not work": it did, and the process has to be restarted.
+
+Step 4 without `:ro` succeeds, and the file on the host is now different from the
+one in the repository — a change nobody made deliberately and nobody will find.
+With `:ro` the write fails immediately, which is the desired outcome.
+====
+
+== Find the four secret leaks
+
+kind: drill
+
+[source,bash]
+----
+# in the repository, committed
+cat .env
+DB_PASSWORD=hunter2
+
+docker run -d --name api -e DB_PASSWORD=hunter2 myimage:1.0
+docker logs api | head -1
+#   starting with config: {db_password: hunter2, ...}
+----
+
+And in the `Dockerfile`:
+
+[source,dockerfile]
+----
+COPY .env /app/.env
+----
+
+Name each leak and give the repair.
+
+.Solution
+[%collapsible]
+====
+. *Committed `.env`.* It is in git history and stays there after deletion; if the
+  repository is public it was read by a scanner within minutes. Repair: remove
+  from tracking, add to `.gitignore`, commit a `.env.example` with names only —
+  and rotate the password.
+. *Secret on the command line.* Visible in `docker ps`, in the shell history and
+  in the host's process list. Repair: `--env-file`, or a mounted secret file with
+  the `*_FILE` convention.
+. *Secret in the log.* Logs are collected and forwarded; whoever reads the log
+  now has the password. Repair: never log configuration values, only their names,
+  and mask anything whose key matches `password|secret|token|key`.
+. *`COPY .env` into the image.* Readable in the layer by anybody who pulls it,
+  permanently. Repair: `.dockerignore`, and configuration at run time.
+
+The single most important sentence about all four: the password is *burnt*. It
+has to be rotated. Fixing the four mechanisms without changing the password fixes
+nothing at all.
+====
+
+== Give your project real persistence
+
+kind: project
+
+. Identify everything in your application that must survive a container restart.
+  Put each on a named volume.
+. Move every environment-specific value out of the image: hostnames, ports,
+  credentials, switches. Verify by starting the same image twice with different
+  settings.
+. Make the application fail loudly on a missing required value, and check it by
+  starting it with one variable removed.
+. Commit a `.env.example` with the names and dummy values. Confirm that no real
+  `.env` is tracked — `git log --all -- .env` must be empty.
+. Write the backup *and* the restore command into your repository. Then run the
+  restore into a fresh volume and confirm the data is there.
+. Record the whole thing as a change, with the choice of volume versus bind mount
+  in `design.md`.
+
+Step 5 is the one that counts. Bring the timestamp of your last successful
+*restore* to the milestone review — not the backup.

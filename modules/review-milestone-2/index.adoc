@@ -1,0 +1,234 @@
+= Second milestone review
+:topic-id: review-milestone-2
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Report what became of the findings of the first review
+* [[lo-2]] Present a forecast, not a status, and defend the numbers behind it
+* [[lo-3]] Demonstrate a deployed end-to-end slice on a machine that is not yours
+* [[lo-4]] Propose a scope decision when the forecast does not fit the deadline
+* [[lo-5]] Review another team's project with an eye on what remains, not on what
+  is past
+
+== The difference from the first review
+
+Milestone one asked whether the project had started properly. Milestone two asks
+whether it will *finish*, which is a different question and needs different
+evidence.
+
+[cols="1,1,1",options="header"]
+|===
+|
+|Review 1
+|Review 2
+
+|Central question
+|has it started properly?
+|will it finish?
+
+|Evidence
+|charter, first specs, first archived changes
+|throughput, trend, a deployed slice
+
+|"Not much works yet"
+|acceptable
+|a finding
+
+|Output
+|findings
+|findings *and*, where needed, a scope decision
+
+|Looks at
+|what has happened
+|what remains
+|===
+
+The consequence for preparation: the numbers matter now. A team that arrives with
+three archived changes and no forecast has not prepared, however good the three
+changes are.
+
+== What is presented
+
+The same rule as before — nothing that is not in the repository — with three
+additions.
+
+. *The findings of review 1, and what became of each.* Archived change,
+  documented rejection, or nothing. "Nothing" is an answer, and it is the one
+  everybody remembers.
+. *The forecast.* Measured throughput from `archive/`, remaining scope, a range,
+  and the assumption at each end. Plus the milestone trend: where the
+  feature-complete date has moved since November.
+. *A deployed end-to-end slice, on a machine that is not the team's.* Not
+  `localhost`. This is the item that separates projects that will finish from
+  projects that will discover deployment in March.
+
+Then the familiar three: the three sentences (finished, next, blocked), the
+archive on screen, and a scenario chosen by the reviewers and run live.
+
+== Why the deployment is non-negotiable at this review
+
+Because it is the risk that most reliably eats three weeks, and it is invisible
+until somebody tries it.
+
+[plantuml,deployment-risk,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "works on the\nteam's laptops" as L
+rectangle "what is still untested" {
+  rectangle "a different architecture" as A
+  rectangle "configuration from outside" as C
+  rectangle "a real database with a volume" as D
+  rectangle "access, accounts, ports" as N
+  rectangle "the client's browser and laptop" as B
+}
+rectangle "deployed and used\nby somebody else" as P
+
+L -down-> A
+L -down-> C
+L -down-> D
+L -down-> N
+L -down-> B
+A -down-> P
+C -down-> P
+D -down-> P
+N -down-> P
+B -down-> P
+@enduml
+----
+
+Every box in the middle has been a lesson in this course, and every one of them
+is a place where a project that "works" stops working. Discovering them in
+January costs an afternoon each; discovering them in March costs the scope.
+
+A deployed slice does not have to be impressive. One capability, reachable by
+somebody else, with real configuration and a real volume, is worth more at this
+review than four capabilities on `localhost`.
+
+== The scope conversation
+
+If the forecast does not fit the deadline, the review is where that is said —
+and, more importantly, where a *proposal* is made. "We will not finish" is a
+report. "We propose to drop X, keep Y, and here is what that costs the client" is
+a decision somebody can act on.
+
+The four levers from `governance-milestones` apply, and in a school project only
+two of them are real:
+
+[cols="1,2",options="header"]
+|===
+|Lever |At school
+
+|*scope*
+|the usable one. Which capability is dropped or postponed, and what the client
+ loses
+
+|*date*
+|fixed by the diploma thesis deadline
+
+|*capacity*
+|no extra people, and a redistribution inside the team is slower before faster
+
+|*quality*
+|only where it is named and bounded — never tests, never acceptance criteria
+|===
+
+A good scope proposal names *what is dropped*, *why that one*, *what the client
+loses* and *what it buys in weeks*. Bringing the forecast without a proposal
+leaves the hardest decision to the person with the least information.
+
+== Reviewing forwards
+
+For the reviewing team the question changes with the milestone. At review 1 you
+asked whether the foundations were there. Now:
+
+* Does their *forecast* follow from their own numbers — or is it a hope with a
+  date attached?
+* Is anything deployed where *somebody else* can reach it?
+* Which findings from review 1 are still open, and does the team know?
+* What is the *one thing* that, if it goes wrong, ends the project? Do they have
+  it in their open questions?
+* Is there any *dependency on one person*, and what happens if that person is ill
+  in March?
+
+The last two are the questions that make the difference at this stage. A team
+that cannot name its single biggest risk has not looked for it — and a risk that
+is named is manageable, which was true at review 1 and is more true now.
+
+== Decisions
+
+* Every team reports the fate of every finding from review 1, including the ones
+  where the answer is "nothing".
+* A forecast with a range and its assumptions is presented. A status report is
+  not accepted in its place.
+* A deployed end-to-end slice, reachable from a machine that is not the team's,
+  is required at this review.
+* Where the forecast does not fit the deadline, the team brings a scope proposal,
+  not only the finding.
+* The milestone trend is recorded again, in the same file, so a third point
+  exists.
+* Findings become changes or documented rejections within one week, as before.
+
+== Pitfalls
+
+* Reporting review-1 findings as "we are aware of it". Awareness is not a state
+  in the life cycle.
+* A forecast that does not follow from the archive. If throughput says eight
+  weeks and the team says four, the difference has to be explained by something
+  other than optimism.
+* Demonstrating on `localhost`. It postpones the deployment risk to the worst
+  possible moment.
+* Bringing bad news without a proposal, leaving the decision to somebody with
+  less information than you.
+* Cutting tests as the quality lever. It is the one that removes the ability to
+  tell whether the remaining work is finished.
+* Not naming the single biggest risk, because naming it feels like admitting it.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Prognose
+|forecast
+
+|Trendanalyse
+|trend analysis
+
+|Umfangsentscheidung
+|scope decision
+
+|Inbetriebnahme
+|deployment
+
+|Risiko
+|risk
+
+|Restaufwand
+|remaining effort
+
+|Befund
+|finding
+|===
+
+== Further reading
+
+* Module `review-milestone-1` — the format, the criteria and the feedback rules
+* Module `governance-milestones` — the trend chart and the four levers
+* Module `governance-estimation-hygiene` — where the forecast numbers come from

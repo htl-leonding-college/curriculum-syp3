@@ -1,0 +1,138 @@
+= Images for more than one processor architecture — exercises
+:topic-id: docker-multiarch
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Find out what you are running
+
+kind: drill
+
+[source,bash]
+----
+uname -m
+docker version --format '{{.Server.Arch}}'
+docker image inspect alpine:3.20 --format '{{.Os}}/{{.Architecture}}'
+docker buildx imagetools inspect alpine:3.20
+docker run --rm --platform linux/amd64 alpine:3.20 uname -m
+docker run --rm --platform linux/arm64 alpine:3.20 uname -m
+----
+
+Compare with a classmate on the other kind of laptop. Which commands give
+different answers, and which give the same?
+
+.Solution
+[%collapsible]
+====
+`uname -m` and `docker version` differ — `x86_64` against `aarch64` or `arm64`.
+`docker image inspect` differs too, because each machine pulled the variant that
+matches it, *from the same tag*: that is the image index doing its job silently.
+
+`buildx imagetools inspect` gives the *same* answer on both machines, because it
+asks the registry rather than the local store, and lists every variant in the
+index — usually seven or eight for `alpine`.
+
+The last two commands are the interesting ones. Each machine can run both, and
+one of the two is emulated. Time them with `time` over something non-trivial and
+the emulation cost is visible immediately.
+====
+
+== Reproduce and diagnose `exec format error`
+
+kind: drill
+
+On any machine:
+
+[source,bash]
+----
+docker run --rm --platform linux/s390x alpine:3.20 echo hi
+----
+
+. What happens, and why does this variant behave differently from `amd64` on a
+  Mac?
+. Now build a tiny image on your machine, push or save it, and have a classmate
+  with the other architecture try to run it.
+. Diagnose their failure from the error alone, then confirm with `inspect`.
+
+.Solution
+[%collapsible]
+====
+. `s390x` is IBM mainframe. Docker Desktop's QEMU set usually cannot emulate it,
+  so instead of running slowly it fails outright — often with `exec format
+  error`. The `amd64`-on-`arm64` case works because that particular emulation is
+  installed by default. The lesson: emulation is a *configuration*, not a
+  property of containers, and where it is missing the failure is immediate.
+. A single-architecture image transferred with `docker save`/`docker load` carries
+  exactly one architecture, and the classmate gets `exec format error` — even
+  though it worked perfectly for you thirty seconds earlier.
+. The diagnosis is two commands:
++
+[source,bash]
+----
+docker image inspect yourimage --format '{{.Architecture}}'
+uname -m
+----
++
+If those two disagree, you are done. Rebuilding the script, the entrypoint or the
+base image — the usual first three attempts — cannot help.
+====
+
+== Build for both
+
+kind: drill
+
+Using the `Dockerfile` from `docker-images`:
+
+. Set up a builder: `docker buildx create --name multi --use --bootstrap`.
+. Try `--platform linux/amd64,linux/arm64 --load` and read the error.
+. Build the same thing with `--push` to a registry you can write to.
+. Inspect the result with `docker buildx imagetools inspect` and identify the
+  index and the two digests.
+. Have a classmate on the other architecture pull the *tag* and run it.
+. Then have them pull `yourimage@sha256:<the amd64 digest>` and run that.
+
+.Solution
+[%collapsible]
+====
+Step 2 fails: the local store holds one image per tag and has no way to represent
+an index, so `--load` cannot accept two platforms.
+
+Step 4 shows the structure: one index digest, and under it one manifest per
+platform, each with its own digest, size and `platform` field.
+
+Step 5 works on both machines from the same tag — the whole point.
+
+Step 6 is the instructive failure. Pinning the *variant* digest defeats the index
+and hands your classmate an image for the wrong architecture. Which is the
+practical warning: pinning by digest is good practice for reproducibility and
+bad practice for portability, and you have to know which one you are buying.
+====
+
+== Decide and document for your project
+
+kind: project
+
+. List every machine your project's image has to run on: team laptops, the school
+  server, any Pi or cloud instance. Record the architecture of each.
+. Decide whether you build one platform or two, and write the reason down — one
+  sentence is enough, and "everything we own is amd64" is a perfectly good one.
+. If you build one, put the supported platform in the README next to the pull
+  command. If you build two, move the build into the pipeline and out of
+  anybody's laptop.
+. Check your base images: are they multi-architecture? Replace any that are not,
+  if that decision affects you.
+. Test the outcome by having a team member on a different architecture — or the
+  server — run the image from the tag, unaided.
+. Record the decision in a `design.md`. This is a genuine choice with a rejected
+  alternative and a cost, which is exactly the test from
+  `sdd-openspec-artifacts`.
+
+Step 2 is the deliverable. A team that has decided *not* to build multi-arch and
+written down why has done this module correctly.

@@ -1,0 +1,238 @@
+= Estimation hygiene instead of estimation methods — questions
+:topic-id: governance-estimation-hygiene
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Why are software estimates systematically too low?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+Four mechanisms, none of them a matter of carelessness:
+
+* *Planning fallacy* — you estimate the work you can imagine. The work you cannot
+  imagine is not estimated at zero; it is not estimated at all.
+* *Anchoring* — somebody says "two days?" and every later number clusters around
+  two days, including yours.
+* *The 90 % syndrome* — the first 90 % takes 90 % of the time and the second 90 %
+  takes the other 90 %.
+* *Optimism under observation* — an estimate given in front of the client or the
+  group is lower than the same estimate written alone.
+
+The consequence for practice is the point of the whole module: none of these is
+repaired by a better formula. They are repaired, partially, by *hygiene* — how the
+estimate is produced, phrased, recorded and revised.
+
+A useful private test before saying a number: *would I bet my weekend on it?* The
+number that survives is usually the second one you thought of.
+
+Points the answer must contain:
+
+* Planning fallacy, anchoring, 90 % syndrome, optimism under observation
+* Unimagined work is not underestimated but absent
+* A method does not fix any of them
+* Hygiene — phrasing, recording, revising — does part of the job
+====
+
+== How should an estimate be phrased?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+As a *range* with a *named assumption* and, where possible, a date at which the
+uncertainty will be smaller.
+
+|===
+|Useless |Usable
+
+|"Two days."
+|"Between one and four days; I would be surprised at more than four."
+
+|"Done by Friday."
+|"Friday if the import format is what we think; otherwise a week later, and I
+ will know which on Tuesday."
+
+|"Half a day."
+|"Half a day for the part I have done before; the OAuth part is unknown — give me
+ two hours to find out."
+|===
+
+Three properties matter. The *width of the range* says how much you know, which
+the client needs more than the midpoint. The *assumption is named*, so somebody
+else can check it. And the *date of reduced uncertainty* turns an unpleasant "we
+do not know" into a schedulable step.
+
+The width is not a weakness to be minimised. One-to-four honestly reported beats
+"two days" that becomes six — and the person reporting it stays believable, which
+is the asset everything else runs on.
+
+Points the answer must contain:
+
+* Range, not a single number; width carries the confidence
+* Name the assumption so it can be checked
+* Say when the uncertainty will be smaller
+* A single number lets the listener invent a confidence you never gave
+====
+
+== How do you forecast with your own measured throughput?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+[plantuml,q-estimate-from-history,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "archive/\n9 changes / 12 weeks" as A
+rectangle "throughput\n0.75 changes per week" as T
+rectangle "remaining\n6 changes" as S
+rectangle "forecast\n~8 weeks" as F
+A -right-> T
+T -down-> F
+S -down-> F
+@enduml
+----
+
+It beats a fresh guess for a reason unrelated to arithmetic: the measurement
+already contains everything that actually happened — the illness, the exam week,
+the afternoon lost to a broken build. A guess contains only the work somebody can
+imagine.
+
+Two conditions. Changes must be roughly *comparable in size*, which is one more
+argument for cutting them small. And you count *archived* changes, not started
+ones.
+
+Where there is no history — an unfamiliar technology — the honest move is not a
+bolder guess but a *spike*: a timeboxed investigation with a fixed budget whose
+deliverable is an estimate. "Two hours to find out, then I can tell you" is a
+professional answer, not an evasion.
+
+Points the answer must contain:
+
+* Throughput = archived changes per week, from `archive/`
+* It already contains the real interruptions; a guess does not
+* Requires comparable change sizes and counts only archived ones
+* No history → a timeboxed spike that produces the estimate
+====
+
+== What is the difference between an estimate and a commitment?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+|===
+|Estimate |Commitment
+
+|prediction under uncertainty
+|promise to somebody
+
+|owned by whoever does the work
+|owned by whoever makes the promise
+
+|may be wrong without breaking anybody's word
+|may not be broken silently
+
+|"one to four days"
+|"you will have it Friday"
+|===
+
+Commitments are legitimate — projects need dates. What is not legitimate is
+*converting an estimate into a commitment without saying so*, which is what
+happens when somebody hears "one to four days" and writes "Tuesday" into a plan.
+The conversion happened, nobody announced it, and the person who gave the
+estimate is later held to a promise they never made.
+
+Two rules, in both directions. If somebody turns your estimate into a date, say
+so: "that is a commitment now, and it assumes the import format is as expected."
+If you make a commitment, own it — and "it will not be Friday" is said as early
+as you know, not on Friday.
+
+And when pressure comes: the negotiable quantity is *scope*, not the estimate.
+Moving scope is a charter conversation, held in the open.
+
+Points the answer must contain:
+
+* Estimate = prediction, commitment = promise; different owners
+* Silent conversion of one into the other is the actual damage
+* Announce the conversion; report a broken commitment early
+* Under pressure, scope is negotiable and the estimate is not
+====
+
+== When do you re-estimate, and what do you record afterwards?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+An estimate describes the world as it was known at a moment. Re-estimate when
+that changes:
+
+* a named assumption turns out to be false;
+* the scope changes, in either direction;
+* a spike comes back and halves or doubles the uncertainty;
+* a milestone passes and the measured throughput differs from the assumed one.
+
+Staleness is not a fault; silence about it is. Reporting "on track" until the
+deadline removes every option the other side had for reacting — which is the real
+cost, larger than the delay itself.
+
+Afterwards, one line per archived change: what it actually took, next to what was
+estimated. Ten such lines are worth more than any method, because they are
+measurements of *you* rather than of software projects in general.
+
+Points the answer must contain:
+
+* Triggers: falsified assumption, scope change, spike result, milestone
+* Report the re-estimate when it happens; silence is the fault
+* Late bad news removes the other side's options
+* Record actual against estimated per archived change, to learn
+====
+
+== Somebody asks you to lower your estimate. What do you do?
+
+covers: lo-4, lo-2
+
+.Answer
+[%collapsible]
+====
+Nothing to the estimate. Pressure is not an argument about the work, and the work
+does not become smaller because somebody looked unhappy.
+
+What is genuinely negotiable is *scope*. "Four days for all of it. Two days if we
+drop the excused-absence case and take it in the next change" is a real answer,
+and it hands the decision to the person who owns it — because dropping a
+requirement is a charter conversation, not a private adjustment.
+
+There is one legitimate way pressure changes the number: if the request comes
+with *information*. "You do not need the migration, the data is empty" is a fact
+that changes the estimate honestly. Ask for that explicitly — "what do you know
+that I do not?" — instead of quietly shaving the number.
+
+Lowering it silently costs more than the days. It converts you into somebody
+whose estimates carry no information, and after that nobody can plan with them at
+all.
+
+Points the answer must contain:
+
+* The estimate does not move; the work is unchanged
+* Offer scope alternatives instead, with the consequence stated
+* New information may legitimately change it — ask for it explicitly
+* Silent lowering destroys the credibility the estimates run on
+====

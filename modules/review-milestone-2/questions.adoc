@@ -1,0 +1,228 @@
+= Second milestone review — questions
+:topic-id: review-milestone-2
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== How does the second review differ from the first?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+|===
+| |Review 1 |Review 2
+
+|central question |has it started properly? |will it finish?
+|evidence |charter, first specs, first archived changes |throughput, trend, a
+ deployed slice
+|"not much works yet" |acceptable |a finding
+|output |findings |findings *and* a scope decision where needed
+|looks at |what has happened |what remains
+|===
+
+The first item presented is the fate of *every* finding from review 1: archived
+change, documented rejection, or nothing. "Nothing" is a permitted answer and the
+one everybody remembers — which is the mechanism that makes the first review
+worth having at all.
+
+The consequence for preparation is that numbers now matter. A team arriving with
+three excellent archived changes and no forecast has not prepared.
+
+Points the answer must contain:
+
+* Review 1 asks whether it started; review 2 whether it will finish
+* Every review-1 finding is reported with its outcome
+* A forecast is required, not a status
+* "Not much works" is now a finding, not an acceptable answer
+====
+
+== What does a forecast at this review consist of?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+Four things, all derived rather than asserted:
+
+* *measured throughput* — archived changes per week, from `archive/`;
+* *remaining scope* — the changes still open or planned, with a note where they
+  are not comparable in size to what has been archived;
+* *a range* with the assumption at each end;
+* *the milestone trend* — where the feature-complete date stood at review 1 and
+  where it stands now.
+
+The trend is the part that is new, and it is the part that carries information no
+single report can: two points make a direction, and a direction can be
+extrapolated.
+
+The test a reviewer applies: does the forecast *follow from the team's own
+numbers*? If the archive says eight weeks and the team says four, the difference
+has to be explained by something other than optimism — a genuinely smaller
+remaining scope, or a rate that has changed for a stated reason.
+
+Points the answer must contain:
+
+* Throughput from the archive, remaining scope, a range with assumptions
+* The milestone trend gives a second data point and a direction
+* The forecast must be derivable from the team's own record
+* A status report is not a substitute
+====
+
+== Why must a deployed end-to-end slice be shown at this review?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+Because deployment is the risk that most reliably costs three weeks, and it stays
+invisible until somebody actually tries it.
+
+[plantuml,q-deployment-risk,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "works on team laptops" as L
+rectangle "different architecture" as A
+rectangle "configuration from outside" as C
+rectangle "real database with a volume" as D
+rectangle "access, accounts, ports" as N
+rectangle "client's browser and laptop" as B
+rectangle "deployed, used by somebody else" as P
+L -down-> A
+L -down-> C
+L -down-> D
+L -down-> N
+L -down-> B
+A -down-> P
+C -down-> P
+D -down-> P
+N -down-> P
+B -down-> P
+@enduml
+----
+
+Every box in the middle has been a lesson in this course, and each is a place
+where software that "works" stops working. Discovering them in January costs an
+afternoon each; discovering them in March costs the scope.
+
+The slice does not have to be impressive. *One* capability, reachable by somebody
+else, with real configuration and a real volume, is worth more here than four
+capabilities on `localhost`.
+
+Points the answer must contain:
+
+* Deployment risk is invisible until tried and expensive when late
+* Architecture, configuration, persistence, access and the client's environment
+* Not `localhost` — reachable from a machine that is not the team's
+* One thin slice beats several local capabilities
+====
+
+== The forecast does not fit the deadline. What do you bring to the review?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+A *proposal*, not only the finding. "We will not finish" is a report; "we propose
+to drop X, keep Y, and here is what that costs the client and what it buys in
+weeks" is a decision somebody can act on.
+
+Of the four levers, only two are real in a school project:
+
+|===
+|Lever |At school
+
+|scope |the usable one: what is dropped or postponed, and what the client loses
+|date |fixed by the diploma thesis deadline
+|capacity |no extra people; redistribution is slower before it is faster
+|quality |only where named and bounded — never tests, never acceptance criteria
+|===
+
+A good scope proposal names *what is dropped*, *why that one*, *what the client
+loses* and *what it buys in weeks*. Bringing the number without the proposal
+leaves the hardest decision to the person with the least information about the
+project.
+
+Points the answer must contain:
+
+* Bring a scope proposal, not only the forecast
+* Scope is the real lever; the date is fixed
+* Name what is dropped, why, the client's loss and the weeks gained
+* Tests and acceptance criteria are not available as the quality lever
+====
+
+== What do you look for when reviewing another team at this stage?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+What remains, rather than what is past:
+
+* Does their *forecast follow from their own numbers*, or is it a hope with a
+  date attached?
+* Is anything deployed where *somebody else* can reach it?
+* Which review-1 findings are still open, and does the team know that?
+* What is the *one thing* that ends the project if it goes wrong — and is it in
+  their open questions?
+* Is there a *dependency on one person*, and what happens if that person is ill in
+  March?
+
+The last two decide the outcome at this stage. A team that cannot name its single
+biggest risk has not looked for it, and a named risk is manageable — which was
+true at review 1 and is more true now that there is less time to react.
+
+Feedback rules are unchanged: location, defect, repair, written into the reviewed
+team's repository during the session.
+
+Points the answer must contain:
+
+* Check the forecast against their own archive
+* Deployment reachable by somebody else
+* Fate of review-1 findings
+* The single biggest risk and any single-person dependency
+====
+
+== "We are aware of that finding." Why is that not an answer?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+Because awareness is not a state in the life cycle. A finding from review 1 has
+exactly three possible outcomes: it became a *change* — open or archived — it was
+*rejected in writing with a reason*, or *nothing happened*. "We are aware" is the
+third one with better wording.
+
+The distinction is not pedantry. A change has an owner, an exit condition and a
+date; a rejection has a reason somebody can disagree with. Awareness has none of
+those, cannot be checked, and reliably produces the same sentence again at review
+3.
+
+The honest version is short and costs nothing: "nothing happened; it is not
+recorded anywhere; we will open a change this week — or we drop it, and here is
+why." Both halves of that are acceptable answers. What is not acceptable is a
+finding that has been neither acted on nor decided against, four months into a
+project with a fixed deadline.
+
+Points the answer must contain:
+
+* Three legitimate outcomes: change, written rejection, or nothing
+* Awareness is unowned, undated and uncheckable
+* A change has an owner and exit condition; a rejection has a reason
+* Saying "nothing happened" plainly is an acceptable answer
+====

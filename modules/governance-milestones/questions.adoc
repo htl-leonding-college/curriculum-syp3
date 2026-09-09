@@ -1,0 +1,240 @@
+= Planning milestones that can be verified — questions
+:topic-id: governance-milestones
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is the difference between a milestone, a phase, a task and a deadline?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+|===
+|Term |What it is
+
+|milestone |a point in time with a verifiable condition; no duration, no effort
+|phase |a stretch of time with a name; duration, no condition
+|task |a piece of work with an owner and an effort
+|deadline |a date with a consequence, usually external
+|===
+
+Only the milestone can be *passed or missed observably*. "We are in the
+implementation phase" cannot be false. "Attendance recording is archived and its
+two scenarios ran in front of the client" is either true or not, and everybody in
+the room can tell which.
+
+That is why a milestone is neither a celebration nor a report: it is a question
+with a yes-or-no answer, agreed in advance.
+
+Points the answer must contain:
+
+* Milestone = point in time plus verifiable condition, no duration
+* Phase has duration but no condition, so it cannot be missed
+* Task has effort and an owner; many tasks lead to a milestone
+* Deadline is an externally imposed date with a consequence
+====
+
+== How do you write a milestone that somebody else can check?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+*By <date>, <observable condition> is true, checkable by <who> through <how>.*
+
+|===
+|Not verifiable |Verifiable
+
+|"Backend finished"
+|"By 2026-11-14 the capabilities `attendance` and `session` are archived and
+ their scenarios run against the deployed app, checked by the reviewing team"
+
+|"Testing done"
+|"By 2027-02-06 every capability has a refusal scenario and the pipeline is green
+ on `main`, checked by the pipeline"
+
+|"MVP ready"
+|"By 2027-03-06 a trainer records a full session end to end on the deployed
+ system without help, observed by the client"
+|===
+
+Three properties of the right column: an *observer outside the team*, because
+self-certification turns a milestone into a ceremony; a named *mechanism*, so
+nobody invents the check on the day; and a condition about the *behaviour of the
+system* rather than the activity of the team, which is what lets it survive a
+change of plan.
+
+The strongest criteria are machine-evaluable — "the pipeline is green on `main`"
+needs no meeting. Use those where they fit, but do not force them: the
+interesting milestones involve a person watching the software work.
+
+Points the answer must contain:
+
+* Date, observable condition, external observer, mechanism
+* About system behaviour, not team activity
+* No self-certification
+* Machine-checkable where possible, a person watching where it matters
+====
+
+== Where in the year do milestones belong?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+Where the *uncertainty* is — their job is to convert an unknown into a known
+while the answer still leaves options.
+
+[plantuml,q-milestone-placement,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "M1 early\ncharter and specs" as M1
+rectangle "M2 first slice\nend to end, deployed" as M2
+rectangle "M3 feature complete" as M3
+rectangle "M4 acceptance" as M4
+M1 -right-> M2
+M2 -right-> M3
+M3 -right-> M4
+@enduml
+----
+
+Two rules carry most of the value.
+
+*The first thin end-to-end slice goes early.* One capability from interface to
+database, deployed, says more about the project's risk than three capabilities
+that all stop at the service layer. Deployment, authentication and the machine
+nobody has access to are what turn into three lost weeks, and they only surface
+when something is joined up.
+
+*Leave a milestone between feature-complete and the deadline.* A slip discovered
+at the deadline has no answer; one found four weeks earlier can still be answered
+by cutting scope, which somebody is allowed to decide.
+
+Points the answer must contain:
+
+* Milestones go where the uncertainty is, not at even intervals
+* An early deployed end-to-end slice exposes integration risk
+* At least one milestone well before the final deadline
+* The purpose is to leave options open, not to record history
+====
+
+== What does a milestone trend chart show that a status report cannot?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+A *systematic* slip.
+
+[plantuml,q-milestone-trend,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "review 1\nM3: 06 Feb" as R1
+rectangle "review 2\nM3: 20 Feb" as R2
+rectangle "review 3\nM3: 06 Mar" as R3
+rectangle "M3 moves ~2 weeks\nper review" as X
+R1 -right-> R2
+R2 -right-> R3
+R3 -down-> X
+@enduml
+----
+
+Each individual delay has a good reason and sounds like bad luck. Three in a row
+moving the same way is not luck — it is a *rate*, and a rate can be extrapolated
+to a date nobody wants.
+
+A status report cannot show this because it only ever describes the present. The
+trend is built by recording, at every review, the expected date of every future
+milestone — which costs one line per milestone per review.
+
+Honest use: raise the scope conversation early, while the options exist.
+Dishonest use: leave the date where it is and hope, which is how "we are on
+track" can be said truthfully every week until the last one.
+
+Points the answer must contain:
+
+* Records the expected date of each future milestone at every review
+* Makes a systematic slip visible as a rate, not as a series of accidents
+* A status report only describes the present
+* Its purpose is an early scope conversation
+====
+
+== A milestone is missed. What are the legitimate responses?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Four, and missing one is ordinary — what is assessed is what happens next.
+
+* *Reduce scope.* Something is dropped or postponed, in writing, as a charter
+  conversation. The commonest and usually the right answer.
+* *Add capacity.* Rarely available at school, and slower before it is faster — a
+  new person costs the team time first.
+* *Move the date.* Only where the date is not fixed. A diploma thesis deadline is
+  not.
+* *Accept lower quality*, and only where somebody names *what* is given up — "no
+  browser other than Chrome is tested". Never tests, never the acceptance
+  criteria.
+
+What is not a response: working more hours and saying nothing. It is
+unverifiable, it does not survive February, and it removes the one thing the
+milestone existed for — telling somebody else early that a decision is needed.
+
+And the one move that destroys the instrument: lowering the criterion so it can
+be met. That converts the whole system back into a self-report.
+
+Points the answer must contain:
+
+* Scope, capacity, date, quality — the four levers
+* Scope reduction is usually the right one and is a charter conversation
+* Silence plus overtime is not a response
+* Criteria are never lowered to be met
+====
+
+== Why does "the implementation phase is complete" fail as a milestone?
+
+covers: lo-1, lo-2
+
+.Answer
+[%collapsible]
+====
+Because it cannot be false.
+
+There is no condition anybody outside the team could check. The phase ends when
+the team says it ends, so the statement carries no information and the milestone
+records nothing except that a date passed. Every project reaches every phase.
+
+It also fails the other two tests. There is no *observer* — the team certifies
+itself. And it describes *team activity* rather than *system behaviour*, so when
+the plan changes, the milestone becomes meaningless rather than merely missed.
+
+The repair is to ask what would be *observably true* if the phase really were
+complete, and to write that instead: "by 2027-02-06 all capabilities in `specs/`
+are archived, the pipeline is green on `main`, and the reviewing team has run two
+scenarios of their choosing on the deployed app." That can be failed — which is
+the entire point.
+
+Points the answer must contain:
+
+* No condition that can be false; every project reaches every phase
+* No external observer, so it is self-certification
+* Describes activity, not system behaviour
+* Repair: state what would be observably true, and who checks it
+====

@@ -1,0 +1,139 @@
+= Estimation hygiene instead of estimation methods — exercises
+:topic-id: governance-estimation-hygiene
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Rewrite six estimates
+
+kind: drill
+
+Each is a real sentence from a project meeting. Rewrite it as a range with an
+assumption, and add the date at which the uncertainty shrinks where one exists.
+
+. "The login takes two days."
+. "We'll be done before Christmas."
+. "That's a quick fix."
+. "The database migration is maybe a week."
+. "Testing, let's say one day."
+. "Deploying it should be trivial."
+
+.Solution
+[%collapsible]
+====
+. "One to five days. One if we use the library the fourth year used; five if we
+  implement OAuth ourselves. I will know which by Thursday."
+. "Six to ten remaining changes at our current 0.75 per week is eight to
+  thirteen weeks, so before Christmas only if nothing is added. The next
+  milestone tells us whether the rate holds."
+. "Twenty minutes if the cause is where I think it is; up to a day if it is in
+  the import path. Give me half an hour to find out."
+. "Three to fifteen days. Three if the old data is clean, fifteen if the
+  duplicates we found in the sign-in sheets are also in the export. I can check
+  that tomorrow morning."
+. "Not estimable as a separate item, because it is not a separate item — testing
+  is inside every change. If you mean the acceptance run with the client, half a
+  day plus the time to fix what it finds, which is unknown until it runs."
+. "Unknown; nobody in the team has deployed to the school server. Two hours
+  timeboxed to find out, then I can give you a range."
+
+Items 5 and 6 are the important ones. "Testing" as a trailing phase is the 90 %
+syndrome with a name on it, and "trivial" is what people say about work they have
+never done.
+====
+
+== Compute a forecast from an archive
+
+kind: drill
+
+A team's `archive/` shows changes archived in these calendar weeks:
+
+----
+KW38  KW39  KW41  KW41  KW43  KW44  KW46  KW47  KW49
+----
+
+Six changes are open or planned; the deadline is KW10 of the following year, and
+KW52–KW01 are holidays.
+
+. Compute the throughput.
+. Forecast the finish, as a range.
+. Name two things that would make the forecast wrong.
+
+.Solution
+[%collapsible]
+====
+. Nine changes from KW38 to KW49 is twelve weeks: *0.75 changes per week*.
+. Six remaining at 0.75 is eight weeks of work. From KW50, with two holiday weeks
+  and no reason to assume the rate improves, that lands around KW10 — right on
+  the deadline, with no slack. As a range: KW8 if the remaining changes are on
+  the small side and the rate holds, KW13 if the rate drops as it did around
+  KW40. Report both.
+. Any of: the remaining changes are not comparable in size to the archived ones
+  (the last ones usually are not — integration and acceptance work is bigger);
+  the exam period in February; scope added after the second milestone; one team
+  member unavailable; the historical rate itself included a burst that will not
+  repeat.
+
+The right conclusion is not "we will make it". It is: *this forecast has no
+slack*, which is a fact worth putting in front of the client in KW50 rather than
+in KW9.
+====
+
+== Spot the mechanism
+
+kind: drill
+
+Name which of the four mechanisms is at work.
+
+. Everybody in the room estimates between 2 and 3 days after the team leader
+  wondered aloud whether it was "about two days".
+. The team is at 90 % for the third week running.
+. Nobody thought about the data migration until the second milestone.
+. The estimate given to the teacher was three days; the same person had written
+  "about a week" in their own notes that morning.
+
+.Solution
+[%collapsible]
+====
+. *Anchoring.* The fix is procedural and cheap: everybody writes their number
+  down before anybody says one. It costs sixty seconds and removes most of the
+  effect.
+. *The 90 % syndrome*, and usually with a missing definition of done underneath
+  it. Ask what would have to be *archived* for it to be 100 %; the answer is
+  normally three items nobody had listed.
+. *Planning fallacy.* The migration was not underestimated — it was never
+  estimated, because nobody imagined it. The cure is a checklist of the work that
+  is always there and always forgotten: review, migration, deployment,
+  documentation, acceptance.
+. *Optimism under observation.* The private number was the honest one. Which is
+  the argument for estimating alone first and only then in the group.
+
+Note that three of the four have a *procedural* fix that takes under a minute.
+That is the claim of the module: hygiene beats method.
+====
+
+== Estimate your own remaining project
+
+kind: project
+
+. Compute your team's throughput from `archive/`: archived changes divided by
+  elapsed weeks. Write the number down.
+. List the remaining changes to the deadline, and mark the ones you believe are
+  *not* comparable in size to what you have archived so far.
+. Produce a forecast as a range, with the assumption behind each end named.
+. Identify the one thing you know least about, and plan a timeboxed spike for it:
+  a fixed budget, and an estimate as the deliverable.
+. For the last three archived changes, write one line each: estimated against
+  actual. Say what the difference has in common.
+. Bring the forecast to the next milestone review — and say explicitly whether it
+  is an estimate or a commitment.
+
+Step 5 is where the learning is. Three lines are enough to show a pattern, and it
+is almost always the same pattern: the work nobody listed.

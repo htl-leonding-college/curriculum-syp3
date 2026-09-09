@@ -1,0 +1,147 @@
+= Second milestone review — exercises
+:topic-id: review-milestone-2
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Report the fate of five findings
+
+kind: drill
+
+These were written into a team's repository at review 1. For each, say which of
+the three outcomes applies and write the sentence the team should say.
+
+. "`specs/booking` has no refusal scenario."
+. "38 of 40 commits are from one account."
+. "Nothing is deployed anywhere."
+. "The open-questions list is empty."
+. "Eleven commits are called 'fix'."
+
+.Solution
+[%collapsible]
+====
+The point is the *form* of the answer, not the content:
+
+. "Change `add-booking-refusals`, archived 2026-12-05. Two refusal scenarios; you
+  can run either now." — a change, and the strongest possible answer.
+. "Still open. We paired on two changes in December, and the split is now 60/40.
+  Not fixed, improving, and it is the risk we are most worried about." — honest
+  partial progress, with the risk named.
+. "Deployed since 2027-01-09 at <address>; you can open it from here." — done,
+  and it is the finding that mattered most.
+. "Rejected: we believed we had no open questions. That was wrong. There are now
+  four, with sources." — a rejection that turned into a correction, which is a
+  perfectly good outcome to report.
+. "Nothing happened. It is not recorded anywhere. We will open a change this
+  week." — the answer nobody wants to give and the only acceptable form of it.
+
+Note that item 5 is *better* than "we are aware of it". It is checkable, it has a
+date, and the reviewing team can hold them to it.
+====
+
+== Check a forecast against an archive
+
+kind: drill
+
+A team presents: "We will be feature complete by 6 March." Their repository shows
+changes archived in KW38, 39, 41, 41, 43, 44, 46, 47, 49, 02, 03 — and seven
+changes still open, three of which are the export, the authentication and the
+deployment.
+
+At review 1 in November they said feature complete on 6 February.
+
+. Compute their throughput and produce your own forecast.
+. Compare with theirs.
+. Which two questions do you ask?
+
+.Solution
+[%collapsible]
+====
+. Eleven archived changes from KW38 to KW03 — about eighteen weeks, minus two
+  holiday weeks — is roughly *0.7 changes per week*. Seven remaining is ten
+  weeks: mid-to-late March, not 6 March, and that assumes the remaining changes
+  are the same size as the archived ones.
+. Their date is about two to three weeks more optimistic than their own record
+  supports. And the trend is against them: 6 February at review 1, 6 March now —
+  a month of slip in three months.
+. The two questions:
++
+* "Your archive gives 0.7 changes per week and you have seven left. Which of them
+  are smaller than average, and why?" — the question that either produces a real
+  answer or exposes the optimism.
+* "Authentication and deployment are still open. Are those comparable in size to
+  the eleven you archived?" — they are almost certainly not, which usually moves
+  the honest forecast further out rather than closer.
+
+The finding to write down is not "your date is wrong". It is: "your forecast does
+not follow from your archive, and the trend is negative. Bring a scope proposal."
+====
+
+== Make a scope proposal
+
+kind: drill
+
+Same team. Deadline 10 April, acceptance needs four weeks, honest forecast is
+late March. The charter has four objectives: record attendance, monthly export,
+member self-service, and statistics.
+
+Write the proposal.
+
+.Solution
+[%collapsible]
+====
+____
+Our archive gives 0.7 changes per week. Seven changes remain, two of them larger
+than average, so feature complete is late March at best. Acceptance needs four
+weeks, so that does not fit 10 April.
+
+*We propose to drop the statistics page* and to postpone member self-service to a
+read-only view.
+
+Why those: statistics is the only objective the client has never asked about
+since October, and self-service is the only one whose value survives being
+halved — read-only still lets a member check their attendance, which is the thing
+they actually wanted.
+
+*What the client loses*: no charts, and members cannot correct their own data —
+they ask a trainer, as they do today.
+
+*What it buys*: about three weeks, which puts feature complete at the start of
+March and leaves the four weeks for acceptance.
+
+*What we need*: a decision by 30 January, because after that the work has
+started.
+____
+
+Every element is present: what, why that one, the client's loss, the weeks
+gained, and a date by which the decision is needed. That last line is what turns
+a proposal into something that actually gets decided.
+====
+
+== Hold your own second milestone review
+
+kind: project
+
+. Report the fate of every review-1 finding — change, written rejection, or
+  nothing. Do not use the word "aware".
+. Compute your throughput from `archive/` and produce a forecast as a range with
+  its assumptions. Record the milestone trend as a second data point.
+. Deploy one end-to-end capability somewhere that is not your laptop, and have
+  the reviewing team reach it from theirs. If this fails, that is the review's
+  most valuable finding.
+. If the forecast does not fit your deadline, bring a scope proposal with all
+  five elements.
+. Name the single thing that ends your project if it goes wrong, and the one
+  person your team could not currently do without.
+. As reviewers of another team: check their forecast against their archive, and
+  ask the two questions about risk and single-person dependency.
+
+Step 5 is the one to write down and keep. At the acceptance you will find out
+whether you named the right thing.

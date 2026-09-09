@@ -1,0 +1,238 @@
+= Data and configuration outside the container — questions
+:topic-id: docker-volumes-config
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Why must data and configuration live outside the image?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+Because the image is immutable and identical everywhere, and that is the property
+worth protecting.
+
+[plantuml,q-one-image-many-envs,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "booking:0.3.0" as I
+rectangle "development" as D
+rectangle "test" as T
+rectangle "production" as P
+I -down-> D
+I -down-> T
+I -down-> P
+@enduml
+----
+
+If the database password were baked in, three environments would need three
+images — and the image that was tested would not be the image that runs. In one
+sentence: *the thing you tested must be the thing you ship, so everything that
+differs between environments comes from outside.*
+
+Two different kinds of thing come from outside and behave differently. *State* —
+database files, uploads — must survive the container, and that is volumes.
+*Configuration* — hostnames, ports, switches, credentials — differs per
+environment, and that is environment variables and mounted files.
+
+Points the answer must contain:
+
+* One image for all environments; the tested one is the shipped one
+* Baked-in configuration forces one image per environment
+* State (volumes) and configuration (env/files) are separate concerns
+* The container's writable layer dies with the container
+====
+
+== Named volume or bind mount?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+|===
+| |Named volume |Bind mount
+
+|command |`-v bookingdata:/var/lib/postgresql/data` |`-v "$PWD/src:/app/src"`
+|managed by |Docker, own storage area |you, an ordinary host path
+|portable |yes, same command anywhere |no, depends on path and permissions
+|use for |service state: databases, uploads |files a human edits
+|===
+
+Rule of thumb: *named volume for state the service owns, bind mount for files a
+human edits.*
+
+A database on a bind mount works on your machine and then produces permission and
+performance problems on the first machine that is not yours — which is the one
+that matters. Conversely a named volume for source code during development is
+useless, because you cannot edit it with your editor.
+
+And one warning attached to volumes: `docker volume rm` and `docker volume prune`
+delete data without confirmation and without undo.
+
+Points the answer must contain:
+
+* Named volume: Docker-managed, portable, for service state
+* Bind mount: host path, for files a person edits
+* Databases on bind mounts break on other machines
+* Volume removal is irreversible and unconfirmed
+====
+
+== How does configuration reach a container?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+Three ways, in increasing capacity:
+
+[source,bash]
+----
+docker run -e DB_HOST=db -e LOG_LEVEL=info booking:0.3.0
+docker run --env-file ./local.env booking:0.3.0
+docker run -v "$PWD/application.yaml:/app/application.yaml:ro" booking:0.3.0
+----
+
+Single values as `-e`; many values from an `--env-file` that is not in the
+repository; whole configuration files mounted read-only.
+
+The application must be written to accept them, which is a design rule rather
+than a Docker one: *read configuration from the environment, with sensible
+defaults, and fail loudly when something required is missing.* A service that
+starts with an empty password and only fails on the first request is much harder
+to debug than one that refuses to start.
+
+The `:ro` is worth its four characters: a writable config mount can be modified
+by the container, after which the file on the host no longer matches what anybody
+committed.
+
+Points the answer must contain:
+
+* `-e`, `--env-file`, and a read-only mounted config file
+* The env file is not committed
+* The application fails loudly on a missing required value
+* `:ro` prevents the container from editing the host's file
+====
+
+== Where must a secret never be, and where does it go instead?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+|===
+|Not in |Because
+
+|the image |every layer is readable with `docker history`, forever
+|the repository |git keeps it after deletion; a public repo publishes it at once
+|the command line |`docker ps`, shell history and the process list show it
+|the log |logs are collected, forwarded and read by other people
+|===
+
+What is left, in order of preference:
+
+. a *secret file mounted read-only* and referenced by path — the `*_FILE`
+  convention most images support;
+. an environment variable from an `--env-file` that is in `.gitignore`;
+. for the pipeline, the repository secrets of GitHub Actions, injected at run
+  time.
+
+The piece that makes this workable in a team is a committed `.env.example` with
+the *names* and dummy values: the next person knows what to set, and nobody ever
+sends a password over chat.
+
+And the rule that follows from all four rows: a secret that has been in an image,
+a commit or a public log is *burnt*. Rotate it — deleting the file changes
+nothing.
+
+Points the answer must contain:
+
+* Not in image, repository, command line or log — with the reason for each
+* Mounted secret file, env-file in `.gitignore`, pipeline secrets
+* `.env.example` documents the names without the values
+* A leaked secret is rotated, not deleted
+====
+
+== How do you back up and restore the data of a containerised service?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+[source,bash]
+----
+docker run --rm -v bookingdata:/data -v "$PWD:/backup" alpine:3.20 \
+  tar czf /backup/bookingdata-2026-11-14.tar.gz -C /data .
+
+docker volume create bookingdata_restored
+docker run --rm -v bookingdata_restored:/data -v "$PWD:/backup" alpine:3.20 \
+  tar xzf /backup/bookingdata-2026-11-14.tar.gz -C /data
+----
+
+A throwaway container that can see the volume does the work; the volume itself
+needs no running service.
+
+For a *database* the better backup is its own dump — `pg_dump` rather than a file
+copy — because a file-level copy of a running database can catch it mid-write.
+The tar approach is right for uploads, and for volumes whose service is stopped.
+
+Two habits: *stop the service before a file-level backup*, and *write the restore
+command down next to the backup command*, because the restore is what you will
+need under pressure and it is the half nobody has practised.
+
+The summary sentence: a service whose data has never been restored does not have
+a backup, it has a hope.
+
+Points the answer must contain:
+
+* A helper container mounts the volume and tars it out
+* Restore into a fresh volume the same way
+* Databases: use their own dump, not a file copy of a running instance
+* An untested restore is not a backup
+====
+
+== A team keeps three images — dev, test and prod. What is wrong?
+
+covers: lo-1, lo-3
+
+.Answer
+[%collapsible]
+====
+The image that was tested is not the image that runs, so the testing proves
+nothing about production.
+
+Whatever differs between the three — a hostname, a password, a feature switch —
+was baked in at build time, which means each image was built separately and any
+of the three builds could differ in ways nobody intended: a different base layer
+pulled, a dependency resolved to a newer patch, a file copied on one machine and
+not another.
+
+The repair is mechanical. One image, built once, tagged with a version, and
+promoted unchanged from test to production. Everything environment-specific
+arrives at run time through `-e`, an `--env-file` or a read-only mounted config
+file, and the application fails loudly if a required value is absent.
+
+The second, quieter problem: three images means the credential is inside at least
+one of them, which brings back the rule that a secret in a layer is readable and
+permanent.
+
+Points the answer must contain:
+
+* The tested artefact is not the shipped one; testing loses its meaning
+* Separate builds can differ in unintended ways
+* One image promoted unchanged; configuration injected at run time
+* Baked-in configuration usually means a baked-in secret as well
+====

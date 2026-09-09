@@ -1,0 +1,138 @@
+= Acceptance and handover — exercises
+:topic-id: governance-acceptance
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Derive acceptance criteria from objectives
+
+kind: drill
+
+A charter has these three objectives. Write one acceptance criterion for each,
+including the conditions it will be tried under.
+
+. "Trainers record attendance digitally, including excused absence."
+. "The club produces a monthly attendance list for the association."
+. "Members see their own attendance history."
+
+.Solution
+[%collapsible]
+====
+. "On the club's laptop, a trainer records a full session of up to 20 members,
+  including at least one excused absence, on the deployed system, unaided, within
+  five minutes — and an attempt to record attendance for a session that has ended
+  is refused with a message they can act on."
+. "The club secretary produces the November list as a PDF from the deployed
+  system, unaided, and its member count matches the paper sheets for that month."
+. "A member logs in on their own phone and sees their own attendance for the last
+  three months, and sees nobody else's."
+
+Three properties are present in all of them and absent from the objectives. An
+*actor* who is not the team; an *environment* — the club's laptop, their own
+phone — because that is where it will be tried; and at least one *refusal or
+negative* case, since "sees nobody else's" is the requirement that actually
+matters in the third one.
+
+Note also what the criteria do not say: nothing about frameworks, screens or
+databases. They would still be valid after a complete rewrite.
+====
+
+== Judge four acceptance outcomes
+
+kind: drill
+
+For each, decide: accepted, accepted with defects, or refused — and say what goes
+in the protocol.
+
+. All criteria pass. The export PDF has the club logo stretched.
+. A trainer records a session in seven minutes instead of five, because the
+  member list is slow. Everything else passes.
+. Attendance recording works. The monthly list contains every member twice.
+. Everything passes on the team's laptop. On the club's laptop the app does not
+  open.
+
+.Solution
+[%collapsible]
+====
+. *Accepted*, with the logo as a listed defect, low severity, with a deadline.
+  Clean acceptances with a short defect list are normal.
+. *Accepted with defects.* The purpose is served — the session got recorded — but
+  a criterion was missed, so it is recorded as failed with the measured value
+  (seven minutes), a severity and a deadline. Do not quietly redefine five as
+  "about five".
+. *Refused*, or at best accepted with a critical defect and a new date — and the
+  distinction depends on whether the list is the purpose of the objective. It is:
+  the association gets a list with doubled members, which is worse than no list.
+. *Refused.* It does not run in the environment the criterion named. This is also
+  the case the criteria were written to catch — "on the club's laptop" earns its
+  place here.
+
+Case 4 is the one that happens in real school projects, and the reason is almost
+always an environment difference nobody checked: a missing runtime, a different
+browser, a proxy, an architecture.
+====
+
+== Test a handover on a person
+
+kind: drill
+
+Swap repositories with another team. Using only what is written in their
+repository — no questions to them:
+
+. Build the project on your machine.
+. Run it.
+. Make a trivial change and get it deployed or built again.
+. Restore their data backup into a fresh volume.
+. List every point at which you had to guess, and every point at which you had to
+  ask.
+
+Then swap the lists.
+
+.Solution
+[%collapsible]
+====
+The list is the deliverable, and it is almost never short on the first attempt.
+The recurring gaps, in rough order of frequency:
+
+* a *required tool or version* that is installed on every machine of the owning
+  team and mentioned nowhere;
+* an *environment variable* the app needs, with no `.env.example` to name it;
+* a *step performed once by hand* — a database created, a folder made, a
+  migration run — that never made it into a script;
+* the *restore*, which usually has never been tried by anybody;
+* *access*: an account, a token or a registry permission that only one person
+  has.
+
+Every one of these is invisible from inside the team, which is the entire point
+of the exercise. A README cannot be verified by its author.
+====
+
+== Prepare your own acceptance
+
+kind: project
+
+. Write one acceptance criterion per charter objective, in the form used above —
+  actor, action, observable result, environment. Include at least one refusal
+  case.
+. Have your client or teacher confirm the criteria *now*, before the remaining
+  work is done. If a criterion surprises them, that is a finding worth more than
+  the rest of the exercise.
+. Prepare the protocol template: version, date, participants, result per
+  criterion, defect list with severities, declaration.
+. Do a dry run with another team acting as the client — and do not touch the
+  keyboard. Write down every defect they found that you did not expect.
+. Build the handover package and have someone outside the team verify it on a
+  clean machine, including the restore.
+. Write down which secrets will have to be rotated at handover, and where each
+  currently lives.
+
+Step 4 is the one that changes the software. Every team discovers that watching
+somebody else use it for ten minutes is worth more than a week of their own
+testing.

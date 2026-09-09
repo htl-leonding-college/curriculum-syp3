@@ -1,0 +1,235 @@
+= Images for more than one processor architecture
+:topic-id: docker-multiarch
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain why an image built on one machine may not run on another
+* [[lo-2]] Read an image's architecture and recognise the mismatch from its error
+* [[lo-3]] Build a multi-architecture image with `buildx` and publish it
+* [[lo-4]] Explain what an image index is and how the right variant is selected
+* [[lo-5]] Decide when multi-architecture is worth its cost
+
+== The class has two kinds of laptop
+
+This is not an exotic topic. It is the reason one team's image runs on three
+machines and fails on the fourth.
+
+A container shares the host kernel, and it also runs the host's *instruction
+set*. An image contains compiled binaries, and a binary compiled for `amd64` — an
+Intel or AMD processor — is not executable on `arm64` — an Apple Silicon Mac, a
+Raspberry Pi, or an ARM server in a cloud.
+
+[cols="1,1",options="header"]
+|===
+|Machine |Architecture
+
+|most school and office PCs, most CI runners
+|`linux/amd64`
+
+|Mac with M-series chip
+|`linux/arm64`
+
+|Raspberry Pi 4 and 5
+|`linux/arm64`
+
+|newer cloud instances
+|`linux/arm64`, increasingly
+|===
+
+The practical consequence: the image somebody built on their MacBook may not
+start on the school server, and the one built by the pipeline may not start on
+their MacBook.
+
+== What the failure looks like
+
+Worth memorising, because the message does not say "wrong architecture" in any
+obvious way.
+
+[source]
+----
+exec /app/entrypoint.sh: exec format error
+----
+
+or, on a Mac running an `amd64` image:
+
+[source]
+----
+WARNING: The requested image's platform (linux/amd64) does not match
+the detected host platform (linux/arm64/v8) and no specific platform was
+requested
+----
+
+`exec format error` means: the kernel was asked to run a binary it does not
+understand. It is the same error a Linux kernel gives for a Windows executable,
+and for the same reason.
+
+Inspect before you guess:
+
+[source,bash]
+----
+docker image inspect nginx:1.27 --format '{{.Os}}/{{.Architecture}}'
+docker buildx imagetools inspect nginx:1.27      # all variants in the registry
+uname -m                                          # what this machine is
+----
+
+On macOS and Windows the picture is muddier, because Docker there emulates the
+foreign architecture with QEMU. The image runs — slowly, sometimes five to ten
+times slower, and occasionally with subtle failures in native libraries. "It
+works but it is inexplicably slow" is a symptom of this, not of your code.
+
+== One tag, several images
+
+The mechanism that solves it is the *image index* — sometimes called a manifest
+list. A tag in a registry does not have to point at one image; it can point at a
+small document listing several, one per platform.
+
+[plantuml,image-index,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "tag\nbooking:0.3.0" as T
+rectangle "image index\n(manifest list)" as IX
+rectangle "image\nlinux/amd64\ndigest sha256:aaa…" as A
+rectangle "image\nlinux/arm64\ndigest sha256:bbb…" as B
+
+T -down-> IX
+IX -down-> A
+IX -down-> B
+@enduml
+----
+
+`docker pull booking:0.3.0` fetches the index, the client looks up its own
+platform and pulls *that* digest. Nobody has to know which machine they are on —
+which is why every widely used base image is published this way, and why
+`nginx:1.27` simply works everywhere.
+
+Note what this means for the digest: the index has a digest of its own, and each
+variant has another. `booking@sha256:aaa…` is one specific architecture; the tag
+is the portable thing.
+
+== Building one
+
+[source,bash]
+----
+docker buildx create --name multi --use --bootstrap     # once per machine
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t ghcr.io/htl-leonding-example/booking:0.3.0 \
+  --push .
+----
+
+Two details that trip people up on the first attempt.
+
+*`--push`, not `--load`.* A local image store holds one architecture, so a
+multi-platform build cannot be loaded into it. It goes straight to a registry, or
+you build one platform at a time with `--load` for local testing.
+
+*It is slower.* Each platform is built separately, and the one that is not native
+is emulated. A two-platform build is more than twice the time of a single one —
+which is an argument for building them in the pipeline rather than on a laptop.
+
+For a JVM application there is a shortcut worth knowing: the `.jar` is
+architecture-independent, so only the base image differs. Choosing a base that is
+already multi-architecture — `eclipse-temurin:25-jre-alpine` is — means the same
+`Dockerfile` produces both variants with no further work. For anything with
+native code — `node-gyp`, Python wheels with C extensions, Go with `cgo` — the
+build genuinely happens twice.
+
+== Is it worth it?
+
+[cols="1,1",options="header"]
+|===
+|Build multi-arch |Do not bother
+
+|the team has both Intel and Apple Silicon machines
+|everybody, including the server, is `amd64`
+
+|it will run on a Raspberry Pi or an ARM cloud instance
+|the image is only ever used by the pipeline
+
+|other people pull the image
+|it is a throwaway build for one experiment
+
+|it is a base image others build on
+|the build takes 20 minutes and nobody needs the second variant
+|===
+
+The honest default for a school project: *if the team is mixed, build both; if
+not, build one and write down which.* The second half of that sentence is the
+part that gets skipped, and it is what turns "it does not work on my machine"
+into a two-minute diagnosis instead of an afternoon.
+
+TIP: `--platform linux/amd64` on `docker run` forces a specific variant. On a Mac
+it makes an `amd64` image run under emulation, which is a useful way to reproduce
+what the server will do — slowly, but faithfully.
+
+== Decisions
+
+* Every published project image states which platforms it supports, in the README
+  next to the pull command.
+* Where the team has mixed architectures, images are built for
+  `linux/amd64,linux/arm64`.
+* Multi-platform images are built and pushed by the pipeline, not from a laptop.
+* Base images are chosen multi-architecture where a choice exists.
+* An `exec format error` is diagnosed with `docker image inspect` before anything
+  else is tried.
+
+== Pitfalls
+
+* Assuming an image that runs locally runs everywhere. It runs on your
+  architecture.
+* `buildx build --platform a,b --load`. It cannot work; the local store holds one
+  architecture.
+* Building multi-platform on a laptop for every experiment and losing ten minutes
+  each time.
+* Reading `exec format error` as a broken entrypoint script and rewriting it.
+* Pinning a *digest* instead of a tag and thereby pinning one architecture for
+  everybody.
+* Silently relying on emulation, then being surprised that the same container is
+  eight times slower on one machine.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Prozessorarchitektur
+|processor architecture
+
+|Befehlssatz
+|instruction set
+
+|Abbildverzeichnis, Manifestliste
+|image index, manifest list
+
+|Plattform
+|platform
+
+|Emulation
+|emulation
+
+|native Erweiterung
+|native extension
+|===
+
+== Further reading
+
+* The Docker documentation on `buildx` and multi-platform images
+* Module `docker-images` — the build this extends
+* Module `gh-actions-pages` — where the multi-platform build belongs

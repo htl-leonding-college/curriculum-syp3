@@ -1,0 +1,247 @@
+= Planning milestones that can be verified
+:topic-id: governance-milestones
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Distinguish a milestone from a phase, a task and a deadline
+* [[lo-2]] Write a milestone whose criterion can be checked by somebody else
+* [[lo-3]] Place milestones so that a slip is discovered while it can still be
+  answered
+* [[lo-4]] Explain what a milestone trend chart shows that a status report cannot
+* [[lo-5]] Decide what happens when a milestone is missed
+
+== A milestone has no duration
+
+The word is used for four different things, and only one of them is a milestone.
+
+[cols="1,2",options="header"]
+|===
+|Term |What it is
+
+|*Milestone*
+|a *point in time* with a *verifiable condition*. It has no duration and no
+ effort: "on 2026-11-14, attendance recording is archived and its scenarios run"
+
+|*Phase*
+|a stretch of time with a name — "the implementation phase". It has duration and
+ no condition
+
+|*Task*
+|a piece of work with an owner and an effort. Many tasks lead to a milestone
+
+|*Deadline*
+|a date with a consequence attached, usually external — the diploma thesis
+ submission
+|===
+
+The distinction matters because only a milestone can be *passed or missed
+observably*. "We are in the implementation phase" cannot be false. "Attendance
+recording is archived, and the two scenarios ran in front of the client" is true
+or it is not, and everybody in the room can tell which.
+
+A milestone is therefore not a celebration and not a report. It is a *question
+with a yes-or-no answer*, agreed in advance.
+
+== Writing one that can be checked
+
+The formula is short: *by <date>, <observable condition> is true, checkable by
+<who> through <how>.*
+
+[cols="1,1",options="header"]
+|===
+|Not verifiable |Verifiable
+
+|"Backend finished"
+|"By 2026-11-14, the capabilities `attendance` and `session` are archived and
+ their scenarios run against the deployed app, checked by the reviewing team"
+
+|"Design phase complete"
+|"By 2026-10-10, the charter is signed and every objective has at least one
+ capability in `specs/`, checked by the teacher"
+
+|"Testing done"
+|"By 2027-02-06, every capability has a refusal scenario and the pipeline is
+ green on `main`, checked by the pipeline itself"
+
+|"MVP ready"
+|"By 2027-03-06, a trainer records a full session end to end on the deployed
+ system without help, observed by the client"
+|===
+
+Three properties are worth naming in the right-hand column. Each has an
+*observer who is not the team* — self-certification is how milestones become
+ceremonies. Each names a *mechanism*, so nobody has to invent the check on the
+day. And each is written in terms of *behaviour of the system*, not of activity
+of the team, which is why they survive a change of plan.
+
+The strongest possible criterion is one a machine evaluates: "the pipeline is
+green on `main`" needs no meeting at all. Use it wherever it fits — but do not
+force it, because the interesting milestones involve a person watching the
+software do something.
+
+== Where to put them
+
+Milestones are not evenly spaced. They go where the *uncertainty* is, because
+their job is to convert an unknown into a known while the answer still leaves
+options.
+
+[plantuml,milestone-placement,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "M1 — early\ncharter and specs exist\n(cheap to change everything)" as M1
+rectangle "M2 — first capability\nend to end, deployed\n(the integration risk fires here)" as M2
+rectangle "M3 — feature complete\nall capabilities archived\n(scope decisions still possible)" as M3
+rectangle "M4 — acceptance\nclient runs the scenarios\n(only polish left)" as M4
+
+M1 -right-> M2
+M2 -right-> M3
+M3 -right-> M4
+@enduml
+----
+
+Two placement rules carry most of the value.
+
+*Put the first thin end-to-end slice early.* One capability, from the user
+interface through to the database and deployed, tells you more about the risk in
+the project than three capabilities that all stop at the service layer. The
+integration problems — the deployment, the authentication, the machine nobody has
+access to — are the ones that turn into three lost weeks, and they surface only
+when something is joined up.
+
+*Leave a milestone between "feature complete" and the deadline.* If the last
+milestone is the deadline, a slip discovered there has no answer. One four weeks
+earlier can still be answered by cutting scope, which is a decision somebody is
+allowed to make.
+
+== The trend, not the status
+
+A status report says where you are. A *milestone trend chart* says how your
+estimate of the finish has been moving, which is the more useful of the two.
+
+[plantuml,milestone-trend,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "at review 1\nM3 expected: 06 Feb" as R1
+rectangle "at review 2\nM3 expected: 20 Feb" as R2
+rectangle "at review 3\nM3 expected: 06 Mar" as R3
+rectangle "reading:\nM3 moves ~2 weeks\nper review — the deadline\nwill not hold" as X
+
+R1 -right-> R2
+R2 -right-> R3
+R3 -down-> X
+@enduml
+----
+
+The chart makes one thing visible that no single report can: a *systematic* slip.
+Every individual delay has a good reason, and each one alone sounds like bad
+luck. Three in a row moving in the same direction is not luck — it is a rate, and
+a rate can be extrapolated.
+
+The honest use of it is to raise a scope conversation early. The dishonest use is
+to leave the date where it is and hope, which is how "we are on track" is
+truthfully said every week until the last one.
+
+== When a milestone is missed
+
+Missing one is ordinary. What is measured is what happens next, and there are
+exactly four legitimate responses:
+
+* *Reduce scope.* Something planned is dropped or postponed, in writing, into the
+  charter conversation. The commonest and usually the right answer.
+* *Add capacity.* Rarely available to a school project, and it is slower before
+  it is faster — a new person costs the team time first.
+* *Move the date.* Possible only where the date is not fixed. The diploma thesis
+  deadline is not.
+* *Accept lower quality.* Legitimate only where somebody names *what* is being
+  given up — "no browser other than Chrome is tested" — and never for tests or
+  for the acceptance criteria.
+
+What is not a response: working more hours and saying nothing. It is unverifiable,
+it does not survive contact with February, and it removes the one thing the
+milestone was for — telling somebody else, early, that a decision is needed.
+
+CAUTION: A milestone criterion is never lowered so that it can be met. That
+converts the whole system into a self-report, which is what it existed to
+replace.
+
+== Decisions
+
+* Every milestone names a date, an observable condition, an observer outside the
+  team and a mechanism.
+* A phase is not a milestone. "Implementation phase" does not appear in the plan
+  as one.
+* The first end-to-end deployed slice is a milestone in the first half of the
+  year.
+* There is at least one milestone four weeks before the final deadline.
+* At every review, the expected date of each future milestone is recorded, so a
+  trend exists.
+* A missed milestone is answered with one of the four responses, in writing,
+  within a week. Criteria are not lowered.
+
+== Pitfalls
+
+* Milestones that are phases. Nobody can miss them, so nobody learns anything.
+* Self-certification. A team that decides it has passed its own milestone has
+  held a ceremony.
+* All milestones at the end. The information arrives when no option is left.
+* A first slice that stops at the service layer. The integration risk stays
+  hidden until it is expensive.
+* Recording only the current status and never the trend, so a systematic slip
+  looks like a series of unrelated accidents.
+* Quietly adjusting the criterion on the day. It is the one move that destroys
+  the instrument.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Meilenstein
+|milestone
+
+|Phase
+|phase
+
+|Frist, Termin
+|deadline
+
+|Meilensteintrendanalyse
+|milestone trend analysis
+
+|überprüfbar
+|verifiable
+
+|Abnahmekriterium
+|acceptance criterion
+
+|Umfangsreduktion
+|scope reduction
+|===
+
+== Further reading
+
+* Module `bridge-progress-and-milestones` — the evidence the criteria are checked
+  against
+* Module `governance-estimation-hygiene` — where the expected dates come from
+* Module `review-milestone-2` — the session that applies all of this

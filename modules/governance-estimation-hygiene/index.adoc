@@ -1,0 +1,251 @@
+= Estimation hygiene instead of estimation methods
+:topic-id: governance-estimation-hygiene
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain why estimates are systematically too low, and name the
+  mechanisms
+* [[lo-2]] Give an estimate as a range with an explicit confidence, not as a
+  number
+* [[lo-3]] Use your own measured throughput instead of a fresh guess
+* [[lo-4]] Separate an estimate from a commitment, and say who owns each
+* [[lo-5]] Re-estimate when the facts change, and say what triggers that
+
+== Why the number is always too low
+
+Every class has been told about function points and story points. This lesson is
+not about a method, because the method is not where projects lose their time.
+Four mechanisms are, and they are worth being able to name:
+
+[cols="1,2",options="header"]
+|===
+|Mechanism |What it looks like
+
+|*Planning fallacy*
+|you estimate the work you can imagine. The work you cannot imagine is not
+ estimated at zero — it is not estimated at all
+
+|*Anchoring*
+|somebody says "two days?" and every subsequent estimate clusters around two days,
+ including yours
+
+|*The 90 % syndrome*
+|the first 90 % takes 90 % of the time, and the second 90 % takes the other 90 %
+
+|*Optimism under observation*
+|an estimate given in front of the teacher, the client or the group is lower than
+ the same estimate written alone
+|===
+
+None of these is fixed by a better formula. All four are fixed, partially, by
+*hygiene*: how the estimate is produced, phrased, recorded and revised.
+
+TIP: A useful private test before you say a number out loud: *would I bet my
+weekend on it?* The number that survives that question is usually the second one
+you thought of.
+
+== A range, with a confidence
+
+A single number carries no information about how sure you are, so the listener
+supplies their own assumption — usually "that is the plan".
+
+[cols="1,1",options="header"]
+|===
+|Useless |Usable
+
+|"Two days."
+|"Between one and four days. I would be surprised if it were more than four."
+
+|"It'll be done by Friday."
+|"Friday if the import format is what we think it is; otherwise a week later,
+ and I will know which on Tuesday."
+
+|"Half a day."
+|"Half a day for the part I have done before, unknown for the OAuth part —
+ I want two hours to find out first."
+|===
+
+Three properties of the right column. The *width of the range says how much you
+know*, which is information the client needs more than the midpoint. The
+*assumption is named*, so somebody can check it. And there is a *date at which
+the uncertainty will be smaller*, which converts an unpleasant "we do not know"
+into a schedulable step.
+
+The width is not a weakness to be minimised. A range of one to four days
+honestly reported is worth more than "two days" that turns into six — and the
+person who reports it stays believable, which is the asset the whole thing runs
+on.
+
+== Use your own numbers
+
+The best estimator available to you is your own recent history, and you have
+been generating it all term without noticing.
+
+[plantuml,estimate-from-history,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "archive/\n9 changes over 12 weeks" as A
+rectangle "measured throughput\n≈ 0.75 changes per week\nper team" as T
+rectangle "remaining scope\n6 changes open or planned" as S
+rectangle "forecast\n≈ 8 weeks, if nothing changes" as F
+
+A -right-> T
+T -down-> F
+S -down-> F
+@enduml
+----
+
+That forecast is better than a fresh guess for a reason that has nothing to do
+with arithmetic: it already contains everything that actually happened — the
+illness, the exam week, the afternoon lost to a broken build. A guess contains
+only the work somebody can imagine.
+
+Two conditions for it to work. Changes have to be *roughly comparable in size*,
+which is another argument for cutting them small. And you must count *archived*
+changes, not started ones, for the reason from `bridge-progress-and-milestones`.
+
+Where you have no history — a technology nobody has used — the honest move is not
+a bolder guess but a *spike*: a timeboxed investigation with a fixed budget whose
+deliverable is an estimate. "Two hours to find out, then I can tell you" is a
+professional answer.
+
+== Estimate and commitment are different objects
+
+The single most useful distinction in this module, and the one that prevents most
+of the damage.
+
+[cols="1,1",options="header"]
+|===
+|Estimate |Commitment
+
+|a prediction under uncertainty
+|a promise to somebody
+
+|owned by whoever does the work
+|owned by whoever makes the promise
+
+|may be wrong without anybody breaking their word
+|may not be broken silently
+
+|"one to four days"
+|"you will have it on Friday"
+|===
+
+A commitment is legitimate — projects need dates. What is not legitimate is
+*converting an estimate into a commitment without saying so*, which is what
+happens when a manager or a teacher hears "one to four days" and writes "Tuesday"
+into a plan. The conversion happened; it just was not announced, and the person
+who gave the estimate is later held to a promise they never made.
+
+Two rules follow, and they hold in both directions:
+
+* If somebody turns your estimate into a date, *say so out loud*: "that is a
+  commitment now, and it is based on the assumption that the import format is
+  what we think."
+* If you make a commitment, own it. "I said Friday and it will not be Friday" is
+  said *as early as you know*, not on Friday.
+
+CAUTION: Pressure to lower an estimate is not an argument about the work. If the
+date is fixed, the negotiable quantity is *scope*, not the estimate — and moving
+scope is a charter conversation, in the open.
+
+== When to re-estimate
+
+An estimate is a statement about the world as it was known at a moment. When that
+changes, the estimate is stale, and staleness is not a fault — silence about it
+is.
+
+Trigger a re-estimate when:
+
+* an assumption you named turns out to be false;
+* the scope changes, in either direction;
+* you learn something that halves or doubles the uncertainty — the spike came
+  back;
+* a milestone passes and the measured throughput differs from the assumed one.
+
+And a habit worth building for the *next* project: when a change is archived,
+write down what it actually took next to what was estimated. Ten of those lines
+are worth more than any method, because they are measurements of you.
+
+== Decisions
+
+* Estimates are given as a range with a named assumption. A single number is not
+  accepted as an estimate.
+* Forecasts use the team's measured throughput from `archive/`, not a fresh
+  guess.
+* Where there is no history, a timeboxed spike produces the estimate; its budget
+  is fixed before it starts.
+* Estimate and commitment are named as such. Converting one into the other is
+  said out loud.
+* Every archived change records actual against estimated effort, in one line.
+* Re-estimation is triggered by a falsified assumption, a scope change or a
+  milestone, and reported when it happens.
+
+== Pitfalls
+
+* A single number. The listener fills in a confidence you did not give.
+* Estimating in front of the group without thinking alone first — anchoring
+  guarantees the numbers converge on the first one said.
+* Estimating the imaginable work and forgetting review, migration, deployment,
+  documentation and the things not yet known.
+* Lowering an estimate because somebody looked unhappy. The work does not become
+  smaller.
+* Reporting "on track" until the deadline. The bad news does not improve with
+  age; it only removes the options for reacting to it.
+* Never comparing actual against estimate, and therefore learning nothing across
+  the whole year.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Schätzung
+|estimate
+
+|Zusage, Verpflichtung
+|commitment
+
+|Bandbreite
+|range
+
+|Planungsfehlschluss
+|planning fallacy
+
+|Ankereffekt
+|anchoring
+
+|Durchsatz
+|throughput
+
+|Zeitfenster, begrenzte Untersuchung
+|timebox, spike
+
+|Nachkalkulation
+|actual versus estimate
+|===
+
+== Further reading
+
+* Module `bridge-progress-and-milestones` — where the throughput number comes
+  from
+* Module `governance-milestones` — dates that can be verified
+* Steve McConnell, *Software Estimation* — the standard treatment, if you want
+  the methods after all

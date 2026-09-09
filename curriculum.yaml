@@ -269,6 +269,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-project-charter]
+    status: ready
 
   - id: governance-milestones
     title: Planning milestones that can be verified
@@ -280,6 +281,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-estimation-hygiene]
+    status: ready
 
   - id: governance-acceptance
     title: Acceptance and handover
@@ -291,6 +293,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-milestones]
+    status: ready
 
   - id: sdd-principle-not-tool
     title: The principle is the subject, not the tool
@@ -562,6 +565,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [docker-images]
+    status: ready
 
   - id: docker-multiarch
     title: Images for more than one processor architecture
@@ -573,6 +577,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [docker-images]
+    status: ready
 
   - id: review-milestone-2
     title: Second milestone review
@@ -584,6 +589,7 @@ topics:
     taught_in: jg3
     prerequisite_for: none
     requires: [review-milestone-1, governance-milestones]
+    status: ready
 
   - id: compose-basics
     title: Describing an application of several services

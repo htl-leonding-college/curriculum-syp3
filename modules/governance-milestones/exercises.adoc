@@ -1,0 +1,139 @@
+= Planning milestones that can be verified — exercises
+:topic-id: governance-milestones
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Classify and repair
+
+kind: drill
+
+For each, say whether it is a milestone, a phase, a task or a deadline. Rewrite
+everything that is not a milestone into one.
+
+. "Requirements analysis"
+. "Lisa implements the booking service"
+. "Diploma thesis submission, 2027-04-10"
+. "Prototype ready"
+. "Sprint 3"
+. "The client has seen the system"
+
+.Solution
+[%collapsible]
+====
+. *Phase.* → "By 2026-10-10 every charter objective has at least one capability
+  in `specs/`, and the open-questions list names its sources, checked by the
+  teacher."
+. *Task.* → the milestone above it: "By 2026-11-14 `specs/booking` is archived
+  and its three scenarios run on the deployed app, checked by the reviewing
+  team."
+. *Deadline* — externally fixed, no rewriting. It should have a milestone four
+  weeks before it.
+. *Almost a milestone*, missing everything checkable. → "By 2026-12-05 a trainer
+  records one full session end to end on the deployed system, observed by the
+  client."
+. *Phase*, and a timebox at that. A sprint may *contain* a milestone; it is not
+  one.
+. *Almost.* "Has seen" is not observable enough — seen what, and did it work? →
+  "By 2027-03-06 the client runs two scenarios of their choosing on the deployed
+  system without help from the team."
+
+The recurring repair: replace the noun with a *sentence about what the system
+does*, and name who watches.
+====
+
+== Place the milestones
+
+kind: drill
+
+A project runs from September to April. The team knows the domain well but has
+never deployed anything, and authentication is an open question. Propose four
+milestones with dates and criteria, and justify each placement in one clause.
+
+.Solution
+[%collapsible]
+====
+A defensible plan:
+
+* *M1, mid-October* — "the charter is signed, every objective has a capability in
+  `specs/`, and the open questions list names authentication with its source."
+  Early, because it is cheap to change everything now.
+* *M2, end of November* — "one capability runs end to end on the deployed system
+  and a trainer uses it unaided." Early *and* thin, because deployment is the
+  risk this team has never touched. This is the most important milestone in the
+  plan.
+* *M3, early February* — "all capabilities archived, pipeline green on `main`,
+  reviewing team runs two scenarios of its choosing." Feature complete, with two
+  months left to react.
+* *M4, early March* — "the client runs two scenarios unaided on the deployed
+  system." Four weeks before the April deadline, so a slip can still be answered
+  by cutting scope.
+
+The justification that matters is M2. Authentication is an open question and the
+team has never deployed; putting both in front of one early milestone converts
+the project's two biggest unknowns into knowns in November rather than in March.
+
+A plan with M1 in October and everything else in March is the common student
+version, and it is a plan that cannot react.
+====
+
+== Read a trend
+
+kind: drill
+
+Three reviews recorded the expected date of the "feature complete" milestone:
+
+----
+review 1 (07 Nov):  expected 06 Feb
+review 2 (05 Dec):  expected 20 Feb
+review 3 (16 Jan):  expected 13 Mar
+----
+
+The final deadline is 10 April, and acceptance needs four weeks.
+
+. What is the rate?
+. Extrapolate to the next review, four weeks later.
+. What do you say to the client, and when?
+
+.Solution
+[%collapsible]
+====
+. Roughly two weeks of slip per month of elapsed time — and it is *accelerating*
+  slightly: 14 days over four weeks, then 21 days over six.
+. At the next review, expect "feature complete" to be quoted around 27 March.
+  With four weeks of acceptance that lands past the deadline.
+. Not "we are on track". The sentence is: "our feature-complete date has moved
+  two weeks per review for three reviews. Extrapolated, it lands after the
+  deadline. We would like to decide now which capability to drop, while dropping
+  it is still cheap." Said *at review 3*, in January — not in March, when the
+  only remaining lever is quality.
+
+The instructive part is that at every single review the team could truthfully
+have said "we are working hard and made progress". Both statements were true;
+only one of them was useful.
+====
+
+== Write your own milestone plan
+
+kind: project
+
+. Write four milestones for the rest of your project, using the formula: date,
+  observable condition, external observer, mechanism.
+. Check each against the "could this be false?" test. Delete any that could not.
+. Make sure one of them is an early, deployed, end-to-end slice — and if the
+  first such milestone is after February, move it.
+. Make sure one falls at least four weeks before your final deadline.
+. Start the trend record: for each milestone, note today's expected date. Repeat
+  at every review, in the same file.
+. Agree the plan with your client or teacher, and record it in the charter or
+  next to it.
+
+Step 5 costs four lines per review and is the only part of this module that
+produces information you cannot get any other way.
