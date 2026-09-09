@@ -92,14 +92,23 @@ shows what exists and compares estimate against reality.
 
 == Assessment
 
-You are assessed in an *oral examination*. That is a deliberate choice and it
-follows from something you already know: an agent produces a plausible solution
-to almost any exercise in seconds. An exercise handed in is therefore no longer
-proof of anything.
+Assessment has two parts, and they ask different things of you.
+
+*Four written exams* over the year — normally two per semester. They cover the
+modules taught up to that point and are answered in writing, under time. What
+they check well is breadth: whether the vocabulary, the distinctions and the
+procedures are available to you without looking them up.
+
+*Oral examinations.* They check depth: whether you can explain a result, justify
+a decision, and say what you would do differently. That is a deliberate choice
+and it follows from something you already know: an agent produces a plausible
+solution to almost any exercise in seconds. An exercise handed in is therefore no
+longer proof of anything.
 
 So the exercises stop pretending to be proof and become what they are — an
 occasion to learn. Every module ships its exam questions with it, in
-`questions.adoc`. Nothing is hidden, nothing is unlocked later.
+`questions.adoc`, and both the written exams and the oral examination draw on
+that same catalogue. Nothing is hidden, nothing is unlocked later.
 
 [TIP]
 ====

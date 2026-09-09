@@ -1,4 +1,4 @@
-= Course overview, organisation and assessment — questions
+= What this course is about — questions
 :topic-id: course-overview
 :icons: font
 
@@ -14,41 +14,158 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+*Governance* is the outer frame, and it is the one part that is not optional:
+project proposal, project charter, milestone plan, acceptance. It exists because
+every project form you will meet up to the diploma thesis demands it, and it is
+what fixes goals, deliverable, dates and responsibility.
+
+*Process models and SDD* is the inside: how you actually get from a goal to a
+result. Waterfall, Scrum and spec-driven development are taught as three
+different tempos rather than as three competing religions.
+
+*Modelling* is how you describe a system so that somebody else understands it:
+UML use case, class, activity and state diagrams — kept as source text, not as
+pictures, so they can be reviewed and diffed like code.
+
+*Tools* are what any of the above needs to be more than talk: git, AsciiDoc,
+GitHub Actions and Pages, AI agents, Docker, compose, minikube.
+
+The four are not four unrelated subjects. They are the outer frame, the inner
+work, the way a system is described, and the equipment.
+
+Points the answer must contain:
 
 * Governance — the outer, mandatory frame: proposal, charter, milestones,
   acceptance
 * Process models and SDD — how the work is done inside that frame
 * Modelling — describing a system with UML, kept as source text
 * Tools — git, AsciiDoc, CI, AI agents, containers
+====
 
 == Why can the execution side change without touching the governance side?
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because the two answer different questions. The charter asks *what* is to be
+achieved, for whom, and by when. It never prescribes *how* the team works.
+
+.The frame is fixed; what happens inside it is the team's choice
+[graphviz,q-outside-inside,svg]
+----
+digraph frame {
+  bgcolor="transparent";
+  compound=true;
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+
+  subgraph cluster_gov {
+    label="Governance — frozen, the yardstick\ndocs/: proposal, charter, milestone plan, acceptance";
+    fontname="Helvetica"; fontsize=10; color="#666666";
+
+    subgraph cluster_exec {
+      label="Execution — the team's choice, changes visibly";
+      fontname="Helvetica"; fontsize=10; color="#999999";
+      E [label="Scrum   →   spec-driven development\nopenspec/specs, openspec/changes, src/"];
+    }
+  }
+}
+----
+
+So "we use Scrum" was a decision of the team, not a requirement of the frame.
+Replacing it with spec-driven development changes the working method, the
+artefacts under `openspec/`, and the daily rhythm — and leaves the goals, the
+deliverable and the milestone dates exactly where they were. Nothing in `docs/`
+has to be rewritten.
+
+The reverse is not true, and that asymmetry is the point: a change to the
+governance side (a new goal, a moved deadline) always reaches the execution side.
+
+Points the answer must contain:
 
 * The charter asks for goals, deliverables and dates, never for a process model
 * Scrum was a choice, not a requirement, so replacing it with SDD changes
   nothing on the outside
+====
 
 == How is a lesson structured, and where does the project work happen?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A lesson is three teaching units: *one unit of theory, two units of practice*.
+
+----
+1 UE theory     the idea, the vocabulary, the decision
+2 UE practice   your hands on the keyboard
+----
+
+Project work happens *outside* the lesson. Lesson time is input, review and
+getting unstuck — it is deliberately not the time in which the project gets
+built, because three units a week would never be enough for that and pretending
+otherwise produces projects that exist only on paper.
+
+Three lessons in the year are *milestone reviews*: the team shows what actually
+exists and compares the estimate with reality. Those are the moments where a
+project that has quietly stalled becomes visible while there is still time.
+
+The order of topics is not the order of a textbook. It follows what you need to
+be able to do next: git before you can hand anything in, AsciiDoc before
+documentation means anything, an agent before spec-driven development is more
+than a claim.
+
+Points the answer must contain:
 
 * Three units per lesson: one theory, two practice
 * Project work happens outside the lesson; lesson time is input, review and help
 * Three milestone reviews during the year
+====
 
 == How are you assessed, and why are the exam questions published in advance?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Assessment has two parts. *Four written exams* over the year — normally two per
+semester — cover the modules taught up to that point and check breadth: whether
+the vocabulary, the distinctions and the procedures are there without looking
+them up. *Oral examinations* check depth: whether you can explain a result,
+defend a decision, and say what you would do differently.
 
-* Oral examination
+The weight on the oral part follows from something you already know: an agent
+produces a plausible solution to almost any exercise in seconds. An exercise
+handed in therefore proves nothing about who can do what — not because students
+cheat, but because the artefact stopped carrying the information it used to
+carry.
+
+So the exercises stop pretending to be proof and become what they always were
+useful as: an occasion to learn.
+
+The questions ship *with* each module, in `questions.adoc`, and both the written
+exams and the oral examination draw on that same catalogue. Nothing is hidden and
+nothing is unlocked later, for two reasons. Publishing them makes the target
+explicit — you can see what "understood this module" means before you start. And
+hiding them would buy nothing anyway: the only thing a secret question set
+protects is the illusion that the handed-in exercise was the evidence.
+
+TIP: Read a module's questions *before* working through it. They tell you what
+the module is for, which is more useful than reading the text twice.
+
+Points the answer must contain:
+
+* Four written exams over the year, normally two per semester, plus oral
+  examinations
 * An agent can solve any handed-in exercise, so handing in proves nothing
 * The exercise becomes an occasion to learn; the questions state what you must be
   able to explain
+* Written and oral assessment draw on the same published catalogue
+====

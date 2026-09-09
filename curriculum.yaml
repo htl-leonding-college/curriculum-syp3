@@ -657,8 +657,8 @@ topics:
 # Reserve U26-U30 — fällt bei Terminausfällen zuerst weg (D9)
 # ============================================================================
 
-  - id: assessment-oral-exams
-    title: Oral assessment and how it is conducted
+  - id: assessment-written-and-oral
+    title: Written exams and oral assessment
     block: governance
     theme: Assessment
     kind: theorie
