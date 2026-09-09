@@ -1,0 +1,227 @@
+= Repeating workflows and stop conditions
+:topic-id: ai-agentic-loops
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Describe the agentic loop and say what makes it stop
+* [[lo-2]] Formulate a stop condition a machine can evaluate
+* [[lo-3]] Recognise a loop that is not converging and end it
+* [[lo-4]] Split a task into steps an agent can carry out unattended
+* [[lo-5]] Decide which work is safe to run in a loop and which is not
+
+== The loop
+
+An agent does not answer once. It runs a cycle: read the goal, decide on an
+action, carry it out, look at the result, decide again. The interesting question
+is not how the cycle works but *what ends it*.
+
+[plantuml,agentic-loop,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+start
+:read goal and current state;
+repeat
+  :choose an action;
+  :run it — edit, command, search;
+  :observe the result;
+repeat while (stop condition met?) is (no)
+->yes;
+:report;
+stop
+@enduml
+----
+
+Everything in that picture is mechanical except the diamond. A loop with a sharp
+stop condition finishes and hands you something checkable. A loop without one
+runs until the context is exhausted, the money is gone, or somebody presses
+kbd:[Ctrl+C] — and leaves a repository in an unknown state.
+
+*The stop condition is the part you are responsible for.*
+
+== Stop conditions a machine can evaluate
+
+"Until it is good" is not a stop condition. "Until `./gradlew test` exits 0" is.
+The difference is whether a *machine* can decide, because the agent is the one
+that has to evaluate it, and the agent is a poor judge of its own work.
+
+[cols="1,1",options="header"]
+|===
+|Unusable |Usable
+
+|"until the code is clean"
+|"until `./gradlew test` exits 0 and `spotlessCheck` passes"
+
+|"until the bug is fixed"
+|"until `SessionSortTest` passes and no other test broke"
+
+|"until the documentation is complete"
+|"until every module in `curriculum.yaml` with `status: ready` passes
+ `check-curriculum.py`"
+
+|"a few times"
+|"at most 5 attempts, then stop and report"
+|===
+
+Every usable loop carries *two* conditions, and students reliably write only the
+first:
+
+* a *success* condition — what must be true for the work to be done;
+* a *budget* — attempts, time or steps, after which it stops even though it has
+  not succeeded.
+
+Without the budget, a task the agent cannot do becomes a task it tries forever.
+The budget is not pessimism; it is the difference between "this failed, here is
+where" and a session you have to abandon.
+
+TIP: The best success conditions already exist in your repository. A test suite,
+`openspec validate`, a linter, a check script — each is a sentence a machine can
+evaluate, written before anybody needed it for a loop.
+
+== When a loop is not converging
+
+Three symptoms, all recognisable within a minute of watching:
+
+* *Oscillation.* The same two states alternate — a change is made, then undone,
+  then made again. Usually two requirements contradict each other and the agent
+  is satisfying them in turn.
+* *Drift.* Each iteration touches more files than the last. The original task is
+  no longer what is being worked on.
+* *Green by demolition.* The condition is met, but by weakening the check —
+  a test deleted, an assertion softened, a file excluded. The loop optimised what
+  you measured instead of what you meant.
+
+The third is the dangerous one, because it *looks* like success. It is also the
+reason the stop condition must be something you would be willing to defend on its
+own: if "tests pass" can be achieved by deleting a test, then "tests pass" was
+never the goal.
+
+What to do in all three cases is the same: stop the loop, read the diff, and fix
+the *task*, not the agent. An oscillating loop is a contradictory instruction; a
+drifting loop is a task that was too large; a demolished check is a stop
+condition that was not defensible.
+
+== Splitting work so a loop can run unattended
+
+A loop can only run unattended over work where every step is verifiable without
+you. That is a real constraint on how the task is cut.
+
+[cols="1,2",options="header"]
+|===
+|Suits a loop |Needs you in the room
+
+|Make the failing test pass
+|Decide which behaviour is correct
+
+|Apply one rename across the project
+|Choose the new name
+
+|Bring every module up to a check that already exists
+|Decide what the check should be
+
+|Update dependencies until the build is green
+|Decide whether a breaking upgrade is worth it
+|===
+
+The pattern in the left column: *the decision is already made and written down*,
+and what remains is mechanical work with a machine-checkable end. The right
+column is where judgement happens, and judgement does not go in a loop.
+
+This is the same division of labour as everywhere else in this course — you state
+the intent, the machine does the execution — only here the intent has to be
+written sharply enough that nobody is watching while it is carried out.
+
+== What is safe to run unattended
+
+Reversibility again, from the previous lesson, applied to whole sessions rather
+than single commands.
+
+Safe: work on a *branch*, in a clean working tree, with the tests as the stop
+condition, where the worst outcome is a bad commit you can throw away.
+
+Not safe: anything touching `main`, anything that pushes, anything that talks to
+a live system or a real database, anything that costs money per attempt without a
+budget, and anything where the failure mode is silent.
+
+Three practical rules that follow:
+
+* *Start clean.* An unattended loop on top of uncommitted work destroys evidence
+  of what it changed. Commit or stash first.
+* *Loop on a branch.* Then the review of the result is an ordinary diff and the
+  undo is `git switch`.
+* *Read the diff before the summary.* The agent's account of what it did is a
+  claim; the diff is the fact. This is not distrust of a machine in particular —
+  it is the same rule that applies to a classmate's pull request.
+
+== Decisions
+
+* Every loop is given both a success condition and a budget. A loop without a
+  budget is not started.
+* Success conditions are machine-evaluable — a test, a check script,
+  `openspec validate`. Not an opinion about quality.
+* Unattended loops run on a branch, from a clean working tree, never on `main`.
+* The diff is read before the agent's summary is believed.
+* A loop that weakens a check to satisfy it counts as a failed loop, and the
+  result is discarded rather than repaired.
+* Nothing that pushes, deploys or touches live data runs unattended.
+
+== Pitfalls
+
+* A stop condition only a human can evaluate. The agent then decides it is done,
+  and it is the worst available judge of that.
+* No budget. A task the agent cannot do becomes an endless one.
+* Accepting a green result without reading how it was achieved.
+* Starting a loop with uncommitted work in the tree, so afterwards nobody can
+  tell what the loop changed.
+* Looping over a task that contains a decision. The agent will make the decision,
+  and it will not tell you that it did.
+* Widening the task mid-loop ("while you are at it …"). That is how drift starts.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Schleife, Zyklus
+|loop, iteration
+
+|Abbruchbedingung
+|stop condition
+
+|Erfolgsbedingung
+|success condition
+
+|Budget, Obergrenze
+|budget, cap
+
+|Konvergenz
+|convergence
+
+|unbeaufsichtigt
+|unattended
+
+|abdriften
+|to drift
+|===
+
+== Further reading
+
+* Module `ai-harness-engineering` — the permissions that decide what a loop may
+  do
+* Module `ai-context-continuation` — why a long loop runs out of context
+* Module `openspec-hands-on` — `tasks.md` as a stop condition that was written
+  before anybody needed one

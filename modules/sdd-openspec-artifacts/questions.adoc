@@ -10,19 +10,252 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-// Jede Frage ist ein eigener Abschnitt und nennt in der ersten Zeile ihres
-// Rumpfes die Lernziele, die sie prüft:  covers: lo-1, lo-2
-
-== TODO: Prüfungsfrage
+== Which artefacts does a change carry, and what does each answer?
 
 covers: lo-1
 
 .Answer
 [%collapsible]
 ====
-TODO: Erläuterung — warum ist das so, woran merkt man es, was folgt daraus.
+Four, and each one answers a different question:
+
+|===
+|Artefact |Question |Fails when
+
+|`proposal.md`
+|why now, what changes, which capabilities
+|it lists activities instead of a reason
+
+|`specs/**/spec.md`
+|what must be true afterwards
+|it describes the implementation
+
+|`design.md`
+|which decision, which rejected alternatives, why
+|it exists although nothing was decided
+
+|`tasks.md`
+|which steps, in which order, verified how
+|a task cannot say whether it is done
+|===
+
+They are deliberately separate because they answer to different readers and
+change at different moments. The proposal is read once, when the change is
+approved. The spec outlives the change entirely — it folds into the target state.
+The design is read years later by somebody about to repeat a rejected idea. The
+tasks are read daily and then never again.
+
+What is *not* among them is as telling: no status report, no percentage, no time
+sheet. The artefacts are the report.
 
 Points the answer must contain:
 
-* TODO: erwarteter Punkt
+* proposal, spec delta, design (conditional), tasks
+* One question per artefact, and the characteristic failure of each
+* No separate status reporting — the artefacts carry the progress
+====
+
+== What is the difference between the target state and the delta?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+Tense and lifetime.
+
+`openspec/specs/` is the *target state*: present tense, describing the system as
+it is meant to be now. `openspec/changes/<id>/` is a *delta*: one intention,
+describing what shall become true. Archiving folds the delta into the target
+state and moves the change into `changes/archive/`.
+
+[plantuml,q-target-and-delta,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "specs/\ntarget state\npresent tense" as S
+rectangle "changes/<id>/\ndelta\nwhat shall become true" as C
+rectangle "changes/archive/" as A
+C -down-> S : archive
+C -right-> A
+@enduml
+----
+
+The point of the split is that a fact lives in exactly one place. Documentation
+goes stale when the same statement exists twice and only one copy gets updated;
+here there is nothing to keep in sync.
+
+The test when you cannot decide: *would this sentence still be true in a year?*
+If yes, target state. If it only makes sense while the work is happening, it is
+part of the change.
+
+Points the answer must contain:
+
+* specs/ = target state, present tense, what is true now
+* changes/ = delta, one intention, what shall become true
+* Archiving folds the delta in; the archive carries the history
+* One fact in one place — that is what prevents stale documentation
+====
+
+== Write a requirement with a scenario, and say what makes it checkable.
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+[source,markdown]
+----
+### Requirement: A full session refuses further bookings
+
+The system SHALL refuse a booking when the session has reached its capacity,
+and SHALL state the reason to the caller.
+
+#### Scenario: booking the twenty-first place
+- **GIVEN** a session with capacity 20 and 20 confirmed bookings
+- **WHEN** a member books that session
+- **THEN** the booking is refused
+- **AND** the response names the reason "session full"
+----
+
+Three properties make it checkable. It says *what*, never *how* — no table, no
+class, no framework appears, so it survives a rewrite of the implementation.
+Every value is *observable from outside*: capacity, a refusal, a reason string.
+And it is *falsifiable* — you can state exactly what would prove it wrong.
+
+`SHALL` marks the sentence as binding rather than aspirational; it is the same
+vocabulary the client's Pflichtenheft uses.
+
+Scenarios come roughly in threes: the normal case, the boundary, and the case
+that must be refused. A spec with only the happy path is the commonest defect in
+student work — the refusals are where the requirements actually are.
+
+Points the answer must contain:
+
+* Requirement states the behaviour, scenario makes it checkable
+* GIVEN/WHEN/THEN with observable values
+* What, not how — no implementation vocabulary
+* Normal case, boundary, refusal — not only the happy path
+====
+
+== When does a change need a design document?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+When there was a *choice*. That is the whole test.
+
+|===
+|Needs one |Does not
+
+|two storage options, one picked
+|adding a field to an existing form
+
+|a new dependency enters the project
+|renaming a method
+
+|the data model changes shape
+|fixing an off-by-one
+
+|something is deliberately not done
+|a change with one sensible implementation
+|===
+
+It must contain the decision, the alternatives that were seriously considered,
+and why they were rejected. The rejected options are the part with the long
+shelf life: in six months somebody proposes one of them again, and the document
+is the difference between a five-minute answer and the same argument a second
+time.
+
+Both failure directions cost. Skipping it when a decision was made loses the
+reasoning permanently — nobody reconstructs it from the code. Writing one for a
+change that decided nothing produces pages nobody reads, and that habit is
+exactly why the necessary one later gets skipped too.
+
+Points the answer must contain:
+
+* The test: was there a real choice between reasonable options?
+* Contents: decision, alternatives considered, reasons for rejection
+* Rejected alternatives are the durable value
+* Both skipping and writing it by default are failures
+====
+
+== What must a task contain to be usable?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+A statement of *how it is verified*. A task without a check is a wish, and a list
+of wishes cannot tell anybody whether the change is finished.
+
+|===
+|Unusable |Usable
+
+|"Implement booking"
+|"`BookingService.book()` refuses a full session; verified by
+ `BookingServiceTest.refusesWhenFull`"
+
+|"Fix the tests"
+|"`./gradlew test` is green"
+
+|"Documentation"
+|"`README` names the new endpoint; `openspec validate` passes"
+|===
+
+Tasks phrased as topics — "Testing", "Frontend" — can never be honestly ticked
+off, which is why a task list of topics always ends the term at eighty per cent.
+
+Order carries information too: it is the only place the *sequence* of the work is
+recorded. If task 7 cannot begin before task 3 finishes, that has to be visible,
+or two people will start it at the same time.
+
+The audience is the reason for all of it: tasks are written for somebody else,
+including yourself in three weeks, who will have forgotten the context entirely.
+
+Points the answer must contain:
+
+* Every task names its verification; without one it is a wish
+* Concrete deliverable, not a topic heading
+* The order records the dependencies between steps
+* Written for another reader, not as a private note
+====
+
+== Why is the proposal separate from the specification?
+
+covers: lo-1, lo-2
+
+.Answer
+[%collapsible]
+====
+Because they have different lifetimes and different readers.
+
+The proposal answers *why now* — the problem in the words of somebody who is not
+on the team, the boundary of the change, and the capabilities it touches. It is
+read once, when the change is approved, and then it is history.
+
+The specification answers *what must be true afterwards*, and it is the part that
+survives: on archiving it folds into the target state and stays there long after
+the change is forgotten. It contains no justification at all — a target state
+does not argue for itself.
+
+Merging them produces the usual student artefact: a document that explains and
+specifies at once, and can therefore be neither reviewed for its reasoning nor
+folded into `specs/` without carrying the reasoning along. The reason is dated;
+the requirement is not.
+
+The characteristic failure of a proposal is worth stating separately: if every
+sentence begins with "we will", it is a to-do list and the reason has not been
+written yet.
+
+Points the answer must contain:
+
+* Proposal = why now, boundary, capabilities; read once
+* Specification = what must be true; folds into the target state and stays
+* Different lifetimes, so keeping them apart keeps the target state clean
+* "We will …" throughout means the reason is missing
 ====

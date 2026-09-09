@@ -11,18 +11,151 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-// Diese Datei darf inhaltsleer bleiben. Jede Aufgabe trägt ihre Art:
-//   kind: drill    generisch, wiederholbar, Musterlösung möglich
-//   kind: project  am eigenen Projekt, keine Musterlösung
-
-== TODO: Aufgabentitel
+== Sort the sentences into the right artefact
 
 kind: drill
 
-TODO: Arbeitsauftrag
+Each sentence comes from a real student change. Say where it belongs —
+`proposal.md`, the spec delta, `design.md`, `tasks.md` — or that it belongs
+nowhere.
+
+. "Trainers currently write attendance on paper and lose the sheets."
+. "The system SHALL record attendance per member and session."
+. "We chose PostgreSQL over SQLite because two trainers enter data at the same
+  time."
+. "Create the `Attendance` entity."
+. "This will be really useful for the club."
+. "GIVEN a session that has already ended, WHEN a trainer records attendance,
+  THEN the entry is refused."
+. "Marco does the frontend, Lisa the backend."
 
 .Solution
 [%collapsible]
 ====
-TODO: Lösung oder Abschnitt löschen
+. *Proposal* — the why, stated in the client's terms rather than the team's.
+. *Spec delta* — a requirement: what must be true afterwards.
+. *Design* — a decision with a rejected alternative and a reason. Note that the
+  reason is a *fact about the client* (concurrent writers), not a preference.
+. *Tasks* — but not yet usable: it names no verification. "Create the
+  `Attendance` entity; `./gradlew test` compiles and `AttendanceTest` passes."
+. *Nowhere.* Not checkable, not action-changing, and it is the kind of sentence
+  that makes a proposal unreviewable.
+. *Spec delta* — a scenario, and a refusal one, which is the kind teams forget.
+. *Nowhere in the change.* Who does what is team organisation. It changes weekly
+  and would be wrong in the archive within a fortnight.
+
+Sentences 5 and 7 are the interesting ones: both feel like they belong somewhere,
+and neither survives the question "would this still be true, and still matter, in
+a year?"
 ====
+
+== Repair a specification
+
+kind: drill
+
+A team wrote this. Find the defects and rewrite it.
+
+[source,markdown]
+----
+### Requirement: Booking
+
+The BookingController should have a POST /bookings endpoint that inserts a row
+into the bookings table and returns 200. It should be fast.
+
+#### Scenario: booking works
+- GIVEN the app is running
+- WHEN I book
+- THEN it works
+----
+
+.Solution
+[%collapsible]
+====
+Four defects.
+
+* *Implementation instead of behaviour.* Controller, endpoint, table and status
+  code are design. The first rename makes the spec wrong although nothing about
+  the requirement changed.
+* *"should" instead of SHALL.* A requirement is binding or it is not a
+  requirement.
+* *"It should be fast."* Not observable. Either give a number or drop it.
+* *The scenario checks nothing.* "I book" and "it works" name no values and no
+  observable result — it cannot fail, so it cannot pass.
+
+Rewritten:
+
+[source,markdown]
+----
+### Requirement: A member can book a place in a session
+
+The system SHALL record a booking for a member in a session that has free
+capacity, and SHALL confirm it to the caller within 2 seconds.
+
+#### Scenario: booking a free place
+- **GIVEN** a session with capacity 20 and 3 confirmed bookings
+- **WHEN** member M books that session
+- **THEN** the booking is recorded as confirmed
+- **AND** the confirmation names the session and the member
+
+#### Scenario: booking a session that already started
+- **GIVEN** a session whose start time is in the past
+- **WHEN** member M books that session
+- **THEN** the booking is refused
+- **AND** the response names the reason "session already started"
+----
+
+The refusal scenario was not in the original at all. It usually is not — and it
+is the one that turns out to matter.
+====
+
+== Decide: design document or not
+
+kind: drill
+
+For each change, say whether it needs a `design.md`, in one sentence.
+
+. Add a `notes` field to the member form.
+. Store uploaded photos: in the database or on the file system?
+. Rename `SessionSvc` to `SessionService`.
+. Introduce a scheduling library instead of writing the recurrence rules.
+. Fix a sorting bug that shows sessions in the wrong order.
+. Decide *not* to build the statistics page that the charter mentions.
+
+.Solution
+[%collapsible]
+====
+. *No.* One sensible implementation, no choice made.
+. *Yes.* Two real options with different consequences for backup and size.
+. *No.* Nothing was decided that anybody would ask about later.
+. *Yes.* A new dependency is a decision — it has to be maintained, updated and
+  understood by four people.
+. *No.* There is one correct behaviour; the bug is not a choice.
+. *Yes*, and this is the one teams miss. A deliberate omission is a decision, and
+  the only place it can be recorded is a design document — otherwise the June
+  question "why is this missing?" has no answer except "we forgot".
+
+The pattern: the trigger is a *choice*, and choices include the choice not to do
+something.
+====
+
+== Write the artefacts for one change in your project
+
+kind: project
+
+Pick one intention from your project that is genuinely reviewable in one sitting.
+Then:
+
+. Write `proposal.md`. Three paragraphs: why now (in the client's words), what
+  changes, which capabilities are touched. Delete every sentence starting with
+  "we will" and check whether a reason is left.
+. Write the spec delta. At least one requirement with `SHALL`, and three
+  scenarios: normal case, boundary, refusal.
+. Decide whether `design.md` is needed and write down the answer either way —
+  including "no decision was taken here" if that is the case.
+. Write `tasks.md` so that every entry names how it is verified, in an order that
+  reflects what depends on what.
+. Run `openspec validate --changes` and have another team member review the
+  spec with one question only: *what would prove this wrong?*
+
+If they cannot answer that question for a scenario, the scenario is not
+finished.

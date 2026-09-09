@@ -1,0 +1,144 @@
+= Repeating workflows and stop conditions — exercises
+:topic-id: ai-agentic-loops
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Turn six wishes into stop conditions
+
+kind: drill
+
+Rewrite each so that a machine can evaluate it, and add a budget.
+
+. "Fix all the tests."
+. "Make the documentation complete."
+. "Clean up the code."
+. "Update the dependencies."
+. "Make it faster."
+. "Get rid of the warnings."
+
+.Solution
+[%collapsible]
+====
+. "Until `./gradlew test` exits 0 and no test file was deleted or annotated
+  `@Disabled`. At most 5 attempts."
+. "Until `python tools/check-curriculum.py` reports 0 findings. At most 3
+  attempts."
+. "Until `spotlessCheck` passes with the existing configuration. Do not change
+  the configuration. At most 3 attempts."
+. "Until `./gradlew build` is green with the versions in `versions.env` raised to
+  their latest patch release. No major upgrades. At most 5 attempts, then report
+  which dependency blocks it."
+. Not loopable as written — "faster" needs a number and a measurement.
+  "Until `BookingBenchmark` reports under 200 ms median over 100 runs, measured
+  the same way as before the change. At most 5 attempts."
+. "Until `./gradlew build` produces no compiler warning. Warnings may not be
+  suppressed with `@SuppressWarnings` or by lowering the compiler settings. At
+  most 5 attempts."
+
+Two patterns recur. Every rewrite names an *existing* command, and several need
+an explicit clause forbidding the cheap way out — deleting the test, editing the
+config, suppressing the warning. Write that clause before you need it.
+====
+
+== Read three loop transcripts
+
+kind: drill
+
+For each, name the symptom and say what to repair.
+
+[cols="1,3",options="header"]
+|===
+|# |What the log shows
+
+|1
+|Iteration 1 adds `@NotNull` to `memberId`. Iteration 2 removes it because a
+ test passes `null`. Iteration 3 adds it again. Iteration 4 removes it.
+
+|2
+|Iteration 1 edits `BookingService`. Iteration 2 also edits `MemberService`.
+ Iteration 3 reformats twelve files. Iteration 4 changes the build file.
+
+|3
+|Iteration 1: 3 tests fail. Iteration 2: 1 test fails. Iteration 3: all tests
+ pass. The diff shows `SessionSortTest.java` was deleted.
+|===
+
+.Solution
+[%collapsible]
+====
+. *Oscillation.* Two requirements contradict each other: the field is declared
+  non-null and a test asserts null behaviour. The agent cannot resolve it because
+  the resolution is a decision. Repair: decide whether null is legal, write it in
+  the spec, then rerun.
+. *Drift.* The task was too large or too vague, so each iteration widened it. By
+  iteration 4 the loop is working on something nobody asked for. Repair: throw
+  the branch away, split the task, and give the narrower one a stop condition
+  naming the files in scope.
+. *Green by demolition.* The stop condition was met by removing the check.
+  Repair: discard the result — do not restore the test and keep the rest, because
+  the rest was optimised against a check that was not there. Then rerun with
+  "and no test file is deleted or disabled" in the condition.
+
+Case 3 is the one that gets committed in real projects, because the log ends with
+"all tests pass".
+====
+
+== Run a loop and stop it deliberately
+
+kind: drill
+
+On a scratch branch of any repository with a test suite:
+
+. Break one test on purpose — change an expected value.
+. Start an agent with the task "make `./gradlew test` pass; at most 3 attempts;
+  do not delete or disable any test; then report".
+. Watch the iterations. Note what it reads before it edits anything.
+. Repeat the experiment with the budget removed and a deliberately impossible
+  break — assert something that contradicts another test. Stop it yourself when
+  you recognise the symptom, and say which one it was.
+
+.Solution
+[%collapsible]
+====
+The first run normally finishes in one or two iterations, and the interesting
+observation is the order: a usable agent reads the failing test and the code
+under it *before* editing, because the failure message alone does not say which
+of the two is wrong.
+
+The second run oscillates. Two tests assert contradictory things, so any edit
+that fixes one breaks the other, and it alternates. That is the symptom to name —
+and the reason no budget means no ending: the loop is not failing, it is
+succeeding at half the goal, twice per iteration, forever.
+
+The lesson to take away is not "the agent is bad at this". A human given two
+contradictory tests and told to make both pass would do exactly the same thing,
+only slower.
+====
+
+== Put one loop into your project
+
+kind: project
+
+Find a repetitive verification in your project that a person currently does by
+hand — running the tests before a commit, checking that every spec validates,
+confirming the site still builds.
+
+. Write the loop as a task: the goal in one sentence, the success condition as an
+  existing command, the budget, and one clause forbidding the cheap way out.
+. Run it on a branch, from a clean tree.
+. Review the result as a diff *before* reading the agent's summary. Write down
+  one difference between what the summary claims and what the diff shows, if
+  there is one.
+. Record the stop condition in your repository — in the task file or the harness
+  — so the next person runs the same loop rather than inventing a new one.
+
+Bring the stop condition to the milestone review. It is a better piece of
+evidence about how the team works than the code it produced.

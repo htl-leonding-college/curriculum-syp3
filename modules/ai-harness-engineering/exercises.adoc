@@ -1,0 +1,175 @@
+= Shaping the agent's working environment — exercises
+:topic-id: ai-harness-engineering
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Repair an instruction file
+
+kind: drill
+
+A team committed this file. Mark every line that earns its place, and rewrite
+the ones that do not.
+
+----
+# Project instructions
+
+This project is a booking system for a sports club. It is written in Java
+and uses Spring Boot. The team consists of four students of the 3rd year.
+
+Please write clean, maintainable code and be careful with the database.
+Always use best practices.
+
+Build the project. Tests are important.
+
+Our API key for the weather service is wx_live_8831f0c2.
+----
+
+.Solution
+[%collapsible]
+====
+Not one line survives as written.
+
+* *Lines 1–2, the description.* True, and it belongs in the README. It costs
+  context in every session and changes no action.
+* *"clean, maintainable code", "best practices", "be careful with the
+  database".* Neither checkable nor action-changing. Nothing an agent — or a
+  classmate — would do differently after reading them.
+* *"Build the project. Tests are important."* The intention is right, the form is
+  useless: it does not say how.
+* *The API key.* A published credential. It has to be revoked, not just deleted
+  from the file — it is in the git history from the moment it was committed.
+
+A usable version:
+
+----
+# Project instructions
+
+- Build and test with `./gradlew build`. Never build only in the IDE.
+- Tests live next to the class under test, named `*Test.java`.
+- Every schema change is a migration file in `db/migration/`, never an edit
+  to an existing one.
+- Never commit to `main`. Branch, then open a pull request.
+- Secrets come from environment variables. Nothing secret in the repository.
+----
+
+Every line is checkable afterwards and changes what somebody does.
+====
+
+== Assign the permission tiers
+
+kind: drill
+
+Put each command in one of the three tiers — allowed without asking, asks first,
+never — and give the reason in one clause.
+
+. `git status`
+. `git commit -m "..."`
+. `./gradlew test`
+. `rm -rf build/`
+. `git push --force`
+. `npm install left-pad`
+. `curl -X POST https://api.example.com/upload -d @members.csv`
+. `git checkout -- .`
+
+.Solution
+[%collapsible]
+====
+[cols="1,1,2",options="header"]
+|===
+|Command |Tier |Reason
+
+|`git status`
+|allowed
+|reads, changes nothing
+
+|`git commit`
+|asks
+|changes history; easy to undo locally, confusing if unexpected
+
+|`./gradlew test`
+|allowed
+|reproducible, writes only to `build/`
+
+|`rm -rf build/`
+|allowed
+|`build/` is generated; regenerating it costs a minute
+
+|`git push --force`
+|never
+|rewrites history other people already have — not undoable
+
+|`npm install left-pad`
+|asks
+|adds foreign code to the project and changes the lock file
+
+|`curl … -d @members.csv`
+|never
+|sends data — personal data at that — outside the repository
+
+|`git checkout -- .`
+|asks
+|destroys uncommitted work with no way back
+|===
+
+The interesting pair is 4 and 8. Both delete things, and they land in different
+tiers: `build/` is reproducible, uncommitted edits are not. Reversibility, not
+the verb, decides.
+====
+
+== Diagnose four bad results
+
+kind: drill
+
+For each, name the part of the harness that failed — model, instructions,
+context or permissions — and the repair.
+
+. The agent calls `list.getFirst()` on a Java 11 project and it does not compile.
+. It writes tests into `src/test/kotlin` although the project is Java.
+. It says "the `BookingService` has no validation" although the file has forty
+  lines of it.
+. It rewrites `main` and the team's branches are gone.
+
+.Solution
+[%collapsible]
+====
+. *Model.* It produced a plausible API from a newer version. Nothing to repair
+  in the harness — this is why every result is verified by compiling and running.
+  Naming the version in the instruction file makes it rarer, not impossible.
+. *Instructions.* The convention was never written down. Repair: one line in the
+  instruction file, and it holds for everybody from then on.
+. *Context.* It answered about a file it had not read. Repair: give it the file,
+  and be suspicious of any claim about code that was never opened.
+. *Permissions.* A force push had standing permission it should never have. The
+  repair is the settings file, not a conversation — and the incident is the
+  argument for the "never" tier being non-negotiable.
+
+Only the first is the model's. Three out of four bad results in this list are
+repairable, permanently, by editing a committed file.
+====
+
+== Write the harness for your own project
+
+kind: project
+
+For your project repository:
+
+. Write the instruction file. At most fifteen lines, every line checkable and
+  action-changing. Include the build command, the test command, the branch rule
+  and one convention specific to your project.
+. Write down the permission tiers your team agrees on, with a one-clause reason
+  for every entry in the "never" tier.
+. Find one procedure your team has already repeated — a release, a review, a
+  report — and put it in its own file instead of in the instruction file.
+. Open a pull request with all three and have another team member review it.
+  Their job in the review: for each line, ask "what would somebody do
+  differently because of this?"
+
+Anything that survives that question stays.

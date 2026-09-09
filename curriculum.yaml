@@ -221,6 +221,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [sdd-why-specs]
+    status: ready
 
   - id: sdd-change-lifecycle
     title: The life cycle of a change
@@ -498,6 +499,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [openspec-hands-on]
+    status: ready
 
   - id: ai-agentic-loops
     title: Repeating workflows and stop conditions
@@ -509,6 +511,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [ai-harness-engineering]
+    status: ready
 
   - id: review-milestone-1
     title: First milestone review

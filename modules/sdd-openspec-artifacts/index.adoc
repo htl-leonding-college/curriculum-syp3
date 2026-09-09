@@ -3,6 +3,7 @@
 :icons: font
 :source-highlighter: rouge
 :experimental:
+:imagesdir: images
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -14,29 +15,205 @@ endif::[]
 
 == Learning outcomes
 
-* [[lo-1]] TODO: was nach diesem Unterricht gekonnt werden muss
+* [[lo-1]] Name the artefacts of a change and say which question each one answers
+* [[lo-2]] Distinguish the target state from the delta, and say where each lives
+* [[lo-3]] Write a requirement with a scenario that a reader can check
+* [[lo-4]] Decide whether a change needs a design document
+* [[lo-5]] Say what a task list must contain to be usable by somebody else
 
-== TODO: Abschnittstitel
+== Two folders, two tenses
 
-Stichpunkte, Diagramme als PlantUML, rund ein bis zwei Seiten — so viel, wie in
-den Slot dieses Themas passt.
+`openspec-hands-on` walked the loop with the tooling. This lesson looks at what
+that loop leaves behind, because the artefacts — not the commands — are what the
+project is assessed on.
 
-[plantuml,sdd-openspec-artifacts-overview,svg]
+Everything rests on one distinction:
+
+[plantuml,artefact-tenses,svg]
 ----
 @startuml
 skinparam monochrome true
 skinparam shadowing false
-:Beispiel;
+skinparam defaultFontName Helvetica
+
+rectangle "openspec/specs/\nthe target state\n*present tense*\nwhat is true today" as S
+rectangle "openspec/changes/<id>/\none intention\n*future tense*\nwhat shall become true" as C
+rectangle "changes/archive/\nwhat was decided, and when" as A
+
+C -down-> S : "archive: the delta\nfolds into the target state"
+C -right-> A : "the change moves"
 @enduml
 ----
 
+`specs/` is written in the present tense and describes the system as it is meant
+to be *now*. `changes/` is written per intention and describes a *delta*: what
+this one change adds, alters or removes. The two never say the same thing twice —
+which is the property that keeps the documentation from going stale, because
+there is only one place a fact can live.
+
+A useful test when you cannot decide where something goes: *would this sentence
+still be true in a year?* If yes, it is target state. If it only makes sense
+while the work is being done, it belongs to the change.
+
+== The four artefacts
+
+[cols="1,2,2",options="header"]
+|===
+|Artefact |The question it answers |It has failed when
+
+|`proposal.md`
+|Why now? What changes? Which capabilities does it touch?
+|it lists activities ("we will write a service") instead of a reason
+
+|`specs/**/spec.md`
+|What must be true afterwards?
+|it describes the implementation instead of the behaviour
+
+|`design.md`
+|Which decision was taken, which alternatives were rejected, and why?
+|it exists although no choice was ever made
+
+|`tasks.md`
+|Which steps, in which order, and how is each one verified?
+|a task cannot tell you whether it is done
+|===
+
+Note what is *not* in the list: a status report, a time sheet, a progress
+percentage. The artefacts are the report — that is the subject of
+`bridge-progress-and-milestones`.
+
+== The proposal
+
+Three paragraphs, not three pages. The one that matters is the first:
+
+* *Why now* — the problem, in terms of somebody who is not on the team. "Trainers
+  cannot see who paid" beats "we need a payment module".
+* *What changes* — the boundary of this change, stated so a reviewer can tell
+  what is outside it.
+* *Which capabilities* — which parts of the target state this change touches.
+
+The characteristic failure is a proposal that is a to-do list in prose. If every
+sentence starts with "we will", the reason has not been written yet.
+
+== The specification: requirement and scenario
+
+A requirement states a behaviour. A scenario makes it checkable. Neither works
+alone: a requirement without a scenario is an opinion, a scenario without a
+requirement is a test with no stated purpose.
+
+[source,markdown]
+----
+### Requirement: A full session refuses further bookings
+
+The system SHALL refuse a booking when the session has reached its capacity,
+and SHALL state the reason to the caller.
+
+#### Scenario: booking the twenty-first place
+- **GIVEN** a session with capacity 20 and 20 confirmed bookings
+- **WHEN** a member books that session
+- **THEN** the booking is refused
+- **AND** the response names the reason "session full"
+----
+
+Three properties of that block are worth naming, because they are what
+separates a specification from a wish:
+
+* it says *what*, never *how* — no table, no class, no framework appears;
+* every value in it is *observable* from outside the system;
+* it is falsifiable: you can write down exactly what would prove it wrong.
+
+The keyword `SHALL` is not decoration. It marks the sentence as binding, and it
+is the vocabulary the client's own documents already use — the *Pflichtenheft*
+of `sdd-why-specs` is built from the same kind of sentence.
+
+Scenarios come in threes, roughly: the normal case, the boundary, and the case
+that must be refused. A specification with only the happy path is the single most
+common defect in student work, and it is also the one that costs the most in
+June — the refusals are where the interesting bugs live.
+
+== The design document
+
+The one artefact people either skip when they needed it or write when they did
+not. The test is one question: *was there a choice?*
+
+[cols="1,1",options="header"]
+|===
+|Needs a design document |Does not
+
+|Two storage options, one picked
+|Adding a field to an existing form
+
+|A new dependency enters the project
+|Renaming a method
+
+|The data model changes shape
+|Fixing an off-by-one
+
+|Something is deliberately *not* done
+|A change with exactly one sensible implementation
+|===
+
+What it must contain: the decision, the alternatives that were seriously
+considered, and why they were rejected. The rejected options are the valuable
+part — six months later somebody will propose one of them again, and the
+document is the difference between a five-minute answer and a repeated argument.
+
+A design document is not a UML gallery. Diagrams appear where they carry the
+argument, not to fill the page.
+
+== The task list
+
+Tasks are for somebody else — including yourself in three weeks, who will have
+forgotten everything.
+
+[cols="1,1",options="header"]
+|===
+|Unusable |Usable
+
+|"Implement booking"
+|"`BookingService.book()` refuses a full session; verified by
+ `BookingServiceTest.refusesWhenFull`"
+
+|"Fix the tests"
+|"`./gradlew test` is green"
+
+|"Documentation"
+|"`README` names the new endpoint; `openspec validate` passes"
+|===
+
+Every task names *how it is verified*. A task without a check is a wish, and a
+list of wishes cannot tell anybody whether the change is finished.
+
+Order matters too, and for a reason that is easy to miss: the order of the tasks
+is the only place where the *sequence* of the work is recorded. If task 7 cannot
+start before task 3, that has to be visible, or two people will collide.
+
 == Decisions
 
-None specific to this topic.
+* Every change carries `proposal.md`, its spec delta and `tasks.md`. `design.md`
+  is written when a decision was taken.
+* Specifications are written before tasks. Planning work whose target is not yet
+  decided is how scope drifts.
+* Every requirement has at least one scenario, and every scenario names an
+  observable result.
+* Each capability gets at least one refusal scenario, not only the happy path.
+* Every task states its verification. A task without one does not go on the list.
+* `specs/` is present tense and holds no history; the history is the archive.
 
 == Pitfalls
 
-None specific to this topic.
+* Writing the specification in terms of tables, classes or endpoints. That is
+  design leaking into the target state, and it makes the spec obsolete the first
+  time the implementation changes.
+* Only happy-path scenarios. The refusals carry the actual requirements.
+* A proposal that lists activities. Nobody can review a change whose reason is
+  missing.
+* A design document for a change that had no decision — pages nobody reads, and
+  the habit that then makes people skip the one that mattered.
+* Copying target-state text into the change, or the reverse. Two copies of a fact
+  drift apart, and neither is then trustworthy.
+* Tasks phrased as topics ("Testing", "Frontend"). They can never be ticked off
+  honestly.
 
 == Terminology
 
@@ -44,10 +221,37 @@ None specific to this topic.
 |===
 |Deutsch |English
 
-|TODO
-|TODO
+|Zielzustand
+|target state
+
+|Änderungsdelta
+|delta
+
+|Vorschlag, Begründung
+|proposal
+
+|Anforderung
+|requirement
+
+|Szenario
+|scenario
+
+|Entwurfsentscheidung
+|design decision
+
+|verworfene Alternative
+|rejected alternative
+
+|Aufgabenliste
+|task list
+
+|Abnahmekriterium
+|acceptance criterion
 |===
 
 == Further reading
 
-* TODO: Quelle
+* This repository's `openspec/specs/` and `openspec/changes/` — a worked example
+* Module `sdd-why-specs` — why a living target state instead of a requirements
+  document, and where Lastenheft and Pflichtenheft fit
+* Module `sdd-change-lifecycle` — the same artefacts along their life cycle

@@ -1,0 +1,229 @@
+= Shaping the agent's working environment — questions
+:topic-id: ai-harness-engineering
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is a harness, and which of its parts can you change?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+A harness is the program around the model: it assembles the input, calls the
+model, and acts on the answer. Four parts matter, and three of them are yours.
+
+[plantuml,q-harness-parts,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "instructions" as I
+rectangle "context" as C
+rectangle "tools" as T
+rectangle "permissions" as P
+rectangle "model\n(not yours)" as M
+I --> M
+C --> M
+M --> T
+P --> T
+T --> C
+@enduml
+----
+
+The practical consequence is the whole point of the lesson: two people with the
+same model and the same task get very different results, and the difference is
+never the model. One of them shaped the instructions, the context and the
+permissions; the other typed harder.
+
+Points the answer must contain:
+
+* Harness = everything around the model: instructions, context, tools,
+  permissions
+* The model is fixed; the other three are yours to shape
+* Result quality is mostly a property of the harness, not of the model
+====
+
+== What belongs in a project instruction file, and what does not?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+The instruction file is prepended to every session, so it must hold the rules
+that would otherwise be repeated in every prompt — and nothing else.
+
+A useful instruction has two properties. It is *checkable*: afterwards you can
+tell whether it was followed. And it *changes an action*: something happens
+differently because of it.
+
+|===
+|Belongs in it |Does not
+
+|"Build with `./gradlew build`, not with the IDE."
+|"This project is a booking system." — that is the README
+
+|"Never commit to `main`; branch first."
+|"Write good code." — nothing follows from it
+
+|"Tests live next to the class, named `*Test.java`."
+|A copy of the coding standard — link it
+|===
+
+Length matters for a reason from the previous lesson: the file is read in full,
+every turn, and competes for context with the actual question. Two hundred
+lines of description crowd out the thing you asked.
+
+Points the answer must contain:
+
+* Standing rules that would otherwise be repeated in every prompt
+* Checkable and action-changing; "write good code" is neither
+* Not project description, not a stale copy of a standard
+* Short, because it costs context in every single session
+====
+
+== How do you decide which commands an agent may run without asking?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+By *reversibility*. The question is not how useful the command is but how
+expensive the mistake is, which gives three tiers:
+
+* *allowed without asking* — read-only or trivially undone: reading files,
+  searching, `git status`, `git diff`, running the tests;
+* *asks first* — changes something that matters: editing files, `git commit`,
+  installing a dependency, writing outside the project;
+* *never* — irreversible or reaching other people: `git push --force`,
+  `rm -rf`, deleting branches, sending data anywhere.
+
+A mistake you can undo with `git restore` costs a minute; one that has already
+left your machine cannot be undone at all — other people have it.
+
+Two things people get wrong. Approving a command once in a session is not the
+same as granting it permanently in the settings file. And allowing everything
+because the prompts are annoying is itself a decision — the better fix is to
+allow the read-only commands explicitly, which removes most prompts and costs no
+safety.
+
+Points the answer must contain:
+
+* Reversibility decides the tier, not usefulness
+* Three tiers with examples; read-only free, changes ask, irreversible never
+* A one-off approval is not a standing permission
+* Blanket approval is a decision, and the wrong one
+====
+
+== A result is wrong. How do you tell whether the model or the harness failed?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+By the symptom. Each part of the harness fails in a recognisable way:
+
+|===
+|Symptom |Cause
+
+|invented a method that does not exist
+|*model* — verify, do not argue
+
+|wrong build command, wrong folder, wrong style
+|*instructions* — rule missing or unfollowable
+
+|answered about a file it never opened
+|*context* — it did not have what it needed
+
+|stopped and asked instead of acting
+|*permissions* — not allowed
+
+|did the right thing and destroyed something else
+|*permissions* — tier too generous
+|===
+
+Only the first line is the model's, and it is the only one you cannot repair.
+The other four are yours — which is the useful half of the news, because a
+repair to the harness holds for the whole team and for every future session,
+while arguing with the model in one chat helps nobody tomorrow.
+
+The diagnostic habit worth building: when you catch yourself giving the same
+correction a second time, stop correcting and write it down instead.
+
+Points the answer must contain:
+
+* Match the symptom to the box: model, instructions, context, permissions
+* Invented APIs are the model's; wrong conventions are the instructions'
+* Only the model failure is unrepairable; the rest are yours
+* A correction given twice belongs in a file
+====
+
+== Why is the harness kept in version control, and what must never be in it?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Because it decides how the whole team works, and because it is a change like any
+other. An instruction that lives on one laptop helps one person; committed, it
+helps everybody including whoever joins in February. Reviewing it in a pull
+request means a change to how four people work gets the same scrutiny as a change
+to the code.
+
+Never in it: credentials of any kind, and personal data. The file is read by a
+model and it is in the repository — an API key in it is a published API key, and
+that is true the moment it is pushed, not when somebody notices.
+
+The corollary about maintenance: when an instruction turns out to be wrong, fix
+the file instead of working around it in prompts. A workaround repeated four
+times is a rule that has not been written yet.
+
+Points the answer must contain:
+
+* Committed and reviewed, because it governs the whole team
+* Version control also makes harness changes visible and revertible
+* No credentials, no personal data — the file is public and machine-read
+* Fix the file rather than repeating a workaround
+====
+
+== You keep telling the agent the same thing every session. What do you do?
+
+covers: lo-2, lo-5
+
+.Answer
+[%collapsible]
+====
+Write it down — but the place depends on what kind of thing it is.
+
+A *standing rule* that applies to all work ("never commit to `main`", "tests are
+named `*Test.java`") goes in the instruction file. It is short, it is checkable,
+and it is needed in every session anyway.
+
+A *procedure* that applies only in a particular situation — how a release is
+made, what a bug report must contain, how a module is reviewed — does not belong
+there. It would be carried through every unrelated session for nothing. It goes
+in its own file and is invoked when that situation arises.
+
+The distinction is the same one as between a coding standard and a checklist: one
+is always in force, the other is used at a moment. Getting it wrong in the
+convenient direction — putting everything in the instruction file — is exactly
+how that file grows until it crowds out the question you asked.
+
+Points the answer must contain:
+
+* Repetition is a signal that something is missing from the repository
+* Standing rule → instruction file; situational procedure → its own file
+* The instruction file costs context in every session, so it stays short
+* Committed, so the rule holds for the team and not just for you
+====
