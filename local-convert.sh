@@ -25,6 +25,9 @@ echo "==> Quellen sammeln"
 rm -rf "${SITE_DIR}"
 mkdir -p "${SITE_DIR}"
 cp site/index.adoc "${SITE_DIR}/index.adoc"
+# Gemeinsames docinfo: Stil und der Schalter, der alle Antworten und
+# Lösungen einer Seite auf einmal aufklappt.
+cp templates/site/docinfo-footer.html "${SITE_DIR}/docinfo-footer.html"
 cp "${BUILD_DIR}"/nav.adoc "${BUILD_DIR}"/ue-overview.adoc "${BUILD_DIR}"/stoffstruktur.puml "${SITE_DIR}/"
 mkdir -p "${SITE_DIR}/questions"
 cp "${BUILD_DIR}"/questions/* "${SITE_DIR}/questions/"
@@ -41,6 +44,7 @@ docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -v "${PWD}:/documents" -w /d
   asciidoctor -r asciidoctor-diagram --failure-level=WARN \
     -a toc=left -a icons=font -a source-highlighter=rouge \
     -a imagesdir@=images \
+    -a docinfo=shared -a docinfodir="/documents/${SITE_DIR}" \
     "${SITE_DIR}/index.adoc" "${SITE_DIR}"/questions/index.adoc \
     $(find "${SITE_DIR}/modules" -name '*.adoc' 2>/dev/null | tr '\n' ' ')
 

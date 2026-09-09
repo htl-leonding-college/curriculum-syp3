@@ -31,7 +31,8 @@ Stoffstruktur, Lernmodule und Publikationsweg für den Gegenstand SYP im
 |Lernmodul: `index.adoc`, `exercises.adoc`, `questions.adoc`, `images/`
 
 |`templates/`
-|Vorlagen für Module, Schülerprojekte und Governance-Artefakte
+|Vorlagen für Module, Schülerprojekte und Governance-Artefakte;
+ `templates/site/` das gemeinsame docinfo der gebauten Seiten
 
 |`tools/`
 |Prüfung und Generatoren (Python)
@@ -99,13 +100,19 @@ Der Lauf in vier Schritten:
 
 . `tools/check-curriculum.py` — bricht bei Befunden ab (außer mit `--skip-check`)
 . Generatoren: Mindmap, Navigation, UE-Übersicht, Fragenkatalog nach `build/`
-. Quellen sammeln: `site/index.adoc`, das Erzeugte und die Module mit
-  `status: ready` nach `build/site/`
+. Quellen sammeln: `site/index.adoc`, das Erzeugte, das gemeinsame docinfo
+  und die Module mit `status: ready` nach `build/site/`
 . asciidoctor und asciidoctor-revealjs im Container
 
 Ergebnis ist `build/site/index.html`; die Foliensätze liegen unter
 `build/site/slides/<topic-id>.html`. `build/` ist wegwerfbar und wird nicht
 versioniert.
+
+`templates/site/docinfo-footer.html` wird als gemeinsames docinfo eingebunden
+(`-a docinfo=shared -a docinfodir=…`). Es bringt den Stil des Fragenkatalogs mit
+und den Schalter *Alle aufklappen*, der auf jeder Seite mit mindestens zwei
+eingeklappten Blöcken erscheint — Antworten in `questions.adoc`, Lösungen in
+`exercises.adoc`.
 
 === publish.sh — zusätzlich auf den Schulwebspace
 

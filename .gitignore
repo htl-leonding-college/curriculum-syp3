@@ -23,6 +23,8 @@ dist/
 target/
 *.pdf
 *.html
+# Ausnahme: das gemeinsame docinfo ist Quelle, kein Erzeugnis
+!templates/site/*.html
 
 # Node
 node_modules/
