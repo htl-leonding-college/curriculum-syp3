@@ -17,6 +17,12 @@ endif::[]
 
 covers: lo-1
 
-Erwartete Punkte in der Antwort:
+.Answer
+[%collapsible]
+====
+TODO: Erläuterung — warum ist das so, woran merkt man es, was folgt daraus.
+
+Points the answer must contain:
 
 * TODO: erwarteter Punkt
+====

@@ -27,6 +27,10 @@ PLACEHOLDERS = {
     "EXERCISE_TASK": "TODO: Arbeitsauftrag",
     "EXERCISE_SOLUTION": "TODO: Lösung oder Abschnitt löschen",
     "QUESTION": "TODO: Prüfungsfrage",
+    "ANSWER_EXPLANATION": (
+        "TODO: Erläuterung — warum ist das so, woran merkt man es, "
+        "was folgt daraus."
+    ),
     "ANSWER_POINT": "TODO: erwarteter Punkt",
 }
 

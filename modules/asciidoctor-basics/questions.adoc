@@ -1,4 +1,4 @@
-= Documentation as text with AsciiDoc — questions
+= AsciiDoc and the toolchain — questions
 :topic-id: asciidoctor-basics
 :icons: font
 
@@ -14,47 +14,208 @@ endif::[]
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because text gets everything the code already has: the same commit, the same
+review, the same history.
+
+[cols="1,1",options="header"]
+|===
+|Word processor in a shared drive |AsciiDoc in the repository
+
+|binary, no useful diff
+|line-based diff, readable in a review
+
+|lives beside the code
+|lives *with* the code, in one commit
+
+|"final_v3_really_final.docx"
+|the history is the version list
+
+|screenshots of diagrams
+|diagram source, rebuilt on every change
+|===
+
+The decisive one is the first: a reviewer can see *what changed* in a text file.
+A `.docx` in a pull request is an opaque blob, so documentation changes are
+never really reviewed — and what is never reviewed drifts.
+
+The second is almost as important. Because the document is in the same commit as
+the code it describes, there is never a question which version of the
+documentation belongs to which state of the system: check out the commit and you
+have both. A shared drive cannot answer that question at all.
+
+Points the answer must contain:
 
 * Same commit, same review, same history as the code
 * Line-based diffs make changes reviewable
 * No question which document version belongs to which state of the code
+====
 
 == Show the AsciiDoc markup for a section, a table, a code block and a warning
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+=====
+[source,adoc]
+------
+== Section
+
+[cols="1,2",options="header"]
+|===
+|Column |Meaning
+
+|a
+|the first one
+|===
+
+[source,java]
+----
+System.out.println("hello");
+----
+
+WARNING: One-line admonition.
+
+[WARNING]
+====
+Multi-line admonition.
+====
+------
+
+The rule that costs beginners the most time is not in the markup itself: *blocks
+are separated by blank lines*. Without the blank line before a list or a table,
+the block never starts and the markup appears verbatim in the output. The
+related trap is an accidental four-space indent — AsciiDoc reads it as a literal
+block and turns your paragraph into monospace.
+
+Worth knowing about the header, too: `:toc: left` builds the table of contents,
+`:source-highlighter: rouge` colours the code, and the `ifdef::env-github[]`
+block makes admonitions render on GitHub as well as in the built site.
+
+Points the answer must contain:
 
 * `== Section`, `[cols=…,options="header"]` with `|===`, `[source,java]` with
   `----`, `WARNING:` or the `[WARNING]` block
 * Blank lines separate blocks — without them the markup does not start
+=====
 
 == How do you convert the document, and why through a container?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[source,bash]
+----
+./local-convert.sh          # exactly the steps the pipeline runs
+----
+
+Nothing is installed locally except Docker. The container image carries
+asciidoctor, the `asciidoctor-diagram` extension, PlantUML, Graphviz and
+`asciidoctor-revealjs`, all pinned to one version.
+
+The reason is reproducibility. asciidoctor alone would not be enough — the
+diagram extension needs a Java runtime for PlantUML and a Graphviz binary, and
+each of those has version-dependent behaviour. Installed by hand on twenty
+machines, that produces twenty slightly different outputs and a class of bug that
+starts with "but it renders fine here".
+
+The container makes the toolchain a *pinned dependency* instead of an
+environment: your output, your neighbour's output and the pipeline's output are
+byte-for-byte the same, and upgrading means changing one image tag in
+`config.sh`, deliberately, for everybody at once.
+
+Points the answer must contain:
 
 * `./local-convert.sh`, which runs the containerised asciidoctor
 * The container carries the diagram extension, PlantUML and Graphviz
 * Everyone's output is identical, including the pipeline's
+====
 
 == Why are diagrams kept as PlantUML source rather than as images?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because a diagram written as text is subject to every practice the rest of the
+repository already uses.
+
+[source,adoc]
+------
+[plantuml,login-flow,svg]
+----
+@startuml
+skinparam monochrome true
+actor Student
+Student -> Browser : opens booking page
+Browser -> Server : GET /sessions
+Server --> Browser : list of sessions
+@enduml
+----
+------
+
+It *diffs*, so a changed arrow is visible in a review. It can be edited six
+months later by somebody who was not there. It is rebuilt together with the
+document, so it cannot go stale relative to the text around it.
+
+An exported PNG has none of that. It is a binary in the repository whose source
+lives in a drawing tool on one person's laptop — and the moment that person
+leaves or reinstalls, the diagram becomes uneditable and is quietly replaced by a
+new one that no longer matches. That is exactly the drift this course avoids
+everywhere else.
+
+Images stay right for what cannot be expressed as source: screenshots, photos,
+freehand sketches. And those carry their provenance.
+
+Points the answer must contain:
 
 * Text diffs, is reviewable, survives editing, is rebuilt with the document
 * An exported PNG has its source on one person's machine — drift
 * Images remain right for screenshots, photos and freehand sketches
+====
 
 == What must accompany every image in this course?
 
 covers: lo-3, lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Its *provenance*, in one of three classes, written into the caption when the
+image is inserted:
+
+[source,adoc]
+----
+.Git log in IntelliJ IDEA 2026.2 (own)
+image::git-log-intellij-2026.2.png[Git log in IntelliJ,700]
+
+.Kubernetes architecture (free: CC BY-SA 4.0, https://example.org/k8s.svg)
+image::k8s-architecture.svg[Architecture,700]
+
+.Sketch from the client meeting (unclear)
+image::sketch.png[Sketch,500]
+----
+
+*own* is your own work — screenshot, photo, drawing. *free* requires the licence
+name *and* the source URL; a licence without a URL cannot be checked, and a URL
+without a licence says nothing. *unclear* is the honest label for an image whose
+origin you do not know, and it is allowed as a marker so that it can be found and
+replaced later — the check reports it.
+
+The reason for insisting on "when the image is inserted" is simple: provenance
+cannot be reconstructed afterwards. Three weeks later nobody remembers which of
+five search results the picture came from, and a published document with
+unclear image rights is a real problem, not a formality — especially for a
+diploma thesis that goes online under the school's name.
+
+Points the answer must contain:
 
 * Its provenance: own work, free licence with licence name and URL, or unclear
 * Recorded when the image is inserted, because it cannot be reconstructed later
+====

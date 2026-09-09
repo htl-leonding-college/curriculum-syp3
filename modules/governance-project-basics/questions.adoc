@@ -14,38 +14,164 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A project is *unique*, *time-bounded*, *resourced* and *goal-directed*, and it is
+complex enough that it has to be organised. All five together — a single one is
+not enough.
+
+[cols="2,1,2",options="header"]
+|===
+|Work |Project? |Which criterion decides
+
+|Your year project
+|yes
+|unique goal, fixed end, a team, a deliverable nobody has built yet
+
+|Answering support mail
+|no
+|not unique and not time-bounded — continuous operation
+
+|Migrating the school website to a new host
+|yes
+|one-off, dated, resourced, with a result that can be accepted or rejected
+
+|Weekly backups
+|no
+|repeats; there is no end and no unique result
+
+|Fixing a printer
+|no
+|routine, and not complex enough to need organising
+|===
+
+The distinction is not academic. If it is a project, somebody must be able to say
+afterwards whether it *succeeded* — and that is only possible if a goal was
+written down before the work started. Routine work is judged differently: it is
+judged by whether it keeps running.
+
+Points the answer must contain:
 
 * Unique, time-bounded, resourced, goal-directed, complex enough to organise
 * Counter-example: routine work such as support mail — continuous, repeating,
   no unique result
+====
 
 == What belongs in an initial situation, and what does not?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The *Ausgangslage* describes what exists today and what is unsatisfactory about
+it: who has the problem, what happens now, and what it costs in time, money or
+nerves. It does not describe your solution and it names no technology.
+
+[cols="1,1",options="header"]
+|===
+|Not an initial situation |An initial situation
+
+|"We build an app with Spring Boot and a React frontend."
+|"The club's attendance list is kept on paper. Trainers copy it into a
+ spreadsheet after training, which takes about twenty minutes a week and is
+ often forgotten."
+
+|"There is no digital solution yet."
+|"Members cannot see whether a session is full before they arrive, so about a
+ quarter of them travel for nothing."
+|===
+
+The test: *could somebody who has never heard of your project recognise the
+problem?* If the text only makes sense once your solution is known, it is a
+solution description wearing the wrong hat.
+
+The consequence of getting this wrong is not stylistic. If the solution is
+written into the problem, then the question "was this the right solution?" can
+never be answered — the yardstick and the thing being measured are the same
+object. And "there is no app yet" is not a problem; nobody suffers from the
+absence of an app, they suffer from twenty minutes a week and from wasted trips.
+
+Points the answer must contain:
 
 * Who has the problem, what happens today, what it costs
 * Not the solution, not the technology
 * Test: a reader who does not know your solution must still recognise the problem
+====
 
 == Name the three constraints and explain which one moves in a school year
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+*Scope* (what is built), *time* (when it is due) and *resources* (people, money,
+machines). They are connected: changing one forces a change in at least one of
+the others.
+
+.Two corners are nailed down by the school year
+[graphviz,q-triangle,svg]
+----
+digraph triangle {
+  bgcolor="transparent";
+  layout=neato;
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowhead=none];
+
+  S [label="SCOPE\nwhat is built\n— the only variable", pos="0,1.4!",
+     fillcolor="#ffffff"];
+  T [label="TIME\nthe year ends\n— fixed", pos="-1.6,-0.6!"];
+  R [label="RESOURCES\nthe team you are\n— fixed", pos="1.6,-0.6!"];
+
+  S -> T;
+  T -> R;
+  R -> S;
+}
+----
+
+In a school year *time is fixed* — the year ends on its date — and *resources are
+fixed* — you are the team you are, with three afternoons a week. Only scope can
+move.
+
+That is why a project that is "almost finished" in June is normally a project
+whose scope was never cut. And it explains the quiet failure mode: quality is not
+a fourth corner of the triangle, it is what gets sacrificed when the other three
+are all treated as fixed. Nobody decides to lower quality; it simply happens,
+without a decision anybody could later point to.
+
+Points the answer must contain:
 
 * Scope, time, resources
 * Time and resources are fixed by the school year and the team
 * Scope is the only variable; if it is treated as fixed too, quality gives way
   silently
+====
 
 == Where does the initial situation live in the project repository, and why there?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+In `openspec/config.yaml`, under `context:` — unchanged, the same text that goes
+into the project proposal.
+
+The reason is the rule that runs through the whole course: *one text, not two*.
+If the initial situation lives in a Word document for the supervisor and in a
+paraphrase for the repository, the two drift apart within weeks, and then neither
+is authoritative.
+
+Putting it there also means the agent reads exactly what the supervisor reads. It
+needs the same information and for the same reason: it is the only place that
+says what the work is *for*, and without it every proposal is judged only against
+what was literally asked for, never against the problem behind it.
+
+Points the answer must contain:
 
 * `openspec/config.yaml` under `context:`
 * One text instead of two; the agent and the supervisor read the same thing
+====

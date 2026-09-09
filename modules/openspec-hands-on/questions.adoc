@@ -1,4 +1,4 @@
-= Running a change end to end — questions
+= openspec in practice — questions
 :topic-id: openspec-hands-on
 :icons: font
 
@@ -14,49 +14,204 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+.One change, from the reason to the archived target state
+[graphviz,q-openspec-loop,svg]
+----
+digraph loop {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7];
+
+  P [label="propose\nwhy now,\nwhat changes"];
+  S [label="specs\nwhat must be true\n(the delta)"];
+  D [label="design\nonly if a decision\nwas taken"];
+  T [label="tasks\nsteps with\ntheir verification"];
+  A [label="apply\nimplement, tick off,\nverify"];
+  R [label="archive\ndelta folds into\nopenspec/specs/"];
+
+  P -> S -> D -> T -> A -> R;
+}
+----
+
+[source,bash]
+----
+openspec propose              # create the change and its artefacts
+openspec status --change x    # what is still missing
+openspec apply                # work through the tasks
+openspec validate --changes   # structure is sound
+openspec archive              # fold the delta into specs/
+----
+
+Two steps deserve a comment. `design` is conditional — it is written when a real
+choice was made, and skipped when there was only one way. And `archive` is not
+bookkeeping: it is the moment the delta becomes part of the target state in
+`openspec/specs/`, so that the next change starts from the new reality instead of
+from a pile of unmerged proposals.
+
+`openspec validate` checks *structure*, not judgement. It will tell you that a
+scenario is missing; it cannot tell you that the requirement is the wrong one.
+
+Points the answer must contain:
 
 * propose, specs, design if needed, tasks, apply, archive
 * `openspec status` shows what is missing, `validate` checks structure
 * Archiving folds the delta into the target state
+====
 
 == What does each artefact answer?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,2,2",options="header"]
+|===
+|Artefact |Answers |Fails when
+
+|`proposal.md`
+|why now, what changes, which capabilities are touched
+|it lists activities instead of a reason
+
+|`specs/**/spec.md`
+|what must be true afterwards — the delta to the current target state
+|it describes the implementation
+
+|`design.md`
+|which decision was taken, which alternatives were rejected and why
+|it is written for a change that had no decision to take
+
+|`tasks.md`
+|which steps, in which order, and how each is verified
+|a task has no way to tell whether it is done
+|===
+
+The failure column is the useful half of this table, because each artefact fails
+in its own characteristic way. A proposal that says "refactor the booking module"
+has named an activity, not a reason — the reader still does not know what goes
+wrong today. A specification that says "add a `BookingValidator` class" has
+jumped into the implementation, and has thereby forbidden every other way of
+reaching the same behaviour. A task that reads "improve error handling" cannot be
+ticked off honestly by anyone.
+
+Read together they answer four different questions — why, what, which decision,
+which steps — and that is why they are four files and not one document.
+
+Points the answer must contain:
 
 * Proposal — why now and what changes; specs — what must be true afterwards
 * Design — which decision and which rejected alternatives; tasks — steps with
   their verification
 * Each has a characteristic failure mode
+====
 
 == When do you write a design document?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The test is one question: *was there a choice?* If two reasonable options existed
+and you picked one, the reason is worth a paragraph. If there was only one way to
+do it, there is nothing to record and a design document would be ceremony.
+
+Examples of a real decision: CSV against XLSX for the export; storing the
+timestamp in UTC against storing local time; validating on the server against
+validating in the browser. Each has a defensible alternative, which is precisely
+why it needs writing down.
+
+The value of the document is the *rejected* alternative. The chosen option is
+visible in the code forever; the option you did not take leaves no trace at all —
+and it is the one somebody proposes again in March, when nobody remembers that it
+was already considered and why it lost. Half a page then saves a week.
+
+This is also the artefact people get wrong in both directions: skipped when a
+decision was made ("it was obvious at the time"), and written by default for
+changes that had nothing to decide, which trains everybody to stop reading them.
+
+Points the answer must contain:
 
 * When a real choice existed between reasonable options
 * Not by default, and not when there was only one way
 * The value is the rejected alternative, which is otherwise lost
+====
 
 == How do you notice that a change is too large, and what do you do?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The signals are visible before you start implementing:
+
+[cols="1,1",options="header"]
+|===
+|Too large |Right size
+
+|"build the booking system"
+|"refuse bookings for sessions that already started"
+
+|touches eight capabilities
+|touches one, maybe two
+
+|three weeks of work
+|days, with visible intermediate states
+
+|thirty tasks whose first ten have nothing to do with the last ten
+|a list you can hold in your head
+|===
+
+The rule underneath all four rows: *one change is one intention*. If you cannot
+say in a single sentence what will be true afterwards, you have more than one
+intention.
+
+What to do is split by intention, not by size — "part 1 of 3" is not a split, it
+is the same change in instalments, and neither part can be archived on its own.
+Splitting is cheap while the change is still a proposal; unpicking a
+half-implemented change is not, because the code, the specs and the tasks then
+all have to be separated by hand.
+
+Points the answer must contain:
 
 * Many capabilities touched, thirty unrelated tasks, weeks of work, unreviewable
 * Split by intention; splitting early is cheap
 * One change is one intention
+====
 
 == Why archive continuously instead of at the end of the year?
 
 covers: lo-1, lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because the archive is the *evidence* at a milestone review. "This change is in
+the archive, dated" is checkable; "we worked on the booking module" is not. A
+review that has to rely on the second kind of statement cannot distinguish a
+project that is on track from one that has stalled — which is the one thing it
+exists to do.
+
+Twelve open changes in June therefore say something quite precise: nothing was
+finished. Each of them is work that was started, is partly in the code, and has
+no point at which somebody decided it was done. That is also the state in which
+two changes silently contradict each other, because neither delta was ever folded
+into the target state that the other one started from.
+
+Archiving as you go keeps `openspec/specs/` a description of what the system
+actually does now, so progress can be *read from the repository* instead of
+reported in a meeting. And a specification that is currently true is worth
+reading; one that is a year of accumulated intentions is not.
+
+Points the answer must contain:
 
 * The archive is the milestone evidence
 * Twelve open changes in June means nothing finished
 * Progress is read from the repository rather than reported
+====

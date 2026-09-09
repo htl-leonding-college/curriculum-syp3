@@ -14,49 +14,198 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The charter is not replaced. Each field has a place in the repository where the
+*living* version of that field is kept.
+
+[cols="1,1,2",options="header"]
+|===
+|Feld / field |Artefact |Why there
+
+|Ausgangslage / initial situation
+|`openspec/config.yaml` -> `context:`
+|the agent needs the same context the supervisor does
+
+|Zielsetzung / objectives
+|the set of `openspec/specs/`
+|one capability per objective, in checkable form
+
+|Untersuchungsanliegen / research objective
+|`proposal.md` -> Why
+|the open question, stated before the solution
+
+|Geplantes Ergebnis / planned deliverable
+|`spec.md` -> requirements and scenarios
+|a scenario is an acceptance condition in miniature
+
+|Meilenstein + Termin / milestone
+|a change archived by that date
+|the evidence is a state of the repository, not a claim
+
+|Verantwortlich / responsible
+|change ownership plus git history
+|visible per person without a separate report
+
+|Projektfortschritt / progress
+|`openspec list`, `openspec status`
+|no hand-written status update
+|===
+
+The pattern behind the table: the charter says *what was agreed and stays
+agreed*; the repository holds *what is currently true*. Both are needed, and
+neither is a copy of the other — which is why the mapping is a mapping and not a
+duplication.
+
+Points the answer must contain:
 
 * Initial situation to `config.yaml` context, objectives to the set of specs
 * Research objective to proposal Why, planned deliverable to requirements and
   scenarios
 * Milestone to an archived change, responsibility to change ownership plus git
   history
+====
 
 == Turn a charter objective into a requirement with a scenario
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Charter objective: "a trainer can record attendance for a session in under two
+minutes."
+
+[source,markdown]
+------
+## ADDED Requirements
+
+### Requirement: Attendance is recorded per session
+A trainer SHALL be able to mark each member of a group present or absent for one
+session and store the result in one operation.
+
+#### Scenario: Recording a full group
+- **WHEN** a trainer opens a session with 30 members and marks 28 present
+- **THEN** the attendance for all 30 members is stored with the session date
+------
+
+Two things happened in the translation, and both are deliberate.
+
+*What survived* is the observable behaviour: who does what, and what must be true
+afterwards. The requirement uses SHALL, the scenario uses WHEN and THEN, so it
+can be read as an acceptance condition and — later — as a test.
+
+*What was dropped* is the two-minute limit. It is a quality goal, it belongs in
+the charter, and it is checked once at the acceptance. Repeating it in every
+scenario would make each scenario a performance test and none of them a behaviour
+test.
+
+One more rule: *one capability per objective*, not one per feature idea. A
+capability is a thing the system can do for somebody; splitting it by screens or
+by classes produces specs that nobody can read as goals any more.
+
+Points the answer must contain:
 
 * Keep the observable behaviour, drop quality limits that belong in the charter
 * Requirement with SHALL, scenario with WHEN and THEN
 * One capability per objective, not one per feature idea
+====
 
 == Why is "change archived by date" a better milestone than a status report?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because it is a *fact about the repository* rather than a statement about
+intentions. The change `add-attendance-recording` is in `changes/archive/` with a
+date, or it is not, and anybody — teacher, client, teammate — can check that in
+ten seconds without asking the team anything.
+
+A status report has to be *believed*. It is written by the people it assesses, in
+prose, at a moment when saying "we are behind" is uncomfortable. It is not
+dishonest so much as unusable: "the frontend is nearly finished" describes a
+feeling, and two people writing that sentence about the same project can mean
+very different states.
+
+There is a second effect that only shows up at the review. Because the milestone
+is a specific archived change, the review can compare *estimate against reality*
+— how long the team thought this change would take against when it was actually
+archived. That comparison is the only calibration data a school team gets, and it
+requires both numbers to refer to the same, unambiguous thing.
+
+Points the answer must contain:
 
 * The evidence is a state of the repository that anyone can check
 * Nothing has to be believed
 * Estimate versus reality can be compared at the review
+====
 
 == How is individual responsibility visible without a separate document?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Every change has an *owner*, and every commit has an *author*. Both are already
+recorded, so the question is answered by reading what exists:
+
+[source,bash]
+----
+openspec list                  # which changes exist and who owns them
+openspec status --change x     # how far that one has got
+git log --author "Name"        # what this person actually committed
+git log --oneline --author "Name" -- openspec/specs/
+----
+
+This matters beyond bookkeeping. The diploma thesis application has a
+*Verantwortlich* column, and in year five it has to be filled per student with
+something defensible. Filling it from change ownership and git history is honest
+and takes a minute; reconstructing it from memory in June is neither.
+
+It also removes a whole category of dispute. "Who did what" is a question that
+poisons team projects when it is answered from impressions. Here it is answered
+from a record that everybody could see all along — which also means it is worth
+committing your own work under your own name, in reasonable pieces, rather than
+in one shared commit at the end of the week.
+
+Points the answer must contain:
 
 * Each change has an owner; git history shows the commits
 * `openspec list` and `git log --author` answer the question directly
 * The diploma application's "Verantwortlich" column is filled from this
+====
 
 == What goes wrong if you copy the charter text into the specs?
 
 covers: lo-1, lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+You get *two copies of the same sentence in two documents with different rules*,
+and they start to drift the first time reality changes.
+
+The charter is *frozen*: it records what was agreed in November and must not be
+edited. The specs are *living*: they describe what the system is supposed to do
+now, and they change with every archived change. Two documents with opposite
+update rules cannot hold the same text for long — and once they differ, nobody
+can say which one is authoritative, because both look official.
+
+The mapping avoids this by giving each field a *derived* home rather than a
+duplicated one: the objective from the charter becomes a capability with
+requirements and scenarios, written in the form the specs use. Same intent,
+different form, one place to change when the target state moves.
+
+The related pitfall is the reverse: specs that grow past the charter without
+anybody noticing. That gap should be a *decision*, taken visibly as a change —
+not a drift discovered at the acceptance.
+
+Points the answer must contain:
 
 * Two versions of the same sentence, maintained separately, drifting apart
 * The charter is frozen and the specs are not, so they cannot be the same text
+====

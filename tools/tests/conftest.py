@@ -162,5 +162,11 @@ GOOD_QUESTIONS = """
 
     covers: lo-1
 
-    Expected answer points: tree, parent, author, message.
+    .Answer
+    [%collapsible]
+    ====
+    A commit records the complete state of the tracked files.
+
+    Points the answer must contain: tree, parent, author, message.
+    ====
     """

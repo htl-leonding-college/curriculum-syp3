@@ -14,51 +14,204 @@ endif::[]
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+In git terms: nothing. The merge commit a pull request produces is the same
+merge commit you could have made with `git merge` on your own machine. Everything
+a pull request adds sits *around* the merge.
+
+.The same merge, with three things attached to it
+[graphviz,q-pr-adds,svg]
+----
+digraph pr {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  B [label="branch pushed"];
+  P [label="pull request"];
+  C [label="CI runs\non the branch"];
+  R [label="review by\nanother person"];
+  M [label="merge into main\n(the same merge as\ngit merge would do)"];
+
+  B -> P;
+  P -> C;
+  P -> R;
+  C -> M [label="green"];
+  R -> M [label="approved"];
+}
+----
+
+*A review moment.* Somebody who did not write the change reads it before it
+reaches `main`. That is the only mechanism in the course that catches a mistake
+before it becomes everybody's problem.
+
+*A discussion attached to the change.* The comments live with the diff, not in a
+chat that scrolls away, so the reasoning is still readable a year later next to
+the code it is about.
+
+*A CI run on the branch.* The build and the tests run on the merged result
+*before* the merge, so `main` stays green by construction rather than by luck.
+
+And afterwards the history records who reviewed what — which is not
+bureaucracy but the answer to "how did this get in?" when something breaks.
+
+Points the answer must contain:
 
 * Technically nothing in git terms — the merge is the same
 * It adds a review moment, a discussion attached to the change, and a CI run on
   the branch before the merge
 * The history then records who reviewed what
+====
 
 == Which three questions does a pull request description answer?
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+. *What does this change, for the user of the system?* Not "renamed the method"
+  — "the attendance list can now be exported as CSV".
+. *Why this way?* One sentence on the alternative you rejected. This is the part
+  the reviewer cannot reconstruct from the diff, and the part they would
+  otherwise ask about.
+. *How did you check it?* The test, the command, the screenshot. It tells the
+  reviewer what is already covered and, by omission, what is not.
+
+[source,markdown]
+----
+## What
+Attendance can be exported as CSV from the class view.
+
+## Why this way
+The school administration system imports CSV and nothing else. XLSX was
+rejected because it pulls in a library for one feature.
+
+## Checked
+`ExportServiceTest` covers the empty list and the DST week; exported a real
+class and imported it into the test instance.
+----
+
+Five lines of description save twenty minutes of somebody else's time. A pull
+request that says "fixes stuff" forces the reviewer to reconstruct all three
+answers from the diff — which they will do badly, or not at all.
+
+Points the answer must contain:
 
 * What changes, for the user of the system
 * Why this way — the rejected alternative in one sentence
 * How it was checked — test, command, evidence
+====
 
 == What makes a review comment useful? Give an example of each kind
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A useful comment is *concrete*, *located* and *actionable*: it names the case
+that goes wrong, points at the line, and says what would fix it. The author can
+act on it without a follow-up conversation.
+
+[cols="1,2",options="header"]
+|===
+|Useless |Useful
+
+|"This is wrong."
+|"If `members` is empty this divides by zero — line 42. Add a guard or return 0."
+
+|"I don't like this name."
+|"`data` here is a list of bookings; `bookings` would save the next reader a
+ lookup."
+
+|"LGTM" after ten seconds
+|"Checked the CSV export against the sample file; the date column is off by a day
+ in the DST week."
+|===
+
+Two habits carry most of the value. *Review the change, not the person* — write
+about what the code does, not about what the author failed to do; the same
+finding phrased as "line 42 divides by zero" and as "you forgot the empty case"
+gets a fix in one case and a defence in the other. And *say what you checked*,
+because that tells the author what was not checked. An approval is a statement
+about your reading, not about your trust in the author, so approve only what you
+actually understood.
+
+Points the answer must contain:
 
 * Concrete, located, actionable: "empty list divides by zero at line 42, add a
   guard"
 * Useless: "this is wrong", "LGTM" after ten seconds
 * Review the change, not the person; say what you checked
+====
 
 == Which rules apply to pull requests in this course?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+*Everything reaches `main` through a pull request, including documentation.* One
+path in means one place to look for how something got there, and documentation
+errors are as public as code errors.
+
+*At least one review by another team member.* Reviewing your own work does not
+work — you read what you meant to write.
+
+*CI green before merging.* Not "merge now and fix it after": a red `main` blocks
+everyone, and the fix always takes longer than the merge saved.
+
+*Small enough to read in one sitting.* A pull request nobody can hold in their
+head gets approved rather than reviewed.
+
+Two habits belong with the rules. Do not answer review comments by force-pushing
+a rewritten branch — the reviewer then loses the thread of what changed since
+their comment; push additional commits instead. And do not leave a pull request
+open for a week: the branch drifts away from `main` and the merge turns into a
+conflict exercise.
+
+Points the answer must contain:
 
 * Everything goes through a pull request, including documentation
 * At least one review by another team member
 * CI green before merging, no "fix it after the merge"
 * Small enough to read in one sitting
+====
 
 == Why is a two-thousand-line pull request a problem?
 
 covers: lo-1, lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because it gets a *signature instead of a review*. Attention does not scale with
+diff size: past a few hundred lines the reviewer stops reading and starts
+scrolling, and "LGTM" on two thousand lines certifies nothing while looking
+exactly like a real approval in the history.
+
+It is also where behaviour changes hide. A pull request that mixes a rename of
+three hundred lines with one changed condition presents the reviewer with three
+hundred and one changes that all look mechanical — and the one that matters is
+indistinguishable from the noise.
+
+The consequences compound: a huge pull request takes days to review, during which
+the branch drifts from `main`, so the merge brings conflicts on top of everything
+else.
+
+The remedy is to split by *intent*, not by size: the rename is one pull request,
+the behaviour change is another. Each is then reviewable in one sitting, and the
+history records two decisions instead of one lump.
+
+Points the answer must contain:
 
 * It gets a signature instead of a review
 * Behaviour changes hide inside mechanical changes such as renames
 * Split it: one pull request per intent
+====

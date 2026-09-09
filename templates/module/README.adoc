@@ -84,10 +84,35 @@ Das ist eine bewusste Aussage und vom Vergessen unterscheidbar.
 == What does a commit contain?
 
 covers: lo-1
+
+.Answer
+[%collapsible]
+====
+Ein Commit hält den vollständigen Stand der verfolgten Dateien fest, dazu
+Autor, Zeitpunkt, Nachricht und den Vorgänger. Der Diff wird bei Bedarf
+zwischen zwei Commits berechnet — deshalb kann man zu jedem Stand zurück.
+
+Points the answer must contain:
+
+* Vollständiger Zustand, nicht der Unterschied
+* Autor, Zeitpunkt, Nachricht, Vorgänger
+====
 ----
 
 Jedes Lernziel braucht mindestens eine Frage, jede Frage ein existierendes
 Lernziel. Die Schüler sehen damit vorab, woran sie gemessen werden.
+
+Jede Frage trägt ihre Antwort im selben Dokument, eingeklappt als
+`[%collapsible]` — Prüfung 10 verlangt das. Zuerst die Erläuterung: warum ist
+das so, woran merkt man es, was folgt daraus. Erst danach die Stichpunkte, die
+in einer Prüfungsantwort vorkommen müssen. Wo eine Grafik trägt, steht sie im
+Antwortblock; Commit-Graphen und Ähnliches als `[graphviz,…,svg]`, alles andere
+als `[plantuml,…,svg]`. Diagrammnamen im Fragenkatalog beginnen mit `q-`, damit
+sie nicht mit denen aus `index.adoc` kollidieren.
+
+Auf der gebauten Seite steht über jeder Frage- und Aufgabenseite ein Schalter
+*Alle aufklappen*. Er kommt aus `templates/site/docinfo-footer.html` und
+braucht im Modul nichts.
 
 == Aufgaben
 

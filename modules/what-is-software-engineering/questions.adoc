@@ -1,4 +1,4 @@
-= What software engineering is — questions
+= What is software engineering — questions
 :topic-id: what-is-software-engineering
 :icons: font
 
@@ -14,48 +14,207 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Two things that are absent when you program alone for an afternoon: *other
+people* and *time*.
+
+[cols="1,1",options="header"]
+|===
+|Programming |Software engineering
+
+|it works on my machine, today
+|it works on other machines, next year
+
+|I understand my code
+|somebody who has never met me can change it safely
+
+|I remember why I did that
+|the reason survives me leaving
+
+|one person, one session
+|a team, many sessions, changing membership
+|===
+
+Programming is getting a machine to do something. Everything that becomes
+necessary once the result has to survive contact with colleagues and with next
+year is engineering — and that is not a moral upgrade, it is a different problem.
+
+The whole subject follows from this difference. Version control exists because
+several people touch the same lines. Specifications exist because intent has to
+outlive a conversation. Reviews exist because nobody catches their own mistakes.
+CI exists because "it worked when I checked" is not a claim anybody else can
+verify. Each practice in this course can be traced back to one of the two words:
+people, or time.
+
+Points the answer must contain:
 
 * Other people and time
 * Works elsewhere and later; changeable by someone who never met the author
 * The reasons survive the author leaving
+====
 
 == Name the forces that make software hard, with one example each
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,2",options="header"]
+|===
+|Force |Example from a school project
+
+|*Change* — requirements move while you build
+|the feature agreed in October is wrong in February; the specs move visibly, the
+ charter does not
+
+|*Scale* — more code, more people, more state
+|the file everyone edits becomes the file nobody dares to touch
+
+|*Time* — the system outlives its authors
+|a project handed over in year five to somebody who was not there
+
+|*Communication* — most defects start as misunderstandings
+|"done" meaning two different things to two people
+
+|*Uncertainty* — you cannot know before you build
+|estimates that were honest and still wrong
+|===
+
+Not one of these is a technical problem, and this is the observation the whole
+subject rests on. A faster language does not stop requirements from moving. A
+better framework does not make "done" mean the same thing to two people. They
+are answered by *practices* — and a practice that cannot name the force it
+answers is a ritual, which is why this course drops such practices rather than
+teaching them.
+
+Points the answer must contain:
 
 * Change, scale, time, communication, uncertainty
 * Examples from a school project: requirements moving mid-year, the file nobody
   dares to touch, handover in year five, "done" meaning two things
 * None is solved by a better language
+====
 
 == Which practice answers which force? Give two pairs
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+.Every practice in this course exists because of a force
+[graphviz,q-force-practice,svg]
+----
+digraph forces {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7];
+
+  Communication -> "version control";
+  Scale -> "version control";
+  Communication -> "review";
+  Scale -> "review";
+  Change -> "specifications";
+  Time -> "specifications";
+  Change -> "CI";
+  Uncertainty -> "milestone reviews";
+  Time -> "documentation in the repository";
+}
+----
+
+*Version control and reviews answer communication and scale.* Several people
+change the same lines, and the history plus the review is what keeps that from
+becoming guesswork about who meant what.
+
+*Specifications answer change and time.* A written specification is the intent
+in a form that survives both the conversation it came from and the person who
+had it — so a requirement that moves can be seen to have moved.
+
+*CI answers verification under change.* "It worked when I checked" is not
+verifiable by anybody else; a pipeline turns it into a statement with a date, a
+commit and a result attached.
+
+Any two of these pairs are a complete answer, as long as you can name the force
+and say why the practice addresses *that* force rather than a different one.
+
+Points the answer must contain:
 
 * Version control and reviews answer communication and scale
 * Specifications answer change and time
 * CI answers "it worked when I checked" — verification under change
+====
 
 == What did cheap code production change, and what did it not?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,1",options="header"]
+|===
+|Changed |Unchanged
+
+|writing an implementation is fast and cheap
+|deciding what should be true is still yours
+
+|explanations are available on demand
+|knowing which explanation applies here is not
+
+|a first version appears in minutes
+|integrating, verifying and maintaining it takes what it took
+
+|the bottleneck moved
+|the bottleneck exists
+|===
+
+The short form: *producing* got cheap, *deciding* and *verifying* did not. An
+agent will write the export service in a minute; it cannot tell you whether the
+class teachers need CSV or XLSX, whether a booking that has already started may
+be cancelled, or whether the thing it produced actually does what the charter
+promised.
+
+This is why the year spends its time on governance, specification and
+verification rather than on typing. The part that got cheaper was never the hard
+part — it was the visible part, which is not the same thing.
+
+Points the answer must contain:
 
 * Implementation became fast; deciding what should be true did not
 * Integration, verification and maintenance cost what they cost
 * The bottleneck moved to specifying and verifying
+====
 
 == Why is "engineering is obsolete now" the wrong conclusion?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because it reverses the arithmetic. When one step in a chain becomes almost
+free, the remaining steps do not become less important — they become *all* of
+the effort. Cheap production means more code arrives, faster, from a source that
+does not know your context, so deciding what should be true and checking that it
+is true now dominate the work instead of sharing it with typing.
+
+The practical evidence is visible within a week of using an agent seriously: the
+implementation is done in minutes and the day still goes on reviewing,
+integrating, correcting the specification that turned out to be ambiguous, and
+finding the case the agent silently assumed. Those are engineering activities,
+and there is now more of them per hour, not less.
+
+The expensive parts were never the typing. They were agreeing on what to build,
+keeping the reasons available to the next person, and being able to show that
+the result works.
+
+Points the answer must contain:
 
 * When producing is cheap, deciding and verifying dominate the effort
 * The expensive parts were never the typing
+====

@@ -17,6 +17,7 @@ IMAGE_RE = re.compile(r"^image::([^\[]+)\[(.*)\]\s*$")
 BLOCK_TITLE_RE = re.compile(r"^\.(?!\.)(.+?)\s*$")
 OUTCOME_RE = re.compile(r"^\*+\s*\[\[([A-Za-z0-9_-]+)\]\]\s*(.*?)\s*$")
 COVERS_RE = re.compile(r"^covers:\s*(.+?)\s*$", re.IGNORECASE)
+COLLAPSIBLE_RE = re.compile(r"^\[%collapsible[^\]]*\]\s*$")
 DELIMITER_RE = re.compile(r"^(-{4,}|\.{4,}|={4,}|\*{4,})$")
 PROVENANCE_RE = re.compile(r"\((own|free|unclear)(?::\s*(.*?))?\)\s*$")
 URL_RE = re.compile(r"https?://\S+")
@@ -50,6 +51,8 @@ class Question:
     line: int
     covers: tuple[str, ...]
     covers_line: int | None
+    #: Die Antwort steht eingeklappt im selben Abschnitt (P5).
+    has_answer: bool = False
 
 
 @dataclass(frozen=True)
@@ -98,7 +101,12 @@ class Document:
                 continue
             covers: tuple[str, ...] = ()
             covers_line: int | None = None
+            has_answer = False
             for offset, line in enumerate(section.body.splitlines(), start=section.line + 1):
+                if COLLAPSIBLE_RE.match(line.strip()):
+                    has_answer = True
+                if covers_line is not None:
+                    continue
                 match = COVERS_RE.match(line)
                 if match:
                     covers = tuple(
@@ -107,13 +115,13 @@ class Document:
                         if part.strip()
                     )
                     covers_line = offset
-                    break
             found.append(
                 Question(
                     title=section.title,
                     line=section.line,
                     covers=covers,
                     covers_line=covers_line,
+                    has_answer=has_answer,
                 )
             )
         return tuple(found)

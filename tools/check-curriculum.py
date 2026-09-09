@@ -489,6 +489,34 @@ def check_skeleton(model: Curriculum) -> list[Finding]:
     return findings
 
 
+@check("answers", "10 Antwort zu jeder Prüfungsfrage, eingeklappt")
+def check_answers(model: Curriculum) -> list[Finding]:
+    """Jede Frage trägt ihre Antwort im selben Dokument (P5).
+
+    Eingeklappt als `[%collapsible]`, damit die Seite als Fragenliste lesbar
+    bleibt und die Antwort trotzdem eine Bewegung entfernt ist.
+    """
+    findings: list[Finding] = []
+    for topic in model.ready:
+        if not topic.questions_path.is_file():
+            continue
+        for question in adoc.read(topic.questions_path).questions():
+            if question.has_answer:
+                continue
+            findings.append(
+                Finding(
+                    check="answers",
+                    message=(
+                        f"Frage '{question.title}' hat keinen Antwortblock "
+                        "(`.Answer` mit `[%collapsible]`)"
+                    ),
+                    path=topic.questions_path,
+                    line=question.line,
+                )
+            )
+    return findings
+
+
 @check("attributes", "Z Strukturangaben gehören nicht ins AsciiDoc")
 def check_attributes(model: Curriculum) -> list[Finding]:
     findings: list[Finding] = []

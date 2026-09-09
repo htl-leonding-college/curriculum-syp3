@@ -1,4 +1,4 @@
-= From push to published page — questions
+= CI with GitHub Actions and Pages — questions
 :topic-id: gh-actions-pages
 :icons: font
 
@@ -14,50 +14,207 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A *trigger*, a *build*, an *artefact*, a *deployment* — that is a complete
+continuous integration setup, and "my `.adoc` becomes a website when I push" is
+exactly it.
+
+.The smallest useful pipeline
+[graphviz,q-pipeline,svg]
+----
+digraph pipeline {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  T [label="trigger\npush to main,\npull request"];
+  B [label="build\non a runner\n(ubuntu-latest)"];
+  A [label="artefact\nbuild/site"];
+  D [label="deployment\nGitHub Pages"];
+  F [label="nothing is published\nthe failing step is reported", shape=box,
+     fillcolor="#ffffff"];
+
+  T -> B;
+  B -> A [label="green"];
+  A -> D;
+  B -> F [label="red"];
+}
+----
+
+[source,yaml]
+----
+name: docs
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./local-convert.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+----
+
+Two properties matter more than the YAML. It runs *on a runner*, a fresh machine
+that is not yours — so it only sees what is actually committed. And a red build
+publishes nothing, which is what makes the pipeline a gate rather than a report.
+
+Points the answer must contain:
 
 * Trigger (push, pull request), build step, artefact, deployment
 * It runs on a runner, not on your machine
 * Nothing is published when the build fails
+====
 
 == Why does CI run the same script as the local build?
 
 covers: lo-1, lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because two build paths drift, and the moment they do, "green" stops meaning
+anything. If the pipeline runs its own sequence of commands and you run another
+one locally, then sooner or later one of them installs something the other does
+not, or passes a flag the other omits — and the difference is discovered on the
+day the site is needed.
+
+With one script, `./local-convert.sh`, the relationship works in both directions.
+A green pipeline certifies that *your local build was honest*, because it was
+literally the same steps. And a local run is a real preview of what CI will do,
+so a failure can be reproduced on your machine instead of by pushing commits and
+waiting.
+
+There is a third benefit that shows up later: the script is the single, readable
+description of how the site is produced. A newcomer reads one file instead of
+reconstructing the build from a YAML workflow, and changing the build means
+changing it once for everybody.
+
+Points the answer must contain:
 
 * Two build paths drift, and then green means nothing
 * A green pipeline should certify the local build too
 * The script is the single description of how the site is produced
+====
 
 == What does the neutral build environment settle?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+It settles arguments that two laptops cannot settle between themselves.
+
+[cols="1,2",options="header"]
+|===
+|Difference |What it breaks
+
+|macOS file names are case-insensitive by default
+|`include::Nav.adoc[]` works on a Mac and fails on Linux — and on the runner
+
+|Apple Silicon is arm64, most servers are amd64
+|an image built on a Mac may not run on the server
+
+|Different tool versions
+|"works for me" with a two-year-old asciidoctor
+
+|Files that were never committed
+|the build passes locally and cannot pass anywhere else
+|===
+
+`ubuntu-latest` is the same environment for everybody, so a disagreement between
+two team members has a referee that neither of them owns. "It works on mine"
+stops being an argument — not because someone is declared right, but because the
+question moved to a machine both can inspect.
+
+That is why CI arrives this early in the course. It is not an advanced topic
+here; it is the end of an argument that would otherwise cost the team hours every
+week.
+
+Points the answer must contain:
 
 * Case sensitivity between macOS and Linux
 * Processor architecture, arm64 versus amd64
 * Tool version differences
 * "Works on my machine" ceases to be an argument
+====
 
 == A run is red. How do you find the cause?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+. Open the run and find the *first* red step. Later failures are usually
+  consequences of the first one — chasing them wastes the most time.
+. Read the *last* twenty lines of that step's log, not the first. The beginning
+  is setup noise; the actual error message is at the end.
+. Reproduce locally with the same command (`./local-convert.sh`). If it fails
+  locally too, you have a normal bug and the fast loop is on your machine.
+
+If it passes locally and fails only on the runner, the difference is the
+environment, and there are three usual suspects — in this order of frequency:
+
+* *A file that was never committed.* It exists on your disk, the runner clones
+  only what is in the repository. `git status --ignored` and a fresh `git clone`
+  into a temporary directory settle it in a minute.
+* *A case difference* in a file name or an include path, invisible on macOS.
+* *A version difference* between a locally installed tool and the pinned one.
+
+What you must not do is fix the red build by removing or disabling the step. The
+pipeline then reports nothing at all, which is strictly worse than reporting a
+failure.
+
+Points the answer must contain:
 
 * First red step, last lines of its log
 * Reproduce locally with the same command
 * If it only fails on the runner: a file not committed, a case difference, a
   version difference
+====
 
 == How does the site get published, and what happens on a red build?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+In the repository settings the Pages *source* is set to "GitHub Actions". The
+build job uploads the produced directory as a Pages artefact, and a second job —
+which depends on the build — deploys that artefact.
+
+[source,yaml]
+----
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+----
+
+Two conditions guard the deployment: it runs *only from `main`*, and *only from a
+green build*. So a pull request is built and checked but publishes nothing, which
+is what you want — the site should show a reviewed state, not every proposal.
+
+On a red build nothing is deployed, and the consequence is the useful part: the
+previously published state stays online. The site is therefore always the last
+state that passed, never a half-broken one. This is also why "commit the
+generated HTML so that Pages has something" is a mistake — the pipeline is what
+generates it, and a committed copy is a second truth that is stale from the next
+push onwards.
+
+Points the answer must contain:
 
 * Pages source set to GitHub Actions; a deploy job publishes the artefact
 * Only from `main`, only from a green build
 * On red, the previous state stays online
+====

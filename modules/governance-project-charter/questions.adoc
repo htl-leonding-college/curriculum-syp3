@@ -14,50 +14,228 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,3",options="header"]
+|===
+|Feld / Field |What belongs in it
+
+|Projekttitel / project title
+|the result in one line, not the technology
+
+|Ausgangslage / initial situation
+|what exists today and why it is unsatisfactory — no solution
+
+|Untersuchungsanliegen / research objective
+|the open question the project answers
+
+|Zielsetzung / objectives
+|verifiable goals, each with its evidence
+
+|Geplantes Ergebnis / planned deliverable
+|what exists at the end, and how you recognise it is done
+
+|Meilensteine / milestones
+|dated, checkable results — not activities
+
+|Verantwortlich / responsible
+|one named person per work package
+
+|Aufwandsschätzung / effort estimate
+|hours, as a range, per work package
+|===
+
+Three of these carry most of the weight. The *initial situation* must be
+recognisable to somebody who does not know your solution. The *objectives* must
+be checkable by a third party without asking what you meant. The *milestones*
+must be results with dates, not activities.
+
+Two smaller rules that are easy to get wrong: the effort estimate is a *range*,
+because a single number claims a precision nobody has; and each work package has
+*exactly one* responsible person, because shared responsibility is none.
+
+These are the fields of the diploma thesis application. You fill them for the
+first time in year three so that in year five the form is familiar rather than
+new.
+
+Points the answer must contain:
 
 * Title, initial situation, research objective, objectives, planned deliverable,
   milestones, responsible person, effort estimate
 * Initial situation without a solution; objectives verifiable; milestones dated
   results
+====
 
 == What is the difference between Projektantrag and Projektauftrag?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,2,2",options="header"]
+|===
+| |Projektantrag / application |Projektauftrag / charter
+
+|Moment
+|before the decision
+|after the decision
+
+|Purpose
+|propose: this is worth doing
+|commission: this is what we do
+
+|Changes later?
+|irrelevant — it is superseded
+|no — it is frozen
+
+|Signed by
+|the team
+|team and client
+|===
+
+The same fields appear in both documents; what differs is their *status*. The
+application *argues* — it is allowed to be optimistic, and if it is rejected
+nothing follows from it. The charter *commits* — from the moment it is signed by
+both sides, it is the standard against which the project is measured.
+
+That is why the charter is signed by the client as well. An application the team
+writes alone is a proposal; a charter that only the team agreed to would be a
+yardstick the team set for itself, which measures nothing.
+
+Points the answer must contain:
 
 * Application argues before the decision; charter commissions after it
 * Same fields, different moment and different status
 * The charter is signed by team and client and then frozen
+====
 
 == What does "frozen" mean, and what would go wrong without it?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Frozen means: after approval, the document is not edited. Everything that happens
+afterwards happens *against* it — changes run through `openspec/changes/`, where
+they are visible and dated.
+
+.The fixed point makes the difference measurable
+[graphviz,q-frozen,svg]
+----
+digraph frozen {
+  rankdir=TB;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  C [label="Projektauftrag (frozen)\ngoals, deliverable, milestones",
+     fillcolor="#ffffff"];
+  S [label="specs (living)\nthe current target state"];
+  A [label="changes/archive\nwhat actually happened"];
+
+  C -> S [label="sets the frame"];
+  S -> A [label="each change archived"];
+  A -> C [label="the difference is visible\nand is itself the lesson"];
+}
+----
+
+Without a fixed point, a team quietly adjusts its goals to whatever got finished.
+Then every project is complete by definition, nobody has learned anything about
+estimating, and the acceptance is a formality with no content.
+
+The important part is what the difference *means*. A gap between charter and
+result is not a failure — it is the subject of scope management, and the only
+calibration data a school team ever gets about its own estimates. It is visible
+solely because one side does not move.
+
+The corresponding malpractice is editing the charter quietly when the plan
+changes. It is visible in the git dates, and it destroys the only yardstick the
+project had.
+
+Points the answer must contain:
 
 * No edits after approval; changes run through `openspec/changes/`
 * Without a fixed point a team adjusts goals to what got finished
 * The visible difference between charter and result is the point of scope
   management
+====
 
-== Give the German terms for research objective, planned deliverable and effort
-estimate
+== Give the German terms for research objective, planned deliverable and effort estimate
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+*Untersuchungsanliegen*, *Geplantes Ergebnis*, *Aufwandsschätzung*.
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Projektantrag
+|project application / proposal
+
+|Projektauftrag
+|project charter
+
+|Untersuchungsanliegen
+|research objective
+
+|Geplantes Ergebnis
+|planned deliverable
+
+|Verantwortlich
+|responsible
+
+|Aufwandsschätzung
+|effort estimate
+|===
+
+The reason for learning both is practical rather than linguistic: the form you
+fill in year five is German, and the course is taught in English. Under exam
+pressure — or in front of a client — you should not be translating "research
+objective" back into *Untersuchungsanliegen* while somebody waits.
+
+`Untersuchungsanliegen` is also the field students most often misread. It is not
+the goal and not the deliverable; it is the *open question* the project answers —
+the thing that was genuinely uncertain at the start.
+
+Points the answer must contain:
 
 * Untersuchungsanliegen, Geplantes Ergebnis, Aufwandsschätzung
 * The form in year five is German; the vocabulary is learned in both languages
   for that reason
+====
 
 == Why is "work on the frontend" not a milestone?
 
 covers: lo-1, lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because it is an *activity*, and an activity has no moment at which it is
+finished. Two people can look at the same state of the project and disagree about
+whether "work on the frontend" is done, which means it cannot carry a date and
+cannot be checked at a review.
+
+A milestone is a *result with a date that a third party can verify*: "the
+attendance list can be opened and filled for one group — change
+`add-attendance-recording` archived by 15 December". Anybody can check that: the
+change is in the archive or it is not.
+
+The practical consequence is what happens when the milestone is missed. With a
+checkable milestone, the review sees it immediately and the team can cut scope
+while there is still time. With "work on the frontend", the answer is always
+"yes, we worked on it" — true, unfalsifiable, and worthless as a warning signal.
+
+Points the answer must contain:
 
 * It is an activity, not a checkable result
 * A milestone has a date and something a third party can verify
+====

@@ -14,48 +14,209 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+. *Collect the criteria* that actually matter for this decision.
+. *Give each a weight*, with the weights summing to 100.
+. *Rate every alternative* per criterion on a fixed scale, say 0–10.
+. *Multiply, sum, compare* — the comparison is between the weighted sums.
+
+[cols="2,1,1,1,1,1",options="header"]
+|===
+|Criterion |Weight |Idea A |A·w |Idea B |B·w
+
+|Team can build it in one year
+|30
+|8
+|240
+|5
+|150
+
+|Somebody actually needs it
+|25
+|6
+|150
+|9
+|225
+
+|We learn something new
+|20
+|7
+|140
+|8
+|160
+
+|Data protection is manageable
+|15
+|9
+|135
+|4
+|60
+
+|Testable without a real client
+|10
+|8
+|80
+|6
+|60
+
+|*Sum*
+|*100*
+|
+|*745*
+|
+|*655*
+|===
+
+The order of the steps is the method. Weights come *before* ratings, because
+weights set after the ratings are where the desired answer gets engineered.
+
+And the number is not the point. What the table produces is *visible reasoning*:
+somebody can now ask "why is feasibility weighted higher than novelty?", which is
+a question the team can answer — unlike "why did you pick A?".
+
+Points the answer must contain:
 
 * Collect criteria, assign weights summing to 100, rate alternatives on a fixed
   scale, multiply and sum
 * The comparison is between the weighted sums
+====
 
 == What makes a criterion useful, and what makes one useless?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A criterion is useful exactly when *the alternatives differ on it*. "Must be
+software" scores 10 for every candidate and contributes nothing but arithmetic —
+it feels like diligence and changes no ranking.
+
+The second failure is vagueness. A criterion nobody can rate consistently
+produces ratings that record who filled in the cell, not what is true:
+
+[cols="1,1",options="header"]
+|===
+|Weak criterion |Better criterion
+
+|"Is interesting"
+|"At least three of us want to work on it in February"
+
+|"Modern technology"
+|"Uses at most one technology none of us has used before"
+
+|"Useful"
+|"There is a named person who will use it and can be asked questions"
+|===
+
+The right-hand column has the same property as a verifiable goal: two people can
+rate it and land close together, because the sentence says what to look at.
+
+One more limit: above roughly seven criteria the individual weights get so small
+that the sums are noise, and the table starts to look more precise than the
+judgement behind it.
+
+Points the answer must contain:
 
 * Useful when the alternatives actually differ on it
 * Useless when everything scores the same — it only adds arithmetic
 * Vague criteria ("interesting") should be replaced by observable ones
+====
 
 == Two alternatives end 745 to 738. What does that mean?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+That the method has found them *equivalent*. A gap of one percent is far smaller
+than the uncertainty in the inputs: any rating shifted by one point, or any
+weight shifted by two, would reverse it. Reading such a result as "A wins" is
+reading precision that was never there.
+
+What to do is decide on something the table does not capture — who is willing to
+maintain it over the summer, which client answers the phone, which of the two the
+team actually wants — and then *write down what decided it*, in one sentence, in
+the project proposal. That sentence is worth more than the table at that point,
+because it is the only record of the real reason.
+
+What not to do is go back and adjust the weights until the gap widens. That is
+manipulation with extra steps, and it is visible in the version history.
+
+There is a third possibility worth checking first: a result that *feels* wrong
+usually means a criterion is missing. That feeling is information, not
+stubbornness — find the criterion, add it, and re-run.
+
+Points the answer must contain:
 
 * The method says they are equivalent — the gap is within the noise
 * Decide on something the table does not capture and write down what it was
 * Do not pretend the number decided it
+====
 
 == How can a weighted scoring be manipulated, and what prevents it?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Three ways, in order of frequency:
+
+*Adjusting the weights after seeing the ratings.* The favourite alternative is
+behind, feasibility gets ten points more, and it is in front. Nobody experiences
+this as cheating — it feels like "realising what really matters".
+
+*Adding criteria that only the preferred option satisfies.* "Uses a technology
+the team already knows" looks neutral and is a portrait of one candidate.
+
+*Rating with the answer in mind.* The same property scores 8 for one idea and 5
+for the other, and the difference lives entirely in who was filling in the row.
+
+What prevents them is procedure, not virtue. *Fix the weights before any rating
+is entered*, and write them down at that moment. *Keep the table in version
+control*, where a change to a weight after the ratings exist is a visible diff
+with a date on it. And *let somebody outside the team read the criteria* before
+the ratings — an outsider spots a portrait criterion immediately.
+
+None of this makes the result objective. It makes it *traceable*, which is the
+actual claim: the decision can be questioned at the point where it was made.
+
+Points the answer must contain:
 
 * Adjusting weights after seeing the ratings
 * Adding criteria that favour the preferred option
 * Prevention: fix weights before rating, keep the table in version control where
   changes are visible
+====
 
 == Why is the result written into the project proposal at all?
 
 covers: lo-1, lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because a project choice has to be defensible to somebody who was not in the
+room — the supervising teacher now, and in the diploma thesis the assessment
+board later. "We discussed it and picked A" cannot be examined. A table of
+criteria, weights and ratings can: every step of it is open to a question, and
+each question has an answer.
+
+The traceable part is the *reasoning*, not the number. Nobody will contest that
+745 is more than 655; what can be contested is whether feasibility deserves 30
+and novelty 20 — and that is exactly the conversation worth having, because it is
+about what the team values, not about arithmetic.
+
+It also pays off inside the team. In February, when the project is hard and a
+different idea looks more attractive in hindsight, the table is the record of why
+this one was chosen. Without it the choice looks arbitrary from the inside too.
+
+Points the answer must contain:
 
 * It makes the choice traceable for someone who was not in the room
 * The reasoning, not the number, is what can be questioned and defended
+====

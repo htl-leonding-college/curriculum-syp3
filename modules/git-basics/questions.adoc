@@ -14,28 +14,145 @@ endif::[]
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A tracked file is in the *working tree* (the files as you edit them), in the
+*index* — also called the staging area (what the next commit will contain), or
+in the *local repository* (`.git`, the recorded history). Two commands move it
+forward, two move it back.
+
+.The three local places and the commands between them
+[graphviz,q-three-states,svg]
+----
+digraph states {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  W [label="working tree\nyour files as you edit them"];
+  I [label="index\nwhat the next commit contains"];
+  L [label="local repository\n.git — the history"];
+
+  W -> I [label="git add"];
+  I -> L [label="git commit"];
+  I -> W [label="git restore", style=dashed, constraint=false];
+  L -> I [label="git restore --staged", style=dashed, constraint=false];
+}
+----
+
+The step people skip in their heads is the index. It exists so that you can
+choose *what* goes into the next commit instead of committing whatever happens
+to be on disk — you can stage two of five changed files and commit them as one
+coherent change.
+
+`git status` names all three places in plain words: "Changes to be committed"
+is the index, "Changes not staged for commit" is the working tree, and a clean
+tree means both agree with the last commit. Run it far more often than feels
+necessary; it is the cheapest way to know where you actually are.
+
+Points the answer must contain:
 
 * Working tree, index (staging area), repository
 * `git add` moves working tree to index, `git commit` moves index to repository
 * `git status` shows where everything currently is
+====
 
 == What does a commit contain, and why is it a state rather than a diff?
 
 covers: lo-1, lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A commit records the *complete state* of all tracked files at that moment, plus
+the author, the timestamp, the message and the hash of its parent commit. It
+does not store "three lines added in `Booking.java`" — it stores the whole tree
+as it looked.
+
+The diff you see in `git show` is *computed*, on demand, by comparing the commit
+with its parent. That is why `git diff HEAD~5` works just as easily: any two
+commits can be compared, not just neighbouring ones.
+
+Storing states sounds wasteful, and is not: identical file contents are stored
+once and referenced by every commit that contains them, so a commit that changes
+one file adds one new object, not a copy of the project.
+
+The consequence matters more than the mechanism. Because every commit is a
+complete state, you can *return* to any of them — check one out, see the program
+as it was, and go back. That is the actual promise of version control, and it is
+why experimenting is safe: the way back is already recorded. A system that
+stored only diffs would have to replay them all to reconstruct a state, and a
+single damaged diff would break the chain.
+
+Points the answer must contain:
 
 * Complete state of the tracked files, author, timestamp, message, parent
 * The diff is computed between two commits on demand
 * Because it is a state, you can return to it — that is what makes experiments
   safe
+====
 
 == What makes a commit message useful? Give a bad and a good example
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A commit message is written for a person reading the history later — usually
+you, usually while hunting the moment something broke. That reader has the diff
+already; what they lack is the *intent*.
+
+The school project guidelines prescribe *Conventional Commits*:
+
+----
+<type>(<scope>): <subject>
+
+<body: why, not what>
+
+<footer: task id, BREAKING CHANGE>
+----
+
+The subject says what changes for the reader, in the imperative, under about
+fifty characters, with no full stop.
+
+[cols="1,1",options="header"]
+|===
+|Useless |Useful
+
+|`update`
+|`fix(attendance): correct off-by-one in the day count`
+
+|`fix bug`
+|`fix(booking): reject slots that already started`
+
+|`did the tests`
+|`test(export): cover the empty-list case`
+|===
+
+The *why* goes in the body, one blank line under the subject — not into a code
+comment that nobody will update:
+
+[source]
+----
+feat(export): write attendance to CSV
+
+The class teachers need the list in the school administration system, which
+imports CSV and nothing else. XLSX was rejected because it drags in a library
+for one feature.
+
+Task: SYP-42
+----
+
+Two requirements come from the project guidelines rather than from the
+specification itself: every message carries the id of its task, so a line of
+history and a board entry can be traced to each other, and a breaking change is
+marked with `!` or a `BREAKING CHANGE:` footer.
+
+Points the answer must contain:
 
 * Written for someone reading the history later, imperative, what changes for
   the reader, under about fifty characters, no full stop
@@ -44,12 +161,62 @@ Expected answer points:
   `fix bug`
 * The "why" goes in the body, not into a code comment
 * The task id belongs in the message — the project guidelines require it
+====
 
 == Name five commit types and say what each is for
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,3",options="header"]
+|===
+|Type |Used for
+
+|`feat`
+|a new feature — the system can do something it could not do before
+
+|`fix`
+|a bug fix — the system does what it was always supposed to do
+
+|`docs`
+|documentation only, no code
+
+|`refactor`
+|restructuring *without* changed behaviour
+
+|`test`
+|tests added or corrected
+
+|`style`
+|formatting only
+
+|`perf`
+|same behaviour, measurably faster
+
+|`chore`
+|outside source and tests: dependency and version bumps
+
+|`ci` / `build`
+|pipeline and build system
+
+|`revert`
+|takes an earlier commit back
+|===
+
+The boundary that gets crossed most often is `refactor`. If behaviour changed,
+it is not a refactoring — it is a `feat` or a `fix`, and calling it `refactor`
+hides exactly the commit a reviewer would want to look at. The second common
+mistake is `chore` as a dustbin: when the type is genuinely hard to choose, the
+problem is usually the commit, not the list of types. A change that is `feat`
+and `fix` and `chore` at once should have been three commits.
+
+The point of the type is that it makes the history machine-readable. `git log
+--oneline | grep feat` answers "what did we build in this sprint" without anyone
+writing a report, and release notes can be generated from the same information.
+
+Points the answer must contain:
 
 * `feat` new feature, `fix` bug fix, `docs` documentation, `refactor`
   restructuring without changed behaviour, `test` tests; also `style`, `perf`,
@@ -58,32 +225,154 @@ Expected answer points:
 * The type makes the history machine-readable: what was built, fixed or
   maintained can be read from `git log` without asking anyone
 * A breaking change is marked with `!` or a `BREAKING CHANGE:` footer
+====
 
 == Which files must not be committed, and why does deleting them later not help?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Two categories stay out: everything that can be *regenerated*, and everything
+that must not be *public*.
+
+[source,gitignore]
+----
+build/
+target/
+node_modules/
+.venv/
+.env            # secrets
+*.class
+.DS_Store
+----
+
+Deleting them later does not help, because a commit is a permanent record. The
+file disappears from the working tree, but the commit that introduced it still
+contains it, and anyone with the repository can read it out with `git show`.
+Removing it for real means rewriting history — every hash after the offending
+commit changes, every clone has to be reset, and if the repository was public in
+the meantime the secret must be treated as leaked anyway. The only remedy that
+actually works is rotating the credential.
+
+Generated files cause a smaller but daily problem: source and output are then
+two truths that drift apart, and every rebuild produces a diff of hundreds of
+lines that nobody reads. Reviews die of that noise.
+
+So the check happens *before* the commit — `git status` and `git diff --staged`,
+not `git add .` on autopilot.
+
+Points the answer must contain:
 
 * Regenerable output (`build/`, `target/`, `node_modules/`) and secrets (`.env`)
 * A committed secret stays in the history; removing it means rewriting history
 * Generated files next to their source create two truths and unreadable diffs
+====
 
 == How do you read what changed in a specific commit?
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Two steps: find the commit, then read it.
+
+[source,bash]
+----
+git log --oneline --graph      # find it — one line per commit, branches visible
+git show 9b41d0e               # read it — message plus the full diff
+----
+
+`git show` needs enough of the hash to be unambiguous; seven characters are
+normally plenty, and `HEAD~2` or a branch name work in the same place.
+
+While you are still working, two other comparisons matter, and mixing them up is
+the usual source of "but I committed that":
+
+[cols="1,2",options="header"]
+|===
+|Command |Compares
+
+|`git diff`
+|working tree against index — what you changed but did not stage
+
+|`git diff --staged`
+|index against the last commit — what the next commit will contain
+
+|`git show <hash>`
+|a commit against its parent — what that commit changed
+|===
+
+IntelliJ shows the same thing in the *Git* tool window (kbd:[Alt+9]): the log
+with its graph on the left, the changed files of the selected commit on the
+right. Same information, faster to click, and the examination asks you to be
+able to say what happens underneath.
+
+Points the answer must contain:
 
 * `git log --oneline --graph` to find it, `git show <hash>` to read it
 * `git diff` compares working tree and index, `git diff --staged` index and last
   commit
+====
 
 == Where does the network start in the git picture, and what follows from that?
 
 covers: lo-5
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The line runs between the local repository and the remote. Working tree, index
+and local repository are all on your machine; `origin` is on the server.
+
+.Only four commands cross the line
+[graphviz,q-network-line,svg]
+----
+digraph network {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  subgraph cluster_local {
+    label="your machine — no network needed";
+    fontname="Helvetica"; fontsize=10; color="#999999";
+    W [label="working tree"];
+    I [label="index"];
+    L [label="local repository\n.git"];
+    W -> I [label="git add"];
+    I -> L [label="git commit"];
+  }
+
+  subgraph cluster_remote {
+    label="server (GitHub)";
+    fontname="Helvetica"; fontsize=10; color="#999999";
+    R [label="remote repository\norigin"];
+  }
+
+  L -> R [label="git push, git fetch, git pull", dir=both];
+}
+----
+
+`add`, `commit`, `log`, `diff`, `status`, `branch` and `merge` are all local.
+Committing works on a plane, in a cellar, with the wifi off. Only `push`,
+`fetch`, `pull` and `clone` cross the line.
+
+The remote holds a full history too — a peer copy, not a master version that
+yours is a fragment of. That is what *distributed* means: any clone can carry on
+if the server burns down.
+
+Two things follow that you feel in the first week. A commit that exists only
+locally exists for nobody else — "it is committed" and "the others have it" are
+different statements, and only a push turns the first into the second. And a
+commit on one laptop is not a backup: the machine in room 3 is not a backup of
+itself. IntelliJ makes this visible in the Git log: `↗ 6` beside `main` means
+six commits are committed and not pushed.
+
+Points the answer must contain:
 
 * Working tree, index and local repository are on your machine; the remote
   repository (`origin`) is on the server
@@ -92,3 +381,4 @@ Expected answer points:
 * The remote holds a full history as well — it is a peer copy, not a master
   version
 * A commit exists for nobody else until it is pushed
+====

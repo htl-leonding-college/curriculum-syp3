@@ -14,47 +14,208 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A specification is the written decision about *what must be true* — short, one
+file per capability, written continuously alongside the work, and phrased so that
+it can be checked.
+
+[cols="1,1",options="header"]
+|===
+|Pflichtenheft / requirements document |specs
+
+|written once, before building
+|written continuously, alongside
+
+|prose, hundreds of pages
+|short, per capability
+
+|becomes stale silently
+|drifts visibly, because the build checks it
+
+|"the system should support user management"
+|a requirement plus scenarios that either hold or do not
+|===
+
+The decisive difference is the third row. A classic requirements document is not
+*wrong*; it is *unverifiable*. Nobody can run it, so nothing ever tells you the
+day it stopped describing the system — it simply becomes fiction quietly, and
+everybody keeps citing it.
+
+A specification made of requirements and scenarios can be checked, by a person or
+by a test. When it and the system disagree, somebody finds out, and then there is
+a decision to take: fix the system, or change the target state deliberately.
+
+Points the answer must contain:
 
 * Short, per capability, written continuously, checkable
 * The requirements document is written once, is prose, and cannot be verified
 * Drift becomes visible instead of silent
+====
 
 == Write a requirement with a scenario for "sessions have a capacity limit"
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[source,markdown]
+------
+## ADDED Requirements
+
+### Requirement: A session cannot be overbooked
+The system SHALL refuse a booking when the session has already reached its
+capacity.
+
+#### Scenario: Booking a session that is full
+- **WHEN** a member books a session whose capacity is 20 and which has 20
+  confirmed bookings
+- **THEN** the booking is refused and the member is told the session is full
+
+#### Scenario: Booking the last free place
+- **WHEN** a member books a session whose capacity is 20 and which has 19
+  confirmed bookings
+- **THEN** the booking is confirmed
+------
+
+Read it as three parts. The *requirement* says what must hold, in one sentence,
+with SHALL. The *scenario* says how you would observe it: WHEN describes the
+situation, THEN the outcome, both from outside the system. Together they define
+what "done" means for this capability.
+
+The second scenario is not decoration. A requirement stated only through its
+failure case is half-specified — the boundary is exactly where the mistakes live,
+and "19 of 20" is the case an implementation gets wrong.
+
+Neither part mentions a class, a table or a framework. If you cannot phrase a
+requirement this way, it is usually not yet understood, or it is a wish.
+
+Points the answer must contain:
 
 * Requirement with SHALL, stating what must hold
 * Scenario with WHEN and THEN, observable from outside
 * No implementation detail in either
+====
 
 == Why did precise statements of intent become the scarce resource?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because the things around them got cheap.
+
+[cols="1,1",options="header"]
+|===
+|Cheap now |Still expensive
+
+|writing the implementation
+|saying exactly what it must do
+
+|producing an explanation of anything
+|deciding which behaviour is correct here
+
+|generating tests that pass
+|knowing which behaviour must never break
+|===
+
+An agent turns a precise description into a working implementation faster than
+you can type it. It will also produce a plausible implementation from an
+*imprecise* description — and that is the actual problem, because the result
+looks equally finished either way. The gap between "what I said" and "what I
+meant" used to be absorbed by the slowness of building; now it goes straight into
+the repository.
+
+So the effort moves to the two ends of the loop: stating the intent precisely
+enough that a wrong reading is visible, and verifying that what came back matches
+it. The right-hand column of the table is not cheaper than it was five years ago,
+and it is now most of the work.
+
+Points the answer must contain:
 
 * Producing code and explanations is now cheap
 * Deciding which behaviour is correct is not
 * The effort moves to specifying and verifying
+====
 
 == What is frozen, what is alive, and why do you need both?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The *charter* is frozen at approval. The *specs* are alive and change with every
+archived change.
+
+.Both, and the difference between them
+[graphviz,q-frozen-alive,svg]
+----
+digraph frozenalive {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  C [label="Projektauftrag\nfrozen at approval", fillcolor="#ffffff"];
+  S [label="openspec/specs/\nthe current target state"];
+  A [label="changes/archive/\nhow it got there"];
+
+  C -> S [label="sets the frame"];
+  S -> A [label="every change recorded"];
+}
+----
+
+Each would fail alone. A charter that could be edited is no yardstick: a team
+adjusts its goals to whatever got finished and every project succeeds by
+definition. A specification that were frozen would stop describing the system
+within a fortnight, and then it is a requirements document again — cited, wrong,
+unrunnable.
+
+Keeping both is what makes the *difference* readable, and the difference is the
+content of scope management: what was promised in November, what is true in June,
+and which archived changes account for the gap. That comparison is the only
+honest feedback a team gets about its own estimating.
+
+Points the answer must contain:
 
 * Charter frozen — otherwise there is no yardstick
 * Specs alive — otherwise they stop describing the system
 * The visible difference between them is scope management
+====
 
 == Why is "the service uses a repository class" a bad requirement?
 
 covers: lo-1, lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because it describes the *implementation* rather than observable behaviour. Two
+problems follow, and they are independent of each other.
+
+*It cannot be verified from outside.* Nobody using the system can tell whether a
+repository class exists. So the requirement has no scenario — there is no WHEN
+and THEN that would show it holding or failing — and a requirement nobody can
+check is not a requirement, it is a preference.
+
+*It forbids a better implementation.* If it turns out that the query belongs in
+one place with three lines of SQL, the specification now says no, for a reason
+nobody would defend if asked. Specifications constrain the *outside*; the inside
+is where the team is supposed to be free to improve.
+
+The rewrite asks what the class was supposed to guarantee: "Attendance records
+SHALL be readable per session and per member" — with a scenario. That keeps
+whatever the design decision was really for, and leaves the design open. If the
+repository class genuinely was a decision worth recording, its place is
+`design.md`, with the alternative that was rejected.
+
+Points the answer must contain:
 
 * It describes the implementation, not the observable behaviour
 * It cannot be verified from outside, and it forbids a better implementation
+====

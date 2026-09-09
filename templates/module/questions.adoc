@@ -12,11 +12,19 @@ endif::[]
 
 // Jede Frage ist ein eigener Abschnitt und nennt in der ersten Zeile ihres
 // Rumpfes die Lernziele, die sie prüft:  covers: lo-1, lo-2
+// Die Antwort steht eingeklappt als [%collapsible] darunter: zuerst die
+// Erläuterung, dann die Punkte, die in der Antwort vorkommen müssen.
 
 == {{QUESTION}}
 
 covers: lo-1
 
-Erwartete Punkte in der Antwort:
+.Answer
+[%collapsible]
+====
+{{ANSWER_EXPLANATION}}
+
+Points the answer must contain:
 
 * {{ANSWER_POINT}}
+====

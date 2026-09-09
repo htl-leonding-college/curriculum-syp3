@@ -14,48 +14,195 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A stakeholder is *anyone affected by the project or able to affect it*. Note both
+halves — people who cannot influence the project still count, and people with no
+interest in it still count if they hold a veto.
+
+[cols="1,2,2",options="header"]
+|===
+|Type |Example in a school project |What they can do to you
+
+|User
+|the trainer who records attendance
+|refuse to use it if it is slower than paper
+
+|Client
+|the club, the teacher, the school
+|change what "finished" means
+
+|Operator
+|whoever runs the server afterwards
+|refuse to host it
+
+|Affected party
+|members whose data is stored
+|data protection, and rightly so
+|===
+
+Missing one is the most common way a finished project turns out to be unusable —
+and it is almost always the operator or the affected party, because neither of
+them appears in the conversation where the idea is born.
+
+Sorted by *interest* and *influence*, the four quadrants suggest four different
+treatments: involve closely, keep satisfied, keep informed, inform.
+
+Points the answer must contain:
 
 * Anyone affected by the project or able to affect it
 * Users, client, operators, affected parties (for example data subjects)
 * The dangerous quadrant is high influence with low interest
+====
 
 == Turn "the app should be fast" into a verifiable goal
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+"Opening the attendance list for a group of 30 takes under one second on the lab
+laptops."
+
+Three ingredients make the difference:
+
+* an *observable action* — opening the attendance list,
+* a *measurable condition* — under one second,
+* a *context in which it holds* — a group of 30, on the lab laptops.
+
+The test is not whether the sentence sounds professional. It is whether *somebody
+who was not involved can check it without asking you what you meant*. "Fast"
+fails that test: fast compared with what, on which machine, with how much data?
+Two people can both be honest and disagree about whether it was met, which means
+the goal cannot settle anything at the acceptance.
+
+[cols="1,1",options="header"]
+|===
+|Wish |Verifiable goal
+
+|"Users should like it."
+|"A trainer can record a full session without written instructions, in under two
+ minutes."
+
+|"The data must be safe."
+|"Personal data is stored only for members with a signed consent, and can be
+ deleted on request within one working day."
+|===
+
+Wishes are allowed to exist — write them down as wishes. What is not allowed is
+calling one a goal, because then the project has a yardstick that cannot measure.
+
+Points the answer must contain:
 
 * Observable action, measurable condition, context
 * For example: attendance list for 30 members opens in under one second on the
   lab laptops
 * A third party must be able to check it without asking what you meant
+====
 
 == Why does a charter contain non-goals?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because they cost one line each and prevent the two most expensive conversations
+of the year.
+
+----
+Non-goals:
+  - no mobile app, browser only
+  - no payment handling
+  - no import from the old Excel sheets
+----
+
+The first conversation is *scope creep during the project*: in March somebody
+asks "could it also do payments?", and without a non-goal there is no cheap way
+to say no — the discussion starts from scratch and usually ends with a yes that
+nobody had time for. With the line written down, the answer is "that is out of
+scope; if we want it, we change the charter deliberately".
+
+The second is *disappointment at the acceptance*: the client expected the Excel
+import because nobody ever said it was not coming. A non-goal is the cheapest
+form of expectation management there is.
+
+A non-goal is not a promise never to do the thing. It says: out of scope for
+*this* project, in *this* year. And it must not be a secret plan — "no mobile app
+*for now*" is a roadmap entry, not a non-goal, and it will be read as a promise.
+
+An empty non-goals section is not accepted in this course: if nothing is out of
+scope, the scope was not thought through.
+
+Points the answer must contain:
 
 * They prevent scope creep during the project and disappointment at acceptance
 * One line each, cheap
 * A non-goal is not a permanent refusal, it is out of scope for this project
+====
 
 == Why is "we implement a REST API" a bad goal?
 
 covers: lo-2, lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because it measures *your effort* instead of the *result*. It is satisfied the
+moment the API exists, whether or not anybody can do anything useful with it —
+and it would still be "achieved" if the trainer never manages to record a single
+session.
+
+Nobody outside the team cares how the thing is built. The client cares what
+somebody can do afterwards that they could not do before; the API is a means, and
+means belong in the design, not in the goals.
+
+There is a second, quieter problem: a goal phrased as an implementation decision
+*forbids every other implementation*. If halfway through it turns out that a
+server-rendered page would do the job in a third of the time, the charter now
+says no — for no reason anybody would defend if asked.
+
+Rewritten: "A trainer can record attendance for a session from the phone at the
+door and see it in the club database within a minute." That says what changes for
+a person, is checkable by somebody who was not there, and leaves the technical
+route open.
+
+Points the answer must contain:
 
 * It measures effort, not result
 * Nobody outside the team cares how it is built
 * Rewrite it as what a user can then do
+====
 
 == What is the risk in the high-influence, low-interest quadrant?
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+They are not paying attention — until the moment they say no.
+
+The typical occupants are the school's IT administration, the data protection
+officer, the person who owns the server. None of them is interested in your
+project week by week; each of them can stop it in a single sentence: "that may
+not be hosted here", "personal data may not be processed like that".
+
+The danger is not the veto itself but *when* it arrives. Because they are not
+watching, the objection surfaces at the point where they are finally asked —
+usually at the deployment, in June, when changing the answer costs a rebuild
+instead of a decision.
+
+The treatment is therefore *keep satisfied*: ask early, in writing, while the veto
+is still cheap. Five minutes with the administrator in October settles what a
+redesign in June cannot. The other quadrants are less demanding — involve the
+high-influence, high-interest people closely; keep the interested-but-powerless
+informed, because they are your best source of requirements; inform the rest.
+
+Points the answer must contain:
 
 * They are not watching until they say no
 * Keep them satisfied and informed early, when a veto is still cheap
+====

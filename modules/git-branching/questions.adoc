@@ -14,37 +14,187 @@ endif::[]
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A branch is a file containing one commit hash. Nothing more. It sits in
+`.git/refs/heads/`, and you can read it:
+
+[source,bash]
+----
+$ cat .git/refs/heads/main
+3f2a9c1e7b0d4a58c1f9e2b6d8a30c4517ee9b21
+----
+
+The commits themselves form a graph: every commit names its parent, so from one
+hash the whole history can be walked backwards. A branch is only the label that
+says "this end of the graph is called `main`", and `HEAD` is the label that says
+"and this is the one I am working on".
+
+That is why creating a branch is cheap — git writes forty-one bytes and is done.
+Nothing is copied, no files are duplicated, the operation is instant even in a
+repository with a hundred thousand commits. Compare this with older systems in
+which a branch really was a copy of the directory tree: there, branching was an
+event you asked permission for. In git it is not an event, and that changes how
+you work — a branch per idea becomes practical, and throwing one away costs
+nothing.
+
+Committing moves the label forward: the new commit points at the old one, and
+the branch file is rewritten to the new hash.
+
+Points the answer must contain:
 
 * A movable pointer to a commit, not a copy of the files
 * The commits form a graph; the branch is one hash in a file
 * Therefore branching costs nothing, and short-lived branches are practical
+====
 
 == When do you get a fast-forward and when a merge commit?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+It depends on one question only: *has the target branch moved since the branch
+started?*
+
+*Case 1 — `main` has not moved.* Every commit on `main` is already an ancestor
+of your branch. There is nothing to reconcile: git only has to move the `main`
+label forward along the existing chain. That is a **fast-forward** — no new
+commit is created.
+
+.Fast-forward — `main` has not moved, so the label just advances
+[graphviz,q-fast-forward,svg]
+----
+digraph fastforward {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7];
+
+  A -> B -> C -> D;
+  B [label="B\nmain points here\nbefore the merge"];
+  D [label="D\nfeature/export\nmain points here after"];
+}
+----
+
+*Case 2 — `main` has moved too.* Somebody merged another branch while you were
+working. Now two lines of development start from the same commit and both have
+new work. Git cannot advance a label along a straight chain any more, so it
+creates a **merge commit**: a commit with *two* parents, one on each line.
+
+.Merge commit — both lines moved, so M ties them together
+[graphviz,q-merge-commit,svg]
+----
+digraph mergecommit {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7];
+
+  A -> B -> C -> M;
+  B -> D -> M;
+  C [label="C\non main —\nsomebody else merged"];
+  D [label="D\non feature/export —\nyour work"];
+  M [label="M — merge commit\ntwo parents: C and D\nmain points here afterwards"];
+}
+----
+
+The merge commit is not noise. It is the only place where the history records
+*when* two lines came together and *how* the reconciliation turned out — that is
+exactly what you want to read six months later when a bug appears. Conflicts, by
+the way, are a separate matter: they are possible in case 2, they never happen in
+case 1, but a merge commit is created whether or not there was a conflict.
+
+The whole rule in one line: fast-forward when your branch already contains
+everything `main` has; merge commit when both sides have something the other
+does not.
+
+Points the answer must contain:
 
 * Fast-forward when the target branch has not moved — the pointer advances
 * Merge commit when both lines have new commits; it has two parents
 * The merge commit records how two lines were reconciled
+====
 
 == Show the commands for creating, merging and deleting a branch
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[source,bash]
+----
+git switch -c feature/export    # create the branch and switch to it
+# ... edit, git add, git commit ...
+git switch main                 # back to the target branch
+git merge feature/export        # bring the work in
+git branch -d feature/export    # remove the label
+----
+
+Three things are worth knowing about this sequence.
+
+`switch -c` is create *and* switch in one step; without `-c` git expects the
+branch to exist already. Switching rewrites your working tree, so uncommitted
+changes must be committed or stashed first — git refuses the switch if it would
+overwrite them.
+
+`git merge` is run *from the branch that receives the work*. Beginners regularly
+run it the other way round and then wonder why `main` is unchanged: they merged
+`main` into their feature branch instead.
+
+`git branch -d` deletes the label, not the commits. They were merged into `main`
+and are reachable from there, so nothing is lost. The lower-case `-d` refuses to
+delete a branch whose commits are not merged anywhere — that refusal is a safety
+net, and `-D` overrides it.
+
+Points the answer must contain:
 
 * `git switch -c feature/x`, work, commit
 * `git switch main`, `git merge feature/x`
 * `git branch -d feature/x` — the label goes, the commits remain
+====
 
 == Which branching rules apply in this course, and why each?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Each rule exists because of a specific failure it prevents.
+
+*Never commit to `main` directly.* Everything is reviewed. A commit that lands
+on `main` unseen is a change nobody agreed to, and the next person's merge has
+to reconcile it blindly.
+
+*Short-lived branches — days, not months.* Conflicts do not appear evenly over
+time; they accumulate silently and arrive all at once on merge day, which is
+always the day before the deadline. A branch that lives two days has almost no
+conflict surface.
+
+*One branch, one purpose*, named after the work: `feature/attendance-export`,
+not `felix-work`. The name has to tell a reviewer what to expect.
+
+*No rebase of published branches.* Rebasing writes new commits and abandons the
+old ones. If somebody else already has the old ones, their repository and yours
+now disagree about history, and their next push either fails or destroys your
+version. This is the one git operation that can actually lose other people's
+work.
+
+*`main` always builds.* A broken `main` blocks the whole team, not just its
+author, so repairing it is the first task of the next morning.
+
+*No git-flow.* Its `develop`, `release/*` and `hotfix/*` layers solve the
+problem of coordinating versioned releases across several teams. A school
+project has one team and no released versions, so the ceremony would be learned
+as a ritual instead of as a tool.
+
+Points the answer must contain:
 
 * Never commit to `main` directly — everything gets reviewed
 * Short-lived branches — conflicts accumulate otherwise
@@ -52,12 +202,44 @@ Expected answer points:
 * `main` always builds
 * No git-flow: it solves a release-coordination problem a school project does
   not have
+====
 
 == You deleted a branch by mistake. Is the work gone?
 
 covers: lo-2, lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+No. You deleted a label, and the commits it pointed at are still in the object
+database. They are merely *unreachable* — no branch names them any more, so
+`git log` and `git branch` no longer show them.
+
+What still knows about them is the reflog: git records every movement of `HEAD`
+and of every branch, so the lost hash is written down there.
+
+[source,bash]
+----
+$ git reflog
+3f2a9c1 HEAD@{0}: checkout: moving from feature/export to main
+9b41d0e HEAD@{1}: commit: feat(export): write the attendance CSV
+...
+$ git switch -c feature/export 9b41d0e
+----
+
+The new branch points at the old commit, and the work is back exactly as it was.
+
+Two limits are worth knowing. The reflog is local — it is not pushed and not
+cloned, so it only helps on the machine where the work happened. And unreachable
+objects are eventually removed by `git gc`, typically after about thirty days.
+Within the run of a school project you have plenty of time; on someone else's
+laptop you have none.
+
+This is also why `git branch -d` is safe by design: it refuses to delete an
+unmerged branch, and only `-D` overrides that refusal.
+
+Points the answer must contain:
 
 * No — the commits still exist, only the pointer was removed
 * `git reflog` finds the hash, `git switch -c name <hash>` restores it
+====

@@ -253,6 +253,22 @@ def test_skeleton_empty_exercises_is_fine(repo: Repo) -> None:
     assert repo.run("skeleton") == []
 
 
+# --- 10 Antwortbloecke ----------------------------------------------------
+def test_answers_missing(repo: Repo) -> None:
+    repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])
+    questions = GOOD_QUESTIONS.replace(".Answer\n    [%collapsible]\n    ====\n", "").replace(
+        "    ====\n", ""
+    )
+    repo.write_module("git-basics", index=GOOD_INDEX, questions=questions)
+    assert "hat keinen Antwortblock" in repo.messages("answers")
+
+
+def test_answers_collapsible_present(repo: Repo) -> None:
+    repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])
+    repo.write_module("git-basics", index=GOOD_INDEX, questions=GOOD_QUESTIONS)
+    assert repo.run("answers") == []
+
+
 # --- Z Strukturattribute --------------------------------------------------
 def test_attributes_structure_in_adoc(repo: Repo) -> None:
     repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])

@@ -1,4 +1,4 @@
-= Providing context and continuing across sessions — questions
+= Context and continuation — questions
 :topic-id: ai-context-continuation
 :icons: font
 
@@ -14,50 +14,221 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+An agent knows exactly what is in front of it: your instructions, the files it
+read, the output of the commands it ran. Nothing else — not your repository as a
+whole, not last week's session.
+
+[cols="1,1",options="header"]
+|===
+|Worth including |Usually noise
+
+|the spec or requirement being implemented
+|the entire repository
+
+|the file being changed and its immediate neighbours
+|generated output, lock files, build logs
+
+|the exact error message and stack trace
+|"it doesn't work"
+
+|the convention to follow, or a file that shows it
+|your entire chat history from last week
+|===
+
+Both directions fail, and they fail differently.
+
+*Too little context* produces confident guesses about your codebase: invented
+file names, a convention that is not yours, a second implementation of something
+you already have. The agent cannot know it is guessing.
+
+*Too much context* buries the relevant part. Forty files do not make the answer
+better; they make the three that matter harder to weigh, and the answer drifts
+towards the average of everything it was shown.
+
+So context is *assembled deliberately* — the spec, the file, the error — rather
+than dumped. That is a decision you make each time, and it is most of the
+difference between a good and a useless session.
+
+Points the answer must contain:
 
 * The spec or requirement, the file being changed and its neighbours, the exact
   error, the convention to follow
 * Noise: whole repository, generated files, build logs, unrelated history
 * Too little context produces invented conventions; too much buries the relevant
   part
+====
 
 == What happens when the context window fills up?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The window is finite. In a long session the earliest text — usually your original
+instructions and the decisions taken at the start — is pushed out to make room
+for what came later.
+
+The symptom is characteristic, and once you know it you recognise it within a
+minute: the agent starts *contradicting a decision you made an hour ago*, or
+reintroduces a bug you already fixed together, or asks about a file it read
+earlier. It does not announce this; from its side there is no gap, only the text
+that is still there.
+
+.What is still in the window, and what left it
+[graphviz,q-context-window,svg]
+----
+digraph window {
+  rankdir=TB;
+  bgcolor="transparent";
+  compound=true;
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  A [label="your instructions and\nthe decisions taken at the start",
+     style="filled,dashed", fillcolor="#ffffff", color="#999999"];
+
+  subgraph cluster_w {
+    label="context window — fixed size, newest kept";
+    fontname="Helvetica"; fontsize=10; color="#666666";
+    B [label="files read"];
+    C [label="commands and their output"];
+    D [label="the last hour of conversation"];
+    B -> C -> D [style=invis];
+  }
+
+  A -> B [label="pushed out first",
+          lhead=cluster_w, style=dashed, dir=back];
+}
+----
+
+The remedy is not a longer session, and not repeating yourself. It is to *end the
+session deliberately* while it is still going well, and start a new one with a
+written summary — a continuation prompt. A fresh session with three paragraphs of
+accurate state beats a four-hour session that has forgotten half of them.
+
+Points the answer must contain:
 
 * Early instructions drop out
 * Symptom: the agent contradicts earlier decisions or reintroduces fixed bugs
 * Remedy: end the session deliberately and restart with a written summary
+====
 
 == Which four parts does a continuation prompt have?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+*State* — where things stand, including what is broken. *Decisions* — what has
+been settled, so it is not re-litigated. *Next* — the next step, concretely.
+*Files* — where to look.
+
+[source,markdown]
+------
+# Continuation: attendance export
+
+**State:** CSV export works for one session; the date column is off by one
+in the DST week (see failing test `ExportTest.dstWeek`).
+
+**Decided:** dates are stored in UTC and converted on export, not the other way
+round. Do not "fix" this by storing local time.
+
+**Next:** make `ExportTest.dstWeek` pass, then add the group column.
+
+**Files:** `ExportService.java`, `ExportTest.java`, spec
+`openspec/specs/export/spec.md`.
+------
+
+The *Decisions* part earns its place fastest. Without it, a fresh session
+proposes storing local time — a reasonable idea that was already considered and
+rejected — and you spend twenty minutes having the same argument you had
+yesterday.
+
+Written after every substantial session it costs two minutes and saves a restart.
+And note what it really is: exactly the handover a human teammate would need if
+they took the work over tomorrow. Writing it for the agent is not extra work; it
+is the handover you should have written anyway — which is why the continuation
+files of this curriculum repository live under `continuations/` in git and not in
+a chat.
+
+Points the answer must contain:
 
 * State, decisions already taken, next step, relevant files
 * Written after each substantial session
 * It is the same handover a human teammate would need
+====
 
 == Why does project knowledge belong in the repository and not in a chat?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A chat history has none of the properties that make something a project record.
+It is *not versioned* — you cannot see when a decision changed. It is *not
+reviewed* — nobody agreed to what is in it. It is *not visible to the team* — it
+sits in one person's account. And it is not searchable next to the thing it
+describes.
+
+The repository has all four. So anything worth remembering goes into a spec, a
+`Decisions` section, the charter, a continuation file, or a commit message —
+places where it is diffed, reviewed and found again by somebody who was not
+there.
+
+This is also the honest answer to "but the agent knew this yesterday". It did not
+know anything. The text was in its window, the window is gone, and a sentence
+that exists only in a closed session has the same status as a sentence nobody
+ever wrote down. The corollary is uncomfortable and useful: if a decision is only
+in the chat, it does not exist for your team either.
+
+Points the answer must contain:
 
 * A chat is not versioned, not reviewed, not visible to the team
 * "The agent knew this yesterday" is false — the text was in the window and the
   window is gone
 * Decisions belong in specs, `Decisions` sections, charter or commit messages
+====
 
 == What is wrong with a continuation note that lists what you did?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+It is a diary, and the next reader does not need a diary. They need to *continue*,
+which requires two things a list of past activities does not contain: the current
+state, and the direction.
+
+Compare:
+
+[cols="1,1",options="header"]
+|===
+|Diary |Handover
+
+|"Refactored `ExportService`, tried three date libraries, fixed the CSV
+ separator, discussed UTC with Felix."
+|"CSV export works; `ExportTest.dstWeek` fails. Dates stay in UTC by decision —
+ do not switch to local time. Next: make that test pass."
+|===
+
+The left column takes longer to read and leaves every question open: does it work
+now, what was decided, what comes next?
+
+The decisions matter most, because they are the part that gets *re-litigated*
+otherwise. A rejected alternative that is not written down comes back as a fresh
+proposal — from a new session, from a teammate, or from you in two weeks — and
+the work of deciding it is done a second time.
+
+Points the answer must contain:
 
 * The next reader needs state and direction, not a diary
 * The decisions matter so they are not re-litigated
+====

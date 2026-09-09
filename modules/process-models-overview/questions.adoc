@@ -14,47 +14,191 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+The same loop, from the 1970s to this morning:
+
+----
+clarify the goal
+  -> bound the scope
+    -> state the requirement precisely
+      -> build
+        -> verify
+          -> take the change in under control
+----
+
+No model skips a step. Waterfall does not omit verification, and Scrum does not
+omit stating requirements — a user story *is* a requirement, written shorter.
+
+What differs between the models is *how often you go round*, and therefore how
+long an error can survive before anybody notices. That is the whole difference,
+and it is why comparing models by their vocabulary — sprints against phases,
+backlog against specification — misses the point. Compare them by the length of
+one pass.
+
+Points the answer must contain:
 
 * Clarify goal, bound scope, state the requirement, build, verify, control the
   change
 * The steps do not differ between models — the frequency of the loop does
+====
 
 == Place waterfall, Scrum and SDD by tempo and say what follows from each
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,1,2",options="header"]
+|===
+|Model |Tempo of one loop |Consequence
+
+|Waterfall / V-model
+|months
+|being wrong is found late and costs the most
+
+|Scrum
+|weeks
+|being wrong is found at the sprint boundary
+
+|Spec-driven development
+|minutes
+|being wrong is found while you are still holding the thought
+|===
+
+.The same loop, three tempos
+[graphviz,q-three-tempos,svg]
+----
+digraph tempos {
+  rankdir=TB;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  W [label="WATERFALL\nspecify → build → verify\none pass, months"];
+  S [label="SCRUM\nbacklog → sprint → review\nweeks, repeated"];
+  D [label="SDD\nspec → change → verify\nminutes, continuous"];
+
+  W -> S [label="shorter loop"];
+  S -> D [label="shorter loop again"];
+}
+----
+
+What follows is a cost, not a virtue. The later the loop closes, the later an
+error is found and the more work has been built on top of it in the meantime — a
+wrong assumption discovered after four months has four months of code standing on
+it.
+
+But a short loop is not free either: it is only possible when one pass is cheap,
+which requires *automated build and test* and *precise statements* of what should
+happen. Without those, "short loop" just means guessing more often.
+
+Points the answer must contain:
 
 * Months, weeks, minutes
 * The later you close the loop, the later and more expensively an error is found
 * Shorter loops require automation and precise statements
+====
 
 == Why does the choice of process model not affect the charter?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because the charter asks a different kind of question. It wants the initial
+situation, the objectives, the deliverable, the milestones and their dates —
+*what* is to be achieved and *by when*. It contains no field for "sprint",
+"phase" or "iteration", and no field asking how the team organises its week.
+
+[cols="1,2",options="header"]
+|===
+|Layer |Changes with the model?
+
+|Governance — charter, goals, milestones, acceptance
+|no, and it never asked which model you use
+
+|Execution — how you get from goal to result
+|yes, freely
+|===
+
+That separation is what made this course's own switch from Scrum to spec-driven
+development possible without touching a single governance document. The school,
+the client and the examiner see exactly what they saw before.
+
+It cuts the other way too, and that is worth saying: a team cannot use its process
+model as an excuse. "We are agile, so the deliverable moved" is not an argument
+the charter recognises, because the charter never granted the process model any
+authority over goals.
+
+Points the answer must contain:
 
 * The charter asks for goals, deliverables, milestones and dates
 * It has no field for sprints, phases or iterations
 * Governance and execution are separate layers
+====
 
 == Where has the uncertainty moved, now that code is cheap to produce?
 
 covers: lo-1, lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Out of *writing the code* and into *saying precisely what the code should do* and
+*checking that what came out is what you meant*.
+
+A pass through the loop used to be dominated by implementation time. Two things
+changed that: automated build and test made verification nearly free, and agents
+turned a precise description into a working implementation in minutes. What did
+not get cheaper is deciding which behaviour is correct — that still takes a
+person who understands the domain.
+
+The consequence for process models is direct. A model whose loop is measured in
+months invests most of its effort in *coordinating* the expensive implementation
+phase: freezing requirements early so that the build can proceed undisturbed.
+When the build is no longer the expensive part, that coordination is effort spent
+in the wrong place, and its main product is a requirements document that is
+already out of date when the build starts.
+
+Points the answer must contain:
 
 * Out of writing code, into specifying precisely and verifying the result
 * A months-long loop invests effort where it is now least needed
+====
 
 == When would you still choose a long loop?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+When *being wrong is irreversible or very expensive*, and when *the requirements
+are actually known*.
+
+* A bridge, a medical device, a payment run, an aircraft component: you cannot
+  iterate into correctness after deployment, so verification has to happen before
+  building, in detail, and once.
+* A regulated environment where the specification is part of the approval: the
+  document is a legal artefact, not only a working aid.
+* A well-understood domain with stable requirements — the twentieth payroll
+  system for the same rules. A long loop wastes nothing here, because there is
+  little to learn by trying.
+
+The decision is *per situation, not per person and not per company*. The same
+team can run a long loop for the part that touches money and a short one for the
+reporting view next to it. What makes the choice defensible is naming the
+consequence of being wrong: if it is cheap and reversible, iterate; if it is
+neither, verify first.
+
+Points the answer must contain:
 
 * Irreversible or expensive consequences, stable and well-understood
   requirements, regulated environments
 * The choice is per situation, not per person
+====

@@ -1,4 +1,4 @@
-= Working with AI agents, first steps — questions
+= Language models and prompting — questions
 :topic-id: ai-basics-prompting
 :icons: font
 
@@ -14,48 +14,194 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+It predicts likely continuations of text. Everything that looks like more than
+that — the apparent understanding, the plan, the apology after a correction — is
+a consequence of the same mechanism.
+
+Two consequences decide how you have to work with it:
+
+*It has no source of truth.* It produces what is plausible. Plausible is usually
+also correct, and when it is not, the wrong answer arrives in exactly the same
+fluent, well-structured, confident form as a right one. There is no signal in the
+text that separates the two — which is why "it sounded sure" is worth nothing.
+
+*It has no memory between sessions* beyond the text in front of it. Every session
+starts from its input; yesterday's conversation does not exist unless you bring
+it along.
+
+An *agent* is a model plus tools: it reads your files, runs commands, edits code.
+That is what makes it genuinely useful, and it is also what raises the stakes,
+because a wrong prediction no longer stays in a chat window — it changes your
+repository. The countermeasure is not distrust but verification: run it, test it,
+read the diff.
+
+Points the answer must contain:
 
 * Predicts likely continuations of text
 * No source of truth: wrong answers are as fluent as right ones
 * No memory beyond the session context
 * An agent adds tools, so a wrong prediction can change the repository
+====
 
 == Which three ingredients make a task formulation checkable?
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+. *What must be true afterwards* — the behaviour, not the activity.
+. *Where it belongs in the existing code* — the class, the file, the convention
+  to follow.
+. *How it will be checked* — the test, the command, the case that must pass.
+
+[cols="1,1",options="header"]
+|===
+|Weak |Better
+
+|"Write a booking system."
+|"Add a method `book(memberId, sessionId)` to `BookingService` that refuses a
+ booking when the session is full or already started, and returns the reason.
+ Follow the existing exception style in `MemberService`."
+
+|"Fix the bug."
+|"`GET /sessions` returns 500 when the group has no members. Stack trace below.
+ Fix the cause, not the symptom, and add a test for the empty case."
+
+|"Is this good code?"
+|"Review this file for cases where a null list would crash it. List each with the
+ line number."
+|===
+
+The third ingredient is the one people leave out, and it is the one that does the
+work. Without it you get an answer that is *plausible*; with it you get an answer
+that is *verified*, because the request itself carries the criterion by which it
+will be judged. It also protects you from the version of the task that was
+answered instead of the one you asked.
+
+Notice that these are the same three things a specification states — which is why
+prompting well and specifying well turn out to be the same skill.
+
+Points the answer must contain:
 
 * What must be true afterwards, where it belongs in the existing code, how it
   will be checked
 * The third is the one usually missing
+====
 
 == Name four failure modes and how you would notice each
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[cols="1,2,2",options="header"]
+|===
+|Failure |What it looks like |How you notice
+
+|Confident wrongness
+|a clean, well-argued answer that is simply false
+|only by checking the claim — the text gives no signal
+
+|Invented interfaces
+|a method with an entirely plausible name that does not exist
+|it does not compile, or the documentation has no such method
+
+|Outdated practice
+|patterns from an older framework version, presented as current
+|deprecation warnings; the current documentation says otherwise
+
+|Silent scope creep
+|it also "improves" four files you did not ask about
+|read the diff — the file list is longer than the task
+
+|Agreeing with you
+|you push back on a correct answer and it folds
+|the answer changed although no new argument appeared
+|===
+
+The last one is worth a moment: agreement is not evidence. If pushing back
+changes the answer without a new fact being introduced, neither version has been
+established.
+
+The general countermeasure is not suspicion but *verification*, and it is exactly
+what you would do with a classmate's pull request: run it, test it, read the diff
+before merging. The difference is only that the agent produces plausible work far
+faster than a classmate, so the reading is the bottleneck and skipping it is
+tempting.
+
+Points the answer must contain:
 
 * Confident wrongness, invented interfaces, outdated practice, silent scope creep,
   folding under pushback
 * Countermeasure is verification: run, test, read the diff
+====
 
 == What may you hand to an agent, and what must stay out?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+*May:* code in your own repository, public documentation, your own text, test
+data you generated.
+
+*Must not:* personal data of other people — names, marks, addresses, attendance
+records of real members. That is not a matter of taste; it falls under the
+school's data protection rules, and a prompt is a transfer to a third party.
+Where you need realistic data, generate synthetic records.
+
+*Careful:* credentials, tokens, private keys, connection strings. They belong in
+neither prompts nor repositories, and a token pasted "just to debug this" has to
+be treated as leaked and rotated.
+
+Underneath all three lines is one rule that does not move: *you are responsible
+for what you commit*, regardless of who or what wrote it. "The agent did it" is
+not a defence for a licence violation, a leaked key, or a wrong result — and in
+this course the use of agents is open anyway. Hiding it is not the concern; being
+unable to explain the result is.
+
+Points the answer must contain:
 
 * Own code, public documentation, own text, synthetic data
 * Not personal data of others; not credentials or tokens
 * Responsibility for what is committed stays with you
+====
 
 == Why is a large single prompt worse than several small ones?
 
 covers: lo-2, lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+Because errors hide in volume. "Write the booking system" returns eight files you
+have not read, in which one wrong assumption — a session that has already started
+may still be booked — sits in the middle of four hundred correct lines. Nothing
+marks it. To find it you have to review everything with equal attention, which
+nobody does.
+
+Small steps invert that. Each answer is small enough to read properly, and each
+is *verified before the next one builds on it*, so a wrong assumption is caught
+while it has affected one method instead of a whole subsystem.
+
+There is a second effect that matters just as much: with a small step you know
+what you asked for, so you can tell whether you got it. With a large one you end
+up accepting a plausible answer to a slightly different question, because
+reconstructing the original question from the result is harder than reading the
+result.
+
+The practical rule: if you cannot state how you will check the answer, the step
+is too large. And if the first answer is poor, a second attempt with a sharper
+question beats arguing with the first one.
+
+Points the answer must contain:
 
 * Large answers hide their errors; small steps expose them
 * Each step can be verified before the next builds on it
+====

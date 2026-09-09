@@ -1,4 +1,4 @@
-= Conflicts and remote repositories — questions
+= Remotes and conflicts — questions
 :topic-id: git-conflicts-remotes
 :icons: font
 
@@ -14,51 +14,220 @@ endif::[]
 
 covers: lo-1
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+`origin/main` is a *remote-tracking branch*: a local note of where the remote's
+`main` stood the last time you looked. It lives in your `.git`, it is read-only
+for you, and it does not update by itself — only `git fetch` (and therefore
+`git pull`, `git clone`, and a `git push` that succeeds) refreshes it.
+
+.Three different things that all get called "main"
+[graphviz,q-origin-main,svg]
+----
+digraph tracking {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  L [label="main\nyour branch"];
+  T [label="origin/main\nyour note of where\nthe remote was"];
+  R [label="main\non the server"];
+
+  L -> R [label="git push"];
+  R -> T [label="git fetch"];
+  T -> L [label="git merge"];
+}
+----
+
+So there are three things named `main`: yours, your note, and the server's. The
+note is what lets git answer "ahead 2, behind 1" without a network round trip —
+and it is also why that answer can be stale. `git status` compares your branch
+with the *note*, not with the server, so after somebody else pushes you still
+read "up to date" until you fetch.
+
+`git pull` is `git fetch` followed by `git merge origin/main`. One command doing
+two things is convenient and is the reason its failures confuse people: the
+error can come from either half.
+
+Points the answer must contain:
 
 * A remote-tracking branch: your local note of where the remote was at the last
   fetch
 * It updates on `git fetch`, not on its own
 * `git pull` is fetch plus merge
+====
 
 == When does a conflict occur, and why does git not resolve it itself?
 
 covers: lo-3
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+A conflict occurs when two branches changed the *same lines* of the same file
+(or one side changed a file the other deleted). If the changes are in different
+places, git merges them silently, even within one file — that is the normal
+case, and it is why merges usually feel like nothing happened.
+
+[source,text]
+----
+<<<<<<< HEAD
+    return members.size() / groups;
+=======
+    return groups == 0 ? 0 : members.size() / groups;
+>>>>>>> feature/guard-empty-groups
+----
+
+Git stops here because the remaining decision is about *meaning*, not about
+text. Both versions are syntactically fine; which one is correct depends on what
+the program is supposed to do when `groups` is zero. A tool that guessed would
+be right most of the time and silently wrong the rest, which is worse than
+stopping — a merge that quietly discarded the guard is a bug nobody ever sees
+being introduced.
+
+So a conflict is not a failure. It is the point where two people made a decision
+about the same lines and the second decision has to be made consciously. What
+you can control is how often and how big: short-lived branches and small changes
+produce few and small conflicts, long-lived branches produce all of them at once
+on the day before the deadline.
+
+Points the answer must contain:
 
 * Two branches changed the same lines
 * Git refuses to guess which version is correct — that is a decision about
   meaning
 * Conflicts are normal, especially with long-lived branches
+====
 
 == Walk through resolving a conflict
 
 covers: lo-2
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[source,bash]
+----
+git merge feature/guard-empty-groups   # conflict reported
+git status                             # which files conflict
+# open each file, read both sides, decide, delete ALL markers
+git add Attendance.java                # marks this file as resolved
+git commit                             # completes the merge
+----
+
+The order matters and each step has a reason.
+
+`git status` first, because it is the authoritative list — a conflicted file is
+listed under "Unmerged paths", and missing one is the classic way to commit a
+file that still contains markers.
+
+Then read *both* sides before deciding. The frequent mistake is taking your own
+side wholesale ("mine works"); about half the time the other side is the one
+that contains the fix, and the correct result is often neither version but a
+combination of the two.
+
+Delete every `<<<<<<<`, `=======` and `>>>>>>>` line. A stray `=======` compiles
+in some languages, which is worse than a syntax error because it survives to
+runtime.
+
+`git add` on a conflicted file is what tells git "this one is settled"; `git
+commit` then completes the merge and writes the merge commit.
+
+Finally: *verify by building and testing*. Removing the markers proves only that
+the file parses. The resolution is a decision about behaviour, so behaviour is
+what has to be checked. And if it turns out the merge should never have been
+started here, `git merge --abort` restores the state from before it, with
+nothing lost.
+
+Points the answer must contain:
 
 * `git status` to find the files, read both sides, decide, delete all markers
 * `git add` the file, then `git commit` to complete the merge
 * Verify by building and testing — removed markers prove nothing
 * `git merge --abort` gets you out
+====
 
 == Your push is rejected with "fetch first". What happened, what do you do?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+[source,text]
+----
+! [rejected]        main -> main (fetch first)
+----
+
+The remote has commits that you do not have — somebody pushed while you were
+working. Git refuses the push because accepting it would mean dropping those
+commits from the branch, and no push is allowed to make history disappear.
+
+The fix is to integrate first, then push:
+
+[source,bash]
+----
+git pull            # fetch + merge; resolve conflicts if there are any
+# build, test
+git push
+----
+
+What you must *not* do is `git push --force`, whatever the first search result
+suggests. Force-pushing a shared branch replaces the remote history with yours
+and deletes exactly the commits the rejection was protecting — someone else's
+afternoon, and they will only notice when their next pull behaves strangely.
+`--force` has legitimate uses on a branch that is provably yours alone; `main`
+is never that branch.
+
+The related message `Your branch and 'origin/main' have diverged` is the same
+situation seen from the other side: both lines have new commits, so a merge is
+needed, not a force.
+
+Points the answer must contain:
 
 * The remote has commits you do not have
 * `git pull`, resolve any conflict, then push
 * Not `--force` — that deletes the other commits
+====
 
 == You committed to `main` by mistake. How do you fix it?
 
 covers: lo-4
 
-Expected answer points:
+.Answer
+[%collapsible]
+====
+As long as you have not pushed, this is a two-minute repair. The commits are
+fine; only the label is in the wrong place.
+
+[source,bash]
+----
+git switch -c feature/attendance-export   # the branch starts where you are —
+                                          # your commits are now on it
+git switch main
+git reset --hard origin/main              # move main back to the server's state
+git push -u origin feature/attendance-export
+----
+
+Step one costs nothing because a branch is only a pointer: creating it at your
+current position means the new branch already contains the commits. Step three
+moves the `main` label back to where the remote has it; the commits are not
+deleted, they are simply no longer reachable from `main` — and they are
+reachable from your feature branch, which is the point.
+
+`--hard` also throws away uncommitted changes in the working tree, so check
+`git status` before you type it.
+
+Then open a pull request from the branch, exactly as if the detour had never
+happened. If you already pushed to `main`, stop and fix it with the team: the
+repair is then a `git revert` on `main`, not a rewrite of a shared history.
+
+Points the answer must contain:
 
 * `git switch -c feature/x` takes the commits onto a branch
 * `git switch main`, then reset `main` back to `origin/main`
 * Open a pull request from the branch as usual
+====
