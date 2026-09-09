@@ -76,6 +76,7 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 | Ideenfindung mit sechs Techniken, eine davon durchgeführt | `governance-idea-generation` | PUMA8_12 Kreativitätstechniken (Brainstorming, 6-3-5, Morphologischer Kasten, Mindmapping, Bionik, Delphi) |
 | Projektauswahl ist kriterienbasiert und nachvollziehbar | `governance-weighted-scoring` | PUMA8_05 Nutzwertanalyse |
 | Stakeholder und Zielsetzung | `governance-stakeholders-goals` | Manz Kap. 3 (eigene Formulierung) |
+| Erhebungstechniken der Anforderungsanalyse — Interview, Fragebogen, Beobachtung, Dokumentenanalyse | `governance-requirements-elicitation` | PUMA Anforderungsanalyse |
 | Projektantrag und Projektauftrag erstellen | `governance-project-charter` | DA-Antragsformular der Schule |
 | Der Projektauftrag ist eingefroren und bleibt Beurteilungsanker | `governance-project-charter`, `sdd-specs-replace-requirements` | — |
 | Schätz-Hygiene statt Schätzverfahren | `governance-estimation-hygiene` | Manz (Verfahren nur benannt) |

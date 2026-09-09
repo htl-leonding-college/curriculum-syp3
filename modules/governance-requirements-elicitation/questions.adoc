@@ -1,0 +1,293 @@
+= Eliciting requirements from people and documents — questions
+:topic-id: governance-requirements-elicitation
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Name the four elicitation techniques, what each delivers and what it costs
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+[cols="1,2,1,1",options="header"]
+|===
+|Technique |Delivers |Cost |Blind spot
+
+|*Interview*
+|reasons, exceptions, what people want — the "why"
+|1 hour per person, plus preparation and write-up
+|people describe the process as it *should* be
+
+|*Fragebogen*
+|numbers over many people: how often, how many, how important
+|days of waiting; a low response rate
+|no follow-up question is possible
+
+|*Beobachtung*
+|what people actually do, including unmentioned workarounds
+|half a day per workplace
+|being watched changes the behaviour
+
+|*Dokumentenanalyse*
+|fields, data types, value ranges, vocabulary, volumes, rules
+|hours, and nobody else's time
+|shows the rule, never the exception
+|===
+
+The blind-spot column is the reason nobody uses one technique alone: each is
+blind exactly where another one sees. An interview cannot tell you what people do
+without noticing they do it; observation cannot tell you why; a document cannot
+be asked anything at all; a questionnaire cannot follow up.
+
+They also differ in what kind of statement they produce. Interview and
+observation are *qualitative* — they find out what is going on. The questionnaire
+is *quantitative* — it says how widespread it is. Document analysis is the only
+one that yields *structure*: field names, types, ranges.
+
+Points the answer must contain:
+
+* Interview, Fragebogen, Beobachtung, Dokumentenanalyse
+* What each delivers: reasons and exceptions; numbers over many people; actual
+  behaviour; fields, vocabulary and volumes
+* Each has a blind spot the others cover; nobody uses one alone
+====
+
+== How do you prepare and conduct an interview so the answers are usable?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+*Before:* read the documents first, write down what you want to know at the end
+of the hour, turn that into six to ten questions, and decide who has to be in the
+room. An hour is the maximum that stays productive.
+
+*During:* ask *open* questions and follow what turns up. The semi-structured form
+— prepared questions, free follow-ups — is the normal case.
+
+[cols="1,1",options="header"]
+|===
+|Weak |Better
+
+|"So you need an export function, right?"
+|"What do you do with the list once training is over?"
+
+|"Is the current process annoying?"
+|"Walk me through the last time you recorded attendance."
+
+|"Should the system be fast?"
+|"How long may it take before it disturbs your work?"
+|===
+
+The left column is *suggestive*: it offers the answer, and a polite person agrees.
+What you take home is then your own idea with somebody else's name on it — which
+is worse than having no answer, because it looks like evidence.
+
+*Afterwards:* write the protocol the same day — after two days you remember your
+interpretation rather than their sentences — and send it back for confirmation.
+The corrections that come back are usually the most valuable sentences of the
+whole exercise, because they are the points where you misunderstood without
+noticing.
+
+A recording needs consent, and personal data from the interview stays out of the
+repository and out of any prompt.
+
+Points the answer must contain:
+
+* Prepare: read the documents, write down the goal, six to ten questions, one hour
+* Open instead of suggestive questions; semi-structured is the normal form
+* Protocol the same day, sent back for confirmation
+====
+
+== What does a document analysis deliver that no interview can, and how do you run one?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+It delivers *structure*, and it delivers it before you have spoken to anybody:
+field names, data types, value ranges, mandatory fields, volumes, the official
+vocabulary, and the rules that are baked into an Excel formula which nobody in
+the organisation can state out loud any more.
+
+[cols="1,2",options="header"]
+|===
+|Source |What you get out of it
+
+|forms, printed lists, sign-in sheets
+|the fields, their order, which are mandatory, what a signature means
+
+|Excel sheets and their formulas
+|the actual rules
+
+|exports, database dumps, log files
+|data types, value ranges, volumes
+
+|regulations, statutes, house rules, law
+|constraints that are not negotiable
+
+|manuals and old documentation
+|the official vocabulary, and where it has drifted
+|===
+
+The procedure: *collect and catalogue* (what exists, who owns it, from when, still
+in use?); *extract the fields* — every column is a candidate attribute with name,
+type, range and example values, which is the first free draft of your data model;
+*build the glossary* in the client's words, because those are the words the
+acceptance will use; *note the contradictions* — a column that is always empty,
+two forms with different fields for the same thing — as questions for the
+interview; and *record what stayed unclear* as an assumption with its source.
+
+Two further advantages are structural. It costs nobody else's time, so it can be
+done before any appointment exists. And it has no Hawthorne effect: a form does
+not behave differently because you are reading it.
+
+Its limit is equally clear: a document shows the rule, never the exception
+somebody makes every Friday, and it cannot be asked *why*. That is precisely the
+division of labour with the interview — which is why the analysis comes first and
+supplies the questions.
+
+Use anonymised copies or the structure only; real documents carry personal data
+that you do not need and should not hold.
+
+Points the answer must contain:
+
+* Fields, data types, value ranges, vocabulary, volumes, rules — structure
+* Collect and catalogue, extract fields, build a glossary, note contradictions as
+  interview questions, record assumptions
+* It costs nobody else's time and has no observer effect; but it cannot be asked
+  why, and it hides the exceptions
+====
+
+== In which order do you use the techniques, and why that order?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+.Documents first, then people, then a check for breadth
+[graphviz,q-elicitation-order,svg]
+----
+digraph order {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  D [label="Dokumentenanalyse\nfields, vocabulary,\nvolumes"];
+  I [label="Interview\nthe why, the exceptions,\nthe contradictions"];
+  B [label="Beobachtung\nwhat really happens\nat the desk"];
+  F [label="Fragebogen\nhow often, how many,\nhow important"];
+
+  D -> I [label="better questions"];
+  I -> B [label="check the claims"];
+  B -> F [label="quantify what you found"];
+}
+----
+
+*Document analysis first*, because it is the only one that costs nobody else
+anything, and because it makes every later question better. Walking into an
+interview already knowing the fields, the vocabulary and the volumes means the
+hour is spent on what only a person can answer.
+
+*Interview second*, for the reasons, the exceptions and the contradictions the
+documents produced.
+
+*Observation* where the description and the reality are likely to differ — that
+is, wherever people have worked around the official process.
+
+*Questionnaire last*, to find out how widespread what you found actually is.
+First it would ask the wrong questions very efficiently.
+
+The order is a default, not a law. If there are no documents — a process that
+exists only in people's heads — you start with an interview and build the field
+list from it. What stays fixed is the reasoning: use the cheapest technique that
+can still answer the question you have now.
+
+Points the answer must contain:
+
+* Documents, then interview, then observation, then questionnaire
+* Document analysis costs nobody else's time and makes the later questions better
+* The questionnaire needs interviews first, otherwise it asks the wrong things
+====
+
+== Two techniques for two situations, each with a justification
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+*"The trainers say the paper list works fine, but three of them keep a private
+Excel sheet."* — Beobachtung. The statement and the behaviour disagree, and only
+watching resolves that. An interview will get the description again, because
+people do not experience their workarounds as part of the process. Stay long
+enough for the first twenty minutes of best behaviour to wear off.
+
+*"We need to know how many of the 400 members would use online booking, and how
+often."* — Fragebogen. It is a question about quantity across a population that
+is far too big to interview, the answers are closed (yes/no, a number, a scale),
+and no follow-up is needed. Pretest it with three people first.
+
+The justification always has the same shape: name what you need to know, then
+name the technique whose *output* is that kind of statement — reasons, numbers,
+behaviour, or structure — and check that its blind spot is not exactly your
+question.
+
+Points the answer must contain:
+
+* Match the technique to the kind of statement needed: reasons, numbers,
+  behaviour, structure
+* Contradiction between description and reality -> observation
+* A question about how many or how often across many people -> questionnaire
+====
+
+== What must elicitation produce before it counts as finished?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Three artefacts, all of them in the repository:
+
+* *Verifiable goals* for the charter — an observable action, a measurable
+  condition, a context. Notes are not requirements until somebody who was not
+  there can check them.
+* A *glossary* in the client's vocabulary. If the sign-in sheet says *Einheit*
+  and your specs say session, the two documents will describe different things by
+  March, and the acceptance will be about vocabulary rather than about the
+  system.
+* A list of *open questions and assumptions*, each with its source: which document
+  or which conversation it came from.
+
+The third is the one teams skip and the cheapest insurance in the project. An
+assumption that is written down can be corrected in a five-minute conversation
+("we assumed a member belongs to exactly one group — is that true?"). The same
+assumption held silently is discovered at the acceptance, when it has a data model
+built on top of it.
+
+The check that elicitation is actually done: every goal in the charter can be
+traced back to something somebody said, did, or wrote down — and nothing in it
+came from the team's imagination alone.
+
+Points the answer must contain:
+
+* Verifiable goals, a glossary in the client's words, a list of open questions and
+  assumptions with their sources
+* An assumption written down is cheap to correct; one left in somebody's head is
+  found at the acceptance
+* Every goal must be traceable back to a source outside the team
+====

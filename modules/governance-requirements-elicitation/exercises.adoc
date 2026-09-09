@@ -1,0 +1,156 @@
+= Eliciting requirements from people and documents — exercises
+:topic-id: governance-requirements-elicitation
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Extract a data model from one form
+
+kind: drill
+
+Here is a sign-in sheet as it hangs in a club:
+
+----
+Trainingsliste                       Gruppe: ____________
+Datum: __________   Trainer/in: ______________________
+
+Nr | Name                | Beitrag bezahlt | anwesend | Bemerkung
+ 1 |                     |  ja / nein      |    x     |
+ 2 |                     |  ja / nein      |    x     |
+...
+20 |                     |  ja / nein      |    x     |
+
+Unterschrift Trainer/in: ______________________
+----
+
+Extract the candidate attributes with name, type, range and whether they are
+mandatory. Then write down three questions this sheet raises.
+
+.Solution
+[%collapsible]
+====
+Attributes: `gruppe` (text, mandatory), `datum` (date, mandatory), `trainer`
+(text, mandatory), `nummer` (integer 1–20), `name` (text), `beitrag_bezahlt`
+(boolean), `anwesend` (boolean, recorded as a cross — absence is *no cross*, not
+a "no"), `bemerkung` (free text, optional), `unterschrift` (signature,
+mandatory).
+
+Two structural findings come for free. The sheet caps a group at *20* — is that
+the paper or the rule? And `anwesend` has no third state, so "excused" currently
+lives in `Bemerkung` as free text.
+
+Three questions worth taking to the interview:
+
+. Is the maximum of 20 a property of groups or of the sheet?
+. What does an empty `anwesend` mean — absent, or not yet recorded?
+. What is written in `Bemerkung`, and does anybody read it afterwards?
+
+Note that all three come with evidence attached. That is what makes them good
+questions.
+====
+
+== Fix six interview questions
+
+kind: drill
+
+Mark the suggestive and the closed questions, and rewrite them:
+
+. "You would like an app, wouldn't you?"
+. "Is the paper list annoying?"
+. "How many members are in a group?"
+. "Do you want the export as PDF or as Excel?"
+. "Should the system be fast?"
+. "Is it not a problem that the list is often incomplete?"
+
+.Solution
+[%collapsible]
+====
+1, 2, 4 and 6 are suggestive — each offers its own answer, and 4 additionally
+assumes that an export is wanted at all. 3 is closed but legitimate: a number is
+exactly what is being asked for, and it is better taken from the documents
+anyway. 5 is unusable because "fast" has no unit.
+
+Rewritten:
+
+. "Walk me through how you record attendance today."
+. "What is the most annoying part of the current process?"
+. (keep — or read it off the sheet and confirm it)
+. "What happens to the list after training?" — the export format follows from the
+  answer.
+. "How long may it take before it disturbs your work?"
+. "How complete is the list at the end of a week, and what follows from a gap?"
+
+The pattern: replace your hypothesis with a question about the last concrete
+occurrence.
+====
+
+== Decide which technique fits
+
+kind: drill
+
+Name the technique and justify it in one sentence:
+
+. The trainers say the paper list works fine, but three of them keep a private
+  Excel sheet.
+. You need to know how many of the 400 members would use online booking.
+. Nobody can say which fields the club's annual report needs.
+. Two trainers describe the cancellation rule differently.
+
+.Solution
+[%collapsible]
+====
+. *Beobachtung* — description and behaviour disagree, and only watching resolves
+  that; an interview returns the description again.
+. *Fragebogen* — a question about quantity across a population too large to
+  interview, with closed answers and no need for follow-ups.
+. *Dokumentenanalyse* — last year's report exists; its fields are the answer, and
+  reading it costs nobody anything.
+. *Interview*, with both of them and the document in front of you — the
+  contradiction is exactly what an interview is for, and the statute probably
+  settles it.
+====
+
+== Write the assumption list
+
+kind: drill
+
+From the exercises above, write five assumptions in the form
+`We assume X. Source: Y. To be confirmed by: Z.`
+
+.Solution
+[%collapsible]
+====
+For example:
+
+----
+We assume a group has at most 20 members.
+  Source: the sign-in sheet has 20 rows. To be confirmed by: the head trainer.
+
+We assume an empty "anwesend" means absent.
+  Source: assumption, no document says so. To be confirmed by: any trainer.
+
+We assume "excused" is not recorded separately today.
+  Source: no field on the sheet, only Bemerkung. To be confirmed by: interview.
+----
+
+Two properties make such a list worth writing: each line has a *source*, so a
+reader can judge how solid it is, and each names *who* can settle it, so it can
+actually be closed. A list without those two columns turns into a wish list
+nobody works through.
+====
+
+== Run the document analysis for your own project
+
+kind: project
+
+Collect the documents your client already works with, catalogue them, extract the
+field list, build the first glossary, and bring the open questions to your first
+interview.
+
+// Aufgabe am eigenen Projekt — keine Musterlösung.

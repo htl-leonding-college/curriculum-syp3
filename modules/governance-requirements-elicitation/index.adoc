@@ -1,0 +1,330 @@
+= Eliciting requirements from people and documents
+:topic-id: governance-requirements-elicitation
+:icons: font
+:source-highlighter: rouge
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Name the four elicitation techniques and say what each one delivers
+  and what it costs
+* [[lo-2]] Prepare and conduct an interview that produces usable answers
+* [[lo-3]] Run a document analysis and say what it delivers that no interview can
+* [[lo-4]] Choose a technique for a given situation and justify the choice
+* [[lo-5]] Turn elicitation results into verifiable goals, a glossary and a list
+  of open questions
+
+== Where requirements come from
+
+The previous module asked you to write *verifiable goals*. This one asks the
+question underneath: where does the content of those goals come from?
+
+Not from the team. A team that invents requirements builds what it imagined, and
+finds out in June that the trainer never wanted it. Requirements are *elicited* —
+from the people who have the problem, and from the documents they already work
+with. In German the discipline is *Anforderungsanalyse*, and its four classical
+techniques are:
+
+[cols="1,2,1,1",options="header"]
+|===
+|Technique |Delivers |Cost |Blind spot
+
+|*Interview*
+|reasons, exceptions, what people want; the "why" behind everything else
+|1 hour per person, plus preparation and write-up
+|people describe the process as it *should* be
+
+|*Fragebogen* (questionnaire)
+|numbers over many people: how often, how many, how important
+|days of waiting; a low response rate
+|no follow-up question is possible
+
+|*Beobachtung* (observation)
+|what people actually do, including the workarounds nobody mentions
+|half a day per workplace
+|being watched changes the behaviour
+
+|*Dokumentenanalyse* (document analysis)
+|fields, data types, value ranges, vocabulary, volumes, rules
+|hours, and nobody else's time at all
+|documents show the rule, never the exception people make
+|===
+
+Nobody uses one alone. They compensate for each other's blind spots, and the
+order in which you use them decides how much of somebody else's time you waste.
+
+== The order that saves everybody time
+
+.Documents first, then people, then a check for breadth
+[graphviz,elicitation-order,svg]
+----
+digraph order {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  D [label="Dokumentenanalyse\nforms, lists, exports,\nregulations"];
+  I [label="Interview\nthe why, the exceptions,\nthe contradictions"];
+  B [label="Beobachtung\nwhat really happens\nat the desk"];
+  F [label="Fragebogen\nhow often, how many,\nhow important"];
+  G [label="verifiable goals\nglossary\nopen questions"];
+
+  D -> I [label="better questions"];
+  I -> B [label="check the claims"];
+  B -> F [label="quantify what you found"];
+  F -> G;
+  D -> G [style=dashed];
+}
+----
+
+Document analysis comes first because it is the only technique that costs nobody
+else anything. Walking into an interview already knowing the fields of the form,
+the vocabulary and the volumes means you can spend the hour on what only a person
+can answer — why the third column is always empty, and what happens when somebody
+cancels twice.
+
+The reverse order is the classical beginner's mistake: an hour of an expert's
+time spent asking things the form on their desk answers, followed by an interview
+that never gets to the real question.
+
+== Interview
+
+An interview is a conversation with a *goal you wrote down beforehand*. Three
+forms, and you will mostly use the middle one:
+
+[cols="1,2",options="header"]
+|===
+|Form |Use
+
+|*structured* — fixed questions, fixed order
+|several people, answers must be comparable
+
+|*semi-structured* — prepared questions, free follow-ups
+|the normal case: you have a plan and can follow what turns up
+
+|*unstructured* — a topic, no question list
+|the very first conversation, when you do not yet know what to ask
+|===
+
+Preparation, in order: read the documents; write down what you want to know at
+the end; turn that into six to ten questions; decide who else must be in the
+room. An hour is the maximum that stays productive.
+
+*Open questions produce content, closed questions produce confirmations.*
+
+[cols="1,1",options="header"]
+|===
+|Weak |Better
+
+|"So you need an export function, right?"
+|"What do you do with the list once training is over?"
+
+|"Is the current process annoying?"
+|"Walk me through the last time you recorded attendance."
+
+|"Should the system be fast?"
+|"How long may it take before it disturbs your work?"
+|===
+
+The left column is *suggestive*: it offers the answer, and a polite person agrees
+with it. What you then have is your own idea with somebody else's name on it.
+
+Two rules for afterwards. Write the protocol *the same day* — after two days you
+remember your interpretation, not their sentences. And *send it back for
+confirmation*; the corrections that come back are usually the most valuable
+sentences of the whole exercise.
+
+NOTE: A recording needs consent, and personal data from the interview follows the
+same rule as everywhere in this course: it does not go into a prompt, and it does
+not go into the repository.
+
+== Fragebogen
+
+A questionnaire reaches many people cheaply and produces *numbers*: how many
+trainers, how often per week, how many members per group, how important is
+feature X on a scale of one to five.
+
+What makes one usable:
+
+* mostly *closed* questions — scales, choices, numbers — because two hundred free
+  texts are a second research project;
+* one question per question, and no negations ("Do you *not* want …" produces
+  garbage);
+* a *pretest* with three people, which reliably finds two questions that mean
+  something different to the reader than to you;
+* a known population, so you can say what a response rate of 30 % means.
+
+Its place is *after* the qualitative work: interviews tell you which questions are
+worth asking, the questionnaire tells you how widespread each answer is. Used
+first, it asks the wrong things very efficiently.
+
+== Beobachtung
+
+Watching the work happen, at the place where it happens. It is the only technique
+that shows the difference between the process as described and the process as
+performed — and that difference is where most requirements hide.
+
+What it typically turns up: the second spreadsheet nobody mentions because it is
+"not part of the system", the sticky note with the abbreviations, the step that is
+skipped when it is raining and the hall is full, the double entry that exists
+because two systems do not talk to each other.
+
+Two limits belong to the method. People behave differently when watched — the
+*Hawthorne effect* — so the first twenty minutes are usually a performance, and
+you stay long enough for the normal day to reassert itself. And it is expensive:
+half a day gives you one workplace, not a survey.
+
+Practicalities: announce it, explain that you are studying the process and not the
+person, take notes on *actions and times* rather than on impressions, and ask your
+questions afterwards rather than during.
+
+== Dokumentenanalyse
+
+The technique that gets skipped and pays best. Everything the organisation
+already writes down is evidence about what it does — and it can be read before
+you have met anybody.
+
+[cols="1,2",options="header"]
+|===
+|Source |What you get out of it
+
+|forms, printed lists, sign-in sheets
+|the fields, their order, which are mandatory, what a signature means
+
+|Excel sheets and their formulas
+|the actual rules, including the ones nobody can state out loud
+
+|exports, database dumps, log files
+|data types, value ranges, volumes, how many records per week
+
+|reports and statistics
+|what the organisation considers worth measuring
+
+|regulations, statutes, house rules, law
+|constraints that are not negotiable
+
+|manuals and old documentation
+|the official vocabulary, and where it has drifted
+|===
+
+How to run one:
+
+. *Collect and catalogue.* What exists, who owns it, from when, is it still in
+  use? An obsolete form is a trap — it looks like evidence.
+. *Extract the fields.* Every form column becomes a candidate attribute: name,
+  type, range, mandatory or not, example values. This is the first draft of your
+  data model, and it is free.
+. *Build the glossary.* The words on the document are the words the client will
+  use in the acceptance. If they call it *Einheit* and you call it session,
+  somebody will misunderstand somebody in June.
+. *Note the contradictions.* Two forms with different fields for the same thing,
+  a column that is always empty, a total that does not add up. Each of these is a
+  question for the interview — and they are the best questions you will ask,
+  because they come with evidence attached.
+. *Record what you could not clarify* as an assumption, with the document it came
+  from.
+
+What it cannot do: a document shows the rule, never the exception somebody makes
+every Friday, and it cannot be asked *why*. That is exactly the division of
+labour with the interview.
+
+[TIP]
+====
+Real documents usually contain personal data. Work with anonymised copies or with
+the structure only — the field names, not the members. The structure is what you
+need; the names are a liability.
+====
+
+== From findings to goals
+
+Elicitation is finished when it has produced three things, all of which go into
+the repository:
+
+* *verifiable goals* for the charter — an observable action, a measurable
+  condition, a context;
+* a *glossary* in the client's vocabulary, which later becomes the vocabulary of
+  the specs;
+* a list of *open questions and assumptions*, each with its source.
+
+The third one is the one teams skip, and it is the cheapest insurance in the
+project: an assumption that is written down can be corrected in a five-minute
+conversation, an assumption that lives in somebody's head is discovered at the
+acceptance.
+
+== Decisions
+
+* Every team runs a document analysis *before* its first interview, and brings
+  the extracted field list to it.
+* At least one interview per project is conducted, recorded in a protocol and
+  sent back to the interviewee for confirmation.
+* Observation and questionnaire are used where they fit; neither is mandatory.
+* Assumptions are written down with their source. An undocumented assumption is
+  treated as a defect at the milestone review.
+* No personal data from real documents enters the repository or a prompt.
+
+== Pitfalls
+
+* Interviewing before reading the documents. You spend an expert hour on
+  questions a form answers.
+* Suggestive questions. You get your own idea back, with a customer's name on it.
+* Taking the description of the process for the process. That is what observation
+  is for.
+* A questionnaire as the first step. Efficiently asking the wrong questions.
+* Treating an obsolete form as current. Always ask from when a document is and
+  whether it is still used.
+* Collecting findings and never turning them into goals. Notes are not
+  requirements until somebody can check them.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Anforderungsanalyse
+|requirements analysis
+
+|Anforderungserhebung
+|requirements elicitation
+
+|Interview, Befragung
+|interview
+
+|Fragebogen
+|questionnaire
+
+|Beobachtung
+|observation
+
+|Dokumentenanalyse
+|document analysis
+
+|offene / geschlossene Frage
+|open / closed question
+
+|Suggestivfrage
+|leading question
+
+|Annahme
+|assumption
+
+|Glossar
+|glossary
+|===
+
+== Further reading
+
+* PUMA — Anforderungsanalyse, the source used for this module
+* Module `governance-stakeholders-goals` — whom to ask, and what a goal must look
+  like afterwards
+* Module `bridge-charter-to-specs` — where the glossary and the goals end up
