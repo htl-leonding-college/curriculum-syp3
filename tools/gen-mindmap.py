@@ -15,7 +15,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import generated  # noqa: E402
-from tools.curriculum import DEFAULT_PATH, Curriculum, Topic, load  # noqa: E402
+from tools.curriculum import (  # noqa: E402
+    DEFAULT_PATH,
+    Curriculum,
+    Topic,
+    lesson_label,
+    load,
+    year_label,
+)
 
 OUTPUT = "stoffstruktur.puml"
 
@@ -35,9 +42,9 @@ PLANNED_COLOR = "#808080"
 
 
 def _topic_line(topic: Topic, depth: int) -> str:
-    label = f"U{topic.lesson} {topic.title}"
+    label = f"{lesson_label(topic.lesson)} {topic.title}"
     if not topic.is_ready:
-        label = f"<color:{PLANNED_COLOR}>{label} (offen)</color>"
+        label = f"<color:{PLANNED_COLOR}>{label} (planned)</color>"
     return f"{'*' * depth}_ {label}"
 
 
@@ -59,7 +66,10 @@ def _block_lines(model: Curriculum, block) -> list[str]:
     theorie = sum(t.ue for t in topics if t.kind == "theorie")
     praxis = sum(t.ue for t in topics if t.kind == "praxis")
     color = BLOCK_COLORS.get(block.id, FALLBACK_COLOR)
-    lines = [f"**[{color}] {block.title}\\n{theorie} UE T / {praxis} UE P"]
+    lines = [
+        f"**[{color}] {block.title}\\n"
+        f"{theorie} units theory / {praxis} units practice"
+    ]
     for topic in _sorted_topics([t for t in topics if not t.theme]):
         lines.append(_topic_line(topic, 3))
     for theme in _themes(topics):
@@ -72,11 +82,9 @@ def _block_lines(model: Curriculum, block) -> list[str]:
 def render(model: Curriculum) -> str:
     meta = model.meta
     root = str(meta.get("gegenstand", "SYP"))
-    jahrgang = str(meta.get("jahrgang", "")).strip()
-    if jahrgang.startswith("jg") and jahrgang[2:].isdigit():
-        root += f"\\n{int(jahrgang[2:])}. Jahrgang"
-    elif jahrgang:
-        root += f"\\n{jahrgang}"
+    year = year_label(meta)
+    if year:
+        root += f"\\n{year.capitalize()}"
     schuljahr = str(meta.get("schuljahr", "")).strip()
     if schuljahr:
         root += f"\\n{schuljahr}"
@@ -92,7 +100,9 @@ def render(model: Curriculum) -> str:
     for block in model.blocks:
         lines.extend(_block_lines(model, block))
     lines.append("legend right")
-    lines.append(f"  <color:{PLANNED_COLOR}>grau</color> = geplant, Modul offen")
+    lines.append(
+        f"  <color:{PLANNED_COLOR}>grey</color> = planned, module not written yet"
+    )
     lines.append("endlegend")
     lines.append("@endmindmap")
     return "\n".join(lines) + "\n"

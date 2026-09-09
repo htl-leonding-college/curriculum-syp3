@@ -1,6 +1,6 @@
-= Curriculum SYP 3. Jahrgang
+= SYP curriculum, year 3
 :toc: left
-:toc-title: Inhalt
+:toc-title: Contents
 :toclevels: 2
 :icons: font
 :source-highlighter: rouge
@@ -13,27 +13,29 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-Lernressourcen für den Gegenstand SYP im 3. Jahrgang der HTL Leonding,
-Schuljahr 2026/27. Unterrichtssprache ist Englisch; Fachbegriffe der
-Projekt-Governance werden zusätzlich deutsch geführt.
+Learning resources for SYP in the third year at HTL Leonding, school year
+2026/27. The course is taught in English; the German terms of project
+governance — Lastenheft, Pflichtenheft, Projektauftrag — are given alongside
+their English names, because that is what the forms and the diploma thesis
+still call them.
 
-== Stoffstruktur
+== Structure of the subject
 
 plantuml::stoffstruktur.puml[format=svg]
 
-== Unterrichte
+== Lessons
 
 include::nav.adoc[]
 
-== Umfang
+== Scope
 
 include::ue-overview.adoc[leveloffset=+1]
 
-== Weiteres
+== Elsewhere
 
-* link:questions/index.html[Fragenkatalog] — maßgeblich für SYP 3. Jahrgang
-  ab 2026/27
-* https://htl-leonding-college.github.io/fragenkatalog[Bestehender Fragenkatalog]
-  — übrige Gegenstände und Jahrgänge, bleibt als Archiv erhalten
-* https://edufs.edu.htl-leonding.ac.at/~t.stuetz/hugo/[Ältere Projektseiten]
-  — unverändert erreichbar
+* link:questions/index.html[Question catalogue] — authoritative for SYP year 3
+  from 2026/27 on
+* https://htl-leonding-college.github.io/fragenkatalog[Existing question
+  catalogue] — other subjects and years, kept as an archive
+* https://edufs.edu.htl-leonding.ac.at/~t.stuetz/hugo/[Older project pages] —
+  still reachable, unchanged

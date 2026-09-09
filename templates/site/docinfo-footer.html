@@ -1,6 +1,6 @@
 <style>
-/* Antworten und Lösungen stehen eingeklappt im Dokument (P5). Der Schalter
-   oben klappt alle auf einmal auf — für Wiederholung kurz vor der Prüfung. */
+/* Answers and solutions sit collapsed in the document (P5). The button at
+   the top opens them all at once — for revision shortly before the exam. */
 .reveal-all { margin: 0 0 1.5rem 0; }
 .reveal-all button {
   font: inherit;
@@ -15,7 +15,7 @@
 .reveal-all button:hover { background: #e9ebed; }
 #content details > summary.title { cursor: pointer; }
 
-/* Fragenkatalog: Auswahlfelder, Merkmale, Lernzielverweise. */
+/* Question catalogue: drop-downs, attribute tags, outcome references. */
 .question-filter { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; margin-bottom: 1rem; }
 .question-filter label { font-size: 0.9em; }
 .question-filter .count { color: #666; font-size: 0.85em; }
@@ -41,7 +41,7 @@ table.questions th[data-sort] { white-space: nowrap; }
     var open = 0;
     Array.prototype.forEach.call(blocks, function (block) { if (block.open) open++; });
     var all = open === blocks.length;
-    button.textContent = all ? 'Alle zuklappen' : 'Alle aufklappen';
+    button.textContent = all ? 'Collapse all' : 'Expand all';
     button.setAttribute('aria-expanded', all ? 'true' : 'false');
   }
 

@@ -46,7 +46,33 @@ DEFAULT_STATUS = "planned"
 #: Ein Thema entspricht einem Unterrichtsslot: 1 UE Theorie bzw. 2 UE Praxis.
 UE_BY_KIND = {"theorie": 1, "praxis": 2}
 
+#: Anzeigenamen für die veröffentlichte Site. Das Modell führt seine Merkmale
+#: deutsch, die Site ist durchgehend englisch — die Klasse liest sie. Die IDs
+#: bleiben unberührt: sie stehen in ``curriculum.yaml``, in den Prüfungen und
+#: als Datenattribut im Fragenkatalog.
+KIND_LABEL = {"theorie": "Theory", "praxis": "Practice"}
+
+#: Ein Unterricht heißt auf der Site „Lesson“, kurz ``L7``.
+LESSON_PREFIX = "L"
+
 LINE_KEY = "__line__"
+
+
+def kind_label(kind: str) -> str:
+    return KIND_LABEL.get(kind, kind)
+
+
+def lesson_label(lesson: int) -> str:
+    """Kurzform eines Unterrichts auf der Site: ``L7``."""
+    return f"{LESSON_PREFIX}{lesson}"
+
+
+def year_label(meta: dict[str, Any]) -> str:
+    """``jg3`` als englische Jahrgangsangabe: ``year 3``."""
+    jahrgang = str(meta.get("jahrgang", "")).strip()
+    if jahrgang.startswith("jg") and jahrgang[2:].isdigit():
+        return f"year {int(jahrgang[2:])}"
+    return jahrgang
 
 
 class CurriculumError(Exception):

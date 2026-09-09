@@ -10,10 +10,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import generated  # noqa: E402
-from tools.curriculum import DEFAULT_PATH, Curriculum, load  # noqa: E402
+from tools.curriculum import (  # noqa: E402
+    DEFAULT_PATH,
+    Curriculum,
+    kind_label,
+    load,
+)
 
 OUTPUT = "nav.adoc"
-KIND_LABEL = {"theorie": "Theorie", "praxis": "Praxis"}
 
 
 def render(model: Curriculum) -> str:
@@ -24,22 +28,22 @@ def render(model: Curriculum) -> str:
         by_lesson.setdefault(topic.lesson, []).append(topic)
 
     for lesson in sorted(by_lesson):
-        lines.append(f"* U{lesson}")
+        lines.append(f"* Lesson {lesson}")
         for topic in sorted(by_lesson[lesson], key=lambda t: t.kind, reverse=True):
-            label = f"{KIND_LABEL.get(topic.kind, topic.kind)}: {topic.title}"
+            label = f"{kind_label(topic.kind)}: {topic.title}"
             if topic.is_ready:
                 # Neben dem Lerninhalt stehen Aufgaben und Fragen; ohne diese
                 # Verweise waeren beide Seiten nur ueber ihre Adresse zu finden.
                 entry = (
                     f"** xref:modules/{topic.id}/index.adoc[{label}]"
-                    f" — xref:modules/{topic.id}/exercises.adoc[Übungen]"
-                    f" · xref:modules/{topic.id}/questions.adoc[Fragen]"
+                    f" — xref:modules/{topic.id}/exercises.adoc[Exercises]"
+                    f" · xref:modules/{topic.id}/questions.adoc[Questions]"
                 )
             else:
-                entry = f"** {label} _(offen)_"
+                entry = f"** {label} _(planned)_"
             if topic.assignment_template:
                 entry += (
-                    f" — https://github.com/{topic.assignment_template}[Angabe]"
+                    f" — https://github.com/{topic.assignment_template}[Assignment]"
                 )
             lines.append(entry)
     lines.append("")

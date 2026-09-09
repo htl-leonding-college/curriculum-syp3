@@ -73,8 +73,8 @@ def test_mindmap_marks_planned_topics(repo: Repo) -> None:
     text = mindmap.render(repo.model())
     planned = [line for line in text.splitlines() if "Git basics" in line]
     ready = [line for line in text.splitlines() if "Course overview" in line]
-    assert planned and "(offen)" in planned[0] and "<color:" in planned[0]
-    assert ready and "(offen)" not in ready[0] and "<color:" not in ready[0]
+    assert planned and "(planned)" in planned[0] and "<color:" in planned[0]
+    assert ready and "(planned)" not in ready[0] and "<color:" not in ready[0]
 
 
 def test_nav_links_exercises_and_questions(repo: Repo) -> None:
@@ -121,7 +121,7 @@ def test_nav_order_follows_lesson(repo: Repo) -> None:
 def test_nav_marks_planned_topics_as_open(repo: Repo) -> None:
     base(repo)
     rendered = nav.render(repo.model())
-    assert "_(offen)_" in rendered
+    assert "_(planned)_" in rendered
     assert "xref:modules/git-basics" not in rendered
 
 
@@ -129,7 +129,9 @@ def test_nav_links_assignment_template(repo: Repo) -> None:
     entry = topic("git-basics", kind="praxis", lesson=1)
     entry["assignment_template"] = "htl-leonding-example/jg03-syp-git-basics"
     repo.write_model([topic("course-overview", kind="theorie", lesson=1), entry])
-    assert "htl-leonding-example/jg03-syp-git-basics[Angabe]" in nav.render(repo.model())
+    assert "htl-leonding-example/jg03-syp-git-basics[Assignment]" in nav.render(
+        repo.model()
+    )
 
 
 def test_overview_sums_change_with_the_model(repo: Repo) -> None:
@@ -141,7 +143,9 @@ def test_overview_sums_change_with_the_model(repo: Repo) -> None:
 
 def test_overview_reports_progress(repo: Repo) -> None:
     base(repo)
-    assert "0 von 2 Themen sind fertig, 2 sind offen." in overview.render(repo.model())
+    assert "0 of 2 topics are finished, 2 are still open." in overview.render(
+        repo.model()
+    )
 
 
 def test_questions_carry_tags_from_the_model(repo: Repo, tmp_path: Path) -> None:
@@ -159,8 +163,39 @@ def test_questions_carry_tags_from_the_model(repo: Repo, tmp_path: Path) -> None
     assert rows[0]["covers"] == ["lo-1"]
 
     rendered = questions.render(model, rows)
-    assert "taught_in: jg3" in rendered
+    # Die Site zeigt Namen, das Datenattribut fuehrt weiter die ID.
+    assert "taught in: year 3" in rendered
+    assert 'data-taught_in="jg3"' in rendered
     assert "What does a commit contain?" in rendered
+
+
+def test_site_output_is_english(repo: Repo, tmp_path: Path) -> None:
+    """Die Klasse spricht kein Deutsch — auf der Site darf keins stehen.
+
+    Das Modell fuehrt seine Merkmale weiter deutsch (``theorie``, ``vorgehen``);
+    geprueft wird nur, was gerendert wird.
+    """
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1),
+            topic("git-basics", kind="praxis", lesson=1, status="ready"),
+        ]
+    )
+    repo.write_module("git-basics", index=GOOD_INDEX, questions=GOOD_QUESTIONS)
+    model = repo.model()
+    rendered = "\n".join(
+        [
+            nav.render(model),
+            mindmap.render(model),
+            overview.render(model),
+            questions.render(model, questions.collect(model)),
+        ]
+    )
+    for german in ("Theorie", "Praxis", "Übungen", "Fragen", "(offen)", "Angabe",
+                   "Je Art", "Bearbeitungsstand", "Unterricht", "Thema", "Lernziele"):
+        assert german not in rendered, f"deutsch auf der Site: {german}"
+    assert "Practice: Git basics" in rendered
+    assert "Theory: Course overview" in rendered
 
 
 def test_generated_files_carry_the_marker(repo: Repo, tmp_path: Path) -> None:

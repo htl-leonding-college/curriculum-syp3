@@ -15,7 +15,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import adoc, generated  # noqa: E402
-from tools.curriculum import DEFAULT_PATH, Curriculum, load  # noqa: E402
+from tools.curriculum import (  # noqa: E402
+    DEFAULT_PATH,
+    Curriculum,
+    kind_label,
+    lesson_label,
+    load,
+    year_label,
+)
 
 OUTPUT = "questions/index.adoc"
 DATA_OUTPUT = "questions/questions.json"
@@ -66,17 +73,51 @@ def select(rows: list[dict], **criteria: str) -> list[dict]:
     ]
 
 
-def _filter_ui(rows: list[dict]) -> str:
+#: Spaltenname je Merkmal — die Feldnamen selbst bleiben die IDs des Modells.
+FIELD_LABEL = {
+    "block": "Block",
+    "taught_in": "Taught in",
+    "prerequisite_for": "Prerequisite for",
+    "topic": "Topic",
+    "kind": "Kind",
+}
+
+
+def _value_labels(model: Curriculum) -> dict[str, dict[str, str]]:
+    """Sichtbarer Name je Merkmalswert. Der Wert selbst bleibt die ID.
+
+    Ein Filter, der ``vorgehen`` und ``praxis`` anbietet, ist für eine Klasse
+    ohne Deutsch unbrauchbar; das Datenattribut der Zeile führt weiter die ID,
+    damit Auswahl und Modell zusammenpassen.
+    """
+    years = {
+        value: year_label({"jahrgang": value})
+        for topic in model.topics
+        for value in (topic.taught_in, topic.prerequisite_for)
+    }
+    return {
+        "block": {block.id: block.title for block in model.blocks},
+        "kind": dict(zip(("theorie", "praxis"), map(kind_label, ("theorie", "praxis")))),
+        "taught_in": years,
+        "prerequisite_for": years,
+    }
+
+
+def _filter_ui(rows: list[dict], labels: dict[str, dict[str, str]]) -> str:
     """Auswahlfelder und Tabelle als HTML — die Merkmale sind Datenattribute."""
     options = {
         field: sorted({str(row[field]) for row in rows}) for field in FILTER_FIELDS
     }
     selects = "\n".join(
         "<label>{label}: <select data-field=\"{field}\">"
-        "<option value=\"\">alle</option>{opts}</select></label>".format(
-            label=field.replace("_", " "),
+        "<option value=\"\">all</option>{opts}</select></label>".format(
+            label=FIELD_LABEL.get(field, field.replace("_", " ")),
             field=field,
-            opts="".join(f'<option value="{value}">{value}</option>' for value in values),
+            opts="".join(
+                f'<option value="{value}">'
+                f'{labels.get(field, {}).get(value, value)}</option>'
+                for value in values
+            ),
         )
         for field, values in options.items()
     )
@@ -84,7 +125,7 @@ def _filter_ui(rows: list[dict]) -> str:
         "<tr {attrs}><td>{lesson}</td><td>{topic_title}</td><td>{question}</td>"
         "<td>{covers}</td></tr>".format(
             attrs=" ".join(f'data-{field}="{row[field]}"' for field in FILTER_FIELDS),
-            lesson=f"U{row['lesson']}",
+            lesson=lesson_label(row["lesson"]),
             topic_title=row["topic_title"],
             question=row["question"],
             covers=", ".join(row["covers"]) or "—",
@@ -98,10 +139,10 @@ def _filter_ui(rows: list[dict]) -> str:
 </div>
 <table class="questions" id="question-table">
 <thead><tr>
-<th data-sort="lesson">Unterricht</th>
-<th data-sort="topic_title">Thema</th>
-<th data-sort="question">Frage</th>
-<th>Lernziele</th>
+<th data-sort="lesson">Lesson</th>
+<th data-sort="topic_title">Topic</th>
+<th data-sort="question">Question</th>
+<th>Learning outcomes</th>
 </tr></thead>
 <tbody>
 {body}
@@ -125,7 +166,7 @@ def _filter_ui(rows: list[dict]) -> str:
       row.hidden = !show;
       if (show) visible++;
     }});
-    count.textContent = visible + ' von ' + rows.length + ' Fragen';
+    count.textContent = visible + ' of ' + rows.length + ' questions';
   }}
 
   Array.prototype.forEach.call(selects, function (select) {{
@@ -140,7 +181,7 @@ def _filter_ui(rows: list[dict]) -> str:
       var descending = cell.dataset.direction === 'asc';
       rows.sort(function (a, b) {{
         var left = a.cells[index].textContent, right = b.cells[index].textContent;
-        return (descending ? -1 : 1) * left.localeCompare(right, 'de', {{numeric: true}});
+        return (descending ? -1 : 1) * left.localeCompare(right, 'en', {{numeric: true}});
       }});
       cell.dataset.direction = descending ? 'desc' : 'asc';
       rows.forEach(function (row) {{ table.tBodies[0].appendChild(row); }});
@@ -156,11 +197,12 @@ def _filter_ui(rows: list[dict]) -> str:
 
 def render(model: Curriculum, rows: list[dict]) -> str:
     titles = {block.id: block.title for block in model.blocks}
+    subject = model.meta.get("gegenstand", "SYP")
+    year = year_label(model.meta)
     lines = [
-        f"= Fragenkatalog {model.meta.get('gegenstand', 'SYP')} "
-        f"{model.meta.get('jahrgang', '')}".rstrip(),
+        f"= Question catalogue — {subject}, {year}".rstrip(", "),
         ":toc: left",
-        ":toc-title: Inhalt",
+        ":toc-title: Contents",
         ":toclevels: 3",
         ":icons: font",
         "",
@@ -172,23 +214,24 @@ def render(model: Curriculum, rows: list[dict]) -> str:
         ":warning-caption: :warning:",
         "endif::[]",
         "",
-        f"{len(rows)} Fragen aus {len({r['topic'] for r in rows})} Modulen. "
-        "Maßgeblich für SYP 3. Jahrgang ab dem Schuljahr 2026/27; der bestehende "
-        "https://htl-leonding-college.github.io/fragenkatalog[Fragenkatalog] bleibt "
-        "als Archiv erhalten.",
+        f"{len(rows)} questions from {len({r['topic'] for r in rows})} modules. "
+        f"This catalogue is the authoritative one for {subject} {year} from the "
+        "school year 2026/27 on; the existing "
+        "https://htl-leonding-college.github.io/fragenkatalog[question catalogue] "
+        "stays online as an archive.",
         "",
     ]
     if not rows:
-        lines += ["Noch keine Fragen — die Module tragen ihre Fragen selbst.", ""]
+        lines += ["No questions yet — every module carries its own.", ""]
     else:
         lines += [
-            "== Alle Fragen",
+            "== All questions",
             "",
-            "Sortieren durch Klick auf eine Spaltenüberschrift, filtern über die "
-            "Auswahlfelder. Die Merkmale stammen aus `curriculum.yaml` und stehen "
-            "nicht im Fragentext.",
+            "Click a column heading to sort, use the drop-downs to filter. The "
+            "attributes come from `curriculum.yaml`, not from the text of the "
+            "question.",
             "",
-            _filter_ui(rows),
+            _filter_ui(rows, _value_labels(model)),
             "",
         ]
 
@@ -201,11 +244,13 @@ def render(model: Curriculum, rows: list[dict]) -> str:
             topic_rows = [r for r in block_rows if r["topic"] == topic_id]
             head = topic_rows[0]
             lines += [
-                f"=== U{head['lesson']} {head['topic_title']}",
+                f"=== {lesson_label(head['lesson'])} {head['topic_title']}",
                 "",
-                f"[.tags]#block: {head['block']}# "
-                f"[.tags]#taught_in: {head['taught_in']}# "
-                f"[.tags]#prerequisite_for: {head['prerequisite_for']}# "
+                f"[.tags]#block: {titles.get(head['block'], head['block'])}# "
+                f"[.tags]#kind: {kind_label(head['kind'])}# "
+                f"[.tags]#taught in: {year_label({'jahrgang': head['taught_in']})}# "
+                f"[.tags]#prerequisite for: "
+                f"{year_label({'jahrgang': head['prerequisite_for']})}# "
                 f"[.tags]#topic: {topic_id}#",
                 "",
             ]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""UE-Übersicht je Block und je Art (P3)."""
+"""Umfangsübersicht je Block und je Art (P3). Ausgabe englisch."""
 
 from __future__ import annotations
 
@@ -10,7 +10,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import generated  # noqa: E402
-from tools.curriculum import DEFAULT_PATH, Curriculum, load  # noqa: E402
+from tools.curriculum import (  # noqa: E402
+    DEFAULT_PATH,
+    Curriculum,
+    kind_label,
+    load,
+)
 
 OUTPUT = "ue-overview.adoc"
 
@@ -23,25 +28,25 @@ def render(model: Curriculum) -> str:
 
     # Kein Dokumenttitel: die Übersicht wird eingebunden, nicht einzeln gebaut.
     lines = [
-        "== Je Art",
+        "== By kind",
         "",
         '[cols="1,1,1,3",options="header"]',
         "|===",
-        "|Art |UE |Budget |Themen",
+        "|Kind |Units |Budget |Topics",
         "",
     ]
     for kind in sorted(by_kind):
         topics = model.of_kind(kind)
         lines += [
-            f"|{kind}",
+            f"|{kind_label(kind)}",
             f"|{by_kind[kind]}",
             f"|{budget.get(kind, '—')}",
             f"|{len(topics)}",
             "",
         ]
-    lines += ["|===", "", "== Theorie je Block", "",
+    lines += ["|===", "", "== Theory units per block", "",
               '[cols="1,1,1,3",options="header"]', "|===",
-              "|Block |UE |Budget |Themen", ""]
+              "|Block |Units |Budget |Topics", ""]
     for block in model.blocks:
         topics = [t for t in model.of_kind("theorie") if t.block == block.id]
         lines += [
@@ -51,8 +56,8 @@ def render(model: Curriculum) -> str:
             f"|{len(topics)}",
             "",
         ]
-    lines += ["|===", "", "== Praxis je Block", "",
-              '[cols="1,1,3",options="header"]', "|===", "|Block |UE |Themen", ""]
+    lines += ["|===", "", "== Practice units per block", "",
+              '[cols="1,1,3",options="header"]', "|===", "|Block |Units |Topics", ""]
     for block in model.blocks:
         topics = [t for t in model.of_kind("praxis") if t.block == block.id]
         lines += [f"|{block.title}", f"|{sum(t.ue for t in topics)}", f"|{len(topics)}", ""]
@@ -60,9 +65,9 @@ def render(model: Curriculum) -> str:
 
     ready, planned = len(model.ready), len(model.planned)
     lines += [
-        "== Bearbeitungsstand",
+        "== Progress",
         "",
-        f"{ready} von {len(model.topics)} Themen sind fertig, {planned} sind offen.",
+        f"{ready} of {len(model.topics)} topics are finished, {planned} are still open.",
         "",
     ]
     return "\n".join(lines)
