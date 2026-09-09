@@ -1,0 +1,296 @@
+= What containers solve
+:topic-id: docker-basics
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] State the problem containers solve, and give an example from your own
+  experience
+* [[lo-2]] Distinguish image, container and registry, and say what is mutable
+* [[lo-3]] Run, inspect, stop and remove a container from the command line
+* [[lo-4]] Explain why a container is not a virtual machine, and what follows
+  from that
+* [[lo-5]] Recognise when a container is the right tool and when it is overhead
+
+== "It works on my machine"
+
+You have already met this problem twice without naming it. `setup-tools.sh`
+exists so that four laptops end up with the same JDK. The site in this repository
+is built by a *containerised* asciidoctor, because a locally installed one is a
+different version on every machine — including the pipeline's.
+
+The general shape:
+
+[cols="1,2",options="header"]
+|===
+|Symptom |Underlying cause
+
+|builds here, fails in the pipeline
+|different tool version, different library, different locale
+
+|works for three people, not the fourth
+|something installed once, long ago, and forgotten
+
+|worked in November, fails in March
+|a system update changed a dependency nobody pinned
+
+|"just install these six things first"
+|the setup is knowledge in somebody's head, not in the repository
+|===
+
+A container answers all four the same way: *the environment travels with the
+software, and it is described in a file that is committed.*
+
+== Image, container, registry
+
+Three words, and confusing them is the source of most early errors.
+
+[plantuml,image-container-registry,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "Dockerfile\na description" as D
+rectangle "image\nread-only, layered,\nidentified by a digest" as I
+rectangle "container\na running instance,\nwith a writable layer" as C
+rectangle "registry\nwhere images are\nstored and fetched" as R
+
+D -right-> I : "build"
+I -right-> C : "run"
+I -up-> R : "push"
+R -down-> I : "pull"
+C -down-> I : "many containers\nfrom one image"
+@enduml
+----
+
+[cols="1,2",options="header"]
+|===
+|Term |What it is
+
+|*image*
+|an immutable, layered filesystem plus a default command. Never changes after it
+ is built
+
+|*container*
+|one running instance of an image, with a thin writable layer on top. Changes
+ inside it are lost when it is removed
+
+|*registry*
+|where images live — Docker Hub, GitHub Container Registry, a school-internal one
+|===
+
+The relation is the one between a class and an object, and it has the same
+practical consequence: *many containers, one image*. When you fix something by
+editing files inside a running container, you have fixed one object and not the
+class — the next `docker run` starts from the image again, unchanged.
+
+That is not a flaw. It is the property the whole thing is built on: an image is
+reproducible precisely because nothing that happens in a container flows back
+into it.
+
+== The commands you actually need
+
+[source,bash]
+----
+docker run --rm -it alpine:3.20 sh     # start, attach, delete on exit
+docker run -d --name web -p 8080:80 nginx:1.27   # detached, port published
+
+docker ps                # running containers
+docker ps -a             # including stopped ones
+docker logs web          # what it wrote to stdout/stderr
+docker exec -it web sh   # a shell inside a running container
+docker stop web          # SIGTERM, then SIGKILL after a grace period
+docker rm web            # remove the stopped container
+docker images            # local images
+docker rmi nginx:1.27    # remove an image
+----
+
+Four flags are worth understanding rather than copying:
+
+* `--rm` deletes the container on exit. Without it, stopped containers accumulate
+  silently until the disk is full.
+* `-it` gives you a terminal. Without it an interactive shell exits immediately,
+  which is the commonest first confusion.
+* `-d` detaches. The container keeps running and you get the prompt back.
+* `-p 8080:80` publishes *host port 8080* to *container port 80*. The order is
+  host first, and getting it backwards is the second commonest first confusion.
+
+The tag matters as much as the flags. `nginx` means `nginx:latest`, which is
+whatever was pushed most recently — a moving target, and therefore not
+reproducible. *Always pin a version*: `nginx:1.27`.
+
+== Not a virtual machine
+
+Both isolate. They isolate at different levels, and the difference explains every
+practical property.
+
+[plantuml,vm-vs-container,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "virtual machine" {
+  rectangle "hardware" as H1
+  rectangle "host OS + hypervisor" as O1
+  rectangle "guest kernel A" as K1
+  rectangle "guest kernel B" as K2
+  rectangle "app A" as A1
+  rectangle "app B" as A2
+  H1 -up-> O1
+  O1 -up-> K1
+  O1 -up-> K2
+  K1 -up-> A1
+  K2 -up-> A2
+}
+
+rectangle "containers" {
+  rectangle "hardware" as H2
+  rectangle "host OS — one kernel" as O2
+  rectangle "app C" as A3
+  rectangle "app D" as A4
+  H2 -up-> O2
+  O2 -up-> A3
+  O2 -up-> A4
+}
+@enduml
+----
+
+A virtual machine brings its own kernel; a container shares the host's and is
+isolated by kernel features — namespaces for what it can see, cgroups for what it
+may consume.
+
+[cols="1,1,1",options="header"]
+|===
+|
+|Virtual machine
+|Container
+
+|Start-up
+|tens of seconds
+|fractions of a second
+
+|Overhead
+|a whole guest OS
+|the process itself
+
+|Isolation
+|strong — separate kernel
+|weaker — shared kernel
+
+|Different OS kernel
+|yes, Windows on Linux
+|no
+|===
+
+Two consequences you will meet in this course. A Linux container does not run on
+a Windows or macOS kernel — on those machines Docker quietly runs a small Linux
+VM, which is why the first start is slow and why memory limits matter. And a
+container image built for one *processor architecture* does not run on another;
+that is the subject of `docker-multiarch`.
+
+The weaker isolation is worth stating plainly rather than glossing: a container is
+a boundary, not a sandbox for hostile code. Running an untrusted image with
+`--privileged` or with the Docker socket mounted gives it the host.
+
+== When a container is the wrong tool
+
+The honest half of the lesson. A container costs a description to maintain, an
+image to build, and a layer of indirection between you and your program.
+
+[cols="1,1",options="header"]
+|===
+|Worth it |Overhead
+
+|the thing has to run identically elsewhere
+|a script only you will ever run, on your machine
+
+|it needs a service — a database, a broker
+|a single binary with no dependencies
+
+|the toolchain is awkward to install
+|a language your IDE already runs natively
+
+|it must be reproducible in a year
+|a one-off experiment you will delete today
+|===
+
+The rule of thumb: containerise at the boundary where the software leaves your
+machine — the pipeline, the deployment, the shared service. Inside your own edit
+and debug loop, a container is usually friction, and pretending otherwise is how
+people end up debugging their build system instead of their program.
+
+== Decisions
+
+* Every image is pinned to a version tag. `latest` is not used anywhere in this
+  course.
+* Interactive experiments run with `--rm`; long-lived containers are named
+  explicitly with `--name`.
+* Nothing is fixed by editing files inside a running container. The fix goes into
+  the description, and the image is rebuilt.
+* No `--privileged` and no mounting of the Docker socket in student projects.
+* Container images are not used for the inner edit-and-run loop unless the
+  toolchain requires it.
+
+== Pitfalls
+
+* Using `latest` and getting a different program next week.
+* Publishing the ports backwards — `-p 80:8080` when you meant `-p 8080:80`.
+* Forgetting `-it` and concluding the container "does not work" when it exited
+  immediately.
+* Editing inside a running container and losing the change on the next `run`.
+* Never removing stopped containers or unused images, then running out of disk in
+  April.
+* Treating a container as a security boundary against code you do not trust.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Abbild
+|image
+
+|Behälter, laufende Instanz
+|container
+
+|Registrierung, Ablage
+|registry
+
+|Schicht
+|layer
+
+|unveränderlich
+|immutable
+
+|Namensraum
+|namespace
+
+|Portweiterleitung
+|port publishing
+
+|Fingerabdruck des Abbilds
+|digest
+|===
+
+== Further reading
+
+* The Docker documentation — "Get started" and the CLI reference
+* Module `learning-environment-setup` — `setup-tools.sh` as a first draft of a
+  `Dockerfile`
+* Module `docker-images` — writing the description that produces the image

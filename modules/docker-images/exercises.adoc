@@ -1,0 +1,168 @@
+= Building an image from a description — exercises
+:topic-id: docker-images
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Review a Dockerfile
+
+kind: drill
+
+Find every defect and rewrite the file.
+
+[source,dockerfile]
+----
+FROM node
+COPY . .
+RUN npm install
+RUN npm run build
+COPY .env /app/.env
+EXPOSE 3000
+CMD npm start
+----
+
+.Solution
+[%collapsible]
+====
+Six defects.
+
+* `FROM node` — unpinned. Tomorrow it is a different major version and the build
+  fails for no reason anybody changed.
+* `COPY . .` before `npm install` — every source edit invalidates the dependency
+  install. Copy `package.json` and `package-lock.json` first.
+* `COPY . .` with no `.dockerignore` — `.git`, `node_modules/` and `.env` land in
+  the image.
+* `COPY .env` — a credential in a layer, readable by anybody who pulls it.
+  Configuration comes in at run time.
+* No `USER` — the process runs as root.
+* Single stage — the result carries the full toolchain and the sources.
+
+[source,dockerfile]
+----
+FROM node:22-alpine AS build
+WORKDIR /src
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine
+WORKDIR /app
+COPY --from=build /src/dist ./dist
+COPY --from=build /src/package.json ./
+RUN npm ci --omit=dev
+USER node
+EXPOSE 3000
+CMD ["node", "dist/main.js"]
+----
+
+With `.dockerignore`:
+
+----
+.git
+node_modules
+dist
+*.env
+----
+
+Note `CMD ["node", ...]` in exec form rather than `CMD npm start`: the shell form
+wraps the process in a shell, which then swallows the stop signal, and
+`docker stop` waits ten seconds before killing it every single time.
+====
+
+== Measure the cache
+
+kind: drill
+
+Take any project with dependencies and do this in order:
+
+. Write a `Dockerfile` in the bad order — sources first, then dependency install.
+. `docker build` and time it. Change one character in a source file and build
+  again. Time it.
+. Rewrite in the good order — dependency files, install, then sources.
+. Build twice with the same one-character change. Time it.
+. Add a `.dockerignore` and compare the "sending build context" line before and
+  after.
+
+.Solution
+[%collapsible]
+====
+The typical outcome on a Java or Node project: the bad order rebuilds everything
+on the second run, one to three minutes. The good order reuses the dependency
+layer and rebuilds in seconds.
+
+The build-context line is the second finding. Without `.dockerignore` a project
+with `node_modules/` or `build/` sends hundreds of megabytes to the daemon on
+every single build — before any instruction has run.
+
+The point worth taking away: neither improvement required understanding the
+application. Both are properties of the *order* and of what is sent, and both are
+paid for on every build for the rest of the project.
+====
+
+== Find the secret in an image
+
+kind: drill
+
+Build this and then dig it out.
+
+[source,dockerfile]
+----
+FROM alpine:3.20
+RUN echo "api_key=wx_live_8831f0c2" > /tmp/secrets.env
+RUN cat /tmp/secrets.env > /dev/null && rm /tmp/secrets.env
+CMD ["sh"]
+----
+
+[source,bash]
+----
+docker build -t leaky:1 .
+docker run --rm leaky:1 ls /tmp        # the file is gone
+docker history --no-trunc leaky:1      # and yet
+----
+
+.Solution
+[%collapsible]
+====
+`ls` shows nothing, because the final layer no longer contains the file.
+`docker history` shows the `RUN echo …` instruction with the key in plain text,
+and the layer that contained the file is still part of the image — anybody who
+pulls it can extract it, with `docker save` and `tar` if nothing else.
+
+Two conclusions.
+
+*Deleting does not remove.* An image is an append-only stack; a later layer can
+hide a file but cannot unmake the layer under it. The same is true of git, for
+the same structural reason.
+
+*A leaked secret is burnt.* The response is to rotate the credential, not to
+rebuild the image. If it has been pushed to a registry — public or not — assume it
+has been read.
+====
+
+== Containerise your own project
+
+kind: project
+
+. Write a multi-stage `Dockerfile` for your application: build stage with the
+  toolchain, runtime stage with only the artefact.
+. Add a `.dockerignore`. Verify by building and running
+  `docker run --rm yourimage ls -la` that `.git` and no `.env` are inside.
+. Run as a non-root user. Confirm with `docker run --rm yourimage id`.
+. Compare the image size with a naive single-stage version. Write down both
+  numbers.
+. Tag it `yourproject:0.1.0` and have a team member pull or load it and run it on
+  their machine, without instructions beyond the command.
+. Record in `openspec/changes/` what you decided and why — base image, user,
+  stage split. This is a change like any other.
+
+Step 5 is the acceptance test of the whole lesson. If it does not run on their
+machine unchanged, the description is incomplete somewhere, and that is the
+finding.

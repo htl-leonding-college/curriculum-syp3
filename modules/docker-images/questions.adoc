@@ -1,0 +1,253 @@
+= Building an image from a description — questions
+:topic-id: docker-images
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Write a Dockerfile for a small application and explain each instruction.
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+[source,dockerfile]
+----
+FROM eclipse-temurin:25-jre-alpine
+WORKDIR /app
+COPY build/libs/booking.jar app.jar
+EXPOSE 8080
+USER 1000:1000
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+----
+
+`FROM` names the pinned base image; `WORKDIR` sets the directory for everything
+after it; `COPY` brings the artefact in; `EXPOSE` documents the port; `USER`
+drops root; `ENTRYPOINT` is the command the container runs.
+
+Two things are regularly confused. `EXPOSE` publishes *nothing* — it is
+documentation, and reachability comes from `-p` at run time. And `ENTRYPOINT` is
+the program while `CMD` supplies overridable default arguments: use `ENTRYPOINT`
+when the container *is* a program, `CMD` when it is a starting point somebody
+adapts.
+
+Points the answer must contain:
+
+* FROM pinned, WORKDIR, COPY, EXPOSE, USER non-root, ENTRYPOINT
+* EXPOSE documents; `-p` publishes
+* ENTRYPOINT is the program, CMD the overridable arguments
+* Built with `docker build -t name:version .`
+====
+
+== How does the layer cache work, and how do you order instructions for it?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+Every instruction produces a layer. On rebuild Docker reuses layers whose inputs
+are unchanged and invalidates *everything after the first changed one*.
+
+[plantuml,q-layer-cache,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "bad" {
+  rectangle "COPY . ." as B2
+  rectangle "RUN build — every time" as B3
+  B2 -down-> B3
+}
+rectangle "good" {
+  rectangle "COPY build.gradle" as G2
+  rectangle "RUN dependencies — cached" as G3
+  rectangle "COPY src/" as G4
+  rectangle "RUN build — only this" as G5
+  G2 -down-> G3
+  G3 -down-> G4
+  G4 -down-> G5
+}
+@enduml
+----
+
+The rule: *order from least to most frequently changed.* Dependency declarations
+are copied and resolved before the sources, because sources change on every save
+and dependencies change monthly. Getting this wrong turns a five-second rebuild
+into a three-minute one, every time.
+
+A `.dockerignore` belongs beside it — excluding `.git`, `build/`, `node_modules/`
+and `*.env`. It shrinks the build context, and more importantly it keeps `.git`
+and environment files *out of the image*.
+
+Points the answer must contain:
+
+* One layer per instruction; a changed layer invalidates all later ones
+* Order least-changing to most-changing; dependencies before sources
+* `.dockerignore` for context size and to keep `.git`/`.env` out
+* The cost of a wrong order is paid on every single build
+====
+
+== What does a multi-stage build achieve?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+It separates what is needed to *build* from what is needed to *run*, and ships
+only the second.
+
+[source,dockerfile]
+----
+FROM gradle:8.10-jdk25 AS build
+WORKDIR /src
+COPY build.gradle settings.gradle ./
+RUN gradle dependencies --no-daemon
+COPY src ./src
+RUN gradle bootJar --no-daemon
+
+FROM eclipse-temurin:25-jre-alpine
+WORKDIR /app
+COPY --from=build /src/build/libs/*.jar app.jar
+USER 1000:1000
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+----
+
+The result contains no JDK, no Gradle, no dependency cache, no source and no
+intermediate files — for a Java service typically the difference between roughly
+a gigabyte and roughly a hundred megabytes.
+
+Size is the visible benefit and the smaller one. The real gains: the *attack
+surface* shrinks, because a compiler and a package manager inside a running image
+are tools for whoever gets in; and the *source code is not shipped* to everybody
+who pulls the image.
+
+Points the answer must contain:
+
+* Two stages: build tools in the first, only the artefact in the second
+* `COPY --from=build` moves the artefact across
+* Removes JDK, build tool, caches and sources
+* Smaller, smaller attack surface, source not distributed
+====
+
+== Which security rules apply to an image others will run?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+|===
+|Rule |Why
+
+|pin the base image
+|`latest` is unreproducible and can change overnight
+
+|do not run as root
+|an escape is worth far less against an unprivileged user
+
+|no secrets in any layer
+|`docker history` reads them; a later `rm` does not remove them
+
+|configuration at run time
+|the same image must serve test and production
+
+|log to stdout/stderr
+|`docker logs` works; nothing must be fetched from inside
+
+|keep it small
+|less to transfer, patch and attack
+|===
+
+The secrets rule is the counter-intuitive one and the expensive one:
+
+[source,dockerfile]
+----
+COPY secrets.env /app/secrets.env
+RUN ./configure.sh && rm /app/secrets.env   # still in the earlier layer
+----
+
+Anybody who pulls the image can read it. A secret that has been in an image is
+burnt and must be rotated — exactly like a secret committed to git, and for the
+same reason: the history keeps it.
+
+Points the answer must contain:
+
+* Pinned base, non-root user, no secrets, runtime configuration
+* Layers are readable; deleting in a later layer does not remove it
+* A leaked secret must be rotated, not just deleted
+* Log to stdout; keep the image small
+====
+
+== How do you tag and publish an image so somebody else can reproduce your run?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+[source,bash]
+----
+docker build -t ghcr.io/htl-leonding-example/booking:0.3.0 .
+docker login ghcr.io
+docker push ghcr.io/htl-leonding-example/booking:0.3.0
+----
+
+A *tag* is a name and can be moved; a *digest* is the identity and cannot. That
+distinction is why three conventions matter:
+
+* a *version tag per release*, never only `latest` — `latest` is a convenience
+  for humans and a trap for machines;
+* the image is *built by the pipeline from a commit*, not from a laptop, so the
+  image and the source that produced it are connected;
+* the tag names the *version, not the moment*: `0.3.0` still means something in
+  six months, `monday-fix` does not.
+
+And one warning that is easy to forget: a registry is public unless you made it
+private, and a public image is world-readable — including every layer.
+
+Points the answer must contain:
+
+* `build -t registry/name:version`, `login`, `push`
+* Tags move, digests do not
+* Version tags, not only `latest`; built by the pipeline from a commit
+* Public registries are world-readable, layer by layer
+====
+
+== Why is `COPY . .` early in a Dockerfile usually a mistake?
+
+covers: lo-2, lo-4
+
+.Answer
+[%collapsible]
+====
+For two independent reasons, and both bite.
+
+*The cache.* `COPY . .` changes whenever any file in the project changes — which
+is on every save. Every instruction after it is therefore rebuilt every time,
+including the dependency resolution that takes minutes and changes monthly. The
+fix is to copy the dependency declarations first, resolve them, and copy the
+sources afterwards.
+
+*The contents.* `.` is everything: `.git` with the full history, `build/` with
+stale artefacts, `.env` with credentials, `node_modules/` from someone's laptop.
+All of it goes into the image and is readable by anybody who pulls it. A
+`.dockerignore` is the fix, and it is needed even when the copy is late.
+
+The two reasons point the same way, which is why the rule is easy to remember:
+copy *as little as possible, as late as possible*.
+
+Points the answer must contain:
+
+* It invalidates the cache on every source change
+* Dependencies must be copied and resolved before sources
+* It copies `.git`, `.env`, build output and local artefacts into the image
+* `.dockerignore`, and: copy as little and as late as possible
+====

@@ -257,6 +257,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg5
     requires: [sdd-change-lifecycle]
+    status: ready
 
   - id: governance-estimation-hygiene
     title: Estimation hygiene instead of estimation methods
@@ -537,6 +538,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [learning-environment-setup]
+    status: ready
 
   - id: docker-images
     title: Building an image from a description
@@ -548,6 +550,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [docker-basics]
+    status: ready
 
   - id: docker-volumes-config
     title: Data and configuration outside the container

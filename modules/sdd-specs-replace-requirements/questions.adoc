@@ -1,0 +1,238 @@
+= The living target state replaces the requirements document — questions
+:topic-id: sdd-specs-replace-requirements
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Why does a requirements document go stale, and why does a target state not?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+Three properties of the classical document, none of them anybody's fault:
+
+* *Finished before the work begins.* Everything learned afterwards — from the
+  first user, the first prototype, the first impossibility — has nowhere to go.
+* *Expensive to update.* A re-agreed, re-signed document costs a meeting, so the
+  small corrections are skipped, and small corrections are most of them.
+* *Not used.* Nobody reads it while working, so nobody notices it is wrong. A
+  document read daily cannot rot; one opened twice can.
+
+The target state reverses all three. It is written continuously with the work,
+updated by archiving a change — which costs no more than doing the work — and
+read before every change by everybody.
+
+The consequence is the substantial one: when the classical document disagrees
+with the code, the document is simply wrong, and the drift is total by March.
+When the target state disagrees with the system, it is a *finding* — either a bug
+or a spec defect — and it gets fixed.
+
+Points the answer must contain:
+
+* Written once, expensive to update, not read while working
+* The target state is written with the work and updated by archiving
+* Divergence is a finding, not a normal condition
+* Being read often is what makes divergence noticeable at all
+====
+
+== If the target state may change, what stops a team from redefining success?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+The charter, which stays frozen.
+
+[plantuml,q-frozen-and-alive,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "frozen: charter\ngoals, scope, non-goals,\ndeadline, roles" as CH
+rectangle "alive: specs/" as SP
+rectangle "alive: changes/" as CG
+CH -right-> SP : the yardstick
+CG -up-> SP : archived deltas
+SP -down-> CH : every capability answers\nan objective
+@enduml
+----
+
+Two things stay fixed, and they are the ones with somebody else's name on them:
+the *charter* — objectives, scope, non-goals, deadline, roles — and the
+*acceptance criteria* derived from it. Changing the charter is possible and
+sometimes right, but it is a written negotiation, never a side effect of a
+change.
+
+If the acceptance criteria moved with the work, the project could not fail — and
+a project that cannot fail is not being assessed. The target state may say *more*
+than the charter and say it more precisely; it may not say something else.
+
+Points the answer must contain:
+
+* The charter and the acceptance criteria derived from it stay frozen
+* Changing the charter is an explicit written negotiation
+* Every capability must answer some charter objective
+* Movable criteria make the project unfailable, hence unassessable
+====
+
+== Trace one requirement from elicitation to verification.
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+|===
+|Stage |Wording
+
+|elicited
+|a sign-in sheet with an `anwesend` column; a trainer mentions excused absence
+
+|Lastenheft
+|"attendance must be recorded per member and session, including excused absence"
+
+|charter objective
+|"trainers record attendance digitally, including excused absence"
+
+|target state
+|`specs/attendance`: the system SHALL record present, absent or excused per
+ member and session
+
+|change
+|`changes/record-excused-absence/` — proposal, spec delta, tasks
+
+|archived
+|delta in `specs/attendance`, dated, tasks ticked
+
+|verified
+|the scenario is run at the milestone review
+|===
+
+Two things to notice. The *vocabulary is stable* the whole way down — "excused"
+appears at every stage because it came from the client's own document, which is
+what the glossary in the elicitation module was for. And the wording gets more
+*precise* without getting bigger: the target state names three states, which
+nobody said out loud but the sheet implied.
+
+Points the answer must contain:
+
+* Document/interview → Lastenheft → charter objective → specs → change → archive
+  → scenario run
+* The client's vocabulary survives unchanged through all of it
+* Precision increases; scope does not
+* Verification is running a scenario, not comparing texts
+====
+
+== Where does a given sentence belong — charter, target state or change?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+|===
+|Sentence |Belongs
+
+|"usable by trainers who are not technical"
+|*charter* — an objective, not a checkable behaviour
+
+|"attendance for a past session cannot be changed"
+|*target state* — a behaviour that must be true now
+
+|"we will add the export in November"
+|*a change* — an intention with a date; not a requirement at all
+
+|"we deliberately do not build a mobile app"
+|*charter*, as a non-goal — the entry that saves the most argument later
+
+|"the list is sorted by surname"
+|*target state* if a user can observe it; nowhere if it is an implementation
+ detail
+|===
+
+The test in one question: *who would notice if this were false?* The client
+notices a broken objective; a user notices a wrong behaviour; only the team
+notices an unmet intention. Things only the team notices belong in neither
+document.
+
+The last row is the one worth arguing about in class, because it depends on
+something outside the sentence — whether the ordering is visible to a user.
+
+Points the answer must contain:
+
+* Charter = objectives, scope, non-goals; target state = current required
+  behaviour; change = intention
+* The test: who would notice if it were false?
+* Non-goals belong in the charter and are worth writing
+* Implementation details belong in neither
+====
+
+== What replaces the signed requirements document at acceptance?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Running the target state in front of the client.
+
+* Every charter objective maps to capabilities in `specs/`.
+* Every capability has scenarios.
+* The scenarios are executed in the room, and either pass or do not.
+* The archive shows when each became true.
+
+This is stronger than a signature, for one reason: it is *falsifiable on the
+spot*. A signed document records that two parties once agreed on a text; a
+scenario that runs shows that the software does the thing. The classical model
+compares two documents and hopes the second describes the first.
+
+It also removes the standard acceptance argument — "that is not what we meant" —
+because the scenario was written in the client's vocabulary and has been visible
+in the repository since the change that introduced it.
+
+Points the answer must contain:
+
+* Objectives → capabilities → scenarios, executed with the client present
+* Falsifiable in the room; a signature is not
+* The archive dates when each behaviour became true
+* The client's own vocabulary was used throughout, so the scenarios are readable
+====
+
+== Why must a Pflichtenheft and a target state not be maintained side by side?
+
+covers: lo-1, lo-4
+
+.Answer
+[%collapsible]
+====
+Because two descriptions of the same thing become two different descriptions
+within about a month, and then neither can be trusted.
+
+The mechanism is the one already known from the delta and the target state: a
+fact that lives in one place is either right or wrong; a fact that lives in two
+places is right in one of them and nobody knows which. Only one copy gets updated
+when the requirement changes, and it is always the one the team actually uses.
+The other keeps its authority — it is the one with the signature — while quietly
+becoming fiction.
+
+The practical resolution is not to abolish the Pflichtenheft where a client
+requires one. It is to *generate or derive* it from the target state at the
+moment it is needed, so there is still only one source. What must not happen is
+two documents both maintained by hand.
+
+Points the answer must contain:
+
+* Two copies of a fact drift; the unused one keeps its authority
+* The team updates the one it works with, which is not the signed one
+* Same one-fact-in-one-place rule as target state versus delta
+* Where a Pflichtenheft is required, derive it from the target state
+====

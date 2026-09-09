@@ -1,0 +1,279 @@
+= The living target state replaces the requirements document
+:topic-id: sdd-specs-replace-requirements
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain why a requirements document goes stale and a target state does
+  not
+* [[lo-2]] Name what must stay frozen even when the target state lives, and why
+* [[lo-3]] Trace a requirement from the Lastenheft through to an archived change
+* [[lo-4]] Decide whether a proposed wording belongs in the charter, the target
+  state or a change
+* [[lo-5]] Explain what replaces the signed requirements document at acceptance
+
+== The document that is wrong by March
+
+The classical shape: a *Pflichtenheft* is written, agreed, signed, and printed.
+Then the project starts, and every week the software and the document drift a
+little further apart.
+
+Nobody decides to let that happen. It follows from three properties of the
+artefact:
+
+* *It is finished before the work begins.* Everything anybody learns afterwards —
+  from the first user, the first prototype, the first thing that turned out
+  impossible — has nowhere to go.
+* *Updating it is expensive.* A re-agreed, re-signed document costs a meeting, so
+  small corrections are not made, and the small ones are most of them.
+* *It is not used.* Nobody reads it while working, so nobody notices it is wrong.
+  A document that is checked daily cannot rot; one that is opened twice can.
+
+By March the honest description of the system is in the code, and the code cannot
+be read by the client.
+
+== What changes when the target state is alive
+
+`openspec/specs/` is the same content with three properties reversed.
+
+[cols="1,1,1",options="header"]
+|===
+|
+|Requirements document
+|Living target state
+
+|Written
+|once, before the work
+|continuously, with the work
+
+|Updated by
+|a meeting and a signature
+|an archived change
+
+|Read
+|at the start and at the end
+|before every change, by everybody
+
+|Says
+|what was agreed then
+|what must be true now
+
+|When it disagrees with the code
+|the document is wrong
+|one of them is a defect, and you must find out which
+|===
+
+The last row is the substantial one. In the classical model a divergence between
+document and code is normal and eventually total. Here it is a *finding*: either
+the code fails to do what the target state says — a bug — or the target state
+claims something nobody wanted — a spec defect. Both are actionable, and both get
+fixed. That is only possible because the target state is cheap to change and is
+read often enough for the divergence to be noticed.
+
+The mechanism that makes it cheap is the one from `sdd-change-lifecycle`:
+`specs/` is only ever modified by archiving a change, so an update costs the same
+as doing the work, and no more.
+
+== What still has to be frozen
+
+A living target state is not a licence to redefine the project in April. Two
+things stay fixed, and they are the ones with somebody else's name on them:
+
+[plantuml,frozen-and-alive,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "frozen" {
+  rectangle "Projektauftrag / charter\ngoals, scope, non-goals,\ndeadline, roles" as CH
+}
+rectangle "alive" {
+  rectangle "specs/\nwhat must be true now" as SP
+  rectangle "changes/\nhow it gets there" as CG
+}
+
+CH -right-> SP : "the yardstick"
+CG -up-> SP : "archived deltas"
+SP -down-> CH : "every capability must\nanswer an objective"
+@enduml
+----
+
+* The *charter* — objectives, scope, non-goals, deadline, responsibilities. It is
+  the agreement with the client and the yardstick the project is measured
+  against. Changing it is possible and sometimes right, but it is a negotiation,
+  in writing, not a side effect of a change.
+* The *acceptance criteria* derived from it. If those move with the work, the
+  project can never fail, and a project that cannot fail is not being assessed.
+
+The two together answer the obvious objection to living specifications: *if the
+target moves, what stops the team from redefining success?* The charter does. The
+target state may say more than the charter, and it may say it more precisely, but
+every capability in it has to answer some objective of the charter — and a
+capability that answers none is either scope creep or a charter that needs
+renegotiating in the open.
+
+== One requirement, all the way through
+
+The chain is worth walking once end to end, because each link belongs to a
+different lesson and they are easy to see as separate topics.
+
+[cols="1,2",options="header"]
+|===
+|Stage |Artefact and wording
+
+|elicited
+|a sign-in sheet with an `anwesend` column, and a trainer saying "sometimes
+ somebody is excused"
+
+|Lastenheft
+|"attendance must be recorded per member and session, including excused absence"
+
+|charter objective
+|"trainers record attendance digitally, including excused absence"
+
+|target state
+|`specs/attendance`: the system SHALL record for each member and session one of
+ present, absent or excused
+
+|change
+|`changes/record-excused-absence/` — proposal, spec delta, tasks
+
+|archived
+|the delta is in `specs/attendance`, dated, tasks ticked
+
+|verified
+|a scenario from `specs/attendance`, run at the milestone review
+|===
+
+Two observations about that table. The vocabulary is stable all the way down —
+*excused* appears at every stage, because it came from the client's own document,
+which is why the glossary was built in the elicitation module. And the wording
+gets *more precise* without getting bigger: the target state adds the three
+states, which nobody said out loud but the sheet implied.
+
+== Where does this sentence belong?
+
+The everyday decision, and it has a short test.
+
+[cols="1,2",options="header"]
+|===
+|Sentence |Belongs
+
+|"The system must be usable by trainers who are not technical."
+|*charter* — a project objective, not a checkable behaviour
+
+|"Attendance for a past session cannot be changed."
+|*target state* — a behaviour that must be true now
+
+|"We will add the export in November."
+|*a change* — an intention with a date, which is not a requirement at all
+
+|"We deliberately do not build a mobile app."
+|*charter*, as a non-goal — and it is the entry that saves the most argument
+ later
+
+|"The list is sorted by surname."
+|*target state*, if a user can observe it; nowhere, if it is an implementation
+ detail
+|===
+
+The test in one question: *who would notice if this were false?* The client
+notices a broken objective. A user notices a wrong behaviour. Only the team
+notices an unmet intention — and things only the team notices do not belong in
+either document.
+
+== What replaces the signature
+
+At acceptance the classical model produces a document comparison: does the
+delivered system match the signed Pflichtenheft? Here the same question is
+answered by *running the target state*.
+
+* Every charter objective maps to capabilities in `specs/`.
+* Every capability has scenarios.
+* Scenarios are executed, in front of the client, and either pass or do not.
+* The archive shows when each became true.
+
+That is a stronger form of acceptance than a signature on a document, for a
+simple reason: it is *falsifiable in the room*. A signed document says two parties
+once agreed on a text. A scenario that runs says the software does the thing.
+
+The details of the handover — what is signed, what is delivered, what the client
+must be able to do afterwards — are the subject of `governance-acceptance`.
+
+== Decisions
+
+* `specs/` is the authoritative description of intended behaviour. No separate
+  requirements document is maintained alongside it.
+* The charter stays frozen. Changing it is a written negotiation with the client,
+  never a side effect of a change.
+* Every capability in `specs/` must be traceable to a charter objective. One that
+  is not is raised at the next milestone.
+* A divergence between `specs/` and the running system is a finding, and it is
+  resolved in one direction or the other — never left standing.
+* Acceptance is performed by running scenarios, not by comparing documents.
+
+== Pitfalls
+
+* Maintaining a Pflichtenheft *and* a target state. Two descriptions of the same
+  thing, and within a month one of them is lying.
+* Treating "living" as "negotiable". The charter is the anchor; without it the
+  project cannot fail and therefore cannot succeed.
+* Capabilities that answer no objective. That is scope creep with good
+  documentation.
+* Leaving a known divergence between spec and system because "everyone knows".
+  Nobody knows in June.
+* Writing intentions into `specs/` — "we will add …". The target state is present
+  tense.
+* Adjusting acceptance criteria to what was built. The project then measures its
+  own output against itself.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Lastenheft
+|requirements specification (client's)
+
+|Pflichtenheft
+|functional specification (contractor's)
+
+|Zielzustand
+|target state
+
+|eingefroren
+|frozen
+
+|Nachverfolgbarkeit
+|traceability
+
+|Abnahmekriterium
+|acceptance criterion
+
+|Nichtziel
+|non-goal
+
+|Abweichung
+|divergence
+|===
+
+== Further reading
+
+* Module `sdd-why-specs` — the first pass at the same question, with the DIN
+  structure of the Pflichtenheft
+* Module `sdd-change-lifecycle` — why an update to the target state is cheap
+* Module `governance-acceptance` — what happens at the handover

@@ -1,0 +1,140 @@
+= What containers solve — exercises
+:topic-id: docker-basics
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== First contact
+
+kind: drill
+
+Work through this on your own machine and write down what you observe at each
+step.
+
+[source,bash]
+----
+docker run hello-world
+docker run alpine:3.20 echo hi
+docker run alpine:3.20 sh
+docker run -it alpine:3.20 sh
+docker ps
+docker ps -a
+----
+
+Answer: why did the third command return immediately, and where did the
+containers from steps 1–4 go?
+
+.Solution
+[%collapsible]
+====
+The third command starts `sh` with no terminal attached. A shell with nothing to
+read from standard input reaches end-of-file at once, exits, and the container
+stops — so it looks like "nothing happened". `-it` attaches a terminal and gives
+you a prompt.
+
+`docker ps` shows only *running* containers, so after these steps it is likely
+empty. `docker ps -a` shows all four, stopped, still occupying disk. That is the
+point of the exercise: nothing removed them, because none of the commands used
+`--rm`.
+
+Clean up with `docker container prune`, and note how much space it reports.
+Multiply that by a term of experiments.
+====
+
+== Publish a port and read the logs
+
+kind: drill
+
+[source,bash]
+----
+docker run -d --name web -p 8080:80 nginx:1.27
+----
+
+. Open http://localhost:8080 and confirm the page.
+. Show the log of the request you just made.
+. Get a shell inside the container and find the file that was served.
+. Change that file so the page says your team's name. Reload the page.
+. Remove the container, start it again with the same command, and reload.
+. Now do it a second time with `-p 80:8080` and explain what happens.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+docker logs web
+docker exec -it web sh
+#   the file is /usr/share/nginx/html/index.html
+docker stop web && docker rm web
+docker run -d --name web -p 8080:80 nginx:1.27
+----
+
+Step 5 is the lesson: your edit is gone. It lived in the container's writable
+layer, and the new container starts from the unchanged image. The next module
+puts that text into the image where it belongs.
+
+Step 6: `-p 80:8080` publishes host port 80 to container port 8080 — where
+nothing is listening. The container starts fine, nothing errors, and
+http://localhost:80 refuses the connection. This failure mode is quiet, which is
+why the order is worth memorising: *host first*.
+
+Note also that `docker logs` shows exactly what the process wrote to stdout and
+stderr. A program that logs to a file inside the container shows nothing here —
+which is a design rule for later: containerised programs log to stdout.
+====
+
+== Container or virtual machine?
+
+kind: drill
+
+For each requirement, say which one you would use and why in one clause.
+
+. Run a Windows-only accounting program on a Linux laptop.
+. Give every student the same PostgreSQL 17 for one lesson.
+. Run untrusted code submitted by strangers.
+. Start forty short-lived test environments in a pipeline.
+. Provide the school with one machine that must survive a reboot with a fixed IP.
+
+.Solution
+[%collapsible]
+====
+. *VM.* A container shares the host kernel; a Windows program needs a Windows
+  kernel, and no container can provide one.
+. *Container.* Seconds to start, identical everywhere, removed after the lesson —
+  precisely the case containers were made for.
+. *VM*, or a purpose-built sandbox. A container's isolation is a boundary, not a
+  defence: a shared kernel means a kernel vulnerability is a host compromise.
+. *Container.* Forty VMs would take minutes and gigabytes; forty containers take
+  seconds.
+. *VM.* This is a long-lived machine with an identity, not a disposable process.
+  Containers can be made to do it, but you would be reimplementing a VM badly.
+
+The pattern: containers win on *speed and reproducibility*, VMs win on *isolation
+and foreign kernels*. Cases 3 and 5 are the ones students most often get wrong,
+and in opposite directions.
+====
+
+== Containerise one thing in your project
+
+kind: project
+
+. Find one tool your project depends on that is not the language runtime — a
+  database, a linter, a document converter, a formatter.
+. Run it as a container instead of installing it, with a pinned version tag and
+  `--rm`.
+. Write the exact command into your repository — in the README or a script — so
+  that a team member can run it without asking you.
+. Write down one sentence on whether it was worth it. Be willing to conclude that
+  it was not; that answer is also a finding.
+. Check `docker ps -a` and `docker images` afterwards and clean up what the
+  experiment left behind.
+
+Step 4 is the actual exercise. Containerising something is easy; deciding whether
+it earned its place is the judgement this module is about.

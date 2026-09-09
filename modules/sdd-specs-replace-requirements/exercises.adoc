@@ -1,0 +1,135 @@
+= The living target state replaces the requirements document — exercises
+:topic-id: sdd-specs-replace-requirements
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Place eight sentences
+
+kind: drill
+
+For each, say whether it belongs in the charter, in `specs/`, in a change, or
+nowhere — and give the reason in one clause.
+
+. "The club wants to stop losing attendance sheets."
+. "A session that has ended cannot receive new attendance entries."
+. "We use PostgreSQL."
+. "No mobile app will be built."
+. "The booking list loads in under two seconds for 500 members."
+. "Lisa will refactor the service next week."
+. "A member may cancel a booking up to 24 hours before the session."
+. "The `BookingService` class has a `book` method."
+
+.Solution
+[%collapsible]
+====
+. *Charter* — the reason the project exists, in the client's words.
+. *Target state* — an observable behaviour, and a refusal at that.
+. *Nowhere in these three.* It is a decision, so it belongs in the `design.md` of
+  the change that took it.
+. *Charter*, as a non-goal. The single most argument-saving line anybody writes.
+. *Target state.* It is observable and it has a number, so it is checkable — and
+  a scenario can be written for it.
+. *Nowhere.* Team scheduling. It would be stale within a week and wrong in the
+  archive.
+. *Target state* — behaviour with a boundary, which also implies a refusal
+  scenario at 23 hours.
+. *Nowhere.* Implementation. It belongs in the code, and putting it in `specs/`
+  makes the spec wrong at the first rename.
+
+Items 3 and 8 are the ones that get misfiled most often, and in the same
+direction: design and implementation leaking into the target state.
+====
+
+== Resolve four divergences
+
+kind: drill
+
+In each case `specs/` and the running system disagree. Say which is the defect
+and what you do.
+
+. `specs/` says a refusal names its reason; the app returns an empty HTTP 400.
+. `specs/` says nothing about excused absence; the app has a third radio button
+  for it, and the trainers use it.
+. `specs/` says the export is monthly; the client asked for weekly in November
+  and the app now does weekly.
+. `specs/` says a member may cancel 24 hours ahead; the app allows it up to the
+  start, and nobody has complained.
+
+.Solution
+[%collapsible]
+====
+. *Code defect.* The spec is right; the response is missing information the spec
+  requires. Fix the code, and add the scenario if it was missing.
+. *Spec defect, and a process defect.* Behaviour exists that no change
+  introduced, which means somebody edited the system without a change. Write the
+  change retroactively, archive it, and note at the review how it happened.
+. *Charter question, not a spec question.* The requirement changed on the
+  client's instruction, so the charter objective — or its acceptance criterion —
+  needs the written negotiation. Then a change carries it into `specs/`. The
+  danger here is doing only the last part: the code and the spec agree, and the
+  agreement with the client no longer matches either.
+. *Undecided, and that is the finding.* Either the 24-hour rule is real, in which
+  case the code is wrong, or it was never wanted, in which case the spec is
+  wrong. "Nobody has complained" is not evidence — ask the client. What is not
+  allowed is leaving it standing.
+
+The pattern: divergences are resolved *in one direction or the other*, and case 4
+shows why leaving them open is the only genuinely wrong answer.
+====
+
+== Trace a requirement in this repository
+
+kind: drill
+
+This repository practises what the module describes. Pick one capability in
+`openspec/specs/` and walk it backwards:
+
+. Which archived change put it there? Read its `proposal.md`.
+. Did that change have a `design.md`? Was that the right call?
+. Which sentence in `openspec/changes/*/design.md` or in the project's own
+  charter does the capability answer?
+. Find one sentence in `specs/` written in the future tense or describing an
+  implementation, if there is one, and say how you would rewrite it.
+
+.Solution
+[%collapsible]
+====
+There is no single right answer — the point is the walk itself, and two things
+usually turn up.
+
+Some capability will trace cleanly: change, reason, date, delta, all in place.
+That is what the mechanism looks like when it works, and it takes about a minute
+to verify — which is the actual claim of the module.
+
+Something will not trace cleanly, because no repository is perfect. A capability
+whose change you cannot find was either edited in directly or archived before the
+convention settled. Both are ordinary findings and both are worth writing down;
+the exercise is a small milestone review of the course's own material.
+====
+
+== Audit your own target state
+
+kind: project
+
+. For every capability in your `openspec/specs/`, name the charter objective it
+  answers. Any capability that answers none is scope creep or a charter that
+  needs renegotiating — decide which, in writing.
+. For every charter objective, name the capabilities that answer it. An objective
+  with none is either not started or forgotten; say which.
+. Find every sentence in `specs/` that is in the future tense, names a class,
+  table or endpoint, or cannot be observed by a user. Rewrite or delete each.
+. Run two scenarios from `specs/` against the running system. Write down every
+  divergence and resolve each in one direction, with a change.
+. Check whether any behaviour exists in the app that no archived change
+  introduced. If so, that is the finding to bring to the review.
+
+Steps 1 and 2 together are a traceability matrix, and they take twenty minutes
+once. At acceptance they are the document the client is actually shown.
