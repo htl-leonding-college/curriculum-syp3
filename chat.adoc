@@ -317,15 +317,28 @@ Bitte die Mindmap in diesem Stil erstellen, oder mache einen Vorschlag:
 //--
 
 * Im Abschnitt "Assessment" im Abschnitt "Course overview, organisation and assessment" schreibst du nur von mündlichen Assessents. Im Normalfall gibt es zusätzlich 4 schriftliche Exams
+* Würde gerne Docker vor der Arbeit mit den AI-Agents vorziehen
+* Hast du eigentlich geplant die Methoden der Anforderungsanalyse (Interview, Fragebogen, Beobachtung und besonders die Dokumentenanalyse) irgendwo zu lehren.
+* Bei den Kreativitätstechniken hötte ich gerne die Techniken aus dem Buch:
+** Brainstorming
+** Methode 6-3-5
+** Morphologischer Kasten
+** Mindmmapping
+** Bionik
+** Delphi-Methode
+SCAMPER brauche ich nicht, da ich es noch nie gehört habe und auch nicht kenne.
+Die Lehreinheiten können ruhig etwas umfangreicher sein.
 
 
+//--
+
+* Besprichst du in einem Kapitel auch das Pflichtenheft?
+* Ich bin nicht besonders zufrieden mit dem pull-request Kapitel. Du erwähnst nirgends, dass man einen eigenen fork braucht, um einen pull request zu erstellen.
 
 
+//--
 
-
-
-
-
+* Möchte gerne dieses Bild assets/vibe-coding-vs-se.jpeg am Anfang des AI-Kapitels verwenden. Die Quelle ist als Wasserzeichen im Bild "@fromcodetocloud"
 
 
 
