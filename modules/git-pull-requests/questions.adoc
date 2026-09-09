@@ -67,6 +67,131 @@ Points the answer must contain:
 * The history then records who reviewed what
 ====
 
+== When do you need a fork, and when is a branch enough?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+One question decides it: *do you have write access to the repository?*
+
+[cols="2,2",options="header"]
+|===
+|Situation |What you need
+
+|Your team's project repository, you are a collaborator
+|a *branch* in that repository — you can push, nothing else is needed
+
+|Somebody else's repository: the exercise repositories of this course, an
+ open-source project, another team's repo
+|a *fork* — your own copy under your account, because you cannot push to theirs
+|===
+
+A fork is a copy of the repository on GitHub under your own account, with a link
+back to the original. You have write access to the copy and none to the original.
+
+That is also the answer to *why* pull requests exist in this shape: the pull
+request is the mechanism by which somebody who may not push can still propose a
+change — the owner keeps the decision, you keep the work. A branch in a shared
+repository is the same idea with the permission question already settled.
+
+.Two repositories, two remotes, one pull request
+[graphviz,q-fork-flow,svg]
+----
+digraph fork {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  U [label="upstream\nthe original repository\nread only for you",
+     fillcolor="#ffffff"];
+  O [label="origin\nyour fork\nyou may push"];
+  L [label="your machine\nlocal clone"];
+
+  U -> O [label="fork (once)"];
+  O -> L [label="git clone"];
+  L -> O [label="git push"];
+  O -> U [label="pull request"];
+  U -> L [label="git fetch upstream", style=dashed];
+}
+----
+
+In this course: the exercise repositories are forked, the team project
+repository is not — there everybody is a collaborator and works on branches.
+
+Points the answer must contain:
+
+* A branch is enough when you have write access; a fork is needed when you do not
+* A fork is your own copy on GitHub, with write access for you and none to the
+  original
+* The pull request is what lets somebody without write access propose a change
+====
+
+== Walk through opening a pull request from a fork
+
+covers: lo-5, lo-1
+
+.Answer
+[%collapsible]
+====
+[source,bash]
+----
+gh repo fork htl-leonding-example/jg03-syp-git-basics --clone   # fork + clone
+cd jg03-syp-git-basics
+
+# after a fork made in the web interface instead:
+git clone git@github.com:<you>/jg03-syp-git-basics.git
+cd jg03-syp-git-basics
+git remote add upstream git@github.com:htl-leonding-example/jg03-syp-git-basics.git
+
+git remote -v          # origin = your fork, upstream = the original
+git switch -c feature/exercise-3
+# ... commits ...
+git push -u origin feature/exercise-3
+gh pr create --repo htl-leonding-example/jg03-syp-git-basics --fill
+----
+
+The part to understand rather than memorise is the *two remotes*. `origin` is
+your fork — that is where `git push` goes, and it is the only repository you may
+write to. `upstream` is the original — you only ever read from it, with `git
+fetch upstream`. Setting `upstream` is a manual step after a fork made in the
+browser; `gh repo fork --clone` does it for you.
+
+The push therefore goes to *your* fork, and the pull request is opened *from*
+your branch there *against* the original. Nothing you do can change the original
+until somebody with write access merges it.
+
+Keeping the fork in step, before starting the next branch:
+
+[source,bash]
+----
+git fetch upstream
+git switch main
+git merge upstream/main      # or, in one step:  gh repo sync
+git push
+----
+
+A fork does not update itself. Skipping this means every new branch starts from a
+week-old `main`, and the pull request arrives carrying commits the original
+already has.
+
+The classic mistakes: working on `main` of your own fork (nothing stops you, and
+then the pull request contains everything you ever did), forgetting the
+`upstream` remote, and opening the pull request against your own fork's `main`
+instead of the original.
+
+Points the answer must contain:
+
+* Fork on GitHub, clone your fork, add `upstream` pointing at the original
+* Branch, commit, push to `origin` — your fork — then open the pull request
+  against the original
+* `git fetch upstream` and merge before starting the next branch; a fork does not
+  update itself
+====
+
 == Which three questions does a pull request description answer?
 
 covers: lo-1

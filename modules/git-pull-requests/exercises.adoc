@@ -10,6 +10,69 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
+== Fork an exercise repository and open a pull request from it
+
+kind: drill
+
+Fork `htl-leonding-example/jg03-syp-git-basics`, clone your fork, add the
+`upstream` remote, make a small change on a branch and open a pull request
+against the original. Then check with `git remote -v` that the two remotes point
+where you think they do.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+gh repo fork htl-leonding-example/jg03-syp-git-basics --clone
+cd jg03-syp-git-basics
+git remote -v
+# origin    git@github.com:<you>/jg03-syp-git-basics.git      (fetch/push)
+# upstream  git@github.com:htl-leonding-example/jg03-syp-git-basics.git
+
+git switch -c feature/exercise-3
+git commit -am "docs(exercise-3): record the four states of a file"
+git push -u origin feature/exercise-3
+gh pr create --repo htl-leonding-example/jg03-syp-git-basics --fill
+----
+
+Two checks tell you it worked. `git push` succeeds — it went to your fork, which
+you own. And the pull request page shows
+`htl-leonding-example:main ← <you>:feature/exercise-3`: two different
+repositories, which is precisely what a fork-based pull request is.
+
+If `git push` is rejected with a permission error, you cloned the original
+instead of your fork. Fix the URL of `origin` with `git remote set-url origin
+git@github.com:<you>/…` rather than starting over.
+====
+
+== Bring your fork back in step
+
+kind: drill
+
+Have somebody push a commit to the original repository, then update your fork's
+`main` and start a new branch from it.
+
+.Solution
+[%collapsible]
+====
+[source,bash]
+----
+git fetch upstream
+git switch main
+git merge upstream/main      # fast-forward, since you never commit on main
+git push                     # your fork's main is level with the original
+git switch -c feature/next
+----
+
+The merge is a fast-forward exactly as long as you did not commit on your fork's
+`main` — which is the reason for the rule not to. If it is not a fast-forward,
+you have commits on `main` that belong on a branch.
+
+`gh repo sync` does the same thing in one command; knowing the four steps
+underneath is what lets you repair it when the sync refuses.
+====
+
 == Open a pull request against a partner's repository
 
 kind: drill

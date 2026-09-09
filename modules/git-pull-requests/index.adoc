@@ -18,6 +18,8 @@ endif::[]
 * [[lo-2]] Review somebody else's pull request and leave useful comments
 * [[lo-3]] Explain what a pull request adds that a plain merge does not
 * [[lo-4]] Apply the review rules used in this course
+* [[lo-5]] Decide whether a branch or a fork is needed, and open a pull
+  request from a fork
 
 == What a pull request is
 
@@ -56,6 +58,93 @@ git push -u origin feature/attendance-export
 gh pr create --fill          # or open it in the web interface
 gh pr view --web
 ----
+
+== Branch or fork: who is allowed to push?
+
+A pull request always says the same thing: *"please merge branch X of repository
+A into branch Y of repository B"*. Whether A and B are the same repository
+depends on one question — do you have write access?
+
+[cols="2,2",options="header"]
+|===
+|Situation |What you need
+
+|Your team's project repository, you are a collaborator
+|a *branch* in that repository; you can push, so nothing else is required
+
+|Somebody else's repository — the exercise repositories of this course, an
+ open-source project, another team's repo
+|a *fork*: your own copy under your account, because you cannot push to theirs
+|===
+
+A *fork* is a copy of the repository on GitHub, under your own account, with a
+link back to the original. You have write access to your copy and none to the
+original — and that is exactly what makes the pull request necessary: it is the
+mechanism by which somebody without write access can still propose a change.
+
+.Two repositories, two remotes, one pull request
+[graphviz,fork-flow,svg]
+----
+digraph fork {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  U [label="upstream\nhtl-leonding-example/jg03-syp-git-basics\nread only for you",
+     fillcolor="#ffffff"];
+  O [label="origin\n<you>/jg03-syp-git-basics\nyour fork — you may push"];
+  L [label="your machine\nlocal clone"];
+
+  U -> O [label="fork (once, on GitHub)"];
+  O -> L [label="git clone"];
+  L -> O [label="git push"];
+  O -> U [label="pull request"];
+  U -> L [label="git fetch upstream", style=dashed];
+}
+----
+
+[source,bash]
+----
+gh repo fork htl-leonding-example/jg03-syp-git-basics --clone   # fork + clone
+cd jg03-syp-git-basics
+
+# after a fork made in the web interface instead:
+git clone git@github.com:<you>/jg03-syp-git-basics.git
+cd jg03-syp-git-basics
+git remote add upstream git@github.com:htl-leonding-example/jg03-syp-git-basics.git
+
+git remote -v          # origin = your fork, upstream = the original
+git switch -c feature/exercise-3
+# ... commits ...
+git push -u origin feature/exercise-3
+gh pr create --repo htl-leonding-example/jg03-syp-git-basics --fill
+----
+
+Two remotes, two jobs: *`origin`* is your fork — you push there. *`upstream`* is
+the original — you only ever read from it.
+
+=== Keeping the fork in sync
+
+A fork does not update itself. After a week your `main` is behind the original,
+and every branch you start from it carries that gap into the pull request.
+
+[source,bash]
+----
+git fetch upstream
+git switch main
+git merge upstream/main      # or, in one step:  gh repo sync
+git push                     # your fork's main is level again
+git switch -c feature/next   # start the next branch from here
+----
+
+Do this *before* you start a branch, not after the conflict.
+
+NOTE: In your own team project you are a collaborator, so a branch is enough and
+a fork would only add a second copy to keep in step. Fork when you cannot push —
+which in this course means the exercise repositories, and later every open-source
+contribution you make.
 
 == Writing a pull request others can review
 
@@ -96,6 +185,8 @@ a statement about your reading, not about your trust in the author.
 == Decisions
 
 * Everything reaches `main` through a pull request, including documentation.
+* Exercise repositories are forked; the project repository is not — there
+  everybody is a collaborator and works on branches.
 * At least one review from another team member before merging.
 * CI must be green before merging. A red build is not merged "and fixed later".
 * Pull requests stay small enough to read in one sitting.
@@ -110,6 +201,14 @@ a statement about your reading, not about your trust in the author.
   loses the thread of what changed since their comment.
 * Leaving pull requests open for a week. The branch drifts from `main` and the
   merge becomes a conflict exercise.
+* Working on `main` of your own fork. It is your copy, so nothing stops you — and
+  then the pull request contains every commit you ever made and cannot be synced
+  with the original any more.
+* Forgetting the `upstream` remote. The fork then never catches up, and the pull
+  request arrives with commits the original already has.
+* Opening the pull request against your own fork's `main` instead of the
+  original. GitHub preselects the original, but not after you have changed the
+  base once.
 
 == Terminology
 
@@ -131,10 +230,21 @@ a statement about your reading, not about your trust in the author.
 
 |Änderungsumfang
 |scope of the change
+
+|Abspaltung, eigene Kopie
+|fork
+
+|Gegenstelle
+|remote
+
+|ursprüngliches Repository
+|upstream
 |===
 
 == Further reading
 
 * GitHub docs — About pull requests, https://docs.github.com/pull-requests
+* GitHub docs — Working with forks,
+  https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks
 * Module `git-conflicts-remotes` — what happens when two branches touch the same
   lines
