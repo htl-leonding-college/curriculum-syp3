@@ -1,0 +1,248 @@
+= The life cycle of a change — questions
+:topic-id: sdd-change-lifecycle
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Name the states of a change and the condition for each transition.
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+[plantuml,q-change-states,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+[*] --> proposed : reason written
+proposed --> specified : requirements and scenarios
+specified --> planned : tasks with verifications
+planned --> inProgress : work starts
+inProgress --> done : tasks ticked, checks green
+done --> archived : delta folded into specs/
+archived --> [*]
+inProgress --> proposed : reason no longer holds
+specified --> [*] : withdrawn
+@enduml
+----
+
+The condition on each arrow is what makes the state observable. "We are working
+on it" is not a state; *specified* is, because there is a document to point at.
+That is what turns a milestone review into a five-minute conversation instead of
+an interrogation.
+
+The two backward arrows are not exceptions. A change may return to *proposed*
+when its reason stops holding, and it may be withdrawn outright — both are normal
+and both beat a change quietly abandoned in place.
+
+Points the answer must contain:
+
+* proposed, specified, planned, in progress, done, archived
+* Each transition has a condition that can be pointed at
+* Backward transitions exist: return to proposed, withdrawal
+* A state is what the artefacts show, not what somebody reports
+====
+
+== What does archiving do, and why is it the point of the loop?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+Archiving folds the change's delta into `openspec/specs/` and moves the change
+itself into `changes/archive/`. It is the only transition that changes anything
+outside the change.
+
+[plantuml,q-archiving,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "specs/ (before)\n- a member can book\n- a booking can be cancelled" as B
+rectangle "delta\nADDED: a full session refuses" as D
+rectangle "specs/ (after)\n- a member can book\n- a booking can be cancelled\n- a full session refuses" as A
+B -right-> A
+D -down-> A : folded in
+@enduml
+----
+
+Three consequences:
+
+* The target state *grows* but carries no history — `specs/` says what is true,
+  the archive says how it got there.
+* The archive is *dated evidence*. "Archived on 14 November, tasks ticked" is a
+  fact; "we worked on booking" is not.
+* Nothing is written twice. The requirement *moved*; a fact in two places soon
+  becomes a fact in two versions.
+
+The commonest failure is the finished change that was never archived: the code
+exists, and the target state still describes a system that does not.
+
+Points the answer must contain:
+
+* Delta folds into specs/, change moves to archive/
+* Target state grows and stays history-free
+* The archive is dated evidence of finished work
+* Unarchived finished work is invisible work
+====
+
+== A change turns out to be wrong. What do you do?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+Depends which part was wrong.
+
+|===
+|Situation |Response
+
+|the *reason* no longer holds
+|withdraw it — into the archive, marked withdrawn, one sentence why
+
+|the *requirement* was wrong but something is needed
+|back to *proposed*; rewrite the spec delta, then re-plan
+
+|the *implementation* was wrong, requirement stands
+|stay in progress — an ordinary bug, not a life-cycle event
+|===
+
+Withdrawal is the one teams avoid because it feels like admitting failure. It is
+the opposite: it is a documented decision, and the undocumented ones are the
+expensive kind. Six months later "why is there no statistics page?" has an answer
+instead of a shrug.
+
+What never helps is leaving it open. A change untouched for six weeks is not in
+progress — it is an unwritten decision, and at the review it counts as nothing
+either way. Writing it down costs nothing and buys clarity.
+
+Points the answer must contain:
+
+* Distinguish wrong reason, wrong requirement, wrong implementation
+* Withdraw in writing; back to proposed; or just fix the bug
+* Withdrawal is a decision, not a failure
+* Leaving it open is the only response that helps nobody
+====
+
+== Along which line do you split a change that is too large?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+Along a line where *each half can be archived alone*.
+
+|===
+|Good |Bad
+
+|by capability — booking, then attendance
+|by layer — backend change, then frontend change
+
+|by scenario — happy path, then refusals
+|by person — Marco's part, Lisa's part
+
+|by risk — the decided part now, the open question later
+|by time — week one, week two
+|===
+
+The right column shares one defect. A backend-only change leaves the target state
+describing behaviour no user can reach; a change cut by person leaves a record
+that describes the team rather than the system. Neither half is a coherent
+statement about the system, so neither can fold into `specs/`.
+
+The signal that a split is due: the task list is thirty items long and the first
+ten have nothing to do with the last ten. Splitting early is cheap; unpicking a
+half-finished change is not.
+
+Points the answer must contain:
+
+* One intention, reviewable in one sitting, archivable as a whole
+* Split by capability, scenario or risk
+* Never by layer, person or calendar — those halves cannot be archived alone
+* The thirty-item unrelated task list is the warning sign
+====
+
+== What can you read off a project's `changes/` and `archive/` folders?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Most of what a milestone review needs, in about two minutes.
+
+|===
+|What you see |What it means
+
+|`archive/` empty in December
+|nothing finished — possibly much done
+
+|twelve changes open, none archived
+|no change was ever cut to a reviewable size
+
+|`archive/` full, `specs/` thin
+|deltas are not being folded in — the process is performed, not used
+
+|one open, several archived, tasks ticked with dates
+|the healthy picture
+
+|everything archived in one burst last week
+|the record was reconstructed; it is a story, not evidence
+|===
+
+The last row deserves its own sentence. A record written in June, dated June,
+describing work from November tells the reader exactly one thing: the process was
+not used. The dates are the evidence and they cannot be back-filled honestly —
+which is also why reconstructing turns an assessment of the work into a question
+about honesty.
+
+Points the answer must contain:
+
+* Empty archive = nothing finished; many open changes = never split
+* Full archive with thin specs = deltas not folded in
+* Healthy: few open, several archived, dated ticks
+* Dates expose a reconstructed record
+====
+
+== Why must `specs/` never be edited directly?
+
+covers: lo-2, lo-1
+
+.Answer
+[%collapsible]
+====
+Because then the target state has an origin nobody can trace.
+
+Every sentence in `specs/` arrived there through an archived change, which
+carries the reason it was made, the alternatives that were rejected and the date.
+A sentence edited in directly has none of that: it is a requirement with no
+author, no justification and no moment. The next person to disagree with it has
+nothing to read.
+
+It also breaks the one-fact-in-one-place property. A direct edit is not
+reconcilable with any delta, so if a change is later archived that touches the
+same capability, two statements about the same behaviour meet with no way to
+decide which is current.
+
+The rule generalises beyond specs: the target state is *derived* from the history
+of changes. Anything that lets it drift from that history destroys the reason for
+having both.
+
+Points the answer must contain:
+
+* Every sentence in specs/ arrives through an archived change
+* A direct edit has no reason, no alternatives, no date
+* It breaks reconciliation with later deltas
+* The target state must stay derivable from the archive
+====

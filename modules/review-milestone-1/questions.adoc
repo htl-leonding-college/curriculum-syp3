@@ -1,0 +1,231 @@
+= First milestone review — questions
+:topic-id: review-milestone-1
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== What is presented at a milestone review, and what is not?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+Only what is in the repository. No slides, no status report, no percentage.
+
+[plantuml,q-review-sources,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "charter" as CH
+rectangle "specs/" as SP
+rectangle "changes/archive/" as AR
+rectangle "git history" as GI
+rectangle "running app" as AP
+rectangle "the review" as RV
+CH --> RV : still what we agreed?
+SP --> RV : what is claimed true?
+AR --> RV : what is finished?
+GI --> RV : how did the team work?
+AP --> RV : does the claim hold?
+@enduml
+----
+
+The presentation itself is three sentences — finished, next, blocked — plus one
+scenario run live and the archive on screen.
+
+At the first milestone "not much works yet" is an acceptable answer. What is
+never acceptable is being unable to say what is finished: that is not a fact
+about the software, it is a fact about the team.
+
+Points the answer must contain:
+
+* Only repository contents; no slides and no status report
+* Charter, specs/, archive, git history, the running system
+* Three sentences: finished, next, blocked
+* Little working is fine; not knowing what is finished is not
+====
+
+== What counts as evidence, and what is only an assertion?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+Evidence can be pointed at and is dated. An assertion has to be believed.
+
+|===
+|Criterion |Evidence |Assertion
+
+|direction
+|charter goals and the capabilities answering them
+|"we changed direction a bit"
+
+|finished work
+|archived changes, dated, tasks ticked
+|open branches, "almost done"
+
+|target state is true
+|a scenario from `specs/` executed live
+|a spec nobody has run
+
+|way of working
+|commit history, pull requests, review comments
+|a record written last week
+
+|open questions
+|the list of assumptions with sources
+|"no problems"
+|===
+
+The last row is the one that surprises people. A team reporting no open questions
+is either not looking or not saying, and both are worse than six honest ones.
+Named risk is manageable; denied risk is not.
+
+Points the answer must contain:
+
+* Evidence is pointable and dated; assertions must be believed
+* Archived changes, git history, live scenario, assumption list
+* "Almost done" and "no problems" are assertions
+* Open questions are a criterion, not a weakness
+====
+
+== How do you review another team's repository?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+Against the five known criteria, in the repository, in about twenty minutes:
+
+* *Direction* — do the capabilities in `specs/` still answer the charter goals?
+* *Finished work* — what is in `archive/`, dated when, with which tasks ticked?
+* *Truth of the target state* — pick a scenario yourself and have them run it.
+* *Way of working* — does the commit history show steady work, or one burst?
+* *Open questions* — is there a list, and does it have sources?
+
+The choice of scenario is the reviewer's, deliberately. A team allowed to choose
+picks the one that works; a scenario chosen by the reviewer tests whether
+`specs/` is a description of the system or a wish about it.
+
+The criteria are published in advance, because the point is not to catch anybody
+out — it is to make the team's own preparation identical to the review.
+
+Points the answer must contain:
+
+* Five criteria: direction, finished work, truth of specs, way of working, open
+  questions
+* The reviewer picks the live scenario, not the team
+* Everything is checked in the repository
+* Criteria are known in advance by design
+====
+
+== What makes a review comment usable?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+Three parts: *location, defect, repair*. The repair is the one that gets left off.
+
+|===
+|Not usable |Usable
+
+|"The specs are weak."
+|"`specs/booking` has no refusal scenario; add one for the full session — that is
+ where the bug will be."
+
+|"Your git history is messy."
+|"Eleven commits say 'fix'; nobody can find the change that introduced the
+ sorting bug. Put the change id in the subject."
+
+|"Good work!"
+|"Attendance is the only capability with a refusal scenario — do the same for
+ booking."
+|===
+
+Praise follows the same rule or it teaches nothing: a compliment that does not
+name what was good cannot be repeated on purpose.
+
+On the receiving side there is exactly one move during the session: *write it
+down*. Defending a finding is ruled out not because it is impolite but because it
+spends the ten minutes in which the remaining four findings would have been said.
+The place to disagree is afterwards, in writing, as a documented rejection.
+
+Points the answer must contain:
+
+* Location, defect, repair — all three
+* Praise must also name what was good
+* The receiving team writes findings down rather than defending them
+* Disagreement belongs afterwards, in writing
+====
+
+== What happens to the findings after the review?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Each becomes a *change* — with a reason and a task list — or a written, reasoned
+rejection. Nothing stays a good intention.
+
+That is the whole difference between a review that improves a project and one
+that produces a pleasant conversation. A finding in a notes file is forgotten
+within a fortnight; a finding in `changes/` has a state, an owner and an exit
+condition.
+
+It is also self-enforcing: the first question at the second milestone is what
+became of the findings of the first, and the answer is visible in `archive/` or
+it is not there at all. A rejection with a reason is a perfectly good answer —
+"we decided not to, because …" is a decision. Silence is not.
+
+Points the answer must contain:
+
+* Every finding becomes a change or a documented rejection, within a week
+* Changes have state, owner and exit condition; notes do not
+* Milestone two opens with the findings of milestone one
+* A reasoned rejection is an acceptable outcome; silence is not
+====
+
+== How do you prepare for a milestone review, and why does it take forty minutes?
+
+covers: lo-1, lo-5
+
+.Answer
+[%collapsible]
+====
+Because it is repository work you owe anyway, not presentation work:
+
+. *Archive what is done* — this is where teams lose most of their visible
+  progress, and it is pure recovery of credit already earned.
+. *Withdraw what is dead*, one sentence each.
+. *Run two of your own scenarios by hand.* A failure found here is a finding you
+  report yourself instead of one that is found on you.
+. *Update the open-questions list*, with sources.
+. *Write three sentences*: finished, next, blocked.
+
+That is the presentation. If preparation takes an evening, the extra hours are
+going into slides — which move the truth further from the repository, which is
+exactly what the format is designed to prevent.
+
+The deeper reason: a review you can prepare for in forty minutes is one you could
+pass on any given Tuesday. That is the property being taught.
+
+Points the answer must contain:
+
+* Archive, withdraw, run own scenarios, update open questions, three sentences
+* All of it is repository work, needed anyway
+* Slides are the sign that preparation went the wrong way
+* A review passable at any time means the process is genuinely in use
+====

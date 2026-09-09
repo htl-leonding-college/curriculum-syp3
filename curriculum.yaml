@@ -233,6 +233,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [sdd-openspec-artifacts]
+    status: ready
 
   - id: bridge-progress-and-milestones
     title: Reading project progress from changes
@@ -244,6 +245,7 @@ topics:
     taught_in: jg3
     prerequisite_for: jg5
     requires: [bridge-charter-to-specs, sdd-change-lifecycle]
+    status: ready
 
   - id: sdd-specs-replace-requirements
     title: The living target state replaces the requirements document
@@ -523,6 +525,7 @@ topics:
     taught_in: jg3
     prerequisite_for: none
     requires: [openspec-hands-on, bridge-charter-to-specs]
+    status: ready
 
   - id: docker-basics
     title: What containers solve

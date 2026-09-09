@@ -1,0 +1,225 @@
+= First milestone review
+:topic-id: review-milestone-1
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Present the state of a project from its repository, without slides
+* [[lo-2]] Distinguish evidence from assertion, and offer the first
+* [[lo-3]] Review another team's repository against the milestone criteria
+* [[lo-4]] Give and take review feedback that names a defect and a repair
+* [[lo-5]] Turn review findings into changes rather than into good intentions
+
+== What is being reviewed
+
+Nothing is presented that is not in the repository. That single rule decides the
+shape of the whole session: there are no slides, no status report and no
+percentage, because everything a reviewer needs is already committed.
+
+[plantuml,review-sources,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "the repository" {
+  rectangle "charter\nfrozen goals" as CH
+  rectangle "specs/\ntarget state" as SP
+  rectangle "changes/archive/\ndated, ticked" as AR
+  rectangle "git history\nwho, when, what" as GI
+  rectangle "the built site / running app" as AP
+}
+rectangle "the review" as RV
+
+CH --> RV : "is this still what we agreed?"
+SP --> RV : "what does it claim is true?"
+AR --> RV : "what is finished?"
+GI --> RV : "how did the team work?"
+AP --> RV : "does the claim hold?"
+@enduml
+----
+
+The first milestone falls early enough that "not much works yet" is an entirely
+acceptable answer. What is *not* acceptable at any milestone is not being able to
+say what is finished — because that is not a fact about the software, it is a
+fact about the team.
+
+== The criteria
+
+Five, and they are known in advance because the point is not to catch anybody
+out:
+
+[cols="1,2,2",options="header"]
+|===
+|Criterion |Evidence |Not evidence
+
+|*Direction* — the project still matches its charter
+|charter goals, and the capabilities in `specs/` that answer them
+|"we changed direction a bit"
+
+|*Finished work* — something is actually done
+|archived changes with dated, ticked tasks
+|open changes, branches, "almost done"
+
+|*Truth of the target state* — `specs/` describes reality
+|a scenario from `specs/`, executed live
+|a spec nobody has run
+
+|*Way of working* — the process is used, not performed
+|commit history, pull requests, review comments
+|a record written last week
+
+|*Open questions* — the team knows what it does not know
+|the list of assumptions and open questions, with sources
+|"no problems"
+|===
+
+The last criterion surprises people. A team that reports no open questions is
+either not looking or not saying, and both are worse than a team with six honest
+ones. Risk that is named is manageable; risk that is denied is not.
+
+== Preparing: forty minutes, not a night
+
+Preparation is repository work, and it is work you would have to do anyway:
+
+. *Archive what is done.* An unarchived finished change counts as unfinished,
+  and this is where teams lose most of their visible progress.
+. *Withdraw what is dead*, one sentence each.
+. *Run your own scenarios.* Pick two from `specs/` and execute them by hand. If
+  one fails, that is a finding you get to report yourself rather than have found.
+. *Update the open-questions list* — with sources, as in elicitation.
+. *Write three sentences*: what is finished, what is next, what is blocked.
+
+That is the whole presentation. If it takes longer than forty minutes, the
+missing work is not presentation work.
+
+== Running the session
+
+Roughly twenty minutes per team, in a fixed order, because the order is what
+keeps it from turning into a demo:
+
+. *Three sentences* — finished, next, blocked. Not a narrative.
+. *One scenario, live.* Chosen by the reviewers from `specs/`, not by the team.
+. *The archive*, on screen. What was archived, when, with which tasks.
+. *Findings* from the reviewing team.
+. *Written record* — the findings, in the repository, before the session ends.
+
+The live scenario is the part that makes the rest honest. A team that can pick
+any scenario will pick the one that works; a scenario the reviewers pick tests
+whether `specs/` is a description or a wish. When it fails — it often does at
+milestone one — the useful response is "noted, that becomes a change", not an
+explanation.
+
+== Feedback that is worth receiving
+
+A review comment is useful when a reader who was not there can act on it. That
+means three parts, and the third is the one that gets left off:
+
+[cols="1,1",options="header"]
+|===
+|Not usable |Usable
+
+|"The specs are weak."
+|"`specs/booking` has no refusal scenario; add one for the full session, because
+ that is where the bug will be."
+
+|"Your git history is messy."
+|"Eleven commits say 'fix'; a reviewer cannot find the change that introduced the
+ sorting bug. Use the change id in the subject."
+
+|"Good work!"
+|"The attendance capability is the only one with three scenarios including a
+ refusal — do that for booking too."
+|===
+
+Location, defect, repair. Praise follows the same rule, or it teaches nothing: a
+compliment that does not name what was good cannot be repeated on purpose.
+
+On the receiving side, exactly one response is available during the session:
+*write it down*. Defending a finding is not forbidden because it is impolite; it
+is forbidden because it costs the ten minutes in which the other four findings
+would have been said.
+
+== After the review
+
+Findings become *changes*, not good intentions. Each one either enters
+`changes/` with a reason and a task list, or is written down as consciously
+rejected, with the reason.
+
+That is the difference between a review that improves a project and one that
+produces a nice conversation. At the second milestone the first question is what
+happened to the findings of the first — and the answer is visible in the archive,
+or it is not there at all.
+
+== Decisions
+
+* Nothing is presented that is not in the repository. No slides.
+* The scenario demonstrated live is chosen by the reviewers.
+* Every team reviews another team; the findings are written into the reviewed
+  team's repository during the session.
+* Findings become changes or documented rejections within one week.
+* A team reporting no open questions is asked again; "none" is not an accepted
+  answer at a first milestone.
+* The milestone assesses the state of the project, not the presentation of it.
+
+== Pitfalls
+
+* Preparing slides. It costs an evening and moves the truth further from the
+  repository.
+* Demonstrating the one path that works. The reviewers choose, precisely for this
+  reason.
+* Arriving with finished but unarchived work. It is invisible, and it is the
+  cheapest possible loss of credit.
+* Defending findings in the session. It burns the time the remaining findings
+  needed.
+* Feedback without a repair. It leaves the other team knowing something is wrong
+  and not what to do.
+* Findings that go into a notes file and never become changes. By milestone two
+  nobody remembers them.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Meilenstein
+|milestone
+
+|Meilensteinprüfung
+|milestone review
+
+|Nachweis, Beleg
+|evidence
+
+|Behauptung
+|assertion, claim
+
+|Befund
+|finding
+
+|offene Frage
+|open question
+
+|Abnahme
+|acceptance
+|===
+
+== Further reading
+
+* Module `sdd-change-lifecycle` — reading a project from `changes/` and
+  `archive/`
+* Module `bridge-charter-to-specs` — how a milestone becomes checkable at all
+* Module `git-pull-requests` — the same feedback rules, in writing

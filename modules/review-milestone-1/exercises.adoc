@@ -1,0 +1,140 @@
+= First milestone review — exercises
+:topic-id: review-milestone-1
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Sort evidence from assertion
+
+kind: drill
+
+Which of these would you accept at a review, and what would you ask for instead
+where you would not?
+
+. "We are about 60 % done."
+. `changes/archive/refuse-full-sessions/` with all tasks ticked, dated
+  2026-11-14.
+. "The booking works, we showed it last week."
+. A pull request with two review comments and a merge commit.
+. "We have no open questions."
+. `specs/booking/spec.md` containing three scenarios.
+. Forty commits, thirty-eight of them from one account, all dated in the last
+  four days.
+
+.Solution
+[%collapsible]
+====
+. *Assertion*, and an unfalsifiable one — 60 % of what? Ask: "which changes are
+  archived?"
+. *Evidence.* Dated, ticked, pointable. This is the strongest single item on the
+  list.
+. *Assertion.* Ask them to run it now, on a scenario you pick.
+. *Evidence* about the way of working — somebody read somebody else's code, and
+  it is on record.
+. *Assertion*, and the one to push back on. Ask: "what is the thing you are least
+  sure about?" Nobody has nothing.
+. *Evidence about the target state*, but only partial — it says what is claimed,
+  not that it is true. Pick one and have it run.
+. *Evidence, and a finding.* It shows the work happened in one burst by one
+  person. Neither is fatal at milestone one, but both are worth a comment with a
+  repair attached.
+
+Item 6 is the subtle one. A spec is evidence of intent, never of behaviour; only
+running it closes that gap.
+====
+
+== Rewrite six review comments
+
+kind: drill
+
+Add location, defect and repair to each.
+
+. "The code is unstructured."
+. "Nice project!"
+. "You should test more."
+. "The specs don't match the app."
+. "Commit messages are bad."
+. "Too much was done by one person."
+
+.Solution
+[%collapsible]
+====
+. "`BookingService` has 340 lines and mixes validation, persistence and mail.
+  Extract the validation into its own class — it is the part with the branching
+  you will want to test."
+. "The refusal scenarios in `specs/attendance` are the clearest of the four
+  teams; keep that pattern when you spec booking."
+. "`BookingService.book()` has no test for the full-session case, and that is the
+  branch the spec is about. Add `refusesWhenFull` before the next change."
+. "`specs/booking` says a refusal names the reason; the running app returns an
+  empty 400. Either fix the response or change the spec — but they must agree by
+  the next review."
+. "Eleven commits are called 'fix'. Nobody could find where the sorting bug came
+  from. Put the change id and the effect in the subject."
+. "38 of 40 commits are from one account. Pair on the next change and swap who
+  commits, so that both of you can defend it in June."
+
+Notice that every repair is a *next action*, not a principle. "You should test
+more" is advice; "add `refusesWhenFull` before the next change" is something that
+either happens or does not.
+====
+
+== Run a mock review
+
+kind: drill
+
+In pairs of teams, twenty minutes each, in this order:
+
+. Three sentences: finished, next, blocked.
+. The reviewing team opens `specs/`, picks a scenario, and the presenting team
+  runs it.
+. The archive on screen: what, when, which tasks.
+. Findings, spoken and immediately written into the reviewed repository.
+
+Then swap. Afterwards, each team writes down the one finding they would rather
+not have received.
+
+.Solution
+[%collapsible]
+====
+There is no model answer for the findings, but three things reliably happen and
+are worth naming when they do.
+
+*The chosen scenario fails.* Normal at milestone one, and the useful response is
+"noted, that becomes a change" — measured in seconds of explanation, ideally
+zero.
+
+*Work turns out to be finished but unarchived.* Also normal, and it is the
+cheapest possible loss: the credit exists, it simply was not claimed.
+
+*The finding a team least wants to hear is usually about the way of working*, not
+about the code — one person committing everything, or a two-week gap. Those are
+the findings with the longest reach, because they predict what June looks like.
+====
+
+== Hold your own first milestone review
+
+kind: project
+
+Run it for real, on your project:
+
+. Do the forty minutes of preparation: archive, withdraw, run two scenarios,
+  update the open questions, write the three sentences.
+. Present to the reviewing team in the fixed order.
+. Take the findings without defending them; make sure each one is written into
+  your repository before the session ends.
+. Within one week, turn every finding into a change with a reason and a task
+  list, or into a written rejection with a reason.
+. Write down the two open questions you are least comfortable with, each with its
+  source, and bring them to the next lesson.
+
+Keep the three sentences. At the second milestone you will be asked what changed
+about them, and that comparison is the most honest progress measure the course
+has.

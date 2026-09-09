@@ -1,0 +1,246 @@
+= Reading project progress from changes — questions
+:topic-id: bridge-progress-and-milestones
+:icons: font
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Why is "we are 90 % done" not a progress measure?
+
+covers: lo-1
+
+.Answer
+[%collapsible]
+====
+Because it is self-reported against an estimate of the whole, and both halves are
+guesses. "90 %" means 90 % of the tasks somebody thought of, weighted by how long
+somebody guessed each would take. Neither the list nor the weights were ever
+checked.
+
+|===
+|The claim |What it rests on
+
+|"60 % done"
+|60 % of the tasks somebody thought of, weighted by guesses
+
+|"the backend is finished"
+|finished until the first requirement it cannot satisfy appears
+
+|"only testing left"
+|testing is where unfinished work becomes visible, not where it ends
+|===
+
+The common defect: nothing named is checkable by anybody else. That is also the
+repair — replace the number with statements somebody else can verify, and the
+conversation changes shape completely.
+
+The empirical version of the same point is old and reliable: the second 90 % of a
+project takes as long as the first.
+
+Points the answer must contain:
+
+* Self-reported against an estimate; both parts are guesses
+* Not checkable by anyone else
+* "Only testing left" mistakes where the unknown work surfaces
+* Replace with statements that can be verified
+====
+
+== How do you derive progress from archived changes?
+
+covers: lo-2
+
+.Answer
+[%collapsible]
+====
+By counting capabilities reached, per charter objective.
+
+[plantuml,q-progress-derivation,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "charter objective" as O
+rectangle "capabilities in specs/" as C
+rectangle "archived changes" as A
+rectangle "progress statement" as P
+O -down-> C : answered by
+C -down-> A : reached through
+A -right-> P
+@enduml
+----
+
+The report is a table, not a number:
+
+|===
+|Objective |Capabilities |What is missing
+
+|Trainers record attendance digitally
+|2 / 3
+|history view; spec exists, no change open
+
+|Members see their own bookings
+|0 / 2
+|blocked on authentication, still an open question
+
+|Monthly export
+|1 / 1
+|done, archived 2026-11-14
+|===
+
+Three properties make it better than a percentage: it names *what* rather than
+how much, it is falsifiable — run the scenario — and it is written in the
+client's vocabulary. The third column carries the reason, including admitted
+dependencies; a report without such a row usually had nobody look hard at it.
+
+Points the answer must contain:
+
+* Charter objective → capabilities → archived changes
+* Report as a table of capabilities done per objective, with what is missing
+* Falsifiable: any row can be checked by running a scenario
+* An unarchived change counts as not done
+====
+
+== What does a team's working rhythm predict?
+
+covers: lo-3
+
+.Answer
+[%collapsible]
+====
+The rest of the project. That is the only reason to look at it.
+
+|===
+|History |Prediction
+
+|steady commits, several authors
+|the team can absorb a surprise in April
+
+|three silent weeks, then forty commits
+|the next silence is also three weeks, and it will fall in April
+
+|one author for 90 % of the work
+|single point of failure; in June only one person can defend it
+
+|all commits after 22:00 before a review
+|the review is being prepared for, not passed
+|===
+
+None of these is a statement about character; they are patterns with predictive
+value. A milestone review is supposed to say something about what is *ahead*, not
+only to score what is behind.
+
+Which is why the useful question to a bursty team is not "why did you do nothing
+in November?" but "what will you do differently so February is not November?"
+
+Points the answer must contain:
+
+* The history shows how the work happened, the archive only what was finished
+* Steady and distributed predicts resilience; bursty predicts more bursts
+* Single-author history is a single point of failure
+* The point is the forecast, not the judgement
+====
+
+== What can the repository not show, and how is that covered?
+
+covers: lo-4
+
+.Answer
+[%collapsible]
+====
+Four things:
+
+* *Effort* — two hours of thinking that avoided a wrong design leave no trace; a
+  hundred formatting commits leave plenty.
+* *Understanding* — a team can archive changes an agent produced and be unable to
+  explain them. This is a genuine risk of working this way, and it is exactly why
+  the oral exam exists.
+* *Difficulty* — an archived change does not say whether it was trivial or took
+  three attempts.
+* *Contribution beyond commits* — whoever ran the interview, drew the model or
+  unblocked somebody appears nowhere.
+
+The first three are covered by the conversation: reviewers ask, and the answer
+either comes or does not. The fourth is covered by *making the non-code work into
+artefacts* — the interview protocol, the assumption list and the review findings
+are committed, and then they count.
+
+Being explicit about these limits is what keeps the measure trustworthy. A
+measure that claims to capture everything gets gamed; one that states its blind
+spots gets supplemented.
+
+Points the answer must contain:
+
+* Effort, understanding, difficulty, non-code contribution
+* Understanding is checked in the oral exam, not in the repository
+* Commit count is not effort
+* Non-code work is committed so that it counts
+====
+
+== How is individual responsibility shown without a separate report?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+From the record that the normal way of working produces anyway:
+
+* commits and their authors;
+* pull requests — who opened, who reviewed, who merged;
+* the change folder — who wrote the proposal, who wrote the tasks;
+* review findings that person wrote into another team's repository.
+
+That is enough for a defensible statement about an individual and it costs no
+extra paperwork, which is the point. A separate contribution report is written at
+the end, from memory, by whoever is most motivated to look good — it measures
+motivation to write reports.
+
+One caution: a record showing a single author for everything is a finding about
+the *team*, not only about its quiet members. Reviewing each other's pull requests
+is the cheapest fix, and it has to start early enough to be visible in the
+record.
+
+Points the answer must contain:
+
+* Commits, pull requests, change authorship, review findings
+* No separate contribution report; it is written from memory and biased
+* The evidence accumulates as a by-product of normal work
+* One-author records are a team finding with a team fix
+====
+
+== Why does an unarchived change count as not done?
+
+covers: lo-2, lo-1
+
+.Answer
+[%collapsible]
+====
+Because "done" has to mean something checkable, and archiving is the only moment
+that produces a checkable fact: the delta is folded into `specs/`, the tasks are
+ticked and the folder carries a date.
+
+Before that moment the change is an *intention*, and intentions are free. If
+in-flight work earned partial credit, the measure would immediately drift back
+towards self-report — a team could open twelve changes and claim twelve halves.
+
+There is a second reason, and it is the practical one. An unarchived finished
+change leaves the target state describing a system that does not exist. Anybody
+reading `specs/` is then reading a document that is wrong in an invisible
+direction, and the next change is planned against it.
+
+The rule is also unusually cheap to satisfy: archiving is one command, and the
+work is already done. Teams lose more visible progress to this than to anything
+else in the course.
+
+Points the answer must contain:
+
+* Archiving is what turns work into a dated, checkable fact
+* Partial credit for open changes reopens the door to self-report
+* Unarchived work leaves the target state describing a non-existent system
+* The rule is cheap: the work is done, only the archive step is missing
+====

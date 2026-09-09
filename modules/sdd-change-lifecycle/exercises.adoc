@@ -1,0 +1,150 @@
+= The life cycle of a change — exercises
+:topic-id: sdd-change-lifecycle
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Diagnose five projects from their folders
+
+kind: drill
+
+Each row is what a repository looks like in mid-January. Say what happened and
+what you would ask the team first.
+
+[cols="1,3",options="header"]
+|===
+|# |`changes/` and `archive/`
+
+|1
+|`changes/`: 9 folders, oldest from October. `archive/`: empty.
+
+|2
+|`changes/`: 1 folder. `archive/`: 6 folders, dated across October to January.
+ `specs/`: 4 capability files.
+
+|3
+|`changes/`: empty. `archive/`: 7 folders, all dated 12 January.
+
+|4
+|`changes/`: 2 folders. `archive/`: 5 folders. `specs/`: one file with two
+ sentences.
+
+|5
+|`changes/`: 1 folder, `tasks.md` fully ticked, still not archived. `archive/`:
+ 3 folders.
+|===
+
+.Solution
+[%collapsible]
+====
+. *Nothing was ever cut to a finishable size.* Nine open changes since October
+  means each one is bigger than a term. First question: "show me the smallest of
+  these and tell me what stops it from being archived today."
+. *The healthy picture.* Steady archiving, specs growing with it. First question
+  is not diagnostic at all — ask about the one open change and its next step.
+. *Reconstructed.* Seven changes cannot be completed on one day; the record was
+  written afterwards. First question: "what did you have on 12 January that you
+  did not have on 11 January?" — asked gently, because the answer is usually
+  "we found out we were supposed to do this".
+. *Archiving without folding in.* Five changes finished and the target state has
+  two sentences, so the deltas went nowhere. The process is being performed as a
+  ritual. First question: "where in `specs/` is the requirement from this
+  archived change?"
+. *Done but not archived* — the commonest and most repairable case. The work is
+  invisible while it sits there. First question: "what is the archive command
+  waiting for?" Usually the answer is "nothing, we forgot".
+
+Only case 3 is a problem of honesty. The rest are problems of habit, and habits
+are fixable in one review.
+====
+
+== Split three oversized changes
+
+kind: drill
+
+Each of these is too large. Give a split, and say why your line is defensible.
+
+. "Build the attendance feature."
+. "Migrate the application to the new database."
+. "Make the app usable on a phone."
+
+.Solution
+[%collapsible]
+====
+. Split *by scenario and capability*: (a) a trainer records attendance for a
+  session that is running; (b) attendance for a past session is refused; (c) a
+  member sees their own attendance history. Each is a sentence about the system,
+  each folds into `specs/` alone.
+. Split *by risk*: (a) the decision — which database, recorded in `design.md`,
+  with the schema for one capability migrated as proof; (b) the remaining
+  capabilities, one change each. The tempting split — "schema first, then code" —
+  is a layer split: after (a) the system does not work at all, so nothing can be
+  archived.
+. Not splittable as stated, because it is not an intention — it is a quality
+  goal without a subject. First make it a requirement with a scenario ("on a
+  360 px viewport the booking form is usable without horizontal scrolling"),
+  then split by page: booking form, session list, member profile.
+
+The recurring test: after each piece is archived, does `specs/` say something
+true about the system that a user could check? If not, the line is wrong.
+====
+
+== Decide the life-cycle response
+
+kind: drill
+
+For each, name the state transition and write the one sentence that goes with it.
+
+. The client says the statistics page is no longer wanted.
+. The spec says bookings close 24 hours ahead; the client meant 24 hours after
+  the *previous* session ends.
+. `BookingService` throws a null pointer on an empty group.
+. A change has had no commit since November; the team says "we will get to it".
+
+.Solution
+[%collapsible]
+====
+. *Withdrawn.* "Withdrawn 2027-01-12: the client dropped the statistics page
+  after the January review; no replacement requirement." Into the archive, marked
+  withdrawn.
+. *Back to proposed.* "The closing rule was misunderstood; the deadline is
+  relative to the previous session, not to the clock." Then rewrite the spec
+  delta and re-plan the tasks — do not patch tasks onto a spec that now says the
+  wrong thing.
+. *No transition.* An ordinary bug inside *in progress*. Fix it; if the spec had
+  no scenario for the empty group, add one — that is a spec defect, and it is
+  worth noticing separately.
+. *Withdraw or move — the team chooses, today.* "Untouched since November; either
+  a task is ticked this week or the change is withdrawn." Two months of no
+  activity is a decision that has not been written down.
+
+Case 3 is the one people over-escalate, and case 4 the one they under-escalate.
+Both mistakes come from treating the life cycle as paperwork rather than as a
+description of where the work actually is.
+====
+
+== Walk your own changes through the life cycle
+
+kind: project
+
+In your project repository:
+
+. List every folder in `changes/` with the date of its last commit. For each,
+  name its state and the condition that is blocking the next transition.
+. Archive everything that is done. If a change is done and something prevents
+  archiving, write down what — that sentence is usually the real finding.
+. Withdraw everything that is dead, one sentence each, into the archive.
+. Pick the largest remaining change and split it along a line where each half
+  folds into `specs/` alone.
+. Open `specs/` and check the reverse direction: for every capability file, name
+  the archived change that put it there. Anything you cannot trace was edited
+  directly — record that as a finding for the milestone review.
+
+Bring the list from step 1 to the review. It is the review, more or less.

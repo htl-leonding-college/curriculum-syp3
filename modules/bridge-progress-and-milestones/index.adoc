@@ -1,0 +1,232 @@
+= Reading project progress from changes
+:topic-id: bridge-progress-and-milestones
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Explain why percentage complete is not a progress measure
+* [[lo-2]] Derive project progress from archived changes against charter
+  objectives
+* [[lo-3]] Read the working rhythm of a team from its history, and say what it
+  predicts
+* [[lo-4]] Name what the repository cannot show, and how that is covered
+* [[lo-5]] Show individual responsibility from the record without a separate
+  report
+
+== The oldest broken measure
+
+"We are 90 % done" has been the standard answer in software projects for fifty
+years, and the second 90 % takes as long as the first. The reason is structural,
+not moral: the number is *self-reported against an estimate of the whole*, and
+both halves of that are guesses.
+
+[cols="1,2",options="header"]
+|===
+|The claim |What it actually rests on
+
+|"60 % done"
+|60 % of the tasks somebody thought of, weighted by how long somebody guessed
+ they would take
+
+|"the backend is finished"
+|finished until the first requirement it cannot satisfy is discovered
+
+|"only testing left"
+|testing is where the unfinished work becomes visible, not where it ends
+|===
+
+What all three share: nothing named is *checkable by somebody else*. Replace them
+with a measure that is, and the conversation changes shape.
+
+== Progress as a countable thing
+
+An archived change is a fact: it exists, it is dated, its tasks are ticked, and
+its delta is in the target state. Counting those against the charter objectives
+gives a progress statement that nobody has to be trusted for.
+
+[plantuml,progress-derivation,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+rectangle "charter objective\n\"trainers record attendance\ndigitally\"" as O
+rectangle "capabilities in specs/\nattendance, session, member" as C
+rectangle "archived changes\n5 archived, 2 open" as A
+rectangle "progress statement\n\"attendance: recording and\nrefusal done; history open\"" as P
+
+O -down-> C : "answered by"
+C -down-> A : "reached through"
+A -right-> P
+@enduml
+----
+
+The statement at the bottom is longer than "60 %" and worth more than any number,
+for three reasons: it names *what* is done rather than how much, it is
+falsifiable — run the scenario — and it is written in the client's vocabulary
+rather than the team's.
+
+The honest form of a progress report in this course is therefore a table:
+
+[cols="2,1,2",options="header"]
+|===
+|Charter objective |Capabilities done / total |What is missing
+
+|Trainers record attendance digitally
+|2 / 3
+|the history view; the spec exists, no change is open yet
+
+|Members see their own bookings
+|0 / 2
+|not started; depends on authentication, which is an open question
+
+|The club exports a monthly list
+|1 / 1
+|done, archived 2026-11-14
+|===
+
+Note that the third column carries the *reason*, and that one row admits a
+dependency on an unresolved question. A report with no such row is usually a
+report nobody looked hard at.
+
+== Rhythm, and what it predicts
+
+The commit history says something the archive does not: *how* the work happened.
+
+[cols="1,2",options="header"]
+|===
+|What the history shows |What it predicts
+
+|steady commits across weeks, several authors
+|the team can absorb a surprise in April
+
+|nothing for three weeks, then forty commits
+|the next quiet stretch is also three weeks, and it will land in April
+
+|one author for 90 % of the work
+|a single point of failure, and a defence in June that only one person can give
+
+|all commits after 22:00 in the last three days before a review
+|the review is being prepared for, not passed
+|===
+
+None of these is a rule about character. They are patterns with a predictive
+value, which is the only reason to look at them: a milestone review is supposed
+to say something about *the rest* of the project, not just about the part already
+behind you.
+
+The useful question to a team with a bursty history is not "why did you not work
+in November?" but "what will you do differently so that February is not
+November?"
+
+== What the repository cannot show
+
+Being honest about the limits is what keeps the measure trustworthy.
+
+* *Effort.* Two hours of thinking that prevented a wrong design leave no trace,
+  and a hundred commits of formatting leave a lot.
+* *Understanding.* A team can archive changes an agent produced and not be able
+  to explain them. This is a real risk of the way this course works, and it is
+  why the oral exam exists.
+* *Difficulty.* An archived change does not say whether it was trivial or took
+  three attempts.
+* *Contribution beyond commits.* Whoever ran the interviews, drew the model on a
+  whiteboard or unblocked somebody else appears nowhere.
+
+Two of those are covered by the milestone conversation — the reviewers ask, and
+the answer either comes or does not. Contribution is covered by making the
+non-code work into artefacts too: the interview protocol, the assumption list and
+the review findings are committed, and then they count.
+
+== Responsibility per person, without a separate report
+
+The charter names who is responsible for what. The record shows it, if the work
+was done in the normal way:
+
+* commits and their authors;
+* pull requests: who opened, who reviewed, who merged;
+* the change folder: who wrote the proposal, who wrote the tasks;
+* review findings written by that person into another team's repository.
+
+That is enough for a defensible statement about an individual, and it costs no
+extra paperwork — which is the point. A separate contribution report is written
+at the end, from memory, by whoever is most motivated to look good.
+
+CAUTION: A record showing one author for everything is a finding *about the
+team*, not only about the quiet members. Reviewing each other's pull requests is
+the cheapest available fix, and it has to start early enough to be visible.
+
+== Decisions
+
+* Progress is reported as capabilities done per charter objective, never as a
+  percentage.
+* An unarchived change counts as not done. There is no partial credit for
+  in-flight work.
+* The progress table names, for every incomplete objective, what is missing and
+  why.
+* Individual responsibility is read from commits, pull requests and change
+  authorship. No separate contribution report is written.
+* Non-code work — interviews, decisions, review findings — is committed, so that
+  it can count.
+* A team whose history shows a single author is asked to distribute reviews, and
+  it is checked at the next milestone.
+
+== Pitfalls
+
+* Reporting a percentage. It cannot be checked and it is wrong in a predictable
+  direction.
+* Counting open changes as progress. They are intentions, and intentions are
+  free.
+* Reading the commit count as effort. Formatting commits are cheap and thinking
+  is invisible.
+* Hiding a dependency on an open question. It does not go away, and it surfaces
+  when it is most expensive.
+* Leaving non-code work uncommitted and then complaining that it does not count.
+* Treating a one-author history as a personal problem of the others. It is a team
+  problem with a team fix.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Fortschritt
+|progress
+
+|Fertigstellungsgrad
+|percentage complete
+
+|Meilenstein
+|milestone
+
+|Nachweis
+|evidence
+
+|Arbeitsrhythmus
+|working rhythm
+
+|Beitrag, Eigenleistung
+|contribution
+
+|Abhängigkeit
+|dependency
+|===
+
+== Further reading
+
+* Module `sdd-change-lifecycle` — the states behind the count
+* Module `review-milestone-1` — the session in which this reading is done
+* Module `bridge-charter-to-specs` — where the objectives come from

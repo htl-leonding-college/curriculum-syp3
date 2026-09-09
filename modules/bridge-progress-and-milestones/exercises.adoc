@@ -1,0 +1,147 @@
+= Reading project progress from changes — exercises
+:topic-id: bridge-progress-and-milestones
+:icons: font
+:source-highlighter: rouge
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Turn a percentage report into a progress table
+
+kind: drill
+
+A team reports:
+
+____
+We are about 70 % finished. The backend is basically done, the frontend is
+coming along, and then only testing is left. Login still needs a bit of work.
+____
+
+Their charter has three objectives: trainers record attendance digitally,
+members see their own bookings, the club exports a monthly list. Their archive
+contains `record-attendance`, `refuse-past-sessions` and `monthly-export`; open
+in `changes/` are `attendance-history` and `member-login`.
+
+Rewrite it as a progress table.
+
+.Solution
+[%collapsible]
+====
+[cols="2,1,2",options="header"]
+|===
+|Charter objective |Capabilities done / total |What is missing
+
+|Trainers record attendance digitally
+|2 / 3
+|the history view — `attendance-history` is open, no tasks ticked
+
+|Members see their own bookings
+|0 / 2
+|blocked: `member-login` is open, and authentication is still an open question
+
+|The club exports a monthly list
+|1 / 1
+|done, archived
+|===
+
+Three things the original hid. "The backend is basically done" describes a layer,
+not an objective, and layers do not appear in the table at all. "Only testing
+left" has become the visible fact that one objective has nothing archived
+against it. And "login still needs a bit of work" turns out to be the thing
+blocking a whole objective — the most important sentence in the report, delivered
+as an afterthought.
+
+The rewritten table is also shorter to defend: every row can be checked in two
+minutes.
+====
+
+== Read four histories
+
+kind: drill
+
+Say what each predicts, and what you would ask the team.
+
+. 180 commits, 4 authors, roughly even, spread across 14 weeks.
+. 60 commits, 1 author, spread across 14 weeks.
+. 200 commits, 4 authors, 170 of them in the last 6 days.
+. 90 commits, 4 authors, even — but no pull request and no review comment.
+
+.Solution
+[%collapsible]
+====
+. *Healthy and resilient.* Ask nothing about rhythm; spend the time on content.
+. *Single point of failure.* The prediction is about June: one person can defend
+  the work. Ask: "who else can explain `BookingService`, and how will that be
+  true by February?" The fix is pairing and reviews, and it must start now to be
+  visible later.
+. *Bursty.* Predicts that the next quiet stretch is also a week and will land
+  where it hurts. Ask: "what will make February different from January?" Also
+  worth checking whether the archive dates match the commit dates — if everything
+  was archived in those six days too, the record was reconstructed.
+. *Even work, no review.* Four people are writing code nobody else reads, which
+  is a single point of failure four times over rather than a healthy team. Ask:
+  "who has read the code they did not write?" The fix is cheap and immediate.
+
+Case 4 is the one that looks fine in a commit graph and is not. Distribution of
+*authorship* is not distribution of *knowledge*.
+====
+
+== Decide what the repository can settle
+
+kind: drill
+
+For each question at a review, say whether the repository answers it, and if not,
+what does.
+
+. Is the monthly export finished?
+. Did Lisa contribute?
+. Was this change difficult?
+. Do you understand the code that the agent wrote for you?
+. Has the direction changed since the charter?
+. How many hours did you work?
+
+.Solution
+[%collapsible]
+====
+. *Yes.* Archived change, dated, delta in `specs/`, and a scenario you can run.
+. *Partly.* Commits, pull requests, change authorship and review findings she
+  wrote. If she ran the interviews and the protocol is committed, that counts
+  too; if it is not committed, it does not — which is an argument for committing
+  it, not for a separate report.
+. *No.* The archive is silent on difficulty. Ask them.
+. *No*, and this is the limitation that matters most in this course. Only a
+  conversation settles it — which is what the oral exam is for.
+. *Yes.* Compare the charter objectives with the capabilities in `specs/`. A
+  drift shows up as a capability nobody can attach to an objective.
+. *No*, and the repository should not be read as if it could. Commit count is not
+  effort: formatting is cheap, thinking leaves no trace.
+
+The pattern: the repository settles *what is true about the system*. It does not
+settle what happened inside anybody's head, and pretending otherwise is how
+metrics get gamed.
+====
+
+== Write the progress report for your own project
+
+kind: project
+
+. Build the progress table: one row per charter objective, capabilities done over
+  total, and the reason for every incomplete one. Take "done" strictly — archived
+  only.
+. Add one row that admits a dependency on something you have not resolved. If you
+  genuinely have none, write down why you believe that, because it is unusual.
+. Produce the rhythm picture: commits per week per author, from `git log`. Write
+  one sentence on what it predicts for the rest of the year.
+. For every team member, list the evidence of their responsibility — commits,
+  reviews, change authorship, committed non-code work. Where somebody's
+  contribution is real but invisible, fix the invisibility: commit the artefact.
+. Bring the table and the sentence to the next milestone review instead of a
+  status report.
+
+The rhythm sentence is the one to keep. Comparing it against what actually
+happened is the cheapest forecasting lesson the course offers.

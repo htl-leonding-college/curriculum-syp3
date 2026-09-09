@@ -1,0 +1,241 @@
+= The life cycle of a change
+:topic-id: sdd-change-lifecycle
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:imagesdir: images
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Learning outcomes
+
+* [[lo-1]] Name the states of a change and the condition for each transition
+* [[lo-2]] Explain what archiving does to the target state and why it is the
+  point of the whole loop
+* [[lo-3]] Decide what to do with a change that turns out to be wrong
+* [[lo-4]] Recognise a change that is too large, and split it along a defensible
+  line
+* [[lo-5]] Read the state of a project from its `changes/` and `archive/`
+  folders
+
+== States, not steps
+
+The previous lesson looked at the artefacts as documents. This one looks at them
+in time: a change is a small object with a *life cycle*, and every transition has
+a condition attached.
+
+[plantuml,change-lifecycle,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+
+[*] --> proposed : reason written,\nboundary drawn
+proposed --> specified : requirements and\nscenarios exist
+specified --> planned : tasks with\nverifications
+planned --> inProgress : work starts
+inProgress --> done : every task ticked,\nchecks green
+done --> archived : delta folded into specs/
+archived --> [*]
+
+inProgress --> proposed : reason no longer holds
+specified --> [*] : withdrawn
+@enduml
+----
+
+The condition on each arrow is the useful part. "We are working on it" is not a
+state; *specified* is, because there is a document you can point at. That
+property is what lets a milestone review be a five-minute conversation rather
+than an interrogation.
+
+Note the two arrows going backwards. A change may return to *proposed* when its
+reason stops holding, and it may be *withdrawn* entirely. Both are normal, and
+both are better outcomes than a change that is quietly abandoned in place.
+
+== What archiving actually does
+
+Archiving is the only transition that changes something outside the change
+itself, and it is the point of the whole loop.
+
+[plantuml,archiving,svg]
+----
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+rectangle "specs/booking/spec.md\n(before)\n\n- a member can book\n- a booking can be cancelled" as B
+rectangle "changes/refuse-full-sessions/\nspecs/booking/spec.md\n\nADDED:\n- a full session refuses" as D
+rectangle "specs/booking/spec.md\n(after)\n\n- a member can book\n- a booking can be cancelled\n- a full session refuses" as A
+
+B -right-> A
+D -down-> A : folded in
+@enduml
+----
+
+Three consequences worth stating plainly:
+
+* *The target state grows; it does not accumulate history.* After archiving,
+  `specs/` says only what is true. Why it became true is in the archive.
+* *The archive is dated evidence.* "This change is archived, on this date, with
+  these tasks ticked" is a fact. "We worked on booking" is not.
+* *Nothing is written twice.* The requirement moved; it was not copied. A fact
+  that exists in two places is a fact that will soon exist in two versions.
+
+An unarchived change that is finished is the commonest form of invisible work in
+student projects. The work happened, the code is there, and the target state
+still describes a system that does not exist.
+
+== A change that turns out to be wrong
+
+It will happen, and how a team handles it is more diagnostic than how it handles
+success. Three cases, three different answers:
+
+[cols="1,2",options="header"]
+|===
+|Situation |What to do
+
+|The *reason* no longer holds — the client changed their mind, the problem went
+ away
+|Withdraw it. Move it to the archive marked as withdrawn, with one sentence on
+ why. It is not a failure; it is a decision, and undocumented decisions are the
+ expensive kind.
+
+|The *requirement* was wrong, but something is needed here
+|Back to *proposed*. Rewrite the spec delta, then re-plan. Do not patch tasks
+ onto a spec that no longer says the right thing.
+
+|The *implementation* was wrong, the requirement stands
+|Stay in *in progress*. This is an ordinary bug, not a life-cycle event.
+|===
+
+What never helps: leaving it open. A change that nobody has touched for six weeks
+is not "in progress" — it is a decision that has not been written down. At the
+milestone review it will be counted as nothing either way, so writing it down
+costs nothing and buys clarity.
+
+== Splitting a change
+
+A change is *one intention*, reviewable in one sitting, archivable as a whole.
+When it is not, it has to be split — and the line matters.
+
+[cols="1,1",options="header"]
+|===
+|Good split lines |Bad split lines
+
+|by capability — booking, then attendance
+|by layer — "the backend change", then "the frontend change"
+
+|by scenario — the happy path, then the refusals
+|by person — "Marco's part" and "Lisa's part"
+
+|by risk — the decided part now, the open question later
+|by time — "week one" and "week two"
+|===
+
+The right-hand column all share one defect: neither half is *archivable alone*.
+A backend-only change leaves the target state describing behaviour no user can
+reach; a change cut by person leaves the record describing the team rather than
+the system.
+
+The practical signal that a change is too large: the task list is thirty items
+and the first ten have nothing to do with the last ten. Splitting is cheap;
+unpicking a half-finished change is not.
+
+== Reading a project from its folders
+
+This is the skill the milestone review depends on, and it takes about two
+minutes.
+
+[cols="1,2",options="header"]
+|===
+|What you see |What it means
+
+|`archive/` empty in December
+|nothing has been finished; possibly a lot has been done
+
+|twelve changes open, none archived
+|no change was ever cut to a reviewable size
+
+|`archive/` full, `specs/` thin
+|changes are being archived without folding their delta in — the process is
+ being performed, not used
+
+|one change open, several archived, tasks ticked with dates
+|the healthy picture
+
+|changes archived in a single burst last week
+|the record was reconstructed afterwards; it is a story, not evidence
+|===
+
+The last row is worth dwelling on, because it is the one students are tempted
+into. A record written in June, dated June, describing work from November, tells
+the reader exactly one thing: that the process was not used. The dates are the
+evidence, and they cannot be back-filled honestly.
+
+== Decisions
+
+* Every piece of work runs through a change, including documentation work.
+* A change is archived as soon as it is done, not collected for the end of term.
+  An unarchived finished change counts as unfinished.
+* A change whose reason no longer holds is withdrawn in writing, with one
+  sentence of justification.
+* Changes are split by capability, scenario or risk — never by layer, person or
+  week.
+* No change stays open without activity for longer than one milestone period.
+  Either it moves or it is withdrawn.
+* The state of a change is what its artefacts show, not what somebody says in a
+  meeting.
+
+== Pitfalls
+
+* Finishing work and not archiving it. The target state then describes a system
+  that does not exist, and the work is invisible at the review.
+* Leaving a dead change open because withdrawing feels like admitting failure.
+  It is the opposite: withdrawing is the documented decision.
+* Splitting by layer, so that neither half can be archived alone.
+* Reconstructing the record at the end of term. The dates give it away, and it
+  turns an assessment of the work into a question about honesty.
+* Editing `specs/` directly instead of through a change. The target state then
+  has an origin nobody can trace.
+* Treating "in progress" as a place where changes live. It is a state with an
+  exit condition.
+
+== Terminology
+
+[cols="1,1",options="header"]
+|===
+|Deutsch |English
+
+|Lebenszyklus
+|life cycle
+
+|Zustand, Zustandsübergang
+|state, transition
+
+|archivieren
+|to archive
+
+|zurückziehen
+|to withdraw
+
+|Zielzustand
+|target state
+
+|Nachweis, Beleg
+|evidence
+
+|Schnitt, Aufteilung
+|split, cut
+|===
+
+== Further reading
+
+* Module `sdd-openspec-artifacts` — the same objects as documents
+* Module `openspec-hands-on` — the commands that move a change between states
+* Module `bridge-progress-and-milestones` — what the archive is worth at a review
