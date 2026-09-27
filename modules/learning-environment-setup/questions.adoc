@@ -224,6 +224,12 @@ Then look at what is missing and run the script again:
 It continues instead of restarting, because that is what idempotent means — the
 steps that succeeded are detected and skipped.
 
+Note what the run does *not* do: stop at the first failure. A failed step is
+recorded and the rest continues, so one broken download does not cost you the
+other eleven tools. What stayed open is listed under `== Bilanz` at the end, and
+the exit code is non-zero — read that list rather than scrolling back through
+fifteen minutes of output.
+
 Two things not to do. Do not reinstall the system: an aborted script run is not a
 broken system. And do not put `sudo` in front of the whole script — it asks for
 elevation exactly where it needs it, and running the lot as root leaves
@@ -234,5 +240,6 @@ Points the answer must contain:
 
 * Run it again — it continues rather than restarting
 * `--check` shows what is still missing
+* The run does not stop at the first failure; `== Bilanz` lists what stayed open
 * Look at the actual error first: network, apt lock, missing disk space
 ====

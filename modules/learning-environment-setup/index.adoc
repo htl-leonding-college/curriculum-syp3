@@ -129,6 +129,13 @@ fifteen minutes across a dozen failure sources — network, `apt` lock, aborted
 download — so it *will* fail at some point. Every step therefore checks first
 whether the tool is already there.
 
+A single failure does not end the run. The step is recorded, the remaining ones
+continue, and the closing `== Bilanz` lists what stayed open; the exit code is
+then non-zero, because otherwise "it ran through" would say nothing. Steps that
+have no package to install from — the JetBrains Toolbox on Linux — are reported
+as `[manuell]` rather than `[install]`, so a second run does not claim an
+installation that never happens.
+
 [source,bash]
 ----
 git clone https://github.com/htl-leonding-college/klassen-setup.git
