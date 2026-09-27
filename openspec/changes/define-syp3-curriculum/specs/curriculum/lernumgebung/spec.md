@@ -16,18 +16,22 @@ aufsetzt, MUST NOT als gleichwertig gelten.
 - **THEN** ist die Umgebung als Ursache ausgeschlossen, weil alle dieselbe verwenden
 
 ### Requirement: Die Installation wird risikoarm vorbereitet
-Vor jeder Veränderung an der Partitionierung SHALL nachgewiesen sein, dass das Gerät
-das Zielsystem startet. Die Wiederherstellungsschlüssel bestehender
+Vor jeder Veränderung an der Partitionierung SHALL die Hardware-Checkliste vollständig
+abgearbeitet sein. Die Wiederherstellungsschlüssel bestehender
 Festplattenverschlüsselung MUST vorher gesichert sein.
 
-#### Scenario: Gerät startet das Zielsystem nicht
-- **WHEN** ein Gerät den Probestart nicht besteht
-- **THEN** wird die Partitionierung nicht durchgeführt, und der Schüler arbeitet
-  übergangsweise vom Wechselmedium
+#### Scenario: Ein Punkt der Checkliste ist offen
+- **WHEN** ein Gerät einen Punkt der Checkliste nicht erfüllt
+- **THEN** wird die Partitionierung nicht durchgeführt, bis der Punkt geklärt ist
 
 #### Scenario: Verschlüsselung fordert den Wiederherstellungsschlüssel
 - **WHEN** das Gerät nach der Änderung den Schlüssel verlangt
 - **THEN** liegt er gesichert vor, und kein Datenverlust entsteht
+
+#### Scenario: Gerät läuft unter Linux nicht vollständig
+- **WHEN** sich nach der Installation zeigt, dass WLAN oder Grafik nicht laufen
+- **THEN** bleibt die bestehende Windows-Partition als Arbeitsgerät erhalten, und das
+  Gerät geht ins Labor — dieses Restrisiko ist bewusst angenommen (D7)
 
 ### Requirement: Hardware-Voraussetzungen sind vorab geprüft
 Vor der Einrichtung SHALL geprüft sein, dass Arbeitsspeicher, freier Plattenplatz und

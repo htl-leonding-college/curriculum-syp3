@@ -10,20 +10,21 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-== Boot from a live USB and record the result
+== Check your machine against the checklist
 
 kind: drill
 
-Write an Ubuntu 26.04 live USB with persistence, boot your machine from it and
-record: does it boot, does wifi work, does the display run at native resolution,
-does the trackpad work.
+Go through the seven items of "Before you touch the disk" for your own machine
+and record for each one: done, or what is still missing. Amount of RAM, free
+disk space, virtualisation in the BIOS, fast startup, SATA mode, Secure Boot,
+and where the BitLocker recovery key is kept.
 
 .Solution
 [%collapsible]
 ====
-The value is the record, not the outcome. A machine that boots the live system
-cleanly will install cleanly; one that does not is a case for the lab — before
-the partition table is changed, not after.
+There is no single right answer — the point is the record. Every open item is
+your homework before the installation. The two that cost the most time later are
+the recovery key and free space below 100 GB.
 ====
 
 == Prove that the setup script is idempotent

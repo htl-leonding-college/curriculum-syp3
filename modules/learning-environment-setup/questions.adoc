@@ -48,11 +48,9 @@ table has changed some of them can no longer be done at all.
 |otherwise third-party kernel modules refuse to load
 |===
 
-And before all of them: the *live USB with persistence*. It is not a fallback, it
-is a test. It boots independently of the Windows state, changes no partition, and
-proves in fifteen minutes that this particular hardware runs Linux — wifi,
-graphics, disk. Doing this after the partition change means finding out that it
-does not, with no way back.
+The order within the list matters as much as the list itself. The recovery key
+comes first because it is the only item that cannot be produced afterwards —
+once a boot change has triggered a BitLocker prompt, there is no way back to it.
 
 Points the answer must contain:
 
@@ -60,7 +58,6 @@ Points the answer must contain:
 * ≥ 100 GB free, ≥ 8 GB RAM
 * Virtualisation on in the BIOS — otherwise no containers, no minikube
 * Fast startup off, SATA on AHCI, Secure Boot handled
-* Live USB boot test proves the hardware runs Linux before anything is changed
 ====
 
 == Why not WSL2?

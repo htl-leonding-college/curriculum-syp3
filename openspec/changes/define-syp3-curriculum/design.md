@@ -169,9 +169,15 @@ machine" verschwindet als Fehlerklasse.
 *Alternative:* WSL2. Verworfen — WSL2 sitzt auf Windows und erbt dessen Fehlkonfiguration
 (BIOS-Virtualisierung, Hyper-V-Features, Antivirus). Bei kaputtem Windows kein Fallback.
 
-*Überbrückung* statt Fallback: Ubuntu-Live-USB mit Persistenz. Bootet unabhängig vom
-Windows-Zustand, braucht keine Partitionsänderung und beweist vorab, dass die Hardware
-Linux bootet.
+*Kein vorgeschalteter Live-USB-Test* (Nachtrag 2026-09-27). Ein Ubuntu-Live-USB mit
+Persistenz würde vor der Partitionsänderung beweisen, dass die Hardware Linux bootet —
+WLAN, Grafik, Platte. Der Stick muss aber vorher erstellt werden, und genau das leisten
+erfahrungsgemäß zu wenige, sodass die Maßnahme ihre Wirkung ohnehin nicht entfaltet.
+
+*Angenommenes Restrisiko:* Ein Gerät, dessen WLAN- oder Grafikchip unter Linux nicht
+läuft, fällt erst nach der Partitionierung auf. Getragen wird das durch die
+Hardware-Checkliste, die jeden vorab prüfbaren Punkt abdeckt, durch den
+Troubleshooting-Puffer in U2 und dadurch, dass die Windows-Partition bestehen bleibt.
 
 Ergänzungen zur Installationsanleitung: BitLocker-Recovery-Key **vorher** sichern,
 Windows-Schnellstart deaktivieren, SATA-Modus auf AHCI prüfen (Intel RST), Secure Boot
@@ -289,9 +295,9 @@ am Jahresende (D9).
 U1   VORSTELLUNGSEINHEIT (3 UE)
      Überblick Stoffgebiet (PlantUML-Mindmap), Organisation, Bewertung,
      Werkzeugkette (warum Linux, warum git, warum Doku als Code),
-     Linux: Live-USB-Test -> Installation -> setup.sh,
+     Linux: Hardware-Checkliste -> Installation -> setup.sh,
      Hardware-Checkliste (RAM, Platz, Virtualisierung, Recovery-Key)
-     HÜ: Live-USB testen, dann installieren
+     HÜ: Checkliste abarbeiten, dann installieren
 
 U    THEORIE (1 UE)                    PRAXIS (2 UE)                HÜ
 --   --------------------------------  ---------------------------  --------------
@@ -355,7 +361,7 @@ statt zu programmieren.
 
 | Risiko | Mitigation |
 |---|---|
-| Linux-Installation scheitert bei einzelnen Schülern und blockiert die Praxis ab U2 | Live-USB-Test **vor** dem Partitionieren; 30 min Troubleshooting-Puffer in U2; `setup.sh` reduziert Folgefehler; Recovery-Key-Pflicht in der Checkliste |
+| Linux-Installation scheitert bei einzelnen Schülern und blockiert die Praxis ab U2 | Hardware-Checkliste **vor** dem Partitionieren; 30 min Troubleshooting-Puffer in U2; `setup.sh` reduziert Folgefehler; Recovery-Key-Pflicht in der Checkliste; die Windows-Partition bleibt als Arbeitsgerät bestehen |
 | specs driften mit dem Ist-Stand, Beurteilbarkeit geht verloren | Projektauftrag eingefroren als Beurteilungsanker; optionaler git-Tag `baseline-v1`; `changes/archive/` als Änderungsnachweis |
 | openspec ist ein junges Tool und ändert sich | Prinzip (SDD) ist Lerngegenstand, Tool ist die aktuelle Instanz; Curriculum-Struktur benennt das Prinzip, nicht das Kommando |
 | Fragenkatalog / Matura fragt klassische Schätzverfahren ab | 10 Minuten Namenskenntnis und Einordnung im Governance-Block |

@@ -45,8 +45,8 @@ abgelegt werden.
   Vorstellungseinheit und U26–U30 Reserve. Die Reserve liegt am Ende und ist mit dem
   verzichtbarsten Inhalt (minikube) gefüllt, damit Ausfälle automatisch das Richtige treffen.
 - **Lernumgebung**: Ubuntu 26.04 LTS als Dual-Boot-Partition (≥ 100 GB) oder macOS.
-  WSL2 ist kein Fallback, da es die Windows-Fehlkonfiguration erbt; Überbrückung per
-  Ubuntu-Live-USB mit Persistenz. Klassenweites `setup.sh` (apt/brew) als
+  WSL2 ist kein Fallback, da es die Windows-Fehlkonfiguration erbt; vor der
+  Partitionierung steht die Hardware-Checkliste. Klassenweites `setup.sh` (apt/brew) als
   versionierter Standard und späterer Anknüpfungspunkt für den Docker-Block.
 - **asciidoctor + GitHub Actions + GitHub Pages werden in den git-Block integriert.**
   Projektdokumentation entsteht als Nebenprodukt; CI bekommt einen echten Anlass;

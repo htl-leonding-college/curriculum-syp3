@@ -83,26 +83,26 @@ arrow { LineColor #5A6B7D; FontColor #21303F }
 </style>
 skinparam shadowing false
 start
-:write a live USB with persistence; <<work>>
-:boot from it; <<work>>
-if (does the hardware boot Linux?) then (yes)
-  :back up the recovery key; <<key>>
+:work through the checklist above; <<work>>
+:back up the recovery key; <<key>>
+if (every item ticked?) then (yes)
   :shrink the Windows partition; <<key>>
   :install Ubuntu next to Windows; <<ok>>
   :run setup-tools.sh; <<ok>>
   :run setup-identity.sh; <<ok>>
   stop
 else (no)
-  :keep working from the live USB; <<bad>>
-  :bring the machine to the lab; <<bad>>
+  :settle the open item first; <<bad>>
+  :bring the machine to the lab if it cannot be settled; <<bad>>
   stop
 endif
 @enduml
 ----
 
-The live USB with persistence is not a fallback, it is a *test*. It boots
-independently of the Windows state, needs no partition change, and proves in
-fifteen minutes that this hardware runs Linux at all.
+The checklist is the gate, and it is worth its fifteen minutes: every item on it
+can still be settled cheaply before the partition table changes and becomes
+expensive afterwards. The recovery key comes first because it is the only one
+that cannot be produced later.
 
 == The class setup
 
@@ -176,15 +176,15 @@ to be a version difference.
 == Decisions
 
 * Ubuntu 26.04 LTS as a dual-boot partition (≥ 100 GB) or macOS. No WSL2.
-* The live USB test happens *before* any partition change.
+* The checklist is worked through *before* any partition change.
 * The toolchain comes from `klassen-setup`, not from personal preference.
   Adding a tool means adding it there, for everyone.
 * No credentials in a repository. The private SSH key never leaves the machine.
 
 == Pitfalls
 
-* Installing first and testing later. If the hardware will not boot Linux you
-  want to know that before the partition table changed.
+* Starting the installer with items on the checklist still open. Every one of
+  them is minutes now and an afternoon afterwards.
 * Skipping the recovery key. A BitLocker prompt after a boot change without the
   key means the Windows installation is gone.
 * Running `setup-tools.sh` with `sudo` in front. It asks for elevation where it

@@ -29,7 +29,7 @@
 ## 3. Lernumgebung vorbereiten (D7)
 
 - [x] 3.1 Hardware-Checkliste erstellen: RAM >= 8 GB (16 empfohlen), Partition >= 100 GB, Virtualisierung im BIOS, SATA-Modus AHCI, Secure Boot, Windows-Schnellstart aus, BitLocker-Recovery-Key vorher gesichert; Prüfung: Liste deckt jeden Punkt aus D7 ab und ist vor U1 verteilbar
-- [x] 3.2 Ablauf Live-USB mit Persistenz -> Installationstest -> Partitionierung beschreiben; Prüfung: der Hardwaretest steht vor jedem Schritt, der die Platte verändert
+- [x] 3.2 Ablauf Checkliste -> Recovery-Key sichern -> Partitionierung beschreiben; Prüfung: jeder vorab prüfbare Punkt steht vor dem ersten Schritt, der die Platte verändert (Nachtrag 2026-09-27: der vorgeschaltete Live-USB-Test ist entfallen, siehe D7)
 - [x] 3.3 Abgrenzung zu WSL2 schriftlich festhalten (kein Fallback, erbt die Windows-Fehlkonfiguration); Prüfung: Begründung steht dort, wo Schüler nach WSL2 fragen werden
 - [x] 3.4 Verweis auf `klassen-setup` statt eigener Werkzeugliste; Prüfung: die Lernumgebungs-Unterlage nennt kein Werkzeug, das nicht in `versions.env` gepinnt ist
 
