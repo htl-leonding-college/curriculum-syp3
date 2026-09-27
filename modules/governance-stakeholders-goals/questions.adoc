@@ -10,50 +10,47 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-== Who counts as a stakeholder, and which four types should you look for?
+== What is a stakeholder, and how do internal and external ones differ?
 
 covers: lo-1
 
 .Answer
 [%collapsible]
 ====
-A stakeholder is *anyone affected by the project or able to affect it*. Note both
-halves — people who cannot influence the project still count, and people with no
-interest in it still count if they hold a veto.
+A stakeholder is a person, a group or an organisation that is *affected by the
+project, can affect it, or believes itself affected by it* (ÖNORM ISO 21500).
+All three parts count: someone with no influence is still a stakeholder, and
+someone who only believes they are affected will act as if they were.
 
-[cols="1,2,2",options="header"]
+[cols="1,2",options="header"]
 |===
-|Type |Example in a school project |What they can do to you
+| |Examples in a school project
 
-|User
-|the trainer who records attendance
-|refuse to use it if it is slower than paper
+|*intern* — inside the organisation running the project
+|the team, the supervising teacher, the school's IT operations
 
-|Client
-|the club, the teacher, the school
-|change what "finished" means
-
-|Operator
-|whoever runs the server afterwards
-|refuse to host it
-
-|Affected party
-|members whose data is stored
-|data protection, and rightly so
+|*extern* — outside it
+|the club the project is for, its members whose data is stored, the parents,
+ whoever hosts the server afterwards
 |===
 
-Missing one is the most common way a finished project turns out to be unusable —
-and it is almost always the operator or the affected party, because neither of
-them appears in the conversation where the idea is born.
+The point of the list is not the names. Every stakeholder *pursues interests of
+their own*: the trainer wants to be faster than with paper, the committee wants
+to show where the fees went, the members want as little as possible stored about
+them, the operator wants not to be woken up at night. Those interests are
+legitimate, they conflict with each other, and none of them is written down
+anywhere unless you ask.
 
-Sorted by *interest* and *influence*, the four quadrants suggest four different
-treatments: involve closely, keep satisfied, keep informed, inform.
+Projects fail at the acceptance because an interest was never asked about — most
+often that of the operator or of the people whose data is processed, because
+neither appears in the conversation where the idea is born.
 
 Points the answer must contain:
 
-* Anyone affected by the project or able to affect it
-* Users, client, operators, affected parties (for example data subjects)
-* The dangerous quadrant is high influence with low interest
+* Affected by, able to affect, or believing itself affected
+* Internal and external, with an example of each
+* Every stakeholder pursues interests of their own, and they conflict
+* Naming a stakeholder without their interest is worth nothing
 ====
 
 == Turn "the app should be fast" into a verifiable goal
@@ -176,33 +173,101 @@ Points the answer must contain:
 * Rewrite it as what a user can then do
 ====
 
-== What is the risk in the high-influence, low-interest quadrant?
+== In which three dimensions is a project goal stated, and what is an Ergebnisziel?
 
-covers: lo-1
+covers: lo-4
 
 .Answer
 [%collapsible]
 ====
-They are not paying attention — until the moment they say no.
+*Leistung, Termine, Kosten.* Leistung has two halves — the *Umfang* (which
+functions) and the *Qualität* (how well they must work). Termine is when it is
+there, Kosten is what it takes: effort, money, devices, licences.
 
-The typical occupants are the school's IT administration, the data protection
-officer, the person who owns the server. None of them is interested in your
-project week by week; each of them can stop it in a single sentence: "that may
-not be hosted here", "personal data may not be processed like that".
+The three are coupled, so a goal that names only one of them is not agreed yet.
+In a school project the deadline is fixed by the calendar and the cost is fixed
+by the hours that actually exist, which leaves *Leistung* as the only adjustable
+dimension. A team that refuses to adjust it adjusts quality instead, quietly,
+somewhere around March.
 
-The danger is not the veto itself but *when* it arrives. Because they are not
-watching, the objection surfaces at the point where they are finally asked —
-usually at the deployment, in June, when changing the answer costs a rebuild
-instead of a decision.
+An *Ergebnisziel* says what exists at the end and is checked at the acceptance,
+on the product: "members can be enrolled in courses online". A *Vorgehensziel*
+says how the work is done and is checked during the project, on the way of
+working: "the team meets weekly and records its decisions in the repository".
 
-The treatment is therefore *keep satisfied*: ask early, in writing, while the veto
-is still cheap. Five minutes with the administrator in October settles what a
-redesign in June cannot. The other quadrants are less demanding — involve the
-high-influence, high-interest people closely; keep the interested-but-powerless
-informed, because they are your best source of requirements; inform the rest.
+Both belong in the charter, each marked as what it is. The usual failure is a
+charter full of Vorgehenszielen — meetings, tools, methods — with no statement
+of what will exist in June.
 
 Points the answer must contain:
 
-* They are not watching until they say no
-* Keep them satisfied and informed early, when a veto is still cheap
+* Leistung (Umfang and Qualität), Termine, Kosten — coupled
+* In a school project only Leistung is really adjustable
+* Ergebnisziel: the result, checked at the acceptance
+* Vorgehensziel: the way of working, checked during the project
+====
+
+== Which four questions do you ask before writing a goal down?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+*WOZU? FÜR WEN? ENDERGEBNIS? ERFOLGSKRITERIEN?*
+
+* *Wozu* — the purpose behind the goal. If the answer is "because somebody asked
+  for it", the goal is not understood yet
+* *Für wen* — the stakeholder who benefits. A goal with no named beneficiary is
+  usually somebody's hobby
+* *Endergebnis* — what concretely exists when it is reached: a thing, not an
+  activity
+* *Erfolgskriterien* — how a third party recognises that it was reached
+
+The fourth question is the one that turns a wish into a goal, because it forces
+an observable condition. The first two occasionally delete a goal outright —
+which is a good outcome and is far cheaper in October than in May.
+
+Applied to "the app should be fast": wozu — the trainer records attendance
+during the session, not afterwards; für wen — the trainer; Endergebnis — an
+attendance list that opens while the group is still lining up; Erfolgskriterium
+— under one second for a group of 30 on the lab laptops.
+
+Points the answer must contain:
+
+* The four questions, in their own words
+* Erfolgskriterien is what makes a goal verifiable
+* Für wen names the stakeholder, and a goal without one is suspect
+====
+
+== What is Zielkonkurrenz, and what do you do about it?
+
+covers: lo-6
+
+.Answer
+[%collapsible]
+====
+Goals in one charter influence each other, in three ways:
+
+* *Zielkonkurrenz* — reaching one makes the other harder. More functions against
+  an earlier deadline; stronger data protection against a more convenient login
+* *Zielkomplementarität* — reaching one helps the other. A clean data model
+  serves both the export and the deletion requirement
+* *Zielneutralität* — the two do not influence each other. Rarer than it looks
+
+Zielkonkurrenz is not a planning error, it is the normal state. What is an error
+is leaving it unnamed: the team then averages the two, delivers both badly and
+discovers at the acceptance which one actually mattered. The charter's job is to
+say *which of the two wins* when they collide.
+
+Below the goals sit the *Teilziele*, decomposed until each is checkable on its
+own — and they are not equally important. Weighting them is a small
+Nutzwertanalyse: each Teilziel gets a weight with a stated reason, and "what do
+we build first" becomes a calculation instead of a mood.
+
+Points the answer must contain:
+
+* The three relationships, with an example of competition
+* Competition is normal; the charter decides which goal wins
+* Teilziele are weighted, not treated as equal
 ====

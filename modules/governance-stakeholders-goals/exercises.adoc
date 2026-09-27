@@ -52,3 +52,36 @@ three goals, each with the evidence that verifies it, and at least three
 non-goals.
 
 // Aufgabe am eigenen Projekt — keine Musterlösung.
+
+== Name the competition between two goals
+
+kind: drill
+
+A team writes two goals: "members can enrol in courses themselves" and "no
+personal data leaves the school network". Are these competing, complementary or
+neutral — and what has to be decided?
+
+.Solution
+[%collapsible]
+====
+Competing. Self-service enrolment wants an account, a login from home and
+therefore a reachable server; the data goal wants the opposite. Neither is
+wrong, and averaging them produces a system that is half reachable and half
+protected.
+
+The decision belongs in the charter, in one sentence: either enrolment happens
+only on the school network (the data goal wins, the convenience goal is reduced
+to a non-goal for this year), or the data is reachable from outside under stated
+conditions (consent, transport encryption, deletion on request) — in which case
+those conditions are themselves goals with their own checks.
+====
+
+== Put a goal of your project through the four questions
+
+kind: project
+
+Take one goal from your charter and answer, in writing: *Wozu? Für wen?
+Endergebnis? Erfolgskriterien?* If question two has no named stakeholder, or
+question four no observable condition, rewrite the goal — or drop it.
+
+// Aufgabe am eigenen Projekt — keine Musterlösung.

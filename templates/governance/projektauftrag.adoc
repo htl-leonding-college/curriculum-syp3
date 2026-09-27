@@ -41,21 +41,52 @@ TODO
 
 == Ausgangslage / Initial situation
 
-TODO: übernommen aus dem Projektantrag, ggf. präzisiert.
+TODO: übernommen aus dem Projektantrag, ggf. präzisiert. Wer ist der
+Auftraggeber, was macht er, und warum wird das Vorhaben überhaupt angestoßen?
+
+== Ist-Zustand / Current state
+
+TODO: Wie läuft die Sache heute — *nur* die Bereiche, die das Projekt berührt.
+Ohne diesen Abschnitt ist nicht beurteilbar, ob das Neue besser ist als das
+Bestehende; verglichen wird am Ende genau damit.
+
+[cols="2,3",options="header"]
+|===
+|Bereich |Beschreibung
+
+|Ablauf heute / Current process
+|TODO: wer macht was, womit, in welcher Reihenfolge
+
+|Eingesetzte Systeme / Systems in use
+|TODO: Excel-Liste, Papier, Altanwendung, Datenbank
+
+|Bestehende Plattform / Existing platform
+|TODO: Server, Betriebssystem, Netz, Zugänge
+
+|Was daran stört / Pain points
+|TODO: woraus die Zielsetzung folgt
+|===
 
 == Zielsetzung / Objectives
 
 TODO: Was soll erreicht werden? Jedes Ziel prüfbar formuliert — woran erkennt
-ein Außenstehender, dass es erreicht ist?
+ein Außenstehender, dass es erreicht ist? Art: *E* = Ergebnisziel (am Produkt
+geprüft), *V* = Vorgehensziel (an der Arbeitsweise geprüft).
 
-[cols="1,3,2",options="header"]
+[cols="1,3,2,1,1",options="header"]
 |===
-|Nr. |Ziel / Objective |Prüfbar an / Verified by
+|Nr. |Ziel / Objective |Prüfbar an / Verified by |Art |Prio
 
 |Z1
 |TODO
 |TODO
+|E
+|1
 |===
+
+Konkurrieren zwei Ziele miteinander, steht hier in einem Satz, welches gewinnt:
+
+TODO: Zielkonkurrenz und Entscheidung — oder ausdrücklich "keine bekannt".
 
 == Nicht-Ziele / Non-goals
 
@@ -68,12 +99,38 @@ TODO: Beschreibung des Endprodukts. Die Ausformulierung lebt in
 
 == Stakeholder
 
-[cols="2,2,2",options="header"]
+TODO: Wer ist betroffen, wer kann das Projekt beeinflussen, wer hält sich für
+betroffen? Je Zeile das *Interesse*, das die Person verfolgt — der Name allein
+sagt nichts darüber, wie sie sich bei der Abnahme verhält.
+
+[cols="2,1,3",options="header"]
 |===
-|Person oder Gruppe |Interesse / Interest |Einfluss / Influence
+|Person oder Gruppe |intern / extern |Interesse / Interest
 
 |TODO
 |TODO
+|TODO
+|===
+
+== Mengengerüst / Volume estimate
+
+TODO: Größenordnungen, keine Schätzgenauigkeit. 30 Mitglieder und 30 000 sind
+nicht dasselbe System — das entscheidet sich hier, nicht im Betrieb.
+
+[cols="3,2",options="header"]
+|===
+|Größe / Quantity |Erwartet / Expected
+
+|Datenbestände (Anzahl Datensätze je Entität) / Records per entity
+|TODO
+
+|Datenbewegungen pro Tag oder Woche / Transactions per day or week
+|TODO
+
+|Gleichzeitige Benutzer (Spitze) / Concurrent users (peak)
+|TODO
+
+|Wachstum pro Jahr / Growth per year
 |TODO
 |===
 

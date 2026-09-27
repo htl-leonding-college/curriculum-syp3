@@ -20,10 +20,13 @@ Ergebnissen und Terminen. Wie ihr dorthin kommt, ist eure Sache.
 [plantuml,ebenen,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "GOVERNANCE (außen, eingefroren)\nProjektauftrag, Ziele, Stakeholder,\nMeilensteinplan, Abnahme" as G
-rectangle "DURCHFÜHRUNG (innen, frei)\nspecs, changes, Code" as D
+rectangle "GOVERNANCE (außen, eingefroren)\nProjektauftrag, Ziele, Stakeholder,\nMeilensteinplan, Abnahme" as G #E3ECF8
+rectangle "DURCHFÜHRUNG (innen, frei)\nspecs, changes, Code" as D #E4F0E4
 G -down-> D : setzt Rahmen
 D -up-> G : liefert Nachweise
 @enduml
@@ -39,9 +42,17 @@ D -up-> G : liefert Nachweise
 |`openspec/config.yaml` -> `context:`
 |Der Text steht dort, wo ihn auch der Agent liest
 
+|Ist-Zustand / Current state
+|`openspec/config.yaml` -> `context:`, zusammen mit der Ausgangslage
+|Was heute läuft, steht dort, wo verglichen wird
+
 |Zielsetzung / Objectives
 |Menge der `openspec/specs/`
 |Jede Capability ist ein Ziel in prüfbarer Form
+
+|Mengengerüst / Volume estimate
+|nichtfunktionale Requirements in `specs/`
+|Kapazität und Antwortzeit als Requirement mit Scenario, nicht als Adjektiv
 
 |Individuelle Themenstellung / Individual assignment
 |Zuschnitt der `changes/` je Schüler

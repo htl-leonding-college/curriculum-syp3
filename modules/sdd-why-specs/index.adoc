@@ -21,6 +21,8 @@ endif::[]
 * [[lo-4]] Say what stays frozen and what stays alive, and why both are needed
 * [[lo-5]] Explain what a Lastenheft and a Pflichtenheft are, who writes each,
   and which parts of them survive in this course
+* [[lo-6]] Name the seven chapters of a Pflichtenheft, separate functional from
+  non-functional requirements, and say what a Kriterienkatalog is for
 
 == The scarce resource moved
 
@@ -82,60 +84,204 @@ Pflichtenheft → build → acceptance against the Pflichtenheft*. The client sa
 what they need; the contractor answers with what they will build, in enough
 detail that both sides can later agree on whether it was delivered.
 
-.The classical structure of a Pflichtenheft
+=== What a Pflichtenheft contains
+
+The structure below follows the Manz textbook (chapter 7, lesson 2). Read it as
+one argument in seven steps: where the client stands, what they already have,
+what they want, what the system must do, how much of it, how an offer is to be
+handed in, and what is agreed around all of that.
+
+[cols="1,2,4",options="header"]
+|===
+|Nr. |Kapitel |Inhalt
+
+|1
+|Beschreibung der Ausgangslage
+|kind and size of the organisation, locations, products and services, customer
+ structure, how IT is organised, and the reasons for the procurement
+
+|2
+|Ist-Zustand
+|only the parts the project touches: Aufbauorganisation, Ablauforganisation with
+ its business processes and the applications in use, the existing system
+ platform
+
+|3
+|Zielsetzung
+|the goals with priorities, realistic and checkable — nutzenrelevante Ziele,
+ Systemziele, Vorgehensziele
+
+|4
+|Anforderungen (Soll)
+|at the application software, at the system platform, and at the supplier
+
+|5
+|Mengengerüst
+|data movements, data volumes, number of concurrent users
+
+|6
+|Aufbau und Inhalt der Offerte
+|only in a tender: how an offer must be structured so that offers can be
+ compared at all
+
+|7
+|Administratives
+|confidentiality, copyright, distribution list, budget, dates
+|===
+
+The chain from chapter 1 to chapter 4 is what makes the document readable: an
+initial situation, the problem it produces, and only then the task derived from
+it. A requirement whose origin you cannot trace back to chapters 1 to 3 is
+usually somebody's private wish.
+
+Two chapters are regularly skipped and both are expensive. *Ist-Zustand*: the
+system is built into an organisation that already works somehow, and whatever it
+does today is what people will compare yours with. *Mengengerüst*: 30 members
+and 30 000 are not the same system, and you find that out either here or in
+production.
+
+=== Functional and non-functional live in chapter 4
+
+Chapter 4 carries two kinds of requirement, and telling them apart is the skill:
+
 [cols="1,3",options="header"]
 |===
-|Abschnitt |Inhalt
+|Art |Was darin steht
 
-|Zielbestimmung
-|Musskriterien, Wunschkriterien, *Abgrenzungskriterien* — what the product
- explicitly will not do
+|funktional
+|the professional workflow and the data fields — *what* the system does
 
-|Produkteinsatz
-|application area, target groups, operating conditions
-
-|Produktfunktionen
-|numbered: `/F10/`, `/F20/` … — one function per number
-
-|Produktdaten
-|numbered: `/D10/`, `/D20/` … — the data to be stored permanently
-
-|Produktleistungen
-|numbered: `/L10/` … — times, volumes, accuracy
-
-|Qualitätsanforderungen
-|numbered: `/Q10/` … — reliability, usability, maintainability
-
-|Benutzeroberfläche, Technische Umgebung
-|interaction and the systems it must run on
-
-|Testfälle, Entwicklungsplan, Glossar
-|how each requirement is checked, in which order it is built, what the words mean
+|nichtfunktional
+|Effizienz, Leistung, Zuverlässigkeit, Robustheit, Benutzerfreundlichkeit,
+ Datenschutz — *how well* it has to do it
 |===
 
-The numbering is not decoration. It is what makes a requirement referable: a
-test case, a review comment and an acceptance protocol can all point at `/F30/`
-and mean the same sentence. That is the same job an id in `openspec/specs/`
-does today.
+A functional requirement you either implemented or you did not. A non-functional
+one only becomes a requirement once it carries a number or an observable
+condition: "fast" is not a requirement, "the attendance list of a group of 30
+opens in under a second on the lab laptops" is.
 
-[cols="1,1",options="header"]
+Requirements are numbered, and that is not decoration. Numbering is what makes a
+requirement *referable*: a test case, a review comment and an acceptance
+protocol can all point at the same number and mean the same sentence. That is
+exactly the job a requirement id in `openspec/specs/` does today.
+
+=== The catalogue of non-functional characteristics: ISO/IEC 25010
+
+"Non-functional" is a wastebasket word until you have a list. ISO/IEC 25010 is
+that list — the product quality model, nine characteristics, each with its
+sub-characteristics. Use it as a checklist when writing chapter 4: go through
+the nine, and for each one decide whether it matters here and what the
+measurable condition is. Most will not matter; the two or three that do are the
+ones that would otherwise have been discovered in production.
+
+The colours in the diagram group the nine: the top row is what the *user*
+experiences, the middle row is how the system *behaves and protects*, the bottom
+row is what the *developer* lives with — plus safety, which sits with the
+protecting ones.
+
+[plantuml,iso-25010-product-quality,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultFontSize 12
+skinparam rectangle {
+  BackgroundColor white
+}
+rectangle "**Functional suitability**\ncompleteness\ncorrectness\nappropriateness" as FS #E3ECF8
+rectangle "**Performance efficiency**\ntime behaviour\nresource utilization\ncapacity" as PE #E3ECF8
+rectangle "**Compatibility**\nco-existence\ninteroperability" as CO #E4F0E4
+rectangle "**Interaction capability**\nrecognizability · learnability\noperability · user error protection\nengagement · inclusivity\nuser assistance · self-descriptiveness" as IC #E3ECF8
+rectangle "**Reliability**\nfaultlessness · availability\nfault tolerance\nrecoverability" as RE #E4F0E4
+rectangle "**Security**\nconfidentiality · integrity\nnon-repudiation · accountability\nauthenticity · resistance" as SE #E4F0E4
+rectangle "**Maintainability**\nmodularity · reusability\nanalysability · modifiability\ntestability" as MA #FAF0D9
+rectangle "**Flexibility**\nadaptability · scalability\ninstallability\nreplaceability" as FL #FAF0D9
+rectangle "**Safety**\noperational constraint\nrisk identification · fail safe\nhazard warning · safe integration" as SA #E4F0E4
+FS -[hidden]right- PE
+PE -[hidden]right- IC
+CO -[hidden]right- RE
+RE -[hidden]right- SE
+SA -[hidden]right- MA
+MA -[hidden]right- FL
+FS -[hidden]down- CO
+CO -[hidden]down- SA
+@enduml
+----
+
+Own diagram; the characteristic names follow the current edition
+(ISO/IEC 25010:2023) as published at https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[iso25000.com].
+The 2011 edition had eight characteristics: *Usability* has become *Interaction
+capability*, *Portability* has become *Flexibility* and gained scalability, and
+*Safety* is new. Older material — including much of what you will find while
+searching — still shows the eight.
+
+Two characteristics carry a warning for school projects. *Security* is not a
+feature you add at the end; confidentiality and integrity decide the data model.
+And *Safety* only concerns you if your system can cause physical harm — in an
+attendance app the honest answer is "not applicable", and writing that down is
+better than inventing a requirement for it.
+
+=== The Kriterienkatalog is a different document
+
+Alongside the Pflichtenheft the client writes a second paper — for themselves.
+The *Kriterienkatalog* is internal, the supplier never sees it, and its purpose
+is to evaluate the offers that come in.
+
+[cols="1,3",options="header"]
 |===
-|Classical |In this course
+|Kriterium |Bedeutung
 
-|Lastenheft
-|Ausgangslage and Zielsetzung in Projektantrag and Projektauftrag — frozen
+|Muss- oder K.-o.-Kriterium
+|not met — the offer drops out. No weighting, no discussion
 
-|Abgrenzungskriterien
+|Wunschkriterium (Soll-Kriterium)
+|the better it is met, the better the offer is rated
+
+|Abgrenzungskriterium
+|informative — what is deliberately not wanted, so the supplier can size the
+ offer correctly
+|===
+
+[WARNING]
+====
+Muss-, Wunsch- and Abgrenzungskriterien are frequently quoted as a *section of
+the Pflichtenheft*. They are not. Another document, another addressee, another
+purpose: the Pflichtenheft describes the system, the Kriterienkatalog evaluates
+the offers made for it.
+====
+
+=== What survives in this course
+
+[cols="1,2",options="header"]
+|===
+|Im Buch |In diesem Kurs
+
+|Ausgangslage, Ist-Zustand
+|the corresponding sections of Projektantrag and Projektauftrag — frozen at
+ approval
+
+|Zielsetzung
+|the goals table of the charter, one row per goal with the check next to it
+
+|Anforderungen (Soll), funktional
+|a requirement with its scenarios in `openspec/specs/`, one file per capability
+
+|Anforderungen (Soll), nichtfunktional
+|the same place — written as a requirement with a measurable scenario, never as
+ an adjective
+
+|Mengengerüst
+|the Mengengerüst section of the charter
+
+|Aufbau der Offerte, Administratives
+|no counterpart: a school project has no tender and no contract
+
+|Kriterienkatalog, Abgrenzungskriterien
 |the non-goals section of the charter
-
-|Pflichtenheft
-|`openspec/specs/` — the living target state
-
-|`/F10/` und Testfälle
-|a requirement with its scenarios, in one file per capability
-
-|Muss- und Wunschkriterien
-|what is in the current change, and what is a later one
 |===
 
 Nothing in that list was abolished. What changed is the *form*: instead of one
@@ -187,11 +333,14 @@ you cannot phrase this way is either not yet understood or is a wish.
 [plantuml,frozen-and-alive,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "Projektauftrag\nfrozen at approval" as C
-rectangle "specs/\nthe current target state" as S
-rectangle "changes/\nhow it got there" as A
+rectangle "Projektauftrag\nfrozen at approval" as C #E3ECF8
+rectangle "specs/\nthe current target state" as S #E4F0E4
+rectangle "changes/\nhow it got there" as A #FAF0D9
 C -right-> S : sets the frame
 S -right-> A : every change recorded
 @enduml
@@ -233,11 +382,26 @@ both, and keeping the difference visible, is the whole arrangement.
 |Pflichtenheft
 |(system) requirements specification
 
+|Kriterienkatalog
+|evaluation criteria catalogue
+
+|Musskriterium, K.-o.-Kriterium
+|mandatory requirement, knock-out criterion
+
+|Wunschkriterium, Soll-Kriterium
+|desirable requirement
+
 |Abgrenzungskriterium
 |non-goal, exclusion criterion
 
-|Musskriterium / Wunschkriterium
-|mandatory / desirable requirement
+|Ist-Zustand
+|current state, as-is situation
+
+|Mengengerüst
+|volume estimate, sizing
+
+|funktionale / nichtfunktionale Anforderung
+|functional / non-functional requirement
 
 |Spezifikation
 |specification
@@ -258,4 +422,10 @@ both, and keeping the difference visible, is the whole arrangement.
 * Module `bridge-charter-to-specs` — which charter field maps to which artefact
 * Module `governance-requirements-elicitation` — where the content of a
   Lastenheft comes from in the first place
+* https://www.monterail.com/blog/software-qa-standards-iso-25010[Monterail — Software QA standards: ISO 25010] — what the nine characteristics
+  are good for in practice, and how teams prioritise among them
+* https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[iso25000.com — ISO/IEC 25010] — the characteristics and
+  sub-characteristics in their official wording
+* Manz textbook, chapter 7 lesson 2 "Das Pflichtenheft" — the seven-chapter
+  structure and the Kriterienkatalog used above
 * DIN 69901-5 — the definitions of Lastenheft and Pflichtenheft

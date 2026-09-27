@@ -14,58 +14,69 @@ endif::[]
 
 == Learning outcomes
 
-* [[lo-1]] Identify the stakeholders of a project and classify them by interest
-  and influence
+* [[lo-1]] Say what a stakeholder is, give examples, tell internal from external
+  ones, and explain that each of them pursues interests of their own
 * [[lo-2]] Turn a wish into a goal that can be verified by someone else
 * [[lo-3]] Distinguish goals from non-goals and explain why non-goals are written
   down
+* [[lo-4]] Name the three dimensions a project goal is measured in, and tell
+  Ergebnisziele from Vorgehenszielen
+* [[lo-5]] Agree a goal using the four questions: Wozu, für wen, Endergebnis,
+  Erfolgskriterien
+* [[lo-6]] Recognise Zielkonkurrenz, Zielkomplementarität and Zielneutralität,
+  and weight sub-goals instead of pretending they are equal
 
 == Stakeholders
 
-A stakeholder is anyone affected by the project or able to affect it. Missing one
-is the most common way a finished project turns out to be unusable.
+A *stakeholder* is a person, a group or an organisation that is affected by the
+project, can affect it, or believes itself affected by it — the definition of
+ÖNORM ISO 21500. The last third matters: someone who wrongly believes they are
+affected still acts, and still costs you a meeting.
+
+Every stakeholder pursues *interests of their own*, and those are not yours.
+They are usually legitimate, they routinely conflict with each other, and none
+of them is written on the ticket. That is the whole reason for listing them: a
+project fails at acceptance because somebody's interest was never asked about,
+not because somebody was unknown.
 
 [cols="1,2,2",options="header"]
 |===
-|Type |Example in a school project |What they can do to you
+| |*Interne Stakeholder* |*Externe Stakeholder*
 
-|User
-|the trainer who records attendance
-|refuse to use it if it is slower than paper
+|Who
+|inside the organisation running the project: client, project management, the
+ team, the departments whose work changes
+|outside it: users, customers, suppliers, authorities, data protection, the
+ public
 
-|Client
-|the club, the teacher, the school
-|change what "finished" means
+|In a school project
+|the team, the teacher supervising it, the school's IT operations
+|the club or company the project is for, its members, the parents, whoever hosts
+ the server afterwards
 
-|Operator
-|whoever runs the server afterwards
-|refuse to host it
-
-|Affected party
-|members whose data is stored
-|data protection, and rightly so
+|Typical interest
+|a result that is defensible, on time, with no extra work landing on them
+|a system that helps them rather than one that is merely delivered
 |===
 
-Sort them by *interest* and *influence*:
+.Examples and what the interest behind them is
+[cols="2,3",options="header"]
+|===
+|Stakeholder |Their interest
 
-[plantuml,stakeholder-grid,svg]
-----
-@startuml
-skinparam monochrome true
-skinparam shadowing false
-rectangle "high influence\nlow interest\n-> keep satisfied" as A
-rectangle "high influence\nhigh interest\n-> involve closely" as B
-rectangle "low influence\nlow interest\n-> inform" as C
-rectangle "low influence\nhigh interest\n-> keep informed" as D
-A -right- B
-C -right- D
-A -down- C
-B -down- D
-@enduml
-----
+|the trainer who records attendance
+|to be finished faster than with paper — otherwise they simply will not use it
 
-The quadrant with high influence and low interest is the dangerous one: they are
-not paying attention until the moment they say no.
+|the club's committee
+|to be able to show where the membership fees went
+
+|members whose data is stored
+|that as little as possible about them is stored, and that they can have it
+ deleted
+
+|whoever runs the server afterwards
+|not to be woken up by it, and not to be left with something they cannot patch
+|===
 
 == Goals that can be verified
 
@@ -93,6 +104,128 @@ The pattern: an observable action, a measurable condition, a context in which it
 holds. If your goal has none of those, it is a wish — write it down as one, but
 do not call it a goal.
 
+=== Leistung, Termine, Kosten
+
+Project goals are stated in three dimensions, and a goal that names only one of
+them is not yet agreed.
+
+[plantuml,goal-dimensions,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+rectangle "Leistung\nscope and quality:\nwhat it does, how well" as L #E3ECF8
+rectangle "Termine\ndeadlines:\nwhen it is there" as T #FAF0D9
+rectangle "Kosten\neffort, money,\ndevices, licences" as K #E4F0E4
+L -right- T
+T -down- K
+K -left- L
+@enduml
+----
+
+They are coupled: hold two of them and the third follows. In a school project
+*Termine* is fixed by the calendar and *Kosten* is fixed by the hours you
+actually have, which leaves exactly one adjustable dimension — *Leistung*. A
+team that refuses to adjust it ends up adjusting quality instead, silently.
+
+*Leistung* has two halves and both belong in the goal: the *Umfang* (which
+functions) and the *Qualität* (how well they have to work — the non-functional
+side, see `sdd-why-specs`).
+
+=== Ergebnisziele and Vorgehensziele
+
+[cols="1,2,2",options="header"]
+|===
+| |*Ergebnisziel* |*Vorgehensziel*
+
+|Says
+|what exists at the end
+|how the work gets done on the way there
+
+|Example
+|"members can be enrolled in courses online"
+|"the team meets weekly and keeps decisions in the repository"
+
+|Checked
+|at the acceptance, on the product
+|during the project, on the way of working
+
+|If it is missing
+|nobody knows what was promised
+|the result may be right and nobody can repeat it
+|===
+
+Both belong in the charter, marked as what they are. The frequent mistake is a
+charter full of Vorgehenszielen — meetings, tools, methods — with no statement
+of what will exist at the end.
+
+=== The four questions of a goal agreement
+
+Before a goal is written down it should survive four questions. They come from
+the Coverdale method and they are the fastest test there is.
+
+[cols="1,3",options="header"]
+|===
+|Frage |What it forces out
+
+|*WOZU?*
+|the purpose behind the goal. If the answer is "because it was asked for", the
+ goal is not understood yet
+
+|*FÜR WEN?*
+|the stakeholder who benefits. A goal without a named beneficiary is usually
+ somebody's hobby
+
+|*ENDERGEBNIS?*
+|what concretely exists when it is reached — a thing, not an activity
+
+|*ERFOLGSKRITERIEN?*
+|how a third party recognises that it was reached
+|===
+
+Question four is the one that turns a wish into a goal, and questions one and
+two are the ones that occasionally delete a goal entirely — which is a good
+outcome, and much cheaper now than in May.
+
+=== How goals relate to each other
+
+Goals in the same charter are not independent, and the relationship has a name.
+
+[cols="1,3",options="header"]
+|===
+|Beziehung |Bedeutung
+
+|*Zielkonkurrenz*
+|reaching one makes the other harder — more functions against an earlier
+ deadline. Must be decided, not averaged away
+
+|*Zielkomplementarität*
+|reaching one helps the other — a clean data model helps both the export and
+ the deletion requirement
+
+|*Zielneutralität*
+|the two do not influence each other. Rarer than it looks
+|===
+
+Zielkonkurrenz is the interesting case: it is not a planning error, it is the
+normal state, and the charter's job is to say which of the two wins when they
+collide.
+
+=== Teilziele and their weight
+
+A large goal is decomposed into *Teilziele*, hierarchically, until each part is
+checkable on its own. The parts are not equally important — pretending that they
+are is how a project ends up with a perfect export function and no working
+enrolment.
+
+Weighting them is a small Nutzwertanalyse: give each Teilziel a weight, state
+what the weight is based on, and the decision "what do we build first" becomes a
+calculation rather than a mood. The method is in
+`governance-weighted-scoring`.
+
 == Non-goals
 
 Non-goals are what the project explicitly does not do. They cost one line each
@@ -111,17 +244,24 @@ scope for *this* project, in *this* year.
 
 == Decisions
 
-* Every project charter names stakeholders in a table with interest and influence.
+* Every project charter names its stakeholders, marked as internal or external,
+  with the interest each of them pursues.
 * Goals are written so a third party can check them; unverifiable goals go back
   to the team for rewriting.
+* Every goal states Leistung, Termin and Kosten, and is marked as Ergebnisziel
+  or Vorgehensziel.
+* Competing goals are named as competing, with the decision which one wins.
 * Every charter has a non-goals section. An empty one is not accepted — if
   nothing is out of scope, the scope was not thought through.
 
 == Pitfalls
 
 * Only listing users and forgetting whoever has to operate or approve the thing.
+* Listing stakeholders without their interest. The name alone tells you nothing
+  about what they will do at the acceptance.
 * Goals that measure your effort instead of the result ("we implement a REST
   API"). Nobody outside your team cares how it is built; they care what it does.
+* A charter of pure Vorgehenszielen: much method, no promised result.
 * Goals written after the fact, matched to what was finished. That is what the
   frozen charter exists to prevent.
 * Non-goals that are secretly plans ("no mobile app *for now*"). Then it is not a
@@ -136,8 +276,32 @@ scope for *this* project, in *this* year.
 |Anspruchsgruppe, Beteiligter
 |stakeholder
 
+|interne / externe Stakeholder
+|internal / external stakeholders
+
 |Zielsetzung
 |objectives
+
+|Ergebnisziel
+|result goal, outcome goal
+
+|Vorgehensziel
+|process goal
+
+|Leistung, Termine, Kosten
+|scope and quality, schedule, cost
+
+|Zielkonkurrenz
+|conflicting goals
+
+|Zielkomplementarität
+|complementary goals
+
+|Zielneutralität
+|independent goals
+
+|Teilziel
+|sub-goal
 
 |Nicht-Ziel
 |non-goal
@@ -152,4 +316,7 @@ scope for *this* project, in *this* year.
 == Further reading
 
 * Template `templates/governance/projektauftrag.adoc` — the goals table you fill
+* Module `governance-weighted-scoring` — how sub-goals get their weights
 * Module `governance-acceptance` — where these goals are checked again
+* Module `sdd-why-specs` — where the Qualität half of Leistung is written down
+* ÖNORM ISO 21500 — the stakeholder definition used above

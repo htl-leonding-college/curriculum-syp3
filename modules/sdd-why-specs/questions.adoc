@@ -88,30 +88,17 @@ states the need in the language of their own world, without prescribing
 technology; the contractor answers with what will be built, in enough detail that
 both sides can later agree on whether it was delivered.
 
-A Pflichtenheft is classically structured as *Zielbestimmung* (Muss-, Wunsch- and
-Abgrenzungskriterien), *Produkteinsatz*, *Produktfunktionen* `/F10/`,
-*Produktdaten* `/D10/`, *Produktleistungen* `/L10/`, *Qualitätsanforderungen*
-`/Q10/`, user interface, technical environment, test cases, development plan and
-glossary.
-
-The numbering matters more than it looks: it makes a requirement *referable*, so
-a test case, a review comment and an acceptance protocol can all point at `/F30/`
-and mean the same sentence — the job an id in `openspec/specs/` does today.
-
-[cols="1,1",options="header"]
+[cols="1,2",options="header"]
 |===
 |Classical |In this course
 
 |Lastenheft
 |Ausgangslage and Zielsetzung in the charter — frozen
 
-|Abgrenzungskriterien
-|the non-goals section
-
 |Pflichtenheft
 |`openspec/specs/` — the living target state
 
-|`/F10/` plus test cases
+|a numbered requirement plus its test case
 |a requirement with its scenarios, one file per capability
 |===
 
@@ -121,10 +108,66 @@ Points the answer must contain:
   the tender
 * Pflichtenheft: written by the contractor, says how it will be realised, basis
   of the contract and of the acceptance
-* Structure: Zielbestimmung with Muss-, Wunsch- and Abgrenzungskriterien,
-  numbered functions, data, performance and quality requirements, test cases
+* The sequence: elicitation, Lastenheft, offer, Pflichtenheft, build, acceptance
 * Nothing of it was abolished — the same content lives in charter and specs, in
   another form
+====
+
+== Which chapters does a Pflichtenheft have, and what is the Kriterienkatalog for?
+
+covers: lo-6
+
+.Answer
+[%collapsible]
+====
+Seven chapters, and their order is an argument rather than a filing system:
+
+. *Beschreibung der Ausgangslage* — who the client is and why they are procuring
+  anything at all
+. *Ist-Zustand* — the organisation, the processes and the systems that are
+  already there, limited to what the project touches
+. *Zielsetzung* — the goals with priorities, realistic and checkable
+. *Anforderungen (Soll)* — at the application software, at the system platform,
+  at the supplier
+. *Mengengerüst* — data movements, data volumes, concurrent users
+. *Aufbau und Inhalt der Offerte* — only in a tender, so that offers can be
+  compared
+. *Administratives* — confidentiality, copyright, distribution list, budget,
+  dates
+
+Chapters 1 to 3 carry the chain *initial situation → problem → task*: a
+requirement in chapter 4 that cannot be traced back to them is somebody's
+private wish. Chapter 4 itself splits into *funktionale* requirements — the
+professional workflow and the data fields — and *nichtfunktionale* ones:
+Effizienz, Leistung, Zuverlässigkeit, Robustheit, Benutzerfreundlichkeit,
+Datenschutz. A non-functional requirement counts as a requirement only once it
+carries a number or an observable condition.
+
+The catalogue behind that second group is *ISO/IEC 25010*, the product quality
+model: nine characteristics — functional suitability, performance efficiency,
+compatibility, interaction capability, reliability, security, maintainability,
+flexibility, safety — each with sub-characteristics. Walk the nine when writing
+chapter 4 and decide per characteristic whether it matters here and what the
+measurable condition is. "Not applicable" is a valid answer and worth writing
+down.
+
+The *Kriterienkatalog* is a *different document*: internal to the client,
+written alongside the Pflichtenheft, never handed to the supplier. Its purpose
+is to evaluate the offers that come in.
+
+* *Muss-* or *K.-o.-Kriterium* — not met, the offer drops out
+* *Wunschkriterium* (Soll-Kriterium) — the better it is met, the better the
+  rating
+* *Abgrenzungskriterium* — informative, so the supplier can size the offer
+
+Points the answer must contain:
+
+* The seven chapters, in order, with Ist-Zustand and Mengengerüst among them
+* Chapter 4 splits into functional and non-functional requirements, with
+  examples of each; ISO/IEC 25010 is the catalogue of the non-functional ones
+* The Kriterienkatalog is a separate, internal document of the client, used to
+  evaluate offers — not a section of the Pflichtenheft
+* Muss-, Wunsch- and Abgrenzungskriterien with their effect on the evaluation
 ====
 
 == Write a requirement with a scenario for "sessions have a capacity limit"
@@ -230,11 +273,11 @@ archived change.
 digraph frozenalive {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
-  C [label="Projektauftrag\nfrozen at approval", fillcolor="#ffffff"];
+  C [label="Projektauftrag\nfrozen at approval", fillcolor="#E3ECF8"];
   S [label="openspec/specs/\nthe current target state"];
   A [label="changes/archive/\nhow it got there"];
 
