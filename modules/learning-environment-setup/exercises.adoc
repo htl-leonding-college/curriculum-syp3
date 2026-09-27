@@ -37,10 +37,8 @@ the output of the two runs.
 .Solution
 [%collapsible]
 ====
-The second run installs nothing: no line starts with `[install]`. Everything the
-script can install reports `[ok]`; on Linux the JetBrains Toolbox reports
-`[manuell]`, because there is no package for it and the run is honest about a
-step it cannot perform. That is the observable definition of idempotent: same
+The second run reports `[ok]` for every step and installs nothing — no line
+starts with `[install]`. That is the observable definition of idempotent: same
 end state, no damage, no duplicate work.
 
 Interrupt a run with kbd:[Ctrl+C] and start it again — it continues from where

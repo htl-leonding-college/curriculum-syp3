@@ -131,10 +131,7 @@ whether the tool is already there.
 
 A single failure does not end the run. The step is recorded, the remaining ones
 continue, and the closing `== Bilanz` lists what stayed open; the exit code is
-then non-zero, because otherwise "it ran through" would say nothing. Steps that
-have no package to install from — the JetBrains Toolbox on Linux — are reported
-as `[manuell]` rather than `[install]`, so a second run does not claim an
-installation that never happens.
+then non-zero, because otherwise "it ran through" would say nothing.
 
 [source,bash]
 ----
