@@ -93,16 +93,19 @@ things stay fixed, and they are the ones with somebody else's name on them:
 [plantuml,frozen-and-alive,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
 rectangle "frozen" {
-  rectangle "Projektauftrag / charter\ngoals, scope, non-goals,\ndeadline, roles" as CH
+  rectangle "Projektauftrag / charter\ngoals, scope, non-goals,\ndeadline, roles" as CH #E3ECF8
 }
 rectangle "alive" {
-  rectangle "specs/\nwhat must be true now" as SP
-  rectangle "changes/\nhow it gets there" as CG
+  rectangle "specs/\nwhat must be true now" as SP #E4F0E4
+  rectangle "changes/\nhow it gets there" as CG #FAF0D9
 }
 
 CH -right-> SP : "the yardstick"

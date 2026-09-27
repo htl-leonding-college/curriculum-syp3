@@ -30,21 +30,30 @@ locally. What it adds is a moment where somebody else looks.
 [plantuml,pr-flow,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+.key { BackgroundColor #E3ECF8 }
+.work { BackgroundColor #FAF0D9 }
+.ok { BackgroundColor #E4F0E4 }
+.bad { BackgroundColor #F8E5E5 }
+.aside { BackgroundColor #ECE6F7 }
+.muted { BackgroundColor #F0F2F5 }
+</style>
 skinparam shadowing false
 start
-:branch off main;
-:commit your work;
-:push the branch;
-:open a pull request;
-:CI runs on the branch;
+:branch off main; <<work>>
+:commit your work; <<work>>
+:push the branch; <<work>>
+:open a pull request; <<key>>
+:CI runs on the branch; <<key>>
 if (review + CI green?) then (yes)
-  :merge into main;
-  :delete the branch;
+  :merge into main; <<ok>>
+  :delete the branch; <<ok>>
   stop
 else (no)
-  :push more commits to the same branch;
-  :the pull request updates itself;
+  :push more commits to the same branch; <<bad>>
+  :the pull request updates itself; <<bad>>
   detach
 endif
 @enduml
@@ -88,12 +97,12 @@ mechanism by which somebody without write access can still propose a change.
 digraph fork {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   U [label="upstream\nhtl-leonding-example/jg03-syp-git-basics\nread only for you",
-     fillcolor="#ffffff"];
+     fillcolor="#F0F2F5"];
   O [label="origin\n<you>/jg03-syp-git-basics\nyour fork — you may push"];
   L [label="your machine\nlocal clone"];
 

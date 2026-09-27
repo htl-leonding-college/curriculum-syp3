@@ -136,12 +136,15 @@ A tag in a registry does not have to point at one image. It can point at an
 [plantuml,q-image-index,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "tag booking:0.3.0" as T
-rectangle "image index" as IX
-rectangle "linux/amd64\nsha256:aaa…" as A
-rectangle "linux/arm64\nsha256:bbb…" as B
+rectangle "tag booking:0.3.0" as T #FAF0D9
+rectangle "image index" as IX #E3ECF8
+rectangle "linux/amd64\nsha256:aaa…" as A #E4F0E4
+rectangle "linux/arm64\nsha256:bbb…" as B #E4F0E4
 T -down-> IX
 IX -down-> A
 IX -down-> B

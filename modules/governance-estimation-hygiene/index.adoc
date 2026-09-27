@@ -96,15 +96,17 @@ been generating it all term without noticing.
 [plantuml,estimate-from-history,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "archive/\n9 changes over 12 weeks" as A
-rectangle "measured throughput\n≈ 0.75 changes per week\nper team" as T
-rectangle "remaining scope\n6 changes open or planned" as S
-rectangle "forecast\n≈ 8 weeks, if nothing changes" as F
-
+rectangle "archive/\n9 changes over 12 weeks" as A #E3ECF8
+rectangle "measured throughput\n≈ 0.75 changes per week\nper team" as T #FAF0D9
+rectangle "remaining scope\n6 changes open or planned" as S #FAF0D9
+rectangle "forecast\n≈ 8 weeks, if nothing changes" as F #ECE6F7
 A -right-> T
 T -down-> F
 S -down-> F

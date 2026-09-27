@@ -33,18 +33,20 @@ calls the model again.
 [plantuml,harness-parts,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
 rectangle "harness" {
-  rectangle "instructions\nproject rules, conventions" as I
-  rectangle "context\nfiles, output, history" as C
-  rectangle "tools\nread, edit, run, search" as T
-  rectangle "permissions\nwhat may run unasked" as P
+  rectangle "instructions\nproject rules, conventions" as I #FAF0D9
+  rectangle "context\nfiles, output, history" as C #E3ECF8
+  rectangle "tools\nread, edit, run, search" as T #E4F0E4
+  rectangle "permissions\nwhat may run unasked" as P #ECE6F7
 }
-rectangle "model" as M
-
+rectangle "model" as M #F0F2F5
 I --> M
 C --> M
 M --> T : "wants to act"

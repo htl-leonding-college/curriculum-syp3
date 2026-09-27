@@ -127,6 +127,40 @@ PlantUML ist Default, inline im Dokument. Ein Bild nur, wo Quelltext nicht
 trägt: Git-Commit-Graphen, Screenshots realer Oberflächen, freie Skizzen.
 Zu einem selbst erstellten Bild liegt die bearbeitbare Quelldatei daneben.
 
+Jedes PlantUML-Diagramm beginnt mit demselben Kopf — heller Pastellgrund statt
+Graustufen, damit sich Rollen im Bild unterscheiden lassen:
+
+[source]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+----
+
+Die Palette, semantisch eingesetzt und nicht dekorativ:
+
+[cols="1,1,3",options="header"]
+|===
+|Farbe |Hex |Wofür
+
+|blau |`#E3ECF8` |eingefroren, vorgegeben, Ausgangspunkt
+|grün |`#E4F0E4` |Ergebnis, fertig, der gute Weg
+|sand |`#FAF0D9` |Arbeit in Bewegung, was sich oft ändert
+|rosa |`#F8E5E5` |Risiko, Fehlerfall, der schlechte Weg
+|lila |`#ECE6F7` |Nebenschauplatz, Werkzeug, Ablage
+|grau |`#F0F2F5` |Infrastruktur, Kontext, nicht deins
+|===
+
+Eine Box bekommt ihre Farbe angehängt: `rectangle "image" as I #E3ECF8`.
+In Aktivitätsdiagrammen geht das nicht über `#farbe:text;` — dort stehen die
+Klassen `.key .work .ok .bad .aside .muted` im `<style>`-Block und die
+Aktivität trägt sie als Stereotyp: `:deploy to Pages; <<ok>>`.
+Für `[graphviz,…]` gilt dieselbe Palette über `node [fillcolor="#EDF3FA",
+color="#7C93AD"]`.
+
 Jedes Bild trägt seine Herkunft im Bildtitel:
 
 [source,adoc]

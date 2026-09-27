@@ -32,14 +32,16 @@ Everything rests on one distinction:
 [plantuml,artefact-tenses,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "openspec/specs/\nthe target state\n*present tense*\nwhat is true today" as S
-rectangle "openspec/changes/<id>/\none intention\n*future tense*\nwhat shall become true" as C
-rectangle "changes/archive/\nwhat was decided, and when" as A
-
+rectangle "openspec/specs/\nthe target state\n*present tense*\nwhat is true today" as S #E4F0E4
+rectangle "openspec/changes/<id>/\none intention\n*future tense*\nwhat shall become true" as C #FAF0D9
+rectangle "changes/archive/\nwhat was decided, and when" as A #E3ECF8
 C -down-> S : "archive: the delta\nfolds into the target state"
 C -right-> A : "the change moves"
 @enduml

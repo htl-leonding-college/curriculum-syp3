@@ -33,9 +33,19 @@ a condition attached.
 [plantuml,change-lifecycle,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
+
+state proposed #E3ECF8
+state specified #E3ECF8
+state planned #FAF0D9
+state inProgress #FAF0D9
+state done #ECE6F7
+state archived #E4F0E4
 
 [*] --> proposed : reason written,\nboundary drawn
 proposed --> specified : requirements and\nscenarios exist
@@ -67,12 +77,14 @@ itself, and it is the point of the whole loop.
 [plantuml,archiving,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "specs/booking/spec.md\n(before)\n\n- a member can book\n- a booking can be cancelled" as B
-rectangle "changes/refuse-full-sessions/\nspecs/booking/spec.md\n\nADDED:\n- a full session refuses" as D
-rectangle "specs/booking/spec.md\n(after)\n\n- a member can book\n- a booking can be cancelled\n- a full session refuses" as A
-
+rectangle "specs/booking/spec.md\n(before)\n\n- a member can book\n- a booking can be cancelled" as B #F0F2F5
+rectangle "changes/refuse-full-sessions/\nspecs/booking/spec.md\n\nADDED:\n- a full session refuses" as D #FAF0D9
+rectangle "specs/booking/spec.md\n(after)\n\n- a member can book\n- a booking can be cancelled\n- a full session refuses" as A #E4F0E4
 B -right-> A
 D -down-> A : folded in
 @enduml

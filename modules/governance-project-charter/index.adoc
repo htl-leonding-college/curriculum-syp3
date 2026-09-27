@@ -94,11 +94,14 @@ The charter is frozen at approval. Everything after that happens against it:
 [plantuml,frozen-charter,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "Projektauftrag (frozen)\ngoals, deliverable, milestones" as C
-rectangle "specs (living)\nthe current target state" as S
-rectangle "changes/archive\nwhat actually happened" as A
+rectangle "Projektauftrag (frozen)\ngoals, deliverable, milestones" as C #E3ECF8
+rectangle "specs (living)\nthe current target state" as S #E4F0E4
+rectangle "changes/archive\nwhat actually happened" as A #FAF0D9
 C -down-> S : sets the frame
 S -down-> A : each change archived
 A -up-> C : the difference is visible\nand is itself the lesson

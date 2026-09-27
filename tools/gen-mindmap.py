@@ -26,17 +26,17 @@ from tools.curriculum import (  # noqa: E402
 
 OUTPUT = "stoffstruktur.puml"
 
-ROOT_COLOR = "#lightblue"
+ROOT_COLOR = "#E3ECF8"
 
 #: Farbe je Block. Ein unbekannter Block fällt auf FALLBACK_COLOR zurück,
 #: damit ein neuer Block die Mindmap nicht bricht.
 BLOCK_COLORS = {
-    "governance": "#lightgreen",
-    "vorgehen": "#lightyellow",
-    "modellierung": "#plum",
-    "werkzeuge": "#peachpuff",
+    "governance": "#E4F0E4",
+    "vorgehen": "#FAF0D9",
+    "modellierung": "#ECE6F7",
+    "werkzeuge": "#F9E6DC",
 }
-FALLBACK_COLOR = "#whitesmoke"
+FALLBACK_COLOR = "#F0F2F5"
 
 PLANNED_COLOR = "#808080"
 
@@ -73,7 +73,7 @@ def _block_lines(model: Curriculum, block) -> list[str]:
     for topic in _sorted_topics([t for t in topics if not t.theme]):
         lines.append(_topic_line(topic, 3))
     for theme in _themes(topics):
-        lines.append(f"*** {theme}")
+        lines.append(f"***[{color}] {theme}")
         for topic in _sorted_topics([t for t in topics if t.theme == theme]):
             lines.append(_topic_line(topic, 4))
     return lines

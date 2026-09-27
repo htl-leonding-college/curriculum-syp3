@@ -128,12 +128,12 @@ they are visible and dated.
 digraph frozen {
   rankdir=TB;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   C [label="Projektauftrag (frozen)\ngoals, deliverable, milestones",
-     fillcolor="#ffffff"];
+     fillcolor="#E3ECF8"];
   S [label="specs (living)\nthe current target state"];
   A [label="changes/archive\nwhat actually happened"];
 

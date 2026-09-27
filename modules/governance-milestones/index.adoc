@@ -100,15 +100,17 @@ options.
 [plantuml,milestone-placement,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "M1 — early\ncharter and specs exist\n(cheap to change everything)" as M1
-rectangle "M2 — first capability\nend to end, deployed\n(the integration risk fires here)" as M2
-rectangle "M3 — feature complete\nall capabilities archived\n(scope decisions still possible)" as M3
-rectangle "M4 — acceptance\nclient runs the scenarios\n(only polish left)" as M4
-
+rectangle "M1 — early\ncharter and specs exist\n(cheap to change everything)" as M1 #E3ECF8
+rectangle "M2 — first capability\nend to end, deployed\n(the integration risk fires here)" as M2 #FAF0D9
+rectangle "M3 — feature complete\nall capabilities archived\n(scope decisions still possible)" as M3 #ECE6F7
+rectangle "M4 — acceptance\nclient runs the scenarios\n(only polish left)" as M4 #E4F0E4
 M1 -right-> M2
 M2 -right-> M3
 M3 -right-> M4
@@ -137,15 +139,17 @@ estimate of the finish has been moving, which is the more useful of the two.
 [plantuml,milestone-trend,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "at review 1\nM3 expected: 06 Feb" as R1
-rectangle "at review 2\nM3 expected: 20 Feb" as R2
-rectangle "at review 3\nM3 expected: 06 Mar" as R3
-rectangle "reading:\nM3 moves ~2 weeks\nper review — the deadline\nwill not hold" as X
-
+rectangle "at review 1\nM3 expected: 06 Feb" as R1 #FAF0D9
+rectangle "at review 2\nM3 expected: 20 Feb" as R2 #FAF0D9
+rectangle "at review 3\nM3 expected: 06 Mar" as R3 #FAF0D9
+rectangle "reading:\nM3 moves ~2 weeks\nper review — the deadline\nwill not hold" as X #F8E5E5
 R1 -right-> R2
 R2 -right-> R3
 R3 -down-> X

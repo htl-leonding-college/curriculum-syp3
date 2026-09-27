@@ -98,7 +98,11 @@ block makes admonitions render on GitHub as well as in the built site.
 [plantuml,login-flow,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
 actor Student
 Student -> Browser : opens booking page
 Browser -> Server : GET /sessions

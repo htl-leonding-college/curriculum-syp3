@@ -55,11 +55,14 @@ expensive it is to be wrong.
 [plantuml,three-tempos,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "WATERFALL\nspecify -> build -> verify\none pass, months" as W
-rectangle "SCRUM\nbacklog -> sprint -> review\nweeks, repeated" as S
-rectangle "SDD\nspec -> change -> verify\nminutes, continuous" as D
+rectangle "WATERFALL\nspecify -> build -> verify\none pass, months" as W #E3ECF8
+rectangle "SCRUM\nbacklog -> sprint -> review\nweeks, repeated" as S #FAF0D9
+rectangle "SDD\nspec -> change -> verify\nminutes, continuous" as D #E4F0E4
 W -down-> S : shorter loop
 S -down-> D : shorter loop again
 @enduml

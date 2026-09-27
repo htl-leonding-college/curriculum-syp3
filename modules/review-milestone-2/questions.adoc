@@ -90,15 +90,18 @@ invisible until somebody actually tries it.
 [plantuml,q-deployment-risk,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "works on team laptops" as L
-rectangle "different architecture" as A
-rectangle "configuration from outside" as C
-rectangle "real database with a volume" as D
-rectangle "access, accounts, ports" as N
-rectangle "client's browser and laptop" as B
-rectangle "deployed, used by somebody else" as P
+rectangle "works on team laptops" as L #E4F0E4
+rectangle "different architecture" as A #F8E5E5
+rectangle "configuration from outside" as C #F8E5E5
+rectangle "real database with a volume" as D #F8E5E5
+rectangle "access, accounts, ports" as N #F8E5E5
+rectangle "client's browser and laptop" as B #F8E5E5
+rectangle "deployed, used by somebody else" as P #E3ECF8
 L -down-> A
 L -down-> C
 L -down-> D

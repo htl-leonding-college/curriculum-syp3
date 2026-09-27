@@ -57,7 +57,7 @@ def test_mindmap_groups_topics_by_theme(repo: Repo) -> None:
         ]
     )
     lines = mindmap.render(repo.model()).splitlines()
-    assert "*** Git" in lines
+    assert any(line.startswith("***[#") and line.endswith("] Git") for line in lines)
     assert any(line.startswith("****_ ") and "Git basics" in line for line in lines)
     # Ohne theme hängt das Thema eine Ebene höher, direkt unter seinem Block.
     assert any(line.startswith("***_ ") and "Course overview" in line for line in lines)

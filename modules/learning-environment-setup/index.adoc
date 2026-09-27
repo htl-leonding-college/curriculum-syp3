@@ -71,21 +71,30 @@ hours if skipped.
 [plantuml,setup-order,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+.key { BackgroundColor #E3ECF8 }
+.work { BackgroundColor #FAF0D9 }
+.ok { BackgroundColor #E4F0E4 }
+.bad { BackgroundColor #F8E5E5 }
+.aside { BackgroundColor #ECE6F7 }
+.muted { BackgroundColor #F0F2F5 }
+</style>
 skinparam shadowing false
 start
-:write a live USB with persistence;
-:boot from it;
+:write a live USB with persistence; <<work>>
+:boot from it; <<work>>
 if (does the hardware boot Linux?) then (yes)
-  :back up the recovery key;
-  :shrink the Windows partition;
-  :install Ubuntu next to Windows;
-  :run setup-tools.sh;
-  :run setup-identity.sh;
+  :back up the recovery key; <<key>>
+  :shrink the Windows partition; <<key>>
+  :install Ubuntu next to Windows; <<ok>>
+  :run setup-tools.sh; <<ok>>
+  :run setup-identity.sh; <<ok>>
   stop
 else (no)
-  :keep working from the live USB;
-  :bring the machine to the lab;
+  :keep working from the live USB; <<bad>>
+  :bring the machine to the lab; <<bad>>
   stop
 endif
 @enduml

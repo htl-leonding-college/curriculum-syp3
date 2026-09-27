@@ -20,8 +20,18 @@ covers: lo-1
 [plantuml,q-change-states,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
+state proposed #E3ECF8
+state specified #E3ECF8
+state planned #FAF0D9
+state inProgress #FAF0D9
+state done #ECE6F7
+state archived #E4F0E4
+
 [*] --> proposed : reason written
 proposed --> specified : requirements and scenarios
 specified --> planned : tasks with verifications
@@ -65,11 +75,14 @@ outside the change.
 [plantuml,q-archiving,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "specs/ (before)\n- a member can book\n- a booking can be cancelled" as B
-rectangle "delta\nADDED: a full session refuses" as D
-rectangle "specs/ (after)\n- a member can book\n- a booking can be cancelled\n- a full session refuses" as A
+rectangle "specs/ (before)\n- a member can book\n- a booking can be cancelled" as B #F0F2F5
+rectangle "delta\nADDED: a full session refuses" as D #FAF0D9
+rectangle "specs/ (after)\n- a member can book\n- a booking can be cancelled\n- a full session refuses" as A #E4F0E4
 B -right-> A
 D -down-> A : folded in
 @enduml

@@ -30,17 +30,26 @@ is not how the cycle works but *what ends it*.
 [plantuml,agentic-loop,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+.key { BackgroundColor #E3ECF8 }
+.work { BackgroundColor #FAF0D9 }
+.ok { BackgroundColor #E4F0E4 }
+.bad { BackgroundColor #F8E5E5 }
+.aside { BackgroundColor #ECE6F7 }
+.muted { BackgroundColor #F0F2F5 }
+</style>
 skinparam shadowing false
 start
-:read goal and current state;
+:read goal and current state; <<key>>
 repeat
-  :choose an action;
-  :run it — edit, command, search;
-  :observe the result;
+  :choose an action; <<work>>
+  :run it — edit, command, search; <<work>>
+  :observe the result; <<work>>
 repeat while (stop condition met?) is (no)
 ->yes;
-:report;
+:report; <<ok>>
 stop
 @enduml
 ----

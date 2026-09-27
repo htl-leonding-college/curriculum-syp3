@@ -33,18 +33,21 @@ it between two of them.
 [plantuml,git-architecture,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultTextAlignment center
 
 rectangle "your machine" {
-  rectangle "working tree\nyour files as you edit them" as W
-  rectangle "index (staging area)\nwhat the next commit will contain" as I
-  rectangle "local repository\n.git — the full history" as L
+  rectangle "working tree\nyour files as you edit them" as W #FAF0D9
+  rectangle "index (staging area)\nwhat the next commit will contain" as I #E3ECF8
+  rectangle "local repository\n.git — the full history" as L #E4F0E4
 }
 
 rectangle "server (GitHub)" {
-  rectangle "remote repository\norigin — the full history again" as R
+  rectangle "remote repository\norigin — the full history again" as R #ECE6F7
 }
 
 W -right-> I : git add

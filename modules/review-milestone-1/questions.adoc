@@ -22,14 +22,17 @@ Only what is in the repository. No slides, no status report, no percentage.
 [plantuml,q-review-sources,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "charter" as CH
-rectangle "specs/" as SP
-rectangle "changes/archive/" as AR
-rectangle "git history" as GI
-rectangle "running app" as AP
-rectangle "the review" as RV
+rectangle "charter" as CH #E3ECF8
+rectangle "specs/" as SP #E4F0E4
+rectangle "changes/archive/" as AR #FAF0D9
+rectangle "git history" as GI #ECE6F7
+rectangle "running app" as AP #F0F2F5
+rectangle "the review" as RV #F8E5E5
 CH --> RV : still what we agreed?
 SP --> RV : what is claimed true?
 AR --> RV : what is finished?

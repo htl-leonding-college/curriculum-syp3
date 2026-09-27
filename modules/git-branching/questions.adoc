@@ -70,9 +70,9 @@ commit is created.
 digraph fastforward {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7];
+  edge [color="#5A6B7D", arrowsize=0.7];
 
   A -> B -> C -> D;
   B [label="B\nmain points here\nbefore the merge"];
@@ -91,9 +91,9 @@ creates a **merge commit**: a commit with *two* parents, one on each line.
 digraph mergecommit {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7];
+  edge [color="#5A6B7D", arrowsize=0.7];
 
   A -> B -> C -> M;
   B -> D -> M;

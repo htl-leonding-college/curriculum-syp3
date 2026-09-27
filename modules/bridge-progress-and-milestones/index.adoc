@@ -58,15 +58,17 @@ gives a progress statement that nobody has to be trusted for.
 [plantuml,progress-derivation,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "charter objective\n\"trainers record attendance\ndigitally\"" as O
-rectangle "capabilities in specs/\nattendance, session, member" as C
-rectangle "archived changes\n5 archived, 2 open" as A
-rectangle "progress statement\n\"attendance: recording and\nrefusal done; history open\"" as P
-
+rectangle "charter objective\n\"trainers record attendance\ndigitally\"" as O #E3ECF8
+rectangle "capabilities in specs/\nattendance, session, member" as C #E4F0E4
+rectangle "archived changes\n5 archived, 2 open" as A #FAF0D9
+rectangle "progress statement\n\"attendance: recording and\nrefusal done; history open\"" as P #ECE6F7
 O -down-> C : "answered by"
 C -down-> A : "reached through"
 A -right-> P

@@ -27,20 +27,29 @@ integration setup: a trigger, a build, an artefact, a deployment.
 [plantuml,ci-flow,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+.key { BackgroundColor #E3ECF8 }
+.work { BackgroundColor #FAF0D9 }
+.ok { BackgroundColor #E4F0E4 }
+.bad { BackgroundColor #F8E5E5 }
+.aside { BackgroundColor #ECE6F7 }
+.muted { BackgroundColor #F0F2F5 }
+</style>
 skinparam shadowing false
 start
-:push to main;
-:runner starts on ubuntu-latest;
-:check;
+:push to main; <<work>>
+:runner starts on ubuntu-latest; <<work>>
+:check; <<key>>
 if (green?) then (yes)
-  :build the site;
-  :upload artefact;
-  :deploy to Pages;
+  :build the site; <<ok>>
+  :upload artefact; <<ok>>
+  :deploy to Pages; <<ok>>
   stop
 else (no)
-  :report the failing step;
-  :nothing is published;
+  :report the failing step; <<bad>>
+  :nothing is published; <<bad>>
   stop
 endif
 @enduml

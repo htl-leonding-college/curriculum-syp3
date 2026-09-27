@@ -117,12 +117,12 @@ the others.
 digraph triangle {
   bgcolor="transparent";
   layout=neato;
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowhead=none];
+  edge [color="#5A6B7D", arrowhead=none];
 
   S [label="SCOPE\nwhat is built\n— the only variable", pos="0,1.4!",
-     fillcolor="#ffffff"];
+     fillcolor="#FAF0D9"];
   T [label="TIME\nthe year ends\n— fixed", pos="-1.6,-0.6!"];
   R [label="RESOURCES\nthe team you are\n— fixed", pos="1.6,-0.6!"];
 

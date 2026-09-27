@@ -55,11 +55,14 @@ The charter, which stays frozen.
 [plantuml,q-frozen-and-alive,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "frozen: charter\ngoals, scope, non-goals,\ndeadline, roles" as CH
-rectangle "alive: specs/" as SP
-rectangle "alive: changes/" as CG
+rectangle "frozen: charter\ngoals, scope, non-goals,\ndeadline, roles" as CH #E3ECF8
+rectangle "alive: specs/" as SP #E4F0E4
+rectangle "alive: changes/" as CG #FAF0D9
 CH -right-> SP : the yardstick
 CG -up-> SP : archived deltas
 SP -down-> CH : every capability answers\nan objective

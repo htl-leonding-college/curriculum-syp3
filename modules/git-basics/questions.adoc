@@ -28,9 +28,9 @@ forward, two move it back.
 digraph states {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   W [label="working tree\nyour files as you edit them"];
   I [label="index\nwhat the next commit contains"];
@@ -333,9 +333,9 @@ and local repository are all on your machine; `origin` is on the server.
 digraph network {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   subgraph cluster_local {
     label="your machine — no network needed";

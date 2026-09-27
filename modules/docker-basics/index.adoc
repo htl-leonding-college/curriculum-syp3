@@ -59,15 +59,17 @@ Three words, and confusing them is the source of most early errors.
 [plantuml,image-container-registry,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "Dockerfile\na description" as D
-rectangle "image\nread-only, layered,\nidentified by a digest" as I
-rectangle "container\na running instance,\nwith a writable layer" as C
-rectangle "registry\nwhere images are\nstored and fetched" as R
-
+rectangle "Dockerfile\na description" as D #FAF0D9
+rectangle "image\nread-only, layered,\nidentified by a digest" as I #E3ECF8
+rectangle "container\na running instance,\nwith a writable layer" as C #E4F0E4
+rectangle "registry\nwhere images are\nstored and fetched" as R #ECE6F7
 D -right-> I : "build"
 I -right-> C : "run"
 I -up-> R : "push"
@@ -140,17 +142,20 @@ practical property.
 [plantuml,vm-vs-container,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
 rectangle "virtual machine" {
-  rectangle "hardware" as H1
-  rectangle "host OS + hypervisor" as O1
-  rectangle "guest kernel A" as K1
-  rectangle "guest kernel B" as K2
-  rectangle "app A" as A1
-  rectangle "app B" as A2
+  rectangle "hardware" as H1 #F0F2F5
+  rectangle "host OS + hypervisor" as O1 #F0F2F5
+  rectangle "guest kernel A" as K1 #FAF0D9
+  rectangle "guest kernel B" as K2 #FAF0D9
+  rectangle "app A" as A1 #E4F0E4
+  rectangle "app B" as A2 #E4F0E4
   H1 -up-> O1
   O1 -up-> K1
   O1 -up-> K2
@@ -159,10 +164,10 @@ rectangle "virtual machine" {
 }
 
 rectangle "containers" {
-  rectangle "hardware" as H2
-  rectangle "host OS — one kernel" as O2
-  rectangle "app C" as A3
-  rectangle "app D" as A4
+  rectangle "hardware" as H2 #F0F2F5
+  rectangle "host OS — one kernel" as O2 #F0F2F5
+  rectangle "app C" as A3 #E4F0E4
+  rectangle "app D" as A4 #E4F0E4
   H2 -up-> O2
   O2 -up-> A3
   O2 -up-> A4

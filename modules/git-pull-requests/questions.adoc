@@ -27,9 +27,9 @@ a pull request adds sits *around* the merge.
 digraph pr {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   B [label="branch pushed"];
   P [label="pull request"];
@@ -102,12 +102,12 @@ repository is the same idea with the permission question already settled.
 digraph fork {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   U [label="upstream\nthe original repository\nread only for you",
-     fillcolor="#ffffff"];
+     fillcolor="#F0F2F5"];
   O [label="origin\nyour fork\nyou may push"];
   L [label="your machine\nlocal clone"];
 

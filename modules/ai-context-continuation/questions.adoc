@@ -85,12 +85,12 @@ digraph window {
   rankdir=TB;
   bgcolor="transparent";
   compound=true;
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   A [label="your instructions and\nthe decisions taken at the start",
-     style="filled,dashed", fillcolor="#ffffff", color="#999999"];
+     style="filled,dashed", fillcolor="#F0F2F5", color="#A3AEBA"];
 
   subgraph cluster_w {
     label="context window — fixed size, newest kept";

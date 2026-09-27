@@ -85,20 +85,22 @@ until somebody tries it.
 [plantuml,deployment-risk,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "works on the\nteam's laptops" as L
+rectangle "works on the\nteam's laptops" as L #E4F0E4
 rectangle "what is still untested" {
-  rectangle "a different architecture" as A
-  rectangle "configuration from outside" as C
-  rectangle "a real database with a volume" as D
-  rectangle "access, accounts, ports" as N
-  rectangle "the client's browser and laptop" as B
+  rectangle "a different architecture" as A #F8E5E5
+  rectangle "configuration from outside" as C #F8E5E5
+  rectangle "a real database with a volume" as D #F8E5E5
+  rectangle "access, accounts, ports" as N #F8E5E5
+  rectangle "the client's browser and laptop" as B #F8E5E5
 }
-rectangle "deployed and used\nby somebody else" as P
-
+rectangle "deployed and used\nby somebody else" as P #E3ECF8
 L -down-> A
 L -down-> C
 L -down-> D

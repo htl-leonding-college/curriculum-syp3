@@ -98,12 +98,15 @@ while the answer still leaves options.
 [plantuml,q-milestone-placement,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "M1 early\ncharter and specs" as M1
-rectangle "M2 first slice\nend to end, deployed" as M2
-rectangle "M3 feature complete" as M3
-rectangle "M4 acceptance" as M4
+rectangle "M1 early\ncharter and specs" as M1 #E3ECF8
+rectangle "M2 first slice\nend to end, deployed" as M2 #FAF0D9
+rectangle "M3 feature complete" as M3 #ECE6F7
+rectangle "M4 acceptance" as M4 #E4F0E4
 M1 -right-> M2
 M2 -right-> M3
 M3 -right-> M4
@@ -142,12 +145,15 @@ A *systematic* slip.
 [plantuml,q-milestone-trend,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "review 1\nM3: 06 Feb" as R1
-rectangle "review 2\nM3: 20 Feb" as R2
-rectangle "review 3\nM3: 06 Mar" as R3
-rectangle "M3 moves ~2 weeks\nper review" as X
+rectangle "review 1\nM3: 06 Feb" as R1 #FAF0D9
+rectangle "review 2\nM3: 20 Feb" as R2 #FAF0D9
+rectangle "review 3\nM3: 06 Mar" as R3 #FAF0D9
+rectangle "M3 moves ~2 weeks\nper review" as X #F8E5E5
 R1 -right-> R2
 R2 -right-> R3
 R3 -down-> X

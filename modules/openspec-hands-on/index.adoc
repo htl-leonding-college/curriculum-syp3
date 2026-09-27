@@ -24,15 +24,24 @@ endif::[]
 [plantuml,openspec-loop,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+.key { BackgroundColor #E3ECF8 }
+.work { BackgroundColor #FAF0D9 }
+.ok { BackgroundColor #E4F0E4 }
+.bad { BackgroundColor #F8E5E5 }
+.aside { BackgroundColor #ECE6F7 }
+.muted { BackgroundColor #F0F2F5 }
+</style>
 skinparam shadowing false
 start
-:propose — why, what changes, which capabilities;
-:specs — requirements and scenarios (the delta);
-:design — only if there is a real decision to record;
-:tasks — checkable steps;
-:apply — implement, tick off, verify;
-:archive — the delta folds into the target state;
+:propose — why, what changes, which capabilities; <<key>>
+:specs — requirements and scenarios (the delta); <<key>>
+:design — only if there is a real decision to record; <<aside>>
+:tasks — checkable steps; <<work>>
+:apply — implement, tick off, verify; <<work>>
+:archive — the delta folds into the target state; <<ok>>
 stop
 @enduml
 ----

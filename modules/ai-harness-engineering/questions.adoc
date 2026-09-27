@@ -23,13 +23,16 @@ model, and acts on the answer. Four parts matter, and three of them are yours.
 [plantuml,q-harness-parts,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "instructions" as I
-rectangle "context" as C
-rectangle "tools" as T
-rectangle "permissions" as P
-rectangle "model\n(not yours)" as M
+rectangle "instructions" as I #FAF0D9
+rectangle "context" as C #E3ECF8
+rectangle "tools" as T #E4F0E4
+rectangle "permissions" as P #ECE6F7
+rectangle "model\n(not yours)" as M #F0F2F5
 I --> M
 C --> M
 M --> T

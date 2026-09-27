@@ -72,11 +72,14 @@ state and moves the change into `changes/archive/`.
 [plantuml,q-target-and-delta,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "specs/\ntarget state\npresent tense" as S
-rectangle "changes/<id>/\ndelta\nwhat shall become true" as C
-rectangle "changes/archive/" as A
+rectangle "specs/\ntarget state\npresent tense" as S #E4F0E4
+rectangle "changes/<id>/\ndelta\nwhat shall become true" as C #FAF0D9
+rectangle "changes/archive/" as A #E3ECF8
 C -down-> S : archive
 C -right-> A
 @enduml

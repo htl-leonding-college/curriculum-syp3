@@ -62,12 +62,15 @@ By counting capabilities reached, per charter objective.
 [plantuml,q-progress-derivation,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "charter objective" as O
-rectangle "capabilities in specs/" as C
-rectangle "archived changes" as A
-rectangle "progress statement" as P
+rectangle "charter objective" as O #E3ECF8
+rectangle "capabilities in specs/" as C #E4F0E4
+rectangle "archived changes" as A #FAF0D9
+rectangle "progress statement" as P #ECE6F7
 O -down-> C : answered by
 C -down-> A : reached through
 A -right-> P

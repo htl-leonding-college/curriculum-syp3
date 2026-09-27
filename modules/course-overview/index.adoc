@@ -28,21 +28,24 @@ need to do any of it.
 [plantuml,course-areas,svg]
 ----
 @startmindmap
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-* SYP year 3
-** Governance
-*** the outside: proposal, charter, milestones, acceptance
-*** mandatory in every project form up to the diploma thesis
-** Process models and SDD
-*** the inside: how you get from goal to result
-*** waterfall, Scrum and spec-driven development as three tempos
-** Modelling
-*** UML: use case, class, activity, state
-*** diagrams as source text, not as pictures
-** Tools
-*** git, AsciiDoc, GitHub Actions and Pages
-*** AI agents, Docker, compose, minikube
+*[#E3ECF8] SYP year 3
+**[#E4F0E4] Governance
+***[#E4F0E4] the outside: proposal, charter, milestones, acceptance
+***[#E4F0E4] mandatory in every project form up to the diploma thesis
+**[#FAF0D9] Process models and SDD
+***[#FAF0D9] the inside: how you get from goal to result
+***[#FAF0D9] waterfall, Scrum and spec-driven development as three tempos
+**[#ECE6F7] Modelling
+***[#ECE6F7] UML: use case, class, activity, state
+***[#ECE6F7] diagrams as source text, not as pictures
+**[#F9E6DC] Tools
+***[#F9E6DC] git, AsciiDoc, GitHub Actions and Pages
+***[#F9E6DC] AI agents, Docker, compose, minikube
 @endmindmap
 ----
 

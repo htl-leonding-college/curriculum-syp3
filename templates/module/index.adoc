@@ -25,7 +25,10 @@ den Slot dieses Themas passt.
 [plantuml,{{TOPIC_ID}}-overview,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 :Beispiel;
 @enduml

@@ -57,12 +57,15 @@ entirely rigorous from the outside, which is what makes it dangerous.
 [plantuml,q-acceptance-chain,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "charter objective (frozen)" as O
-rectangle "acceptance criterion (frozen)" as A
-rectangle "capabilities in specs/ (alive)" as C
-rectangle "scenarios" as S
+rectangle "charter objective (frozen)" as O #E3ECF8
+rectangle "acceptance criterion (frozen)" as A #E3ECF8
+rectangle "capabilities in specs/ (alive)" as C #E4F0E4
+rectangle "scenarios" as S #E4F0E4
 O -down-> A : derived once
 O -right-> C : answered by
 C -down-> S

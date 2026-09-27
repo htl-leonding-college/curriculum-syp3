@@ -59,15 +59,17 @@ the charter objectives before the work begins, and they do not move.*
 [plantuml,acceptance-chain,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
-rectangle "charter objective\n(frozen)" as O
-rectangle "acceptance criterion\n(frozen, derived at the start)" as A
-rectangle "capabilities in specs/\n(alive)" as C
-rectangle "scenarios\n(run at acceptance)" as S
-
+rectangle "charter objective\n(frozen)" as O #E3ECF8
+rectangle "acceptance criterion\n(frozen, derived at the start)" as A #E3ECF8
+rectangle "capabilities in specs/\n(alive)" as C #E4F0E4
+rectangle "scenarios\n(run at acceptance)" as S #E4F0E4
 O -down-> A : "derived once"
 O -right-> C : "answered by"
 C -down-> S

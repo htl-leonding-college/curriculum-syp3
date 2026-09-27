@@ -30,19 +30,21 @@ percentage, because everything a reviewer needs is already committed.
 [plantuml,review-sources,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
 rectangle "the repository" {
-  rectangle "charter\nfrozen goals" as CH
-  rectangle "specs/\ntarget state" as SP
-  rectangle "changes/archive/\ndated, ticked" as AR
-  rectangle "git history\nwho, when, what" as GI
-  rectangle "the built site / running app" as AP
+  rectangle "charter\nfrozen goals" as CH #E3ECF8
+  rectangle "specs/\ntarget state" as SP #E4F0E4
+  rectangle "changes/archive/\ndated, ticked" as AR #FAF0D9
+  rectangle "git history\nwho, when, what" as GI #ECE6F7
+  rectangle "the built site / running app" as AP #F0F2F5
 }
-rectangle "the review" as RV
-
+rectangle "the review" as RV #F8E5E5
 CH --> RV : "is this still what we agreed?"
 SP --> RV : "what does it claim is true?"
 AR --> RV : "what is finished?"

@@ -58,18 +58,21 @@ are unchanged and invalidates *everything after the first changed one*.
 [plantuml,q-layer-cache,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 rectangle "bad" {
-  rectangle "COPY . ." as B2
-  rectangle "RUN build — every time" as B3
+  rectangle "COPY . ." as B2 #F8E5E5
+  rectangle "RUN build — every time" as B3 #F8E5E5
   B2 -down-> B3
 }
 rectangle "good" {
-  rectangle "COPY build.gradle" as G2
-  rectangle "RUN dependencies — cached" as G3
-  rectangle "COPY src/" as G4
-  rectangle "RUN build — only this" as G5
+  rectangle "COPY build.gradle" as G2 #E4F0E4
+  rectangle "RUN dependencies — cached" as G3 #E4F0E4
+  rectangle "COPY src/" as G4 #FAF0D9
+  rectangle "RUN build — only this" as G5 #E4F0E4
   G2 -down-> G3
   G3 -down-> G4
   G4 -down-> G5

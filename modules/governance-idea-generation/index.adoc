@@ -113,17 +113,26 @@ sheet moves one seat on, and you read what is there before you write.
 [plantuml,brainwriting,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+.key { BackgroundColor #E3ECF8 }
+.work { BackgroundColor #FAF0D9 }
+.ok { BackgroundColor #E4F0E4 }
+.bad { BackgroundColor #F8E5E5 }
+.aside { BackgroundColor #ECE6F7 }
+.muted { BackgroundColor #F0F2F5 }
+</style>
 skinparam shadowing false
 start
-:each person gets a sheet with 3 columns;
+:each person gets a sheet with 3 columns; <<key>>
 repeat
-  :write 3 ideas in 5 minutes;
-  :pass the sheet to the next person;
-  :read what is there, build on it;
+  :write 3 ideas in 5 minutes; <<work>>
+  :pass the sheet to the next person; <<work>>
+  :read what is there, build on it; <<work>>
 repeat while (six rounds done?) is (no)
 ->yes;
-:6 x 3 x 6 = 108 written ideas;
+:6 x 3 x 6 = 108 written ideas; <<ok>>
 stop
 @enduml
 ----
@@ -217,9 +226,9 @@ transfer the principle back — not the shape.
 digraph bionik {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   P [label="technical problem\n\"surfaces get dirty\""];
   A [label="functional question\n\"how does a surface\nstay clean?\""];
@@ -256,9 +265,9 @@ take, how a technology will develop, whether an approach carries.
 digraph delphi {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   Q [label="written question\nto the experts"];
   R1 [label="round 1\neveryone answers\nanonymously"];

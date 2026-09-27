@@ -26,12 +26,15 @@ endif::[]
 [plantuml,git-remotes,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "working tree" as W
-rectangle "local repository\nmain" as L
-rectangle "remote-tracking branch\norigin/main" as T
-rectangle "remote (GitHub)\nmain" as R
+rectangle "working tree" as W #FAF0D9
+rectangle "local repository\nmain" as L #E3ECF8
+rectangle "remote-tracking branch\norigin/main" as T #ECE6F7
+rectangle "remote (GitHub)\nmain" as R #E4F0E4
 W -right-> L : commit
 L -right-> R : push
 R -left-> T : fetch

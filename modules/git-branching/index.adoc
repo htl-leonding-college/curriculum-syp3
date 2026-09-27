@@ -28,12 +28,15 @@ git writes a file containing one hash.
 [plantuml,git-branch,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "A" as A
-rectangle "B" as B
-rectangle "C" as C
-rectangle "D" as D
+rectangle "A" as A #E3ECF8
+rectangle "B" as B #E3ECF8
+rectangle "C" as C #E3ECF8
+rectangle "D" as D #FAF0D9
 A -right-> B
 B -right-> C
 B -down-> D

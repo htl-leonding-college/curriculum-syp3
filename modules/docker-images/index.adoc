@@ -64,24 +64,27 @@ have not changed, and *invalidates everything after the first one that has*.
 [plantuml,layer-cache,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
 skinparam defaultFontName Helvetica
 
 rectangle "bad order" {
-  rectangle "FROM  — cached" as B1
-  rectangle "COPY . .  — changes every edit" as B2
-  rectangle "RUN gradle build  — rebuilt every time" as B3
+  rectangle "FROM  — cached" as B1 #F0F2F5
+  rectangle "COPY . .  — changes every edit" as B2 #F8E5E5
+  rectangle "RUN gradle build  — rebuilt every time" as B3 #F8E5E5
   B1 -down-> B2
   B2 -down-> B3
 }
 
 rectangle "good order" {
-  rectangle "FROM  — cached" as G1
-  rectangle "COPY build.gradle  — rarely changes" as G2
-  rectangle "RUN gradle dependencies  — cached" as G3
-  rectangle "COPY src/  — changes every edit" as G4
-  rectangle "RUN gradle build  — only this rebuilds" as G5
+  rectangle "FROM  — cached" as G1 #F0F2F5
+  rectangle "COPY build.gradle  — rarely changes" as G2 #E4F0E4
+  rectangle "RUN gradle dependencies  — cached" as G3 #E4F0E4
+  rectangle "COPY src/  — changes every edit" as G4 #FAF0D9
+  rectangle "RUN gradle build  — only this rebuilds" as G5 #E4F0E4
   G1 -down-> G2
   G2 -down-> G3
   G3 -down-> G4

@@ -27,16 +27,16 @@ exactly it.
 digraph pipeline {
   rankdir=LR;
   bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#f2f2f2", color="#666666",
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
         fontname="Helvetica", fontsize=11];
-  edge [color="#666666", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   T [label="trigger\npush to main,\npull request"];
   B [label="build\non a runner\n(ubuntu-latest)"];
   A [label="artefact\nbuild/site"];
   D [label="deployment\nGitHub Pages"];
   F [label="nothing is published\nthe failing step is reported", shape=box,
-     fillcolor="#ffffff"];
+     fillcolor="#F8E5E5"];
 
   T -> B;
   B -> A [label="green"];

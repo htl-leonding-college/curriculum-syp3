@@ -87,11 +87,14 @@ says what the work is *for*.
 [plantuml,magic-triangle,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "SCOPE\nwhat is built" as S
-rectangle "TIME\nwhen it is due" as T
-rectangle "RESOURCES\npeople, money, machines" as R
+rectangle "SCOPE\nwhat is built" as S #E3ECF8
+rectangle "TIME\nwhen it is due" as T #FAF0D9
+rectangle "RESOURCES\npeople, money, machines" as R #E4F0E4
 S -- T
 T -- R
 R -- S

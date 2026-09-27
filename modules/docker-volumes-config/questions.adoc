@@ -23,12 +23,15 @@ worth protecting.
 [plantuml,q-one-image-many-envs,svg]
 ----
 @startuml
-skinparam monochrome true
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
 skinparam shadowing false
-rectangle "booking:0.3.0" as I
-rectangle "development" as D
-rectangle "test" as T
-rectangle "production" as P
+rectangle "booking:0.3.0" as I #E3ECF8
+rectangle "development" as D #FAF0D9
+rectangle "test" as T #ECE6F7
+rectangle "production" as P #E4F0E4
 I -down-> D
 I -down-> T
 I -down-> P
