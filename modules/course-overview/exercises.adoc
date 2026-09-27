@@ -10,33 +10,5 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-== Check your machine against the requirements
-
-kind: drill
-
-Go through the hardware checklist in the module `learning-environment-setup` and
-write down, for your own machine: amount of RAM, free disk space, whether
-virtualisation is enabled in the BIOS, and whether you have the BitLocker
-recovery key.
-
-.Solution
-[%collapsible]
-====
-There is no single right answer — the point is the list. Any missing item is
-your homework before the next lesson. The two that cost the most time later are
-the recovery key and free space below 100 GB.
-====
-
-== Read one module's questions first
-
-kind: drill
-
-Open `questions.adoc` of a module you have not read yet and try to answer the
-questions from what you already know. Then read the module and answer again.
-
-.Solution
-[%collapsible]
-====
-The second pass is faster and more precise. That is what the published questions
-are for: they turn reading into looking for something.
-====
+None. This lesson orients you in the subject; there is nothing to practise yet.
+The practical part of lesson 1 is `learning-environment-setup`.

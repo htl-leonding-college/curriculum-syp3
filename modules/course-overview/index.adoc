@@ -14,10 +14,15 @@ endif::[]
 
 == Learning outcomes
 
-* [[lo-1]] Name the four subject areas of this course and say what each one is for
-* [[lo-2]] Explain how a lesson is split into theory and practice, and where the
-  project work happens
-* [[lo-3]] Explain how you are assessed and where the exam questions come from
+This lesson is organisational and carries no exam questions of its own. What it
+should leave you with:
+
+* the four subject areas of this course and what each one is for
+* how a lesson is split into theory and practice, and where the project work
+  happens
+* how you are assessed and where the exam questions come from
+
+The topics behind these points are examined in their own modules.
 
 == What this subject is about
 
