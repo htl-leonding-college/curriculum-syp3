@@ -23,6 +23,98 @@ endif::[]
 * [[lo-4]] Keep generated and secret files out of the repository
 * [[lo-5]] Locate the remote repository in the picture and say which commands
   cross the network
+* [[lo-6]] Tell a centralized from a distributed version control system and name
+  what the distributed one makes possible
+* [[lo-7]] Explain what a commit stores, and why that makes returning to an
+  earlier state possible
+
+== Centralized or distributed
+
+Version control did not start distributed. In a *centralized* system there is
+one repository, on one server, and every developer has nothing but a working
+copy of it. Subversion and Microsoft Team Foundation Server work this way.
+
+[plantuml,git-centralized,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+database "central repository\nthe only history there is" as C #F0F2F5
+
+actor "Susi" as S
+actor "Basti" as B
+actor "Luki" as L
+
+S -up-> C
+B -up-> C
+L -up-> C
+
+note right of C #F8E5E5 : single point of failure\nserver down = nobody commits,\nnobody reads the history
+@enduml
+----
+
+Every operation that has anything to do with history — commit, log, diff,
+revert — goes through that one machine. It is a *single point of failure*, and
+not only in the dramatic sense of a burnt server: a slow network is enough to
+make committing something you postpone.
+
+Git is *distributed*. Cloning does not fetch a working copy, it fetches the
+whole repository. Every participant holds a complete history.
+
+[plantuml,git-distributed,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+database "remote repository\norigin — full history" as R #ECE6F7
+
+database "local repository\nfull history" as R1 #E4F0E4
+database "local repository\nfull history" as R2 #E4F0E4
+database "local repository\nfull history" as R3 #E4F0E4
+
+actor "Susi" as S
+actor "Basti" as B
+actor "Luki" as L
+
+S -up-> R1
+B -up-> R2
+L -up-> R3
+
+R1 -up-> R
+R2 -up-> R
+R3 -up-> R
+
+note right of R #E4F0E4 : any clone can continue the work\nif this one is lost
+@enduml
+----
+
+`origin` on the server is therefore a repository, not a headquarters. It holds
+the same kind of history as the `.git` directory on your machine — a full copy,
+not a master version of which yours is a fragment. It is the agreed meeting
+point, and that is a convention, not a technical rank.
+
+Two consequences you feel on the first day:
+
+* `git add`, `git commit`, `git log` and `git diff` never touch the network.
+  Committing offline works — on a plane, in a cellar, with the wifi switched
+  off. Only `git push`, `git fetch`, `git pull` and `git clone` cross the line.
+* A commit that exists only in your local repository exists for nobody else.
+  "It is committed" and "the others have it" are two different statements — the
+  second one needs a push.
+
+NOTE: How the two sides are kept in step — remote-tracking branches, conflicts,
+rejected pushes — is the subject of `git-conflicts-remotes`. Here it is enough
+to see where the line runs.
 
 == Four places, not one
 
@@ -60,81 +152,323 @@ note bottom of R : git clone creates\nthe left three from this one
 @enduml
 ----
 
-[source,bash]
-----
-git init                    # start a repository in this directory
-git status                  # which files are where
-git add report.adoc         # working tree -> index
-git commit -m "Add report"  # index -> local repository
-git log --oneline           # read the history
-git restore report.adoc     # index -> working tree, throw the edits away
-----
+The middle place is the one without an equivalent in other tools. The *index*
+lets you choose which of your current changes make up the next commit. You
+edited three files and only two belong to the bug you are fixing: you stage
+those two and commit them, and the third stays in the working tree for the next
+commit.
 
 `git status` answers the only question that matters while you work: what is in
 which state right now. Run it more often than you think you need to.
 
-== The remote is a repository, not a headquarters
+== Starting a repository
 
-`origin` on the server holds the same kind of history as `.git` on your machine
-— a full copy, not a master version that yours is a fragment of. This is what
-*distributed* means: any clone can be used to continue the work if the server
-burns down.
+[source,bash]
+----
+mkdir my-first-repo
+cd my-first-repo
+git init                # creates .git — this directory is now a repository
+ls -a                   # .git is there, and it is the whole repository
+git status              # "No commits yet", and nothing tracked
+----
 
-Two consequences you feel on the first day:
+Everything git knows about the project sits inside `.git`. Delete that directory
+and you have an ordinary folder again, with your files intact and the history
+gone. Try it once, deliberately, so that the relationship is clear:
 
-* `git add`, `git commit`, `git log` and `git diff` never touch the network.
-  Committing offline works — on a plane, in a cellar, with the wifi switched
-  off. Only `git push`, `git fetch`, `git pull` and `git clone` cross the line
-  in the picture.
-* A commit that exists only in your local repository exists for nobody else.
-  "It is committed" and "the others have it" are two different statements — the
-  second one needs a push.
+[source,bash]
+----
+rm -rf .git             # history gone, working tree untouched
+git status              # "not a git repository"
+git init                # start over
+----
 
-NOTE: How the two sides are kept in step — remote-tracking branches, conflicts,
-rejected pushes — is the subject of `git-conflicts-remotes`. Here it is enough
-to see where the line runs.
+WARNING: This is the only place in this course where deleting `.git` is a good
+idea. It is not recoverable — there is no second copy of a repository that was
+never pushed.
+
+`git init` does not create a commit. A fresh repository has a history of length
+zero, and the first `git commit` is what starts it.
 
 == What a commit is
 
 A commit records the *complete state* of the tracked files, plus who made it,
-when, and a message. It is not a diff — the diff is computed between two
-commits when you ask for it.
+when, a message, and which commit came before it. It is not a diff — the diff is
+computed between two commits when you ask for it.
+
+That sentence is the centre of git, and it is worth watching it happen. Two
+files, nothing committed yet:
 
 [source,bash]
 ----
-git log --oneline --graph
-git show <hash>             # what this commit changed
-git diff                    # working tree vs index
-git diff --staged           # index vs last commit
+touch file1 file2
+git status              # both untracked
 ----
 
-Because a commit is a state, you can always go back to one. That is the actual
-promise of version control: you can experiment because you can return.
+.Both files are in the working tree, and git is only watching
+[plantuml,git-commit-untracked,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
 
-== The same history in IntelliJ
+folder "working tree" as W #FAF0D9 {
+  file "file1" as f1
+  file "file2" as f2
+}
+storage "index" as I #E3ECF8
+database "local repository" as L #E4F0E4
 
-The IDE shows nothing the commands do not — it shows it faster. In IntelliJ the
-kbd:[Git] tool window (kbd:[Alt+9]) has a *Log* tab with the graph, the branches
-of the local repository and those of the remote, and the changed files of the
-selected commit.
+W -right-> I
+I -right-> L
+@enduml
+----
 
-.Git log in IntelliJ IDEA 2026.2 (own)
-image::git-log-intellij-2026.2.png[Git log in IntelliJ,700]
+[source,bash]
+----
+git add file1 file2
+git status              # both staged, ready to be committed
+----
 
-Three things are worth reading off this window from the first lesson:
+.After git add the files exist twice: in the working tree and in the index
+[plantuml,git-commit-staged,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
 
-* Under *Local* stands `main`, under *Remote* stands `origin/main`. Both labels
-  appear in the picture of the four places — the tool window is that picture,
-  filled with your project.
-* `↗ 6` next to `main` means six commits are committed but not pushed. That is
-  the difference between "it is committed" and "the others have it", made
-  visible.
-* The subjects read `feat: …`, `docs: …`. A history in Conventional Commits form
-  can be scanned in the IDE exactly as it can with `git log --oneline`.
+folder "working tree" as W #FAF0D9 {
+  file "file1" as f1
+  file "file2" as f2
+}
+storage "index" as I #E3ECF8 {
+  file "file1" as i1
+  file "file2" as i2
+}
+database "local repository" as L #E4F0E4
 
-The buttons do the same thing as the commands, and knowing both is deliberate:
-in the IDE you work faster, on the command line you can say what actually
-happened — which is what the oral examination asks for.
+f2 -right-> I : git add
+I -right-> L
+@enduml
+----
+
+[source,bash]
+----
+git commit -m "feat: add the first two files"
+----
+
+.The commit stores a snapshot of every tracked file, not the changed ones
+[plantuml,git-commit-v1,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+folder "working tree" as W #FAF0D9 {
+  file "file1" as f1
+  file "file2" as f2
+}
+storage "index" as I #E3ECF8 {
+  file "file1" as i1
+  file "file2" as i2
+}
+database "local repository" as L #E4F0E4 {
+  card "commit 1" as c1 #E3ECF8 {
+    file "file1" as c1f1
+    file "file2" as c1f2
+  }
+}
+
+f2 -right-> I
+i2 -right-> c1 : git commit
+@enduml
+----
+
+Change one file and commit again. The second commit does not store "one line
+added to file1" — it stores file1 *and* file2 in their current state:
+
+[source,bash]
+----
+echo "one more line" >> file1
+git add file1
+git commit -m "docs: extend file1"
+----
+
+.The second commit is a second complete snapshot, not a difference
+[plantuml,git-commit-v2,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+folder "working tree" as W #FAF0D9 {
+  file "file1" as f1
+  file "file2" as f2
+}
+storage "index" as I #E3ECF8 {
+  file "file1" as i1
+  file "file2" as i2
+}
+database "local repository" as L #E4F0E4 {
+  card "commit 1" as c1 #E3ECF8 {
+    file "file1" as c1f1
+    file "file2" as c1f2
+  }
+  card "commit 2" as c2 #E3ECF8 {
+    file "file1" as c2f1
+    file "file2" as c2f2
+  }
+}
+
+f2 -right-> I
+i2 -right-> c2 : git commit
+@enduml
+----
+
+Deleting is the case that makes it unmistakable. A deletion has to be staged
+like any other change, and the resulting snapshot simply contains one file less:
+
+[source,bash]
+----
+rm file2
+git add file2           # yes — the deletion is a change and has to be staged
+git commit -m "chore: remove the unused file2"
+----
+
+.The third snapshot has no file2 — the earlier snapshots still do
+[plantuml,git-commit-v3,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+folder "working tree" as W #FAF0D9 {
+  file "file1" as f1
+}
+storage "index" as I #E3ECF8 {
+  file "file1" as i1
+}
+database "local repository" as L #E4F0E4 {
+  card "commit 1" as c1 #E3ECF8 {
+    file "file1" as c1f1
+    file "file2" as c1f2
+  }
+  card "commit 2" as c2 #E3ECF8 {
+    file "file1" as c2f1
+    file "file2" as c2f2
+  }
+  card "commit 3" as c3 #E3ECF8 {
+    file "file1" as c3f1
+  }
+}
+
+f1 -right-> I
+i1 -right-> c3 : git commit
+@enduml
+----
+
+Three statements follow from those pictures, and they are the ones to remember:
+
+* A commit stores *all* tracked files, not the difference to the commit before.
+* The content is compressed, and identical content is stored once. Three
+  snapshots of an unchanged `file2` do not cost three times the space — which is
+  why storing whole states is affordable at all.
+* The index is not emptied by a commit. It holds the state that was committed,
+  which is the same thing as "what the next commit would contain if you changed
+  nothing".
+
+=== The history is a chain, and two names point into it
+
+Each commit names its predecessor, so the commits form a chain. Two names point
+into that chain: the branch — `main` in this course — and `HEAD`, which means
+"where you are right now". After an ordinary commit both point at the same
+place, the newest one.
+
+.After a normal commit, main and HEAD point at the same commit
+[plantuml,git-history-pointers,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+circle "commit 1\n3fb9399\nfirst commit" as c1 #E3ECF8
+circle "commit 2\n028fc7c" as c2 #E3ECF8
+circle "commit 3\n8ade525\nnewest commit" as c3 #E3ECF8
+
+card "main" as MAIN #FAF0D9
+card "HEAD" as HEAD #FAF0D9
+
+c1 <-right- c2 : parent
+c2 <-right- c3 : parent
+
+MAIN --> c3
+HEAD --> c3
+@enduml
+----
+
+The arrows between commits point *backwards*, to the parent. A commit knows
+where it came from and cannot know what comes after it — which is precisely why
+a commit, once written, never changes.
+
+[source,bash]
+----
+git log --oneline
+----
+
+[source]
+----
+8ade525 (HEAD -> main) chore: remove the unused file2
+028fc7c docs: extend file1
+3fb9399 feat: add the first two files
+----
+
+`HEAD -> main` in the first line is the picture above, in text form. Both names
+are at `8ade525`.
+
+[source,bash]
+----
+git show 8ade525           # what this commit changed, computed on request
+git diff                   # working tree vs index
+git diff --staged          # index vs last commit
+git log --oneline --graph  # the chain, drawn
+----
+
+Because a commit is a state and not a step, you can always go back to one. That
+is the actual promise of version control: you can experiment because you can
+return.
+
+[source,bash]
+----
+git restore file1                          # throw away the edits, back to the index
+git restore --source=HEAD~1 file1          # take file1 as it was one commit ago
+----
+
+`HEAD~1` means "one commit before HEAD". Moving `HEAD` itself to an older commit
+is possible too, and has a name and a trap — both are in `git-branching`.
 
 == Commit messages follow Conventional Commits
 
@@ -252,10 +586,75 @@ A secret committed once stays in the history even after you delete the file —
 removing it means rewriting history, which is a bad afternoon. Check *before*
 you commit.
 
+== Git clients
+
+Git itself is the command-line program. Everything else — the IDE, a desktop
+application, a web page — is a *client* that runs those same commands for you and
+shows the result.
+
+[cols="1,2,2",options="header"]
+|===
+|Client |Good at |Weak at
+
+|command line (`git`)
+|saying exactly what happens; identical on every machine; the only form that
+ works over SSH and in a pipeline
+|nothing is discoverable — you have to know the command exists
+
+|IntelliJ IDEA
+|the log with its graph, staging single lines of a file, resolving conflicts
+ side by side, all without leaving the editor
+|hides which command ran, so a broken state is hard to describe
+
+|GitKraken
+|drawing the commit graph of a confusing history
+|another tool to install; free for non-commercial use only
+
+|GitHub in the browser
+|pull requests, review, comparing branches, the history of one file
+|no working tree, no index — everything local is invisible there
+|===
+
+In this course the command line comes first and the IDE second. The reason is not
+nostalgia: in the oral examination, and when asking anyone for help, you have to
+name what you did. "I clicked the arrow" is not an answer; `git pull --rebase`
+is.
+
+TIP: Two small comforts worth setting up on the first day. On macOS, `zsh` with
+its git plugin shows the branch and whether the working tree is dirty directly in
+the prompt; on Windows, `posh-git` does the same in PowerShell. The prompt then
+answers "where am I" without a command.
+
+=== The same history in IntelliJ
+
+The IDE shows nothing the commands do not — it shows it faster. In IntelliJ the
+kbd:[Git] tool window (kbd:[Alt+9]) has a *Log* tab with the graph, the branches
+of the local repository and those of the remote, and the changed files of the
+selected commit.
+
+.Git log in IntelliJ IDEA 2026.2 (own)
+image::git-log-intellij-2026.2.png[Git log in IntelliJ,700]
+
+Three things are worth reading off this window from the first lesson:
+
+* Under *Local* stands `main`, under *Remote* stands `origin/main`. Both labels
+  appear in the picture of the four places — the tool window is that picture,
+  filled with your project.
+* `↗ 6` next to `main` means six commits are committed but not pushed. That is
+  the difference between "it is committed" and "the others have it", made
+  visible.
+* The subjects read `feat: …`, `docs: …`. A history in Conventional Commits form
+  can be scanned in the IDE exactly as it can with `git log --oneline`.
+
 == Decisions
 
 * Every project in this course lives in a git repository from the first day, not
   from the first milestone.
+* The default branch is called `main`. Older material and other courses may say
+  `master`; it is the same thing under an earlier name.
+* The command line is the reference, the IDE is the everyday tool. Every command
+  in this module is shown as a command first — what you click afterwards is your
+  choice.
 * Documentation is committed together with the code it describes. Same
   repository, same history.
 * Generated output is never committed. If it can be rebuilt, it is not a source.
@@ -278,6 +677,13 @@ you commit.
   tree; only `git commit` records it.
 * Believing a commit is safe because it is committed. It lives on one disk until
   it is pushed — the machine in room 3 is not a backup of itself.
+* Believing a commit stores the changed files only. It stores the whole state;
+  the diff you see in `git show` is calculated when you ask for it.
+* Forgetting that a deletion is a change. `rm file` alone leaves the file in the
+  next snapshot's parent and shows up as unstaged — the deletion has to be added
+  like anything else.
+* Describing a problem by the buttons you pressed. Nobody can help with "I
+  clicked sync"; everybody can help with the command and its output.
 
 == Terminology
 
@@ -294,11 +700,23 @@ you commit.
 |Versionsstand, Einspielung
 |commit
 
+|Schnappschuss, Zustand
+|snapshot, state
+
 |Verlauf, Historie
 |history
 
 |Repository, Ablage
 |repository
+
+|zentral / verteilt
+|centralized / distributed
+
+|Einzelner Ausfallpunkt
+|single point of failure
+
+|Zeiger
+|pointer
 
 |Art der Änderung
 |commit type
@@ -314,6 +732,9 @@ you commit.
 
 |hochladen / holen
 |push / fetch
+
+|Kommandozeile
+|command line
 |===
 
 == Further reading
@@ -322,4 +743,5 @@ you commit.
 * Conventional Commits 1.0.0, https://www.conventionalcommits.org
 * Projektrichtlinien HTL Leonding — Commit Messages,
   https://htl-leo-projekte.github.io/project-checklist/#_commit_messages
+* GitKraken, https://www.gitkraken.com — free for non-commercial use
 * Module `git-branching` — the next step, once one line of history is not enough
