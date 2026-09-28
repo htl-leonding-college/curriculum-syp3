@@ -243,3 +243,83 @@ Points the answer must contain:
 * No — the commits still exist, only the pointer was removed
 * `git reflog` finds the hash, `git switch -c name <hash>` restores it
 ====
+
+== What is a detached HEAD, how do you get into one, and why is committing there dangerous?
+
+covers: lo-5
+
+.Answer
+[%collapsible]
+====
+Normally `HEAD` points at a *branch*, and the branch points at a commit. That
+indirection is what makes a commit move the branch forward with you. Checking out
+a commit by its id — `git checkout 3fb9399` — removes the indirection: `HEAD` now
+points straight at a commit and no branch is involved. Git says so in plain
+words: "You are in 'detached HEAD' state."
+
+.Attached, detached, and the commit that nothing points at
+[graphviz,q-detached-head,svg]
+----
+digraph head {
+  rankdir=LR;
+  bgcolor="transparent";
+  node [style=filled, color="#7C93AD", fontname="Helvetica", fontsize=10];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=9];
+
+  MAIN [shape=box, label="main", fillcolor="#FAF0D9"];
+  HEAD [shape=box, label="HEAD", fillcolor="#F8E5E5"];
+
+  A [shape=circle, label="A", fillcolor="#E3ECF8"];
+  B [shape=circle, label="B", fillcolor="#E3ECF8"];
+  C [shape=circle, label="C", fillcolor="#E3ECF8"];
+  D [shape=circle, label="D", fillcolor="#F8E5E5"];
+
+  B -> A [label="parent"];
+  C -> B [label="parent"];
+  D -> A [label="parent"];
+
+  MAIN -> C;
+  HEAD -> D;
+}
+----
+
+As long as you only *look*, the state is useful and harmless: the working tree
+holds the project as it was, you can run it and read it, and `git switch -` takes
+you back. `git log` shows only the history behind that commit; `git log --all`
+still shows everything.
+
+The danger begins with a commit. The new commit D attaches to the commit you were
+standing on, and *no branch points at it* — `HEAD` is the only thing holding on.
+Switch back to `main` and `HEAD` moves away with you. From that moment nothing
+names D: it is *unreachable*, invisible in `git log`, and git's garbage collection
+will eventually remove it. The work looks lost, and after a few weeks it really
+is.
+
+The rescue is to give the commit a name, because that is all a branch is:
+
+[source,bash]
+----
+# while still detached — the easy way
+git switch -c experiment/idea      # the branch now points at D, HEAD re-attaches
+
+# after switching away — via the reflog, which records every HEAD position
+git reflog
+git switch -c experiment/idea <hash-of-D>
+----
+
+The habit that removes the whole trap: create a branch the moment you intend to
+*change* something, and treat a detached HEAD as read-only. Looking at an old
+state and working from an old state are two different intentions, and only the
+second one needs a name.
+
+Points the answer must contain:
+
+* Normally `HEAD` points at a branch, which points at a commit; detached means
+  `HEAD` points at a commit directly
+* You get there with `git checkout <commit-id>`
+* Harmless while reading; `git switch -` returns
+* A commit made there has no branch pointing at it — after switching away it is
+  unreachable and eventually collected
+* Rescue: `git switch -c <name>` before switching away, or afterwards via
+  `git reflog`
+====

@@ -18,6 +18,8 @@ endif::[]
 * [[lo-2]] Explain what a branch is and why creating one is cheap
 * [[lo-3]] Tell a fast-forward merge from a merge commit and say when each occurs
 * [[lo-4]] Apply the branching rules used in this course
+* [[lo-5]] Recognise a detached HEAD, return from it, and say why a commit
+  made there is easy to lose
 
 == A branch is a pointer
 
@@ -53,6 +55,178 @@ git branch                     # which branches exist, where am I
 git merge feature/export       # bring the work into main
 git branch -d feature/export   # delete the pointer, the commits stay
 ----
+
+== HEAD, and what detached means
+
+A branch is one pointer; `HEAD` is the second. `HEAD` means *where you are* — the
+commit your working tree was built from and the commit your next commit will
+attach to. Normally `HEAD` does not point at a commit directly, it points at a
+branch, and the branch points at the commit. That indirection is what lets a
+commit move the branch along with you.
+
+.The normal case: HEAD points at the branch, the branch at the newest commit
+[plantuml,git-head-attached,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+circle "A\nfirst commit" as A #E3ECF8
+circle "B" as B #E3ECF8
+circle "C\nnewest" as C #E3ECF8
+
+card "main" as MAIN #FAF0D9
+card "HEAD" as HEAD #FAF0D9
+
+A <-right- B : parent
+B <-right- C : parent
+
+MAIN --> C
+HEAD --> MAIN
+@enduml
+----
+
+Check out a commit by its id, and that indirection is gone. `HEAD` now points at
+a commit, no branch in between. Git calls this a *detached HEAD* and says so
+plainly.
+
+[source,bash]
+----
+git log --oneline
+# 8ade525 (HEAD -> main) chore: remove the unused file2
+# 028fc7c docs: extend file1
+# 3fb9399 feat: add the first two files
+
+git checkout 3fb9399
+# You are in 'detached HEAD' state. …
+----
+
+.Detached HEAD: HEAD points at an old commit, main stays where it was
+[plantuml,git-head-detached,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+circle "A\nfirst commit" as A #E3ECF8
+circle "B" as B #E3ECF8
+circle "C\nnewest" as C #E3ECF8
+
+card "main" as MAIN #FAF0D9
+card "HEAD" as HEAD #F8E5E5
+
+A <-right- B : parent
+B <-right- C : parent
+
+MAIN --> C
+HEAD -down-> A
+@enduml
+----
+
+This state is useful and harmless as long as you only *look*. The working tree
+holds the project as it was at commit A, you can run it, read it, and compare it.
+Note that `git log` now shows only A — the later commits are still there, they
+are just not reachable from where you stand:
+
+[source,bash]
+----
+git log --oneline          # A only — the history behind HEAD
+git log --oneline --all    # every commit, including C
+git switch -                # back to the branch you came from
+----
+
+=== Why you should not commit here
+
+Commit in a detached HEAD and the new commit attaches to A. No branch points at
+it, because `HEAD` was not pointing at a branch — and `HEAD` is the only thing
+holding on to it.
+
+.A commit made in detached HEAD hangs on nothing but HEAD itself
+[plantuml,git-head-detached-commit,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+circle "A\nfirst commit" as A #E3ECF8
+circle "B" as B #E3ECF8
+circle "C\nnewest" as C #E3ECF8
+circle "D\nthe new commit" as D #FAF0D9
+
+card "main" as MAIN #FAF0D9
+card "HEAD" as HEAD #F8E5E5
+
+A <-right- B : parent
+B <-right- C : parent
+A <-down- D : parent
+
+MAIN --> C
+HEAD -down-> D
+@enduml
+----
+
+Switch back to `main`, and `HEAD` moves away. Nothing points at D any more: the
+commit is *unreachable*. It is still in `.git`, but no name leads to it, and git
+will eventually collect it.
+
+.After switching back, D has no name pointing at it — the work looks lost
+[plantuml,git-head-lost-commit,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+circle "A\nfirst commit" as A #E3ECF8
+circle "B" as B #E3ECF8
+circle "C\nnewest" as C #E3ECF8
+circle "D\nunreachable" as D #F8E5E5
+
+card "main" as MAIN #FAF0D9
+card "HEAD" as HEAD #FAF0D9
+
+A <-right- B : parent
+B <-right- C : parent
+A <-down- D : parent
+
+MAIN --> C
+HEAD --> MAIN
+@enduml
+----
+
+The rescue is to give D a name, which is what a branch is. Do it *before* you
+switch away, or afterwards with the help of `git reflog`, which records every
+position `HEAD` has had:
+
+[source,bash]
+----
+# while still detached, the easy way:
+git switch -c experiment/idea       # the new branch points at D, HEAD re-attaches
+
+# after the fact:
+git reflog                          # find D's hash in the list
+git switch -c experiment/idea <hash>
+----
+
+TIP: The whole trap disappears if you make it a habit to create a branch the
+moment you intend to *change* something, and to treat a detached HEAD as
+read-only. "Looking at an old state" and "working from an old state" are two
+different intentions, and only the second one needs a name.
 
 == Two kinds of merge
 
@@ -93,6 +267,8 @@ as a ritual rather than as a tool.
 * No rebasing of published branches.
 * Branch names describe the work: `feature/…`, `fix/…`, `docs/…`.
 * Delete the branch after merging. The commits survive; only the label goes.
+* A detached HEAD is for reading only. Anything you intend to keep gets a
+  branch first.
 
 == Pitfalls
 
@@ -104,6 +280,11 @@ as a ritual rather than as a tool.
   and the conflicts arrive all at once.
 * Deleting a branch and believing the work is gone. The commits are still there;
   `git reflog` finds them.
+* Committing in a detached HEAD and then switching branch. The commit is
+  unreachable from that moment on — `git switch -c <name>` before switching
+  away costs nothing and keeps it.
+* Using `git checkout <commit-id>` when the intention was to continue working.
+  Looking at an old state is read-only; working from one needs a branch.
 
 == Terminology
 
@@ -125,6 +306,15 @@ as a ritual rather than as a tool.
 
 |kurzlebiger Zweig
 |short-lived branch
+
+|abgelöster HEAD
+|detached HEAD
+
+|nicht erreichbarer Commit
+|unreachable commit
+
+|Verlaufsprotokoll der HEAD-Positionen
+|reflog
 |===
 
 == Further reading
