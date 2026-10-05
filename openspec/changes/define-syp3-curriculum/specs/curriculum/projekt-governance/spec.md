@@ -28,7 +28,8 @@ Weitere Techniken SHALL benannt und eingeordnet werden.
 
 ### Requirement: Projektauswahl ist kriterienbasiert und nachvollziehbar
 Der Schüler SHALL eine Nutzwertanalyse aufstellen und anwenden können: Kriterien
-festlegen, gewichten, Alternativen bewerten und das Ergebnis begründen.
+festlegen, gewichten, Alternativen bewerten und das Ergebnis begründen. Unterrichtet
+wird das im 4. Jahrgang, nicht im 3.
 
 #### Scenario: Auswahl unter mehreren Projektideen
 - **WHEN** ein Team sich zwischen mehreren Ideen entscheidet

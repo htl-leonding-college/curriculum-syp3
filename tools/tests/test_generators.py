@@ -91,6 +91,46 @@ def test_nav_links_exercises_and_questions(repo: Repo) -> None:
     assert "course-overview/exercises.adoc" not in text
 
 
+def _with_later_topic(repo: Repo) -> None:
+    moved = topic(
+        "weighted-scoring", kind="theorie", taught_in="jg4", prerequisite_for="jg5",
+        status="ready",
+    )
+    del moved["lesson"]
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1),
+            topic("git-basics", kind="praxis", lesson=1),
+            moved,
+        ]
+    )
+
+
+def test_mindmap_has_one_root_per_year(repo: Repo) -> None:
+    _with_later_topic(repo)
+    lines = mindmap.render(repo.model()).splitlines()
+    roots = [line.split("] ", 1)[1] for line in lines if line.startswith("*[")]
+    assert roots == ["SYP3", "SYP4"]
+    after_syp4 = lines[[i for i, l in enumerate(lines) if l.endswith("] SYP4")][0]:]
+    moved = [line for line in after_syp4 if "Weighted scoring" in line]
+    # Ohne Unterrichtsnummer: im nächsten Jahrgang gibt es kein L-Raster dieses Plans.
+    assert moved and moved[0].endswith("_ Weighted scoring")
+
+
+def test_nav_lists_later_topics_after_the_lessons(repo: Repo) -> None:
+    _with_later_topic(repo)
+    text = nav.render(repo.model())
+    assert text.index("* Lesson 1") < text.index("* SYP4") < text.index("Weighted scoring")
+    assert "modules/weighted-scoring/index.adoc" in text
+
+
+def test_overview_names_later_topics_outside_the_budget(repo: Repo) -> None:
+    _with_later_topic(repo)
+    rendered = overview.render(repo.model())
+    assert "== Moved to a later year" in rendered
+    assert "* SYP4: Weighted scoring (Theory)" in rendered
+
+
 def test_mindmap_stays_on_one_side(repo: Repo) -> None:
     base(repo)
     assert "left side" not in mindmap.render(repo.model())

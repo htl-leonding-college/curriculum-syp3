@@ -41,7 +41,7 @@ Two activities, opposite rules, and the classic mistake is doing both at once:
 |criteria, weights, a decision
 
 |this module
-|next module — weighted scoring
+|weighted scoring — in year 4
 |===
 
 The moment somebody says "that's not feasible" during the diverging phase, the
@@ -389,4 +389,4 @@ discussed.
 
 * PUMA 8/12, Kreativitätstechniken — the source used for this module
 * Zwicky, F. — the morphological method, for the box
-* Module `governance-weighted-scoring` — the converging half
+* Module `governance-weighted-scoring` — the converging half, taught in year 4

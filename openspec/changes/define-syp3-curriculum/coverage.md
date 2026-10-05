@@ -74,7 +74,7 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 |---|---|---|
 | Projektbegriff und Ausgangslage | `governance-project-basics` | Manz Kap. 1–2 (eigene Formulierung) |
 | Ideenfindung mit sechs Techniken, eine davon durchgeführt | `governance-idea-generation` | PUMA8_12 Kreativitätstechniken (Brainstorming, 6-3-5, Morphologischer Kasten, Mindmapping, Bionik, Delphi) |
-| Projektauswahl ist kriterienbasiert und nachvollziehbar | `governance-weighted-scoring` | PUMA8_05 Nutzwertanalyse |
+| Projektauswahl ist kriterienbasiert und nachvollziehbar | `governance-weighted-scoring` — **jg4**, nicht im 3. Jg unterrichtet | PUMA8_05 Nutzwertanalyse |
 | Stakeholder und Zielsetzung | `governance-stakeholders-goals` | Manz Kap. 3 (eigene Formulierung) |
 | Erhebungstechniken der Anforderungsanalyse — Interview, Fragebogen, Beobachtung, Dokumentenanalyse | `governance-requirements-elicitation` | PUMA Anforderungsanalyse |
 | Projektantrag und Projektauftrag erstellen | `governance-project-charter` | DA-Antragsformular der Schule |

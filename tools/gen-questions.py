@@ -21,6 +21,7 @@ from tools.curriculum import (  # noqa: E402
     kind_label,
     lesson_label,
     load,
+    subject_year_label,
     year_label,
 )
 
@@ -30,6 +31,7 @@ DATA_OUTPUT = "questions/questions.json"
 
 def collect(model: Curriculum) -> list[dict]:
     rows: list[dict] = []
+    gegenstand = str(model.meta.get("gegenstand", "SYP"))
     for topic in model.topics:
         # Nur fertige Module: ein Skelett trägt Platzhalterfragen, die im
         # Katalog nichts verloren haben.
@@ -44,6 +46,11 @@ def collect(model: Curriculum) -> list[dict]:
                     "block": topic.block,
                     "kind": topic.kind,
                     "lesson": topic.lesson,
+                    "slot": (
+                        lesson_label(topic.lesson)
+                        if topic.lesson is not None
+                        else subject_year_label(gegenstand, topic.taught_in)
+                    ),
                     "taught_in": topic.taught_in,
                     "prerequisite_for": topic.prerequisite_for,
                     "covers": list(question.covers),
@@ -125,7 +132,7 @@ def _filter_ui(rows: list[dict], labels: dict[str, dict[str, str]]) -> str:
         "<tr {attrs}><td>{lesson}</td><td>{topic_title}</td><td>{question}</td>"
         "<td>{covers}</td></tr>".format(
             attrs=" ".join(f'data-{field}="{row[field]}"' for field in FILTER_FIELDS),
-            lesson=lesson_label(row["lesson"]),
+            lesson=row["slot"],
             topic_title=row["topic_title"],
             question=row["question"],
             covers=", ".join(row["covers"]) or "—",
@@ -244,7 +251,7 @@ def render(model: Curriculum, rows: list[dict]) -> str:
             topic_rows = [r for r in block_rows if r["topic"] == topic_id]
             head = topic_rows[0]
             lines += [
-                f"=== {lesson_label(head['lesson'])} {head['topic_title']}",
+                f"=== {head['slot']} {head['topic_title']}",
                 "",
                 f"[.tags]#block: {titles.get(head['block'], head['block'])}# "
                 f"[.tags]#kind: {kind_label(head['kind'])}# "

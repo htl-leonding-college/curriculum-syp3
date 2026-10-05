@@ -35,15 +35,17 @@ meta:
     kernbetrieb: [2, 25]
     reserve: [26, 30]
   budget:
-    theorie: 27       # 1 Einführung + 25 Kernbetrieb + 1 Reserve
+    theorie: 26       # 1 Einführung + 24 Kernbetrieb + 1 Reserve
+                      # (governance-weighted-scoring nach jg4 verschoben,
+                      # die Theorie rückt nach; L27 ist frei)
     praxis: 56        # 2 Einführung + 48 Kernbetrieb + 6 Reserve
   # Theorie-UE je Block. Feingliederung aus define-syp3-curriculum/design.md:
-  #   governance  = 9 Governance + 1 Leistungsfeststellung (Reserve)
+  #   governance  = 8 Governance + 1 Leistungsfeststellung (Reserve)
   #   vorgehen    = 3 Vorgehensmodelle + 5 SDD + 2 Brücke
   #   modellierung= 5 UML
   #   werkzeuge   = 1 Kursüberblick (U1) + 1 Was ist Software-Engineering
   budget_je_block:
-    governance: 10
+    governance: 9
     vorgehen: 10
     modellierung: 5
     werkzeuge: 2
@@ -115,10 +117,10 @@ topics:
     requires: [governance-project-basics]
     status: ready
 
-  - id: governance-weighted-scoring
-    title: Choosing a project with weighted scoring
+  - id: governance-stakeholders-goals
+    title: Stakeholders and verifiable project goals
     block: governance
-    theme: Project start
+    theme: Goals and charter
     kind: theorie
     ue: 1
     lesson: 4
@@ -127,25 +129,13 @@ topics:
     requires: [governance-idea-generation]
     status: ready
 
-  - id: governance-stakeholders-goals
-    title: Stakeholders and verifiable project goals
-    block: governance
-    theme: Goals and charter
-    kind: theorie
-    ue: 1
-    lesson: 5
-    taught_in: jg3
-    prerequisite_for: jg4
-    requires: [governance-weighted-scoring]
-    status: ready
-
   - id: governance-requirements-elicitation
     title: Eliciting requirements from people and documents
     block: governance
     theme: Goals and charter
     kind: theorie
     ue: 1
-    lesson: 6
+    lesson: 5
     taught_in: jg3
     prerequisite_for: jg4
     requires: [governance-stakeholders-goals]
@@ -157,7 +147,7 @@ topics:
     theme: Goals and charter
     kind: theorie
     ue: 1
-    lesson: 7
+    lesson: 6
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-stakeholders-goals]
@@ -169,7 +159,7 @@ topics:
     theme: Process models
     kind: theorie
     ue: 1
-    lesson: 8
+    lesson: 7
     taught_in: jg3
     prerequisite_for: jg4
     requires: [governance-project-charter]
@@ -181,7 +171,7 @@ topics:
     theme: Spec-driven development
     kind: theorie
     ue: 1
-    lesson: 9
+    lesson: 8
     taught_in: jg3
     prerequisite_for: jg4
     requires: [process-models-overview]
@@ -193,7 +183,7 @@ topics:
     theme: Bridge to the project
     kind: theorie
     ue: 1
-    lesson: 10
+    lesson: 9
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-project-charter, sdd-why-specs]
@@ -205,7 +195,7 @@ topics:
     theme: Course frame
     kind: theorie
     ue: 1
-    lesson: 11
+    lesson: 10
     taught_in: jg3
     prerequisite_for: none
     requires: [process-models-overview]
@@ -217,7 +207,7 @@ topics:
     theme: Spec-driven development
     kind: theorie
     ue: 1
-    lesson: 12
+    lesson: 11
     taught_in: jg3
     prerequisite_for: jg4
     requires: [sdd-why-specs]
@@ -229,7 +219,7 @@ topics:
     theme: Spec-driven development
     kind: theorie
     ue: 1
-    lesson: 13
+    lesson: 12
     taught_in: jg3
     prerequisite_for: jg4
     requires: [sdd-openspec-artifacts]
@@ -241,7 +231,7 @@ topics:
     theme: Bridge to the project
     kind: theorie
     ue: 1
-    lesson: 14
+    lesson: 13
     taught_in: jg3
     prerequisite_for: jg5
     requires: [bridge-charter-to-specs, sdd-change-lifecycle]
@@ -253,7 +243,7 @@ topics:
     theme: Spec-driven development
     kind: theorie
     ue: 1
-    lesson: 15
+    lesson: 14
     taught_in: jg3
     prerequisite_for: jg5
     requires: [sdd-change-lifecycle]
@@ -265,7 +255,7 @@ topics:
     theme: Planning and control
     kind: theorie
     ue: 1
-    lesson: 16
+    lesson: 15
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-project-charter]
@@ -277,7 +267,7 @@ topics:
     theme: Planning and control
     kind: theorie
     ue: 1
-    lesson: 17
+    lesson: 16
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-estimation-hygiene]
@@ -289,7 +279,7 @@ topics:
     theme: Planning and control
     kind: theorie
     ue: 1
-    lesson: 18
+    lesson: 17
     taught_in: jg3
     prerequisite_for: jg5
     requires: [governance-milestones]
@@ -301,7 +291,7 @@ topics:
     theme: Spec-driven development
     kind: theorie
     ue: 1
-    lesson: 19
+    lesson: 18
     taught_in: jg3
     prerequisite_for: jg4
     requires: [sdd-specs-replace-requirements]
@@ -312,7 +302,7 @@ topics:
     theme: Process models
     kind: theorie
     ue: 1
-    lesson: 20
+    lesson: 19
     taught_in: jg3
     prerequisite_for: jg4
     requires: [process-models-overview]
@@ -323,7 +313,7 @@ topics:
     theme: Process models
     kind: theorie
     ue: 1
-    lesson: 21
+    lesson: 20
     taught_in: jg3
     prerequisite_for: jg4
     requires: [process-waterfall]
@@ -334,7 +324,7 @@ topics:
     theme: UML foundations
     kind: theorie
     ue: 1
-    lesson: 22
+    lesson: 21
     taught_in: jg3
     prerequisite_for: jg4
     requires: [what-is-software-engineering]
@@ -345,7 +335,7 @@ topics:
     theme: Diagram types
     kind: theorie
     ue: 1
-    lesson: 23
+    lesson: 22
     taught_in: jg3
     prerequisite_for: jg4
     requires: [uml-overview, governance-stakeholders-goals]
@@ -356,7 +346,7 @@ topics:
     theme: Diagram types
     kind: theorie
     ue: 1
-    lesson: 24
+    lesson: 23
     taught_in: jg3
     prerequisite_for: jg4
     requires: [uml-overview]
@@ -367,7 +357,7 @@ topics:
     theme: Diagram types
     kind: theorie
     ue: 1
-    lesson: 25
+    lesson: 24
     taught_in: jg3
     prerequisite_for: jg4
     requires: [uml-overview]
@@ -378,7 +368,7 @@ topics:
     theme: Diagram types
     kind: theorie
     ue: 1
-    lesson: 26
+    lesson: 25
     taught_in: jg3
     prerequisite_for: jg4
     requires: [uml-overview]
@@ -678,7 +668,7 @@ topics:
     theme: Assessment
     kind: theorie
     ue: 1
-    lesson: 27
+    lesson: 26
     taught_in: jg3
     prerequisite_for: none
     requires: [governance-acceptance]
@@ -715,3 +705,19 @@ topics:
     taught_in: jg3
     prerequisite_for: jg4
     requires: [minikube-deploy]
+
+# ============================================================================
+# Verschoben in einen späteren Jahrgang — kein Unterricht, kein Budget.
+# Das Modul bleibt fertig und auf der Site; die Mindmap zeigt es unter SYP4.
+# ============================================================================
+
+  - id: governance-weighted-scoring
+    title: Choosing a project with weighted scoring
+    block: governance
+    theme: Project start
+    kind: theorie
+    ue: 1
+    taught_in: jg4
+    prerequisite_for: jg5
+    requires: [governance-idea-generation]
+    status: ready

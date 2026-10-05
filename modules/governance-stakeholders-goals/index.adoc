@@ -223,7 +223,7 @@ enrolment.
 
 Weighting them is a small Nutzwertanalyse: give each Teilziel a weight, state
 what the weight is based on, and the decision "what do we build first" becomes a
-calculation rather than a mood. The method is in
+calculation rather than a mood. The method itself is taught in year 4, in
 `governance-weighted-scoring`.
 
 == Non-goals
@@ -316,7 +316,7 @@ scope for *this* project, in *this* year.
 == Further reading
 
 * Template `templates/governance/projektauftrag.adoc` — the goals table you fill
-* Module `governance-weighted-scoring` — how sub-goals get their weights
+* Module `governance-weighted-scoring` — how sub-goals get their weights (year 4)
 * Module `governance-acceptance` — where these goals are checked again
 * Module `sdd-why-specs` — where the Qualität half of Leistung is written down
 * ÖNORM ISO 21500 — the stakeholder definition used above

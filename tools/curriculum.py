@@ -24,7 +24,6 @@ REQUIRED_TOPIC_FIELDS = (
     "block",
     "kind",
     "ue",
-    "lesson",
     "taught_in",
     "prerequisite_for",
     "requires",
@@ -34,7 +33,12 @@ REQUIRED_TOPIC_FIELDS = (
 #: Meilenstein-Reviews …). Es ist eine reine Darstellungsgruppe der Mindmap und
 #: ändert weder Budget noch Reihenfolge; Themen ohne ``theme`` hängen direkt
 #: unter ihrem Block.
-OPTIONAL_TOPIC_FIELDS = ("assignment_template", "note", "status", "theme")
+OPTIONAL_TOPIC_FIELDS = ("assignment_template", "lesson", "note", "status", "theme")
+
+#: ``lesson`` ist Pflicht für jedes Thema des eigenen Jahrgangs
+#: (``meta.jahrgang``). Ein Thema, das in einen späteren Jahrgang verschoben
+#: wurde (``taught_in: jg4``), trägt keinen Unterricht: sein Modul bleibt
+#: erhalten und auf der Site, belegt aber weder Slot noch Budget.
 
 #: Bearbeitungsstand eines Themas. ``planned`` ist der Default: das Thema ist
 #: geplant und in allen abgeleiteten Darstellungen als offen sichtbar, seine
@@ -65,6 +69,12 @@ def kind_label(kind: str) -> str:
 def lesson_label(lesson: int) -> str:
     """Kurzform eines Unterrichts auf der Site: ``L7``."""
     return f"{LESSON_PREFIX}{lesson}"
+
+
+def subject_year_label(gegenstand: str, jahrgang: str) -> str:
+    """Gegenstand plus Jahrgangszahl: ``SYP`` und ``jg4`` ergibt ``SYP4``."""
+    digits = "".join(c for c in jahrgang if c.isdigit())
+    return f"{gegenstand}{int(digits)}" if digits else gegenstand
 
 
 def year_label(meta: dict[str, Any]) -> str:
@@ -130,7 +140,7 @@ class Topic:
     block: str
     kind: str
     ue: int
-    lesson: int
+    lesson: int | None
     taught_in: str
     prerequisite_for: str
     requires: tuple[str, ...]
@@ -199,8 +209,23 @@ class Curriculum:
     def block_ids(self) -> tuple[str, ...]:
         return tuple(b.id for b in self.blocks)
 
+    @property
+    def jahrgang(self) -> str:
+        return str(self.meta.get("jahrgang", "")).strip()
+
+    @property
+    def current(self) -> tuple[Topic, ...]:
+        """Themen des eigenen Jahrgangs — nur sie belegen Slots und Budget."""
+        return tuple(t for t in self.topics if t.taught_in == self.jahrgang)
+
+    @property
+    def later(self) -> tuple[Topic, ...]:
+        """Themen, die in einen anderen Jahrgang verschoben sind."""
+        return tuple(t for t in self.topics if t.taught_in != self.jahrgang)
+
     def of_kind(self, kind: str) -> tuple[Topic, ...]:
-        return tuple(t for t in self.topics if t.kind == kind)
+        """Themen einer Art im eigenen Jahrgang."""
+        return tuple(t for t in self.current if t.kind == kind)
 
     @property
     def ready(self) -> tuple[Topic, ...]:
@@ -214,7 +239,7 @@ class Curriculum:
 
     def ue_by_kind(self) -> dict[str, int]:
         totals: dict[str, int] = {}
-        for topic in self.topics:
+        for topic in self.current:
             totals[topic.kind] = totals.get(topic.kind, 0) + topic.ue
         return totals
 
@@ -243,10 +268,14 @@ def _pop_line(raw: dict[str, Any]) -> int:
     return int(raw.pop(LINE_KEY, 0))
 
 
-def _as_topic(raw: dict[str, Any], root: Path, path: Path) -> tuple[Topic | None, list[Finding]]:
+def _as_topic(
+    raw: dict[str, Any], root: Path, path: Path, jahrgang: str
+) -> tuple[Topic | None, list[Finding]]:
     line = _pop_line(raw)
     findings: list[Finding] = []
     missing = [f for f in REQUIRED_TOPIC_FIELDS if f not in raw]
+    if "lesson" not in raw and str(raw.get("taught_in", "")) == jahrgang:
+        missing.append("lesson")
     if missing:
         findings.append(
             Finding(
@@ -290,13 +319,28 @@ def _as_topic(raw: dict[str, Any], root: Path, path: Path) -> tuple[Topic | None
         )
         requires = []
 
+    lesson = raw.get("lesson")
+    if lesson is not None and str(raw["taught_in"]) != jahrgang:
+        findings.append(
+            Finding(
+                check="model",
+                message=(
+                    f"Thema '{raw['id']}' gehört nach {raw['taught_in']}, trägt "
+                    f"aber lesson {lesson} — einen Unterricht gibt es nur in {jahrgang}"
+                ),
+                path=path,
+                line=line,
+            )
+        )
+        lesson = None
+
     topic = Topic(
         id=str(raw["id"]),
         title=str(raw["title"]),
         block=str(raw["block"]),
         kind=str(raw["kind"]),
         ue=int(raw["ue"]),
-        lesson=int(raw["lesson"]),
+        lesson=int(lesson) if lesson is not None else None,
         taught_in=str(raw["taught_in"]),
         prerequisite_for=str(raw["prerequisite_for"]),
         requires=tuple(str(r) for r in requires),
@@ -344,7 +388,9 @@ def load(path: Path | str = DEFAULT_PATH, root: Path | None = None) -> Curriculu
 
     topics: list[Topic] = []
     for raw in data.get("topics") or []:
-        topic, problems = _as_topic(dict(raw), root=root, path=path)
+        topic, problems = _as_topic(
+            dict(raw), root=root, path=path, jahrgang=str(meta.get("jahrgang", "")).strip()
+        )
         findings.extend(problems)
         if topic is not None:
             topics.append(topic)

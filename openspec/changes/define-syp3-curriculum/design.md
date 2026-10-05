@@ -40,6 +40,8 @@ Randbedingungen, die den Entwurf bestimmen:
   eines Prinzips, nicht der Lerngegenstand selbst
 - Keine vollständige UML-Ausbildung; Überblicksniveau genügt für das 3. Jg
 - Keine Werkzeugvorgabe für die Schüler jenseits von Ubuntu-LTS bzw. macOS
+- Keine Nutzwertanalyse im 3. Jg — `governance-weighted-scoring` ist nach jg4 verschoben
+  (Nachtrag zu D6)
 
 ## Decisions
 
@@ -155,6 +157,14 @@ willkürlich; die Schüler legen Kriterien und Gewichte selbst fest.
 keinen Rechner, und die Praxis-Slots am Jahresanfang sind mit git belegt, das auf dem
 kritischen Pfad liegt.
 
+*Nachtrag 2026-10-05:* Die Nutzwertanalyse wird im 3. Jg nicht unterrichtet, sondern im
+4. Jg (Entscheidung des Lehrenden). `governance-weighted-scoring` trägt `taught_in: jg4`
+und keinen Unterricht mehr; das Modul bleibt fertig und auf der Site, die Mindmap zeigt
+es unter der Wurzel `SYP4`. Die Theorie ab dem alten U5 rückt um einen Unterricht vor,
+der letzte Theorieslot der Reserve (L27) ist frei. `governance-stakeholders-goals`
+setzt jetzt `governance-idea-generation` voraus. Das Paar aus D6 ist damit im 3. Jg
+getrennt: divergiert wird in jg3, konvergiert erst in jg4.
+
 ### D7 — Lernumgebung: Ubuntu-Partition oder macOS, kein WSL2
 
 Ubuntu 26.04 LTS als Dual-Boot-Partition (≥ 100 GB) oder macOS. Ein klassenweites Setup
@@ -265,7 +275,7 @@ hier sind die Vorgabe, gegen die der CI-Check prüft (P2, Prüfung 2).
 
 | Block | UE | Inhalt |
 |---|---|---|
-| `governance` | 9 | Projektbegriff, Ausgangslage, Kreativitätstechniken, Nutzwertanalyse, Stakeholder, Zielsetzung, Projektauftrag, Schätz-Hygiene, Meilensteinplanung, Abnahme (8) + Leistungsfeststellung in der Reserve (1) |
+| `governance` | 9 | Projektbegriff, Ausgangslage, Kreativitätstechniken, Stakeholder, Zielsetzung, Projektauftrag, Schätz-Hygiene, Meilensteinplanung, Abnahme (8) + Leistungsfeststellung in der Reserve (1) |
 | `vorgehen` | 10 | Vorgehensmodelle-Überblick, Wasserfall, Scrum (3) + SDD / openspec vertieft (5) + Brücke Governance ↔ SDD (2) |
 | `modellierung` | 5 | UML: Überblick, Use-Case, Klassen/Objekt, Aktivität, Zustand im Überblick |
 | `werkzeuge` | 2 | Kursüberblick U1 (1) + Was ist Software-Engineering (1) |
@@ -332,7 +342,6 @@ statt zu programmieren.
 ** Governance
 *** Projektbegriff / Ausgangslage
 *** Kreativitätstechniken
-*** Nutzwertanalyse
 *** Stakeholder / Zielsetzung
 *** Projektantrag / Projektauftrag
 *** Schätz-Hygiene

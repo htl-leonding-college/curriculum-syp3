@@ -15,6 +15,7 @@ from tools.curriculum import (  # noqa: E402
     Curriculum,
     kind_label,
     load,
+    subject_year_label,
 )
 
 OUTPUT = "ue-overview.adoc"
@@ -70,6 +71,20 @@ def render(model: Curriculum) -> str:
         f"{ready} of {len(model.topics)} topics are finished, {planned} are still open.",
         "",
     ]
+    if model.later:
+        # Verschobene Themen zählen in keinem Budget oben — sie stehen hier,
+        # damit sie nicht stillschweigend aus der Übersicht verschwinden.
+        gegenstand = str(model.meta.get("gegenstand", "SYP"))
+        lines += [
+            "== Moved to a later year",
+            "",
+            "Not part of this year's plan and not counted in the budgets above.",
+            "",
+        ]
+        for topic in sorted(model.later, key=lambda t: (t.taught_in, t.id)):
+            year = subject_year_label(gegenstand, topic.taught_in)
+            lines.append(f"* {year}: {topic.title} ({kind_label(topic.kind)})")
+        lines.append("")
     return "\n".join(lines)
 
 

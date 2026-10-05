@@ -157,6 +157,43 @@ def test_slots_valid(repo: Repo) -> None:
     assert repo.run("slots") == []
 
 
+def later(topic_id: str, **kwargs) -> dict:
+    """Ein Thema, das in einen späteren Jahrgang verschoben ist — ohne Unterricht."""
+    entry = topic(topic_id, taught_in="jg4", prerequisite_for="jg5", **kwargs)
+    del entry["lesson"]
+    return entry
+
+
+def test_later_year_topic_takes_no_slot_and_no_budget(repo: Repo) -> None:
+    repo.write_model(base_topics() + [later("weighted-scoring", kind="theorie")])
+    assert repo.run("slots", "budget", "completeness", "graph") == []
+
+
+def test_current_year_topic_needs_a_lesson(repo: Repo) -> None:
+    entry = topic("git-basics", kind="praxis")
+    del entry["lesson"]
+    repo.write_model([topic("course-overview", kind="theorie", lesson=1), entry])
+    assert "Thema 'git-basics' fehlt: lesson" in repo.messages("completeness")
+
+
+def test_later_year_topic_must_not_carry_a_lesson(repo: Repo) -> None:
+    repo.write_model(
+        base_topics() + [topic("weighted-scoring", kind="theorie", lesson=2, taught_in="jg4")]
+    )
+    assert "gehört nach jg4, trägt aber lesson 2" in repo.messages("completeness")
+
+
+def test_current_year_topic_must_not_require_a_later_one(repo: Repo) -> None:
+    repo.write_model(
+        [
+            topic("course-overview", kind="theorie", lesson=1, requires=["weighted-scoring"]),
+            topic("git-basics", kind="praxis", lesson=1),
+            later("weighted-scoring", kind="theorie"),
+        ]
+    )
+    assert "späterer Jahrgang" in repo.messages("graph")
+
+
 # --- 6 Pflichtabschnitte --------------------------------------------------
 def test_sections_missing(repo: Repo) -> None:
     repo.write_model([topic("course-overview", kind="theorie", lesson=1), ready("git-basics")])

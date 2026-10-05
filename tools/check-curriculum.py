@@ -214,7 +214,12 @@ def check_graph(model: Curriculum) -> list[Finding]:
                         line=topic.line,
                     )
                 )
-            elif own_year == other_year and other.lesson >= topic.lesson:
+            elif (
+                own_year == other_year
+                and topic.lesson is not None
+                and other.lesson is not None
+                and other.lesson >= topic.lesson
+            ):
                 findings.append(
                     Finding(
                         check="graph",
@@ -282,7 +287,8 @@ def check_completeness(model: Curriculum) -> list[Finding]:
 def check_slots(model: Curriculum) -> list[Finding]:
     findings: list[Finding] = []
     occupied: dict[tuple[int, str], list[Topic]] = defaultdict(list)
-    for topic in model.topics:
+    # Ein in einen anderen Jahrgang verschobenes Thema belegt keinen Slot.
+    for topic in model.current:
         occupied[topic.slot].append(topic)
         expected = UE_BY_KIND.get(topic.kind)
         if expected is None:
@@ -321,8 +327,8 @@ def check_slots(model: Curriculum) -> list[Finding]:
                 )
             )
 
-    lessons = {topic.lesson for topic in model.topics}
-    for lesson in range(1, max(lessons) + 1):
+    lessons = {topic.lesson for topic in model.current}
+    for lesson in range(1, max(lessons, default=0) + 1):
         if lesson not in lessons:
             findings.append(
                 Finding(
