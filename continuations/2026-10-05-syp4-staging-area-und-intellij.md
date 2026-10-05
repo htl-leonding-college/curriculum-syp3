@@ -4,7 +4,7 @@
 **Site live:** https://htl-leonding-college.github.io/curriculum-syp3/
 **Module:** 36 von 55 Themen ready (35 in SYP3, 1 verschoben nach SYP4),
 **203 Fragen**, alle mit ausformulierter Antwort
-**Git:** `curriculum-syp3` gepusht bis `8ce51a3`, Pipeline **queued** (siehe unten)
+**Git:** `curriculum-syp3` gepusht, Pipeline **grün**, Site aktuell
 
 > Löst `2026-09-27-geprueftes-setup-und-buchluecken.md` ab. Ältere liegen in
 > `continuations/archiv/` — dort stehen auch Setup-Skripten, Container-Prüfstand
@@ -92,14 +92,21 @@ Befehl, und in der Prüfung wird der Befehl genannt.
 
 ## Pipeline
 
-Lauf `37370257099` für `8ce51a3` stand beim Schreiben dieses Prompts seit
-über 15 Minuten auf **`queued`** — kein Runner hat ihn aufgenommen.
-githubstatus.com meldete für Actions **`degraded_performance`**, Pages
-`operational`. Lokal war alles grün (Prüfung 0 Befunde, 65 Tests, Build exit 0).
+**Grün.** Beide Läufe vom 05.10. — `37370257099` (`8ce51a3`) und
+`37371762006` (`ee726d9`) — liefen im zweiten Versuch durch. Die Live-Site
+zeigt SYP3/SYP4 in der Mindmap, den IntelliJ-Abschnitt in
+`git-conflicts-remotes` und „staging area" in `git-basics`.
 
-**Als Erstes prüfen:** `gh run view 37370257099`. Bleibt er hängen oder
-scheitert er ohne inhaltlichen Grund: `gh run rerun 37370257099`. Bis dahin
-zeigt die Live-Site noch den Stand von `4e7eb1d` — ohne SYP4, ohne IntelliJ.
+Der erste Versuch scheiterte an GitHub, nicht am Inhalt: Actions meldete
+erst `degraded_performance`, dann `major_outage`. „Curriculum prüfen" bekam
+15 Minuten keinen Runner und wurde ohne einen einzigen Schritt abgebrochen,
+„Site bauen" und „Veröffentlichen" wurden übersprungen. **Erkennungsmerkmal:**
+Job `cancelled` mit leerer Schrittliste und ohne `runner_name`. Abhilfe:
+githubstatus.com abwarten, dann `gh run rerun <id> --failed`.
+
+Wegen `concurrency: cancel-in-progress` bricht ein neuer Push einen noch
+wartenden Lauf ab — bei einem Ausfall also nicht nachschieben, sondern den
+letzten Lauf neu starten.
 
 ---
 
