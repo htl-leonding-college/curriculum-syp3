@@ -109,7 +109,7 @@ the picture it connects.
 [%collapsible]
 ====
 Offline: `add`, `commit`, `diff`, `log`, `status` — they only touch the working
-tree, the index and `.git`. Network: `clone` (remote → a new local repository
+tree, the staging area and `.git`. Network: `clone` (remote → a new local repository
 plus working tree), `fetch` (remote → local repository, your files untouched),
 `push` (local repository → remote). The full history lies on both sides, which
 is why almost everything works without a server.

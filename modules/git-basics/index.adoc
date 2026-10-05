@@ -17,7 +17,7 @@ endif::[]
 
 * [[lo-1]] Create a repository, record changes as commits and read the history
 * [[lo-2]] Explain the three local places a file can be in — working tree,
-  index, local repository — and move a file between them
+  staging area, local repository — and move a file between them
 * [[lo-3]] Write a commit message that is useful to somebody reading it in six
   months
 * [[lo-4]] Keep generated and secret files out of the repository
@@ -134,7 +134,7 @@ skinparam defaultTextAlignment center
 
 rectangle "your machine" {
   rectangle "working tree\nyour files as you edit them" as W #FAF0D9
-  rectangle "index (staging area)\nwhat the next commit will contain" as I #E3ECF8
+  rectangle "staging area\nwhat the next commit will contain" as I #E3ECF8
   rectangle "local repository\n.git — the full history" as L #E4F0E4
 }
 
@@ -152,7 +152,7 @@ note bottom of R : git clone creates\nthe left three from this one
 @enduml
 ----
 
-The middle place is the one without an equivalent in other tools. The *index*
+The middle place is the one without an equivalent in other tools. The *staging area*
 lets you choose which of your current changes make up the next commit. You
 edited three files and only two belong to the bug you are fixing: you stage
 those two and commit them, and the third stays in the working tree for the next
@@ -220,7 +220,7 @@ folder "working tree" as W #FAF0D9 {
   file "file1" as f1
   file "file2" as f2
 }
-storage "index" as I #E3ECF8
+storage "staging area" as I #E3ECF8
 database "local repository" as L #E4F0E4
 
 W -right-> I
@@ -234,7 +234,7 @@ git add file1 file2
 git status              # both staged, ready to be committed
 ----
 
-.After git add the files exist twice: in the working tree and in the index
+.After git add the files exist twice: in the working tree and in the staging area
 [plantuml,git-commit-staged,svg]
 ----
 @startuml
@@ -249,7 +249,7 @@ folder "working tree" as W #FAF0D9 {
   file "file1" as f1
   file "file2" as f2
 }
-storage "index" as I #E3ECF8 {
+storage "staging area" as I #E3ECF8 {
   file "file1" as i1
   file "file2" as i2
 }
@@ -280,7 +280,7 @@ folder "working tree" as W #FAF0D9 {
   file "file1" as f1
   file "file2" as f2
 }
-storage "index" as I #E3ECF8 {
+storage "staging area" as I #E3ECF8 {
   file "file1" as i1
   file "file2" as i2
 }
@@ -321,7 +321,7 @@ folder "working tree" as W #FAF0D9 {
   file "file1" as f1
   file "file2" as f2
 }
-storage "index" as I #E3ECF8 {
+storage "staging area" as I #E3ECF8 {
   file "file1" as i1
   file "file2" as i2
 }
@@ -365,7 +365,7 @@ skinparam defaultTextAlignment center
 folder "working tree" as W #FAF0D9 {
   file "file1" as f1
 }
-storage "index" as I #E3ECF8 {
+storage "staging area" as I #E3ECF8 {
   file "file1" as i1
 }
 database "local repository" as L #E4F0E4 {
@@ -393,7 +393,7 @@ Three statements follow from those pictures, and they are the ones to remember:
 * The content is compressed, and identical content is stored once. Three
   snapshots of an unchanged `file2` do not cost three times the space — which is
   why storing whole states is affordable at all.
-* The index is not emptied by a commit. It holds the state that was committed,
+* The staging area is not emptied by a commit. It holds the state that was committed,
   which is the same thing as "what the next commit would contain if you changed
   nothing".
 
@@ -452,8 +452,8 @@ are at `8ade525`.
 [source,bash]
 ----
 git show 8ade525           # what this commit changed, computed on request
-git diff                   # working tree vs index
-git diff --staged          # index vs last commit
+git diff                   # working tree vs staging area
+git diff --staged          # staging area vs last commit
 git log --oneline --graph  # the chain, drawn
 ----
 
@@ -463,7 +463,7 @@ return.
 
 [source,bash]
 ----
-git restore file1                          # throw away the edits, back to the index
+git restore file1                          # throw away the edits, back to the staging area
 git restore --source=HEAD~1 file1          # take file1 as it was one commit ago
 ----
 
@@ -612,7 +612,7 @@ shows the result.
 
 |GitHub in the browser
 |pull requests, review, comparing branches, the history of one file
-|no working tree, no index — everything local is invisible there
+|no working tree, no staging area — everything local is invisible there
 |===
 
 In this course the command line comes first and the IDE second. The reason is not
@@ -695,7 +695,7 @@ Three things are worth reading off this window from the first lesson:
 |working tree
 
 |Bereitstellungsbereich
-|index / staging area
+|staging area (git's own documentation calls it the index)
 
 |Versionsstand, Einspielung
 |commit

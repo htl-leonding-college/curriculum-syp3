@@ -18,7 +18,7 @@ covers: lo-2
 [%collapsible]
 ====
 A tracked file is in the *working tree* (the files as you edit them), in the
-*index* — also called the staging area (what the next commit will contain), or
+*staging area* (what the next commit will contain), or
 in the *local repository* (`.git`, the recorded history). Two commands move it
 forward, two move it back.
 
@@ -33,7 +33,7 @@ digraph states {
   edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
   W [label="working tree\nyour files as you edit them"];
-  I [label="index\nwhat the next commit contains"];
+  I [label="staging area\nwhat the next commit contains"];
   L [label="local repository\n.git — the history"];
 
   W -> I [label="git add"];
@@ -43,20 +43,20 @@ digraph states {
 }
 ----
 
-The step people skip in their heads is the index. It exists so that you can
+The step people skip in their heads is the staging area. It exists so that you can
 choose *what* goes into the next commit instead of committing whatever happens
 to be on disk — you can stage two of five changed files and commit them as one
 coherent change.
 
 `git status` names all three places in plain words: "Changes to be committed"
-is the index, "Changes not staged for commit" is the working tree, and a clean
+is the staging area, "Changes not staged for commit" is the working tree, and a clean
 tree means both agree with the last commit. Run it far more often than feels
 necessary; it is the cheapest way to know where you actually are.
 
 Points the answer must contain:
 
-* Working tree, index (staging area), repository
-* `git add` moves working tree to index, `git commit` moves index to repository
+* Working tree, staging area, repository
+* `git add` moves working tree to staging area, `git commit` moves staging area to repository
 * `git status` shows where everything currently is
 ====
 
@@ -296,10 +296,10 @@ the usual source of "but I committed that":
 |Command |Compares
 
 |`git diff`
-|working tree against index — what you changed but did not stage
+|working tree against staging area — what you changed but did not stage
 
 |`git diff --staged`
-|index against the last commit — what the next commit will contain
+|staging area against the last commit — what the next commit will contain
 
 |`git show <hash>`
 |a commit against its parent — what that commit changed
@@ -313,7 +313,7 @@ able to say what happens underneath.
 Points the answer must contain:
 
 * `git log --oneline --graph` to find it, `git show <hash>` to read it
-* `git diff` compares working tree and index, `git diff --staged` index and last
+* `git diff` compares working tree and staging area, `git diff --staged` staging area and last
   commit
 ====
 
@@ -324,7 +324,7 @@ covers: lo-5
 .Answer
 [%collapsible]
 ====
-The line runs between the local repository and the remote. Working tree, index
+The line runs between the local repository and the remote. Working tree, staging area
 and local repository are all on your machine; `origin` is on the server.
 
 .Only four commands cross the line
@@ -341,7 +341,7 @@ digraph network {
     label="your machine — no network needed";
     fontname="Helvetica"; fontsize=10; color="#999999";
     W [label="working tree"];
-    I [label="index"];
+    I [label="staging area"];
     L [label="local repository\n.git"];
     W -> I [label="git add"];
     I -> L [label="git commit"];
@@ -374,7 +374,7 @@ six commits are committed and not pushed.
 
 Points the answer must contain:
 
-* Working tree, index and local repository are on your machine; the remote
+* Working tree, staging area and local repository are on your machine; the remote
   repository (`origin`) is on the server
 * `add`, `commit`, `log`, `diff` are local; only `push`, `fetch`, `pull` and
   `clone` cross the network
@@ -490,7 +490,7 @@ Two details that are usually asked next:
   is affordable because identical content is stored once and everything is
   compressed.
 * *The deletion had to be staged.* `rm file2` changes the working tree only;
-  until `git add file2` (or `git rm file2`) the deletion is not in the index and
+  until `git add file2` (or `git rm file2`) the deletion is not in the staging area and
   the commit would still contain the file. A deletion is a change like any
   other.
 
