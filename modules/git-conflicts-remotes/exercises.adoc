@@ -62,6 +62,138 @@ commit is already saved on the new branch. Check with `git log` on both before
 you reset.
 ====
 
+== Resolve the same conflict in IntelliJ
+
+kind: drill
+
+This script builds a repository in which `main` and a feature branch each
+changed `Attendance.java` — one change apart, one change on the same line. Run
+it in a terminal, then open the folder `conflict-ij` in IntelliJ.
+
+[source,bash]
+----
+mkdir conflict-ij && cd conflict-ij
+git init -q -b main
+cat > Attendance.java <<'EOF'
+public class Attendance {
+
+    static String title() {
+        return "Attendance";
+    }
+
+    static int average(int members, int groups) {
+        return members / groups;
+    }
+}
+EOF
+git add Attendance.java && git commit -q -m "feat: add attendance average"
+
+git switch -q -c feature/guard-empty-groups
+cat > Attendance.java <<'EOF'
+/** Attendance figures for one course. */
+public class Attendance {
+
+    static String title() {
+        return "Attendance";
+    }
+
+    static int average(int members, int groups) {
+        return groups == 0 ? 0 : members / groups;
+    }
+}
+EOF
+git commit -q -am "fix: guard against a course without groups"
+
+git switch -q main
+cat > Attendance.java <<'EOF'
+public class Attendance {
+
+    static String title() {
+        return "Attendance per course";
+    }
+
+    static int average(int members, int groups) {
+        return Math.round((float) members / groups);
+    }
+}
+EOF
+git commit -q -am "feat: round the average instead of truncating it"
+----
+
+. In IntelliJ, merge `feature/guard-empty-groups` into `main` through the
+  branch name in the title bar.
+. In the *Files Merged with Conflicts* dialog, click *Merge…* — not one of the
+  Accept buttons.
+. Click *Apply Non-Conflicting Changes*. Note which two changes arrive in the
+  middle pane and which line stays red.
+. Resolve the red line so that *both* intentions survive, finish the file and
+  complete the merge.
+. In the terminal: `git status` and `git log --oneline --graph`. Write down the
+  git command behind each of your clicks.
+. Repeat from a fresh copy, but this time choose *Abort Merge* halfway. What
+  does `git status` report afterwards?
+
+.Solution
+[%collapsible]
+====
+*Apply Non-Conflicting Changes* brings in the Javadoc line from the feature
+branch and the new title from `main` — each changed by one side only. The
+`return` line in `average` stays red, because both branches changed it.
+
+Neither side alone is right: `main` rounds, the feature branch guards against
+zero groups. The resolution keeps both:
+
+[source,java]
+----
+        return groups == 0 ? 0 : Math.round((float) members / groups);
+----
+
+The clicks and the commands behind them:
+
+[cols="1,1",options="header"]
+|===
+|Click |Command
+
+|*Merge 'feature/guard-empty-groups' into 'main'*
+|`git merge feature/guard-empty-groups`
+
+|finishing the file in the merge tool
+|`git add Attendance.java`
+
+|committing the merge
+|`git commit`
+
+|*Abort Merge*
+|`git merge --abort`
+|===
+
+Afterwards the log shows a merge commit with two parents, and `git status`
+reports a clean working tree. After the abort, `git status` reports the same
+clean tree as before the merge: nothing was lost, nothing was merged.
+
+*Accept Yours* would have kept `main`'s file — rounding without the guard, and
+without the Javadoc line, which never was in conflict.
+====
+
+== Repair a rejected push in IntelliJ
+
+kind: drill
+
+Push the practice repository to GitHub. Change one line in the web interface and
+commit it there. Change a *different* line locally, commit, and push from
+IntelliJ (*Git | Push*).
+
+.Solution
+[%collapsible]
+====
+IntelliJ shows the *Push Rejected* dialog. *Merge* fetches the web commit, merges
+it — without a conflict, the two changes touch different lines — and pushes.
+That is `git pull` followed by `git push`. The log shows the merge commit joining
+the web commit and yours. Had you fetched first (*Git | Fetch*), the VCS widget
+would have warned you before the push: a blue arrow for the incoming commit, a
+green one for yours. Force pushing was available and was not needed.
+====
+
 == Establish the team routine
 
 kind: project

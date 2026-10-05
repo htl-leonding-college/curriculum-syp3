@@ -150,6 +150,55 @@ Points the answer must contain:
 * `git merge --abort` gets you out
 ====
 
+== IntelliJ offers Accept Yours, Accept Theirs and Merge…. Which do you click, and what does git do underneath?
+
+covers: lo-5, lo-2
+
+.Answer
+[%collapsible]
+====
+*Merge…* — almost always. The other two decide the *whole file* in one click:
+*Accept Yours* keeps your branch's version (`git checkout --ours` plus `git add`),
+*Accept Theirs* the incoming one. Both throw away everything the other side
+changed in that file, including the parts git could have merged on its own. That
+is the "take my side wholesale" mistake, offered as a button.
+
+*Merge…* opens the three-pane tool. Left is your branch, right the incoming
+branch, both read-only; the middle is the result, starting from the common base.
+*Apply Non-Conflicting Changes* first takes over what only one side changed;
+what stays red is the real conflict. You decide it — often by typing a
+combination of both — and finishing the file marks it resolved, which is
+`git add`.
+
+[cols="1,1",options="header"]
+|===
+|In IntelliJ |Underneath
+
+|merge conflict reported, dialog opens
+|`git merge` stopped, files under "Unmerged paths"
+
+|finish a file in the merge tool
+|`git add <file>`
+
+|commit the merge
+|`git commit`
+
+|*Abort Merge*
+|`git merge --abort`
+|===
+
+The tool does not change what "resolved" means. A file without conflicts is not
+yet correct code: build and test before you push, exactly as on the command line.
+
+Points the answer must contain:
+
+* *Merge…*; Accept Yours/Theirs discard the other side of the whole file
+* Left yours, right incoming, middle the editable result from the common base
+* Finishing a file is `git add`, committing completes the merge, Abort Merge is
+  `git merge --abort`
+* Build and test afterwards — the tool proves nothing about behaviour
+====
+
 == Your push is rejected with "fetch first". What happened, what do you do?
 
 covers: lo-4

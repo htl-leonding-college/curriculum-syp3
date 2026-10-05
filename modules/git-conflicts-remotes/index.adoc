@@ -20,6 +20,8 @@ endif::[]
 * [[lo-3]] Explain why a conflict is a normal event and not a failure
 * [[lo-4]] Recover from the common broken states — diverged branches, rejected
   push, accidental commit on `main`
+* [[lo-5]] Resolve a conflict and a rejected push in IntelliJ, and name the git
+  command behind every step
 
 == Local, remote, and the copy in between
 
@@ -108,6 +110,124 @@ they appear, on your own branch — never in a hurry on `main`.
 |do not, on a shared branch. It deletes other people's commits
 |===
 
+== The same work in IntelliJ
+
+Day to day you will do most of this in IntelliJ, and for conflicts that is the
+better tool: three panes side by side show more than three marker lines. Every
+button is still one of the commands above — and in the examination, and when
+you ask for help, you name the command, not the button.
+
+[cols="1,2,1",options="header"]
+|===
+|Situation |In IntelliJ |Underneath
+
+|update the notes
+|*Git \| Fetch*, or the fetch icon in the VCS widget
+|`git fetch`
+
+|bring the remote's commits in
+|*Git \| Update Project* (kbd:[Ctrl+T], macOS kbd:[Cmd+T]), strategy *Merge*
+|`git fetch` + `git merge`
+
+|send your commits
+|*Git \| Push* (kbd:[Ctrl+Shift+K], macOS kbd:[Cmd+Shift+K])
+|`git push`
+
+|merge a branch into the current one
+|branch name in the title bar → the branch → *Merge '…' into 'main'*
+|`git merge <branch>`
+
+|see where things stand
+|*Commit* tool window (kbd:[Alt+0]) and the *Log* tab of the *Git* tool window
+ (kbd:[Alt+9])
+|`git status`, `git log --graph`
+|===
+
+The VCS widget in the title bar shows a blue arrow next to the branch when the
+remote has commits you have not merged, and a green one when you have commits
+not yet pushed — `git status`'s "behind" and "ahead", as icons. Both are only as
+fresh as the last fetch.
+
+=== Resolving a conflict
+
+A merge that hits a conflict opens the *Files Merged with Conflicts* dialog. It
+lists the conflicted files — the "Unmerged paths" of `git status` — and offers
+three buttons per file:
+
+[cols="1,2",options="header"]
+|===
+|Button |What it does
+
+|*Accept Yours*
+|takes your branch's version of the *whole file* and marks it resolved
+ (`git checkout --ours` + `git add`)
+
+|*Accept Theirs*
+|takes the incoming branch's version of the whole file
+ (`git checkout --theirs` + `git add`)
+
+|*Merge…*
+|opens the three-pane merge tool — the one to use
+|===
+
+The first two are the "take my side wholesale" pitfall, built in as a single
+click. Use them only for a file you have read and know one side to be right,
+such as a generated file.
+
+.The merge tool: two read-only sides, one editable result
+[plantuml,git-intellij-merge,svg]
+----
+@startuml
+<style>
+element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
+arrow { LineColor #5A6B7D; FontColor #21303F }
+</style>
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+skinparam roundCorner 12
+rectangle "left: your branch\nmain (HEAD)\n\nread-only" as L #E3ECF8
+rectangle "middle: result\nstarts at the common base\n\nthe only editable pane" as M #FAF0D9
+rectangle "right: incoming branch\nfeature/guard-empty-groups\n\nread-only" as R #E3ECF8
+L -right-> M : >>
+R -left-> M : <<
+note bottom of M : Apply / Accept and Finish\nmeans git add for this file
+@enduml
+----
+
+Work through it in this order:
+
+. *Apply Non-Conflicting Changes* in the toolbar. It takes over everything git
+  could merge on its own — the changes only one side made. What is still
+  highlighted red afterwards is the real conflict, and usually it is small.
+. Read both sides of each red block. `>>` and `<<` copy one side into the
+  result, the cross discards it. Often the right answer is neither side alone:
+  type the combination into the middle pane.
+. Finish the file (*Apply*, or *Accept and Finish*). IntelliJ marks it resolved,
+  which is `git add` — there are no markers to forget, the result pane never
+  contained any.
+. *Build and test.* The tool proves the file is free of conflicts, not that the
+  code is right.
+. Commit the merge if IntelliJ has not done it yet: the *Commit* tool window
+  then holds the merge with a prefilled `Merge branch …` message. The *Log* tab
+  shows afterwards whether the merge commit exists — check it there, not by
+  memory.
+
+Closing the dialog does not end the merge. The conflicts stay, as a *Merge
+Conflicts* node in the *Commit* tool window, until you resolve them or choose
+*Abort Merge* — which is `git merge --abort`. A conflict produced on the command
+line shows up in the same node, so you can start in the terminal and resolve in
+the IDE.
+
+=== A rejected push
+
+When the remote has commits you do not have, *Git | Push* ends in the *Push
+Rejected* dialog with two choices, *Merge* and *Rebase*. In this course choose
+*Merge*: it is `git pull` followed by `git push`, the same repair as on the
+command line, and a conflict on the way opens the dialog above.
+
+The push dialog can also *force* a push. The rule does not change because the
+command is behind a drop-down: not on a shared branch.
+
 == Decisions
 
 * Nobody force-pushes a shared branch. If a history really must be rewritten,
@@ -117,6 +237,8 @@ they appear, on your own branch — never in a hurry on `main`.
 * `git pull` before you start working, and before you push.
 * A resolved conflict is only resolved once the build passes — the markers being
   gone proves nothing.
+* Conflicts may be resolved in IntelliJ's merge tool, and usually should be. You
+  still have to be able to say which git commands it ran.
 
 == Pitfalls
 
@@ -128,6 +250,12 @@ they appear, on your own branch — never in a hurry on `main`.
   branch only — that is what makes it the safe command.
 * Pulling with uncommitted changes and then being unable to explain the state.
   Commit or stash first.
+* Clicking *Accept Yours* in IntelliJ's conflict dialog because it is the first
+  button. It throws away the other side of the whole file, including the parts
+  git could have merged on its own.
+* Closing IntelliJ's conflict dialog and assuming the merge is over. It is still
+  in progress until every file is resolved and the merge is committed — or
+  aborted.
 
 == Terminology
 
@@ -149,10 +277,16 @@ they appear, on your own branch — never in a hurry on `main`.
 
 |Konfliktmarkierung
 |conflict marker
+
+|Zusammenführungswerkzeug
+|merge tool
 |===
 
 == Further reading
 
 * Pro Git, chapter 3.5 — Remote branches, https://git-scm.com/book
+* IntelliJ IDEA documentation — Resolve Git conflicts,
+  https://www.jetbrains.com/help/idea/resolving-conflicts.html
+* Module `git-basics` — the Git tool window and its log
 * Module `gh-actions-pages` — where a green build becomes the condition for a
   merge
