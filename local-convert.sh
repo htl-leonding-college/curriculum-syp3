@@ -42,7 +42,7 @@ echo "==> asciidoctor (${ASCIIDOCTOR_IMAGE})"
 docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -v "${PWD}:/documents" -w /documents \
   "${ASCIIDOCTOR_IMAGE}" \
   asciidoctor -r asciidoctor-diagram --failure-level=WARN \
-    -a toc=left -a icons=font -a source-highlighter=rouge \
+    -a toc=left -a icons=font -a source-highlighter=rouge -a experimental \
     -a imagesdir@=images \
     -a docinfo=shared -a docinfodir="/documents/${SITE_DIR}" \
     "${SITE_DIR}/index.adoc" "${SITE_DIR}"/questions/index.adoc \
@@ -56,6 +56,7 @@ while IFS= read -r module; do
   docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -v "${PWD}:/documents" -w /documents \
     "${ASCIIDOCTOR_IMAGE}" \
     asciidoctor-revealjs -r asciidoctor-diagram \
+      -a experimental \
       -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@5.1.0 \
       -o "${SITE_DIR}/slides/${topic}.html" "${module}"
 done < <(find "${SITE_DIR}/modules" -name 'index.adoc' 2>/dev/null)

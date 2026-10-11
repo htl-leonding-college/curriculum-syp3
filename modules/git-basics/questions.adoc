@@ -1,6 +1,7 @@
 = Repository, commit, history — questions
 :topic-id: git-basics
 :icons: font
+:experimental:
 
 ifdef::env-github[]
 :tip-caption: :bulb:

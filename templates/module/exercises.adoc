@@ -2,6 +2,7 @@
 :topic-id: {{TOPIC_ID}}
 :icons: font
 :source-highlighter: rouge
+:experimental:
 
 ifdef::env-github[]
 :tip-caption: :bulb:

@@ -1,6 +1,7 @@
 = {{TITLE}} — questions
 :topic-id: {{TOPIC_ID}}
 :icons: font
+:experimental:
 
 ifdef::env-github[]
 :tip-caption: :bulb:

@@ -1,6 +1,7 @@
 = Setting up the learning environment — exercises
 :topic-id: learning-environment-setup
 :icons: font
+:experimental:
 
 ifdef::env-github[]
 :tip-caption: :bulb:
