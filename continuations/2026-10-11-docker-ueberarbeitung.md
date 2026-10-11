@@ -4,15 +4,17 @@
 **Site live:** https://htl-leonding-college.github.io/curriculum-syp3/
 **Module:** 36 von 55 Themen ready (35 in SYP3, 1 verschoben nach SYP4),
 **203 Fragen**, alle mit ausformulierter Antwort
-**Git:** `curriculum-syp3` gepusht, Pipeline **grün**, Site aktuell
+**Git:** Pipeline beim letzten Push **grün**. Lokal liegt `daa65c6` (Docker-Überarbeitung)
+**noch nicht gepusht**, die Site zeigt sie also noch nicht.
 
 > Löst `2026-10-05-syp4-staging-area-und-intellij.md` ab. Ältere liegen in
 > `continuations/archiv/` — dort stehen auch Setup-Skripten, Container-Prüfstand
 > und die Buchlücken-Tabelle, die hier nicht wiederholt werden.
 
-> **Seit 05.10. keine Inhaltsänderung im Repo** (letzter Commit `b2bc2c1`).
-> Der Arbeitsbaum ist bis auf `chat.adoc` sauber. Diese Sitzung hat nur
-> gelesen und besprochen.
+> **Seit 05.10.:** ein Inhaltscommit, `daa65c6` — die Überarbeitung der vier
+> Docker-Module (siehe unten). Arbeitsbaum sonst sauber bis auf `chat.adoc`,
+> `.chat.adoc.swp` und die Datei `continuations/2026-09-23-…` (unversioniert,
+> vom Lehrenden noch nicht freigegeben).
 
 ---
 
@@ -28,26 +30,64 @@ Struktur steht in `curriculum.yaml`, Entscheidungen in
 
 ---
 
-## Docker-Module: Lehrender überarbeitet selbst (neu, 11.10.)
+## Docker-Module überarbeitet (11.10., Commit `daa65c6`)
 
-Der Lehrende ist mit den Docker-Ausarbeitungen **nicht zufrieden**
-(`docker-basics`, `docker-images`, `docker-volumes-config`,
-`docker-multiarch`; welche genau, ist offen). **Vereinbart:** er gestaltet sie
-manuell um, Claude nimmt das zur Kenntnis. Bis dahin **an den Docker-Modulen
-nichts ändern.** Grund der Unzufriedenheit wurde noch nicht genannt.
+Der Lehrende hat die Überarbeitung von L14–L17 (`docker-basics`,
+`docker-images`, `docker-volumes-config`, `docker-multiarch`) **an Claude
+übergeben** — die frühere Vereinbarung „er gestaltet selbst um" gilt nicht mehr.
+Grund der Unzufriedenheit wurde nie genannt; es wurde deshalb **nur** getan, was
+er verlangte, nicht neu geschrieben.
 
-Wenn er fertig ist:
+**Umgesetzt**
 
-1. Diff lesen (`modules/docker-*`), die angewendeten Regeln knapp
-   zusammenfassen und dem Lehrenden vorlegen — erst nach Freigabe in
-   `templates/module/README.adoc` oder Memory ablegen
-2. `check-curriculum.py` und Tests laufen lassen; geänderte Lernziele, Fragen
-   und `covers:` müssen zusammenpassen
-3. Das Muster auf die **Compose-Module L19–L21** anwenden, die auf Docker
-   aufbauen — deshalb Compose **nicht vorher** schreiben
-4. Prüfen, ob andere Module dasselbe Problem haben (nur melden, nicht ändern)
+* **Eigene Zeichnungen** aus seinen Kursunterlagen
+  (htl-leonding-college.github.io/docker-lecture-notes), ins Englische übersetzt:
+  Virtualisierung, Image/Container, Port-Mapping, Build-Context, Bind Mount vs.
+  Volume, nginx (zwei Bilder), Netzwerk, `build-image.svg`. Bildtitel `(own)`.
+  - `docker-basics`: `-lightweight-virt`, `-image-container-v2`, `-port-mapping`,
+    neuer Abschnitt „Containers talk to each other" mit `docker-network-en.png`
+  - `docker-images`: `build-image.svg`, neuer Abschnitt „The build context"
+  - `docker-volumes-config`: Bind-Mount-vs-Volume, nginx-Beispiel mit zwei Bildern
+  - `docker-multiarch`: **kein** passendes Bild, unverändert
+* **CLI-Syntax neu:** `docker container ls|rm|stop|exec|logs`, `docker image
+  ls|rm|history|tag`. `run`, `build`, `pull`, `push`, `login` bleiben.
+* **Alpine 3.24** statt 3.20 (vom Lehrenden genannt, nicht gegengeprüft).
+  nginx 1.27 und postgres 17 unverändert.
+* **Englische Begriffe, deutsche in Klammern** bei der ersten Verwendung;
+  Terminology-Tabellen der vier Module jetzt *English | Deutsch*.
+* `docker-basics/exercises`: Lösung zu `docker run alpine:3.24 sh` nennt `exit`
+  bzw. Ctrl+D.
 
----
+**Nicht ins Repo:** `docker-architecture-v2.png` ist von ByteByteGo, nicht
+eigen — nicht verwendet. Memory `docker-konventionen-lessons` hält CLI-Syntax,
+Alpine, Begriffsregel und diesen Hinweis fest.
+
+**Übersetzungsweg (falls weitere Zeichnungen folgen):** Quellen liegen in
+`assets/Notizen-20-21.key` (Docker-Folien 118, 119, 120, 133, 134, 141) und
+`assets/Notizen-23-25.key` (Build-Context, Folie 259). Keynote öffnet nur Kopien
+per `open -a Keynote <datei>` (AppleScript-`open` scheitert an der Sandbox);
+vorher `xattr -c` auf der Kopie. Texte per AppleScript ersetzen (Treffer mit
+`starts with`, **`it` ist reserviert**), Folien als PNG exportieren
+(`export … as slide images`), mit Pillow zuschneiden. Originale nie speichern.
+
+**Offen aus dieser Überarbeitung**
+
+1. **Übungen und Fragen nicht angepasst** an die neuen Bilder und den
+   nginx-/Netzwerk-Abschnitt. Der Netzwerk-Abschnitt hat **kein Lernziel und
+   keine Frage**; die nginx-Befehle (`-p 8081:80`, `docker exec`) kommen in den
+   Drills nicht vor
+2. **Template** `templates/module/index.adoc` hat noch *Deutsch | English*; alle
+   anderen Module ebenfalls. Angleichen nur nach Rücksprache
+3. **Klammerregel nur an den wichtigsten Stellen** gesetzt, nicht bei jedem
+   Fachwort
+4. Zeichnungen stammen aus Keynote-Folien mit etwas hellerem Gelb als die alten
+   PNGs; untereinander einheitlich
+5. Im Build-Context-Bild zeigt der Baum in der Mitte weiter *alle* Dateien, das
+   `.dockerignore` lässt aber nur `*.java` durch (Screenshot, nicht änderbar)
+6. Der Lehrende kann weiterhin sagen, was ihm an den Docker-Modulen **inhaltlich**
+   nicht gefällt — danach erst tiefer eingreifen
+7. Compose L19–L21 baut auf diesem Stand auf: dieselbe Bildsprache, neue
+   CLI-Syntax, Netzwerk-Bild ist in `docker-basics` schon verwendet
 
 ## Seit dem 27.09. erledigt
 
@@ -139,8 +179,8 @@ letzten Lauf neu starten.
 
 ### Zuerst
 
-0. Docker-Umbau des Lehrenden abwarten und aufnehmen (siehe oben). Compose
-   L19–L21 hängt daran.
+0. `daa65c6` pushen und Pipeline prüfen; offene Punkte der Docker-Überarbeitung
+   (siehe oben) mit dem Lehrenden klären. Danach Compose L19–L21.
 1. Drill „Resolve the same conflict in IntelliJ" einmal in IntelliJ 2026.2
    durchklicken, Screenshot ergänzen
 2. Entscheidungen vom 27.09. (Details im archivierten Prompt):
@@ -187,7 +227,8 @@ L28  —                               minikube-services
 ```
 
 Empfehlung: UML L21–L25 als geschlossener Strang. Compose L19–L21 am Stück,
-aber **erst nach dem Docker-Umbau**. Bis dahin UML oder L18 vorziehen. `process-waterfall` kann auf die Pflichtenheft-Gliederung
+jetzt möglich (Docker-Module überarbeitet; Muster siehe oben, vorher die offenen
+Punkte 1–2 klären). `process-waterfall` kann auf die Pflichtenheft-Gliederung
 in `sdd-why-specs` aufsetzen.
 
 ---
@@ -199,6 +240,11 @@ Fragenformat mit `covers:` und `.Answer`; Pflichtabschnitte; Farbpalette in
 `templates/module/README.adoc`; `#Farbe:text;` in Aktivitätsdiagrammen
 scheitert; `status: ready` erst nach
 `.venv/bin/python tools/check-curriculum.py --as-ready <id>`.
+
+**Neu (11.10.):** Bildtitel-Herkunft heißt `(own)`, `(free: …)` oder `(unclear: …)`
+— `(own; Zusatz)` wird **nicht** erkannt, Zusatz nur mit Doppelpunkt. Alt-Text mit
+Komma in Anführungszeichen setzen (`image::x.png["a, b",700]`), sonst bricht
+Asciidoc ihn auf. Docker-Befehle in der Management-Syntax (`docker container ls`).
 
 **Neu:** In PlantUML-Notizen beginnt eine Zeile nicht mit `=` — das wird zur
 Überschrift (`\n= git add` war fett und groß).
