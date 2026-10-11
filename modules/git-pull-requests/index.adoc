@@ -3,6 +3,7 @@
 :icons: font
 :source-highlighter: rouge
 :experimental:
+:imagesdir: images
 
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -91,28 +92,19 @@ link back to the original. You have write access to your copy and none to the
 original — and that is exactly what makes the pull request necessary: it is the
 mechanism by which somebody without write access can still propose a change.
 
-.Two repositories, two remotes, one pull request
-[graphviz,fork-flow,svg]
-----
-digraph fork {
-  rankdir=LR;
-  bgcolor="transparent";
-  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
-        fontname="Helvetica", fontsize=11];
-  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+GitHub shows the link back right under the name of the fork:
 
-  U [label="upstream\nhtl-leonding-example/jg03-syp-git-basics\nread only for you",
-     fillcolor="#F0F2F5"];
-  O [label="origin\n<you>/jg03-syp-git-basics\nyour fork — you may push"];
-  L [label="your machine\nlocal clone"];
+.A fork names its original (own)
+image::git-forked-from.png[A fork on GitHub showing "forked from" with the original repository,600]
 
-  U -> O [label="fork (once, on GitHub)"];
-  O -> L [label="git clone"];
-  L -> O [label="git push"];
-  O -> U [label="pull request"];
-  U -> L [label="git fetch upstream", style=dashed];
-}
-----
+.Two repositories, two remotes, one pull request (own)
+image::git-fork-and-branch.png["Fork, clone, push, pull request, and pull from upstream",800]
+
+Read the picture from the top left. The *fork* (Abspaltung) copies the original
+into your account, once, on GitHub. You *clone* your fork, work locally as usual
+and *push* back to it. The *pull request* goes from your fork to the original.
+To pick up what others changed in the original, you *pull* from `upstream` —
+which only works after you have added it as a second remote.
 
 [source,bash]
 ----
@@ -154,6 +146,52 @@ NOTE: In your own team project you are a collaborator, so a branch is enough and
 a fork would only add a second copy to keep in step. Fork when you cannot push —
 which in this course means the exercise repositories, and later every open-source
 contribution you make.
+
+=== Fork or template repository?
+
+A *template repository* (Vorlagen-Repository) looks similar at first: you press a
+button and get your own repository with the same directories, files and,
+optionally, branches. The difference is what stays behind — *nothing*. The new
+repository has no link to the template, no `upstream`, and its history starts
+with a single fresh commit.
+
+.Generating a repository from a template (own)
+image::git-template-repository.png["Template repository: from another account, or within your own",800]
+
+Any repository becomes a template with one checkbox in *Settings*. After that,
+*Use this template* creates the copy — from somebody else's account into yours
+(variant 1), or inside your own account (variant 2):
+
+[source,bash]
+----
+gh repo create my-project --template htl-leonding-college/asciidoctor-convert-template --private --clone
+----
+
+[cols="1,1,1",options="header"]
+|===
+| |Fork |Template
+
+|link to the original
+|yes, `forked from …`
+|none
+
+|history
+|the complete history of the original
+|starts with one new commit
+
+|pull request back to the original
+|possible
+|not possible
+
+|typical use
+|propose a change to somebody else's project
+|start a new project from a prepared skeleton
+|===
+
+Rule of thumb: *fork* when your work should flow back into the original;
+*template* when the original is only a starting point. GitHub Classroom uses
+templates for exactly that reason — every student gets a repository with the
+assignment in it, and nobody is meant to send their solution back.
 
 == Writing a pull request others can review
 
@@ -248,6 +286,9 @@ a statement about your reading, not about your trust in the author.
 
 |ursprüngliches Repository
 |upstream
+
+|Vorlagen-Repository
+|template repository
 |===
 
 == Further reading

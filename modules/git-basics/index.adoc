@@ -152,6 +152,13 @@ note bottom of R : git clone creates\nthe left three from this one
 @enduml
 ----
 
+The same four places as a drawing. The *working copy* is the working tree. Each
+commit adds a version (`v1`, `v2`, …) to the local repository, and `git push`
+copies those versions to the remote repository.
+
+.The GitHub workflow: add, commit, push (own)
+image::git-workflow-add-commit-push.png["Working copy, staging area, local and remote repository",800]
+
 The middle place is the one without an equivalent in other tools. The *staging area*
 lets you choose which of your current changes make up the next commit. You
 edited three files and only two belong to the bug you are fixing: you stage
