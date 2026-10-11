@@ -4,15 +4,16 @@
 **Site live:** https://htl-leonding-college.github.io/curriculum-syp3/
 **Module:** 36 von 55 Themen ready (35 in SYP3, 1 verschoben nach SYP4),
 **203 Fragen**, alle mit ausformulierter Antwort
-**Git:** Pipeline beim letzten Push **grün**. Lokal liegt `daa65c6` (Docker-Überarbeitung)
-**noch nicht gepusht**, die Site zeigt sie also noch nicht.
+**Git:** Docker-Überarbeitung (`daa65c6`) und die Git-Bilder vom 11.10. sind
+**gepusht**; Pipeline-Ergebnis mit `gh run list --limit 3` prüfen.
 
 > Löst `2026-10-05-syp4-staging-area-und-intellij.md` ab. Ältere liegen in
 > `continuations/archiv/` — dort stehen auch Setup-Skripten, Container-Prüfstand
 > und die Buchlücken-Tabelle, die hier nicht wiederholt werden.
 
-> **Seit 05.10.:** ein Inhaltscommit, `daa65c6` — die Überarbeitung der vier
-> Docker-Module (siehe unten). Arbeitsbaum sonst sauber bis auf `chat.adoc`,
+> **Seit 05.10.:** zwei Inhaltscommits — `daa65c6`, die Überarbeitung der vier
+> Docker-Module, und danach kbd-Fix plus Fork-/Template-/Workflow-Bilder in den
+> git-Modulen (beide siehe unten). Arbeitsbaum sonst sauber bis auf `chat.adoc`,
 > `.chat.adoc.swp` und die Datei `continuations/2026-09-23-…` (unversioniert,
 > vom Lehrenden noch nicht freigegeben).
 
@@ -88,6 +89,32 @@ vorher `xattr -c` auf der Kopie. Texte per AppleScript ersetzen (Treffer mit
    nicht gefällt — danach erst tiefer eingreifen
 7. Compose L19–L21 baut auf diesem Stand auf: dieselbe Bildsprache, neue
    CLI-Syntax, Netzwerk-Bild ist in `docker-basics` schon verwendet
+
+## kbd-Fix und Git-Bilder (11.10., nach `daa65c6`)
+
+* **`kbd:[…]` wurde in Übungen und Fragen roh ausgegeben** — dort fehlte
+  `:experimental:`. Jetzt global: `local-convert.sh` setzt `-a experimental`
+  für asciidoctor *und* revealjs (Pipeline nutzt dasselbe Skript). Zusätzlich
+  `:experimental:` im Kopf von `templates/module/exercises.adoc`,
+  `questions.adoc` und den drei betroffenen Dateien (für die GitHub-Vorschau).
+* **`git-pull-requests`**, drei eigene Zeichnungen aus den git-lecture-notes
+  (`themen/git/git-lecture-notes/asciidocs/images/`):
+  - `git-forked-from.png` nach der Fork-Definition
+  - `git-fork-and-branch.png` **ersetzt** das Graphviz-Diagramm `fork-flow`
+  - `git-template-repository.png` in neuem Unterabschnitt „Fork or template
+    repository?" (Tabelle Fork/Template, `gh repo create --template`, GitHub
+    Classroom nutzt Templates — vom Lehrenden bestätigt). „Variante 1/2" per
+    Pillow auf „Variant 1/2" übersetzt. Terminology: Vorlagen-Repository
+  - **Bewusst kein Lernziel und keine Frage** zum Template-Abschnitt
+    (Entscheidung des Lehrenden)
+  - Rote Rechtschreib-Wellenlinien unter „github-account" in zwei Bildern:
+    **bleiben**, der Lehrende kümmert sich später selbst darum
+* **`git-basics`**, Abschnitt „Four places, not one": Folie 3 aus
+  `assets/Notizen-22-23.key` („GitHub Workflow", add/commit/push mit v1/v2) als
+  `git-workflow-add-commit-push.png`, ohne Folientitel und ohne Zeile
+  „4bhitm, 20.09.2022" zugeschnitten. Steht unter dem PlantUML-Diagramm.
+  Export: alle Folien außer 3 auf `skipped` setzen, dann `export … as slide
+  images with properties {skipped slides:false}` — liefert genau ein PNG.
 
 ## Seit dem 27.09. erledigt
 
@@ -179,7 +206,7 @@ letzten Lauf neu starten.
 
 ### Zuerst
 
-0. `daa65c6` pushen und Pipeline prüfen; offene Punkte der Docker-Überarbeitung
+0. Pipeline des letzten Pushs prüfen; offene Punkte der Docker-Überarbeitung
    (siehe oben) mit dem Lehrenden klären. Danach Compose L19–L21.
 1. Drill „Resolve the same conflict in IntelliJ" einmal in IntelliJ 2026.2
    durchklicken, Screenshot ergänzen
@@ -246,6 +273,9 @@ scheitert; `status: ready` erst nach
 Komma in Anführungszeichen setzen (`image::x.png["a, b",700]`), sonst bricht
 Asciidoc ihn auf. Docker-Befehle in der Management-Syntax (`docker container ls`).
 
+**Neu (11.10.):** `kbd:[…]` braucht `experimental` — ist jetzt global gesetzt,
+in neuen Dateien trotzdem `:experimental:` in den Kopf (GitHub-Vorschau).
+
 **Neu:** In PlantUML-Notizen beginnt eine Zeile nicht mit `=` — das wird zur
 Überschrift (`\n= git add` war fett und groß).
 
@@ -260,10 +290,11 @@ vergessenen Schritt.
 .venv/bin/python tools/check-curriculum.py    # 55 Themen, 36 ready, 0 Befunde
 .venv/bin/python -m pytest tools/tests -q     # 65 passed
 PYTHON=.venv/bin/python ./local-convert.sh    # build/site/index.html, exit 0
-.venv/bin/python tools/rights-report.py       # unclear=1 → exit 1 (bekannt)
+.venv/bin/python tools/rights-report.py       # 15 Bilder, own=14, unclear=1 → exit 1 (bekannt)
 gh run list --limit 3
 ```
 
 `chat.adoc` ist der private Notizblock des Lehrenden: nicht lesen, nicht
-committen. Dazu liegt `.chat.adoc.swp` im Arbeitsbaum (Datei ist in einem
+committen. `continuations/2026-09-23-…` bleibt unversioniert, bis der Lehrende
+sie ausdrücklich freigibt. Dazu liegt `.chat.adoc.swp` im Arbeitsbaum (Datei ist in einem
 Editor offen) — ebenfalls nicht committen.
