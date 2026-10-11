@@ -157,13 +157,13 @@ covers: lo-4
 |an escape is worth far less against an unprivileged user
 
 |no secrets in any layer
-|`docker history` reads them; a later `rm` does not remove them
+|`docker image history` reads them; a later `rm` does not remove them
 
 |configuration at run time
 |the same image must serve test and production
 
 |log to stdout/stderr
-|`docker logs` works; nothing must be fetched from inside
+|`docker container logs` works; nothing must be fetched from inside
 
 |keep it small
 |less to transfer, patch and attack

@@ -138,9 +138,9 @@ covers: lo-4
 |===
 |Not in |Because
 
-|the image |every layer is readable with `docker history`, forever
+|the image |every layer is readable with `docker image history`, forever
 |the repository |git keeps it after deletion; a public repo publishes it at once
-|the command line |`docker ps`, shell history and the process list show it
+|the command line |`docker container ls`, shell history and the process list show it
 |the log |logs are collected, forwarded and read by other people
 |===
 
@@ -177,11 +177,11 @@ covers: lo-5
 ====
 [source,bash]
 ----
-docker run --rm -v bookingdata:/data -v "$PWD:/backup" alpine:3.20 \
+docker run --rm -v bookingdata:/data -v "$PWD:/backup" alpine:3.24 \
   tar czf /backup/bookingdata-2026-11-14.tar.gz -C /data .
 
 docker volume create bookingdata_restored
-docker run --rm -v bookingdata_restored:/data -v "$PWD:/backup" alpine:3.20 \
+docker run --rm -v bookingdata_restored:/data -v "$PWD:/backup" alpine:3.24 \
   tar xzf /backup/bookingdata-2026-11-14.tar.gz -C /data
 ----
 

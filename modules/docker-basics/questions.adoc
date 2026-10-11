@@ -109,13 +109,13 @@ covers: lo-3
 ====
 [source,bash]
 ----
-docker run --rm -it alpine:3.20 sh
+docker run --rm -it alpine:3.24 sh
 docker run -d --name web -p 8080:80 nginx:1.27
-docker ps / docker ps -a
-docker logs web
-docker exec -it web sh
-docker stop web && docker rm web
-docker images / docker rmi nginx:1.27
+docker container ls / docker container ls -a
+docker container logs web
+docker container exec -it web sh
+docker container stop web && docker container rm web
+docker image ls / docker image rm nginx:1.27
 ----
 
 Four flags are worth understanding rather than copying:
@@ -264,7 +264,7 @@ The repair is the same rule as everywhere in this course: the fix goes into the
 *description*, the image is rebuilt, and the change is committed. Then it exists
 for everybody and it can be reviewed.
 
-`docker exec -it web sh` is still useful — for *looking*: reading a config the
+`docker container exec -it web sh` is still useful — for *looking*: reading a config the
 image actually contains, checking a path, seeing what a process sees. Diagnosis
 inside, repair in the file.
 

@@ -55,10 +55,10 @@ environments has to come from outside.*
 
 Two kinds of thing come from outside, and they behave differently:
 
-* *state* — the database files, uploads, anything that must survive the
+* *state* (Zustand) — the database files, uploads, anything that must survive the
   container. This is `volumes`.
 * *configuration* — hostnames, ports, feature switches, credentials. This is
-  environment variables and mounted files.
+  environment variables (Umgebungsvariablen) and mounted files.
 
 == Volumes and bind mounts
 
@@ -68,8 +68,8 @@ it is mounted in.
 [cols="1,2,2",options="header"]
 |===
 |
-|Named volume
-|Bind mount
+|Named volume (benannter Datenbereich)
+|Bind mount (eingehängter Hostpfad)
 
 |Command
 |`-v bookingdata:/var/lib/postgresql/data`
@@ -92,10 +92,40 @@ it is mounted in.
 |ordinary file backup
 |===
 
+.Bind mount versus named volume (own)
+image::docker-bindmount-vs-volume-en.png[A host directory mounted into a container versus a volume in Docker's own storage,800]
+
+Note the right-hand half of the picture: a named volume lives in a storage area
+that Docker manages. On the host you cannot simply `ls` or `cat` into it — access
+goes through Docker, a container or the API. A bind mount is the opposite: an
+ordinary directory you can open with any tool.
+
 Rule of thumb: *named volume for state the service owns; bind mount for files a
 human edits.* A database on a bind mount works and then gives you permission and
 performance problems on the first machine that is not yours — which is the one
 that matters.
+
+A concrete case is the nginx web server from the first lesson. Its image holds
+the program and the default pages; the pages the container serves are files in
+the writable layer, so they vanish with the container — unless the directory is
+mounted from outside.
+
+.The nginx container: process, files, port and volume (own)
+image::docker-nginx-en.png["nginx image, nginx container with files and a port mapping 80 to 8081, and a volume",500]
+
+.Starting nginx: port, shell and bind mount (own)
+image::docker-starten-nginx-en.png["1 port 80 to 8081, 2 docker exec into the container, 3 bind mount of ./html",800]
+
+[source,bash]
+----
+docker run -d --name nginx -p 8081:80 \
+  -v "${PWD}/html:/usr/share/nginx/html" nginx:1.27   # <1> <2>
+docker container exec -it nginx /bin/sh                         # <3>
+----
+<1> `-p 8081:80` — port 80 in the container, 8081 on the host
+<2> `-v …/html:/usr/share/nginx/html` — the host directory `./html` replaces the
+    served directory; edit a file on the host and reload the browser
+<3> `docker container exec` runs a command in a running container, here a shell
 
 [source,bash]
 ----
@@ -150,13 +180,13 @@ now there are three more places it must not be:
 |Not in |Because
 
 |the image
-|every layer is readable with `docker history`, forever
+|every layer is readable with `docker image history`, forever
 
 |the repository
 |git keeps it after deletion; a public repository publishes it instantly
 
 |the command line
-|`docker ps`, the shell history and the process list all show it
+|`docker container ls`, the shell history and the process list all show it
 
 |the log
 |logs are collected, forwarded and read by people who are not you
@@ -186,12 +216,12 @@ hope. Restoring is the part that has to be practised, and it takes ten minutes.
 [source,bash]
 ----
 # backup: a throwaway container that can see the volume
-docker run --rm -v bookingdata:/data -v "$PWD:/backup" alpine:3.20 \
+docker run --rm -v bookingdata:/data -v "$PWD:/backup" alpine:3.24 \
   tar czf /backup/bookingdata-2026-11-14.tar.gz -C /data .
 
 # restore into a fresh volume
 docker volume create bookingdata_restored
-docker run --rm -v bookingdata_restored:/data -v "$PWD:/backup" alpine:3.20 \
+docker run --rm -v bookingdata_restored:/data -v "$PWD:/backup" alpine:3.24 \
   tar xzf /backup/bookingdata-2026-11-14.tar.gz -C /data
 ----
 
@@ -225,7 +255,7 @@ restore is what you will need under pressure.
 * Removing a container with `-v` or pruning volumes and deleting a database
   nobody had backed up.
 * A bind mount for a database, then permission errors on the next machine.
-* A secret on the command line, visible in `docker ps` and in the shell history.
+* A secret on the command line, visible in `docker container ls` and in the shell history.
 * Mounting a config file writable and letting the container edit it out from
   under the repository.
 * A backup that has never been restored. It is not a backup.
@@ -234,31 +264,31 @@ restore is what you will need under pressure.
 
 [cols="1,1",options="header"]
 |===
-|Deutsch |English
+|English |Deutsch
 
-|Datenträger, benannter Datenbereich
 |named volume
+|Datenträger, benannter Datenbereich
 
-|Einhängen eines Hostpfads
 |bind mount
+|Einhängen eines Hostpfads
 
-|Umgebungsvariable
 |environment variable
+|Umgebungsvariable
 
-|Geheimnis, Zugangsdatum
 |secret
+|Geheimnis, Zugangsdatum
 
-|nur lesbar
 |read-only
+|nur lesbar
 
-|Sicherung
 |backup
+|Sicherung
 
-|Wiederherstellung
 |restore
+|Wiederherstellung
 
-|Zustand
 |state
+|Zustand
 |===
 
 == Further reading

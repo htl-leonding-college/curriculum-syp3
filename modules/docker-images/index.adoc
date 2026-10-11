@@ -56,9 +56,30 @@ default arguments that a `docker run` can override. If you want the container to
 be a program, use `ENTRYPOINT`; if you want it to be a starting point somebody
 adapts, use `CMD`.
 
+The whole path from description to running container fits in one picture: a
+`Dockerfile` names a base image with `FROM`, `docker build` turns it into an
+image, and `docker run` starts a container from that image.
+
+.From Dockerfile to container (own)
+image::build-image.svg["Dockerfile, base image, image and container linked by FROM, docker build and docker run",800]
+
+== The build context
+
+`docker build .` does not read your disk freely. It packs the directory you name
+— the *build context* — and sends it to the Docker daemon; `COPY` can only reach
+what is inside it. The `.dockerignore` file decides what is left out of that
+pack.
+
+.Build context filtered by `.dockerignore` (own)
+image::docker-build-context-en.png["Project tree, .dockerignore with * and !**/*.java, resulting image",800]
+
+The example in the picture is an *allow-list*: `*` excludes everything, and
+`!**/*.java` takes the Java sources back in. Fewer files in the context means a
+faster build and nothing in the image that does not belong there.
+
 == Layers and the cache
 
-Every instruction produces a layer. On rebuild, Docker reuses layers whose inputs
+Every instruction produces a layer (Schicht). On rebuild, Docker reuses layers whose inputs
 have not changed, and *invalidates everything after the first one that has*.
 
 [plantuml,layer-cache,svg]
@@ -116,7 +137,7 @@ the image*, which is a correctness and a security matter, not a speed one.
 == Multi-stage builds
 
 A build needs a compiler, a package manager and a source tree. A running program
-needs none of them. A multi-stage build separates the two and ships only the
+needs none of them. A multi-stage build (mehrstufiger Bau) separates the two and ships only the
 second.
 
 [source,dockerfile]
@@ -140,7 +161,7 @@ the source code and every intermediate file. Typical effect on a Java service �
 from something near a gigabyte to something near a hundred megabytes.
 
 Size is the visible benefit and the smaller one. The real gains are that the
-*attack surface* shrinks — a compiler and a package manager inside a production
+*attack surface* (Angriffsfläche) shrinks — a compiler and a package manager inside a production
 image are tools for whoever gets in — and that the source code, which may not be
 public, is not shipped to everyone who pulls the image.
 
@@ -157,7 +178,7 @@ public, is not shipped to everyone who pulls the image.
 |a container escape is worth much less against an unprivileged user
 
 |No secrets in the image
-|every layer is readable with `docker history`; deleting a file in a later layer
+|every layer is readable with `docker image history`; deleting a file in a later layer
  does *not* remove it from the earlier one
 
 |Pass configuration at run time
@@ -165,7 +186,7 @@ public, is not shipped to everyone who pulls the image.
  `docker-volumes-config`
 
 |Log to stdout and stderr
-|`docker logs` then works, and nothing has to be fetched from inside
+|`docker container logs` then works, and nothing has to be fetched from inside
 
 |Keep the image small
 |less to transfer, less to patch, less to attack
@@ -186,13 +207,13 @@ same reason.
 
 == Tags and publishing
 
-A tag is a name for an image; a *digest* is its identity. Tags can be moved,
+A *tag* (Kennzeichnung) is a name for an image; a *digest* (Fingerabdruck) is its identity. Tags can be moved,
 digests cannot.
 
 [source,bash]
 ----
 docker build -t ghcr.io/htl-leonding-example/booking:0.3.0 .
-docker tag ghcr.io/htl-leonding-example/booking:0.3.0 \
+docker image tag ghcr.io/htl-leonding-example/booking:0.3.0 \
            ghcr.io/htl-leonding-example/booking:latest
 docker login ghcr.io
 docker push ghcr.io/htl-leonding-example/booking:0.3.0
@@ -238,31 +259,31 @@ public registry is world-readable, including everything in every layer.
 
 [cols="1,1",options="header"]
 |===
-|Deutsch |English
+|English |Deutsch
 
-|Bauanleitung
 |Dockerfile, image description
+|Bauanleitung
 
-|Schicht
 |layer
+|Schicht
 
-|Zwischenspeicher
 |build cache
+|Zwischenspeicher
 
-|mehrstufiger Bau
 |multi-stage build
+|mehrstufiger Bau
 
-|Basisabbild
 |base image
+|Basisabbild
 
-|Angriffsfläche
 |attack surface
+|Angriffsfläche
 
-|Fingerabdruck
 |digest
+|Fingerabdruck
 
-|Marke, Kennzeichnung
 |tag
+|Marke, Kennzeichnung
 |===
 
 == Further reading

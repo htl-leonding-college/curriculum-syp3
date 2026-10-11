@@ -18,16 +18,16 @@ kind: drill
 [source,bash]
 ----
 docker run -d --name db -e POSTGRES_PASSWORD=demo postgres:17-alpine
-docker exec -it db psql -U postgres -c "create table t(x int); insert into t values (1);"
-docker exec -it db psql -U postgres -c "select * from t;"
-docker stop db && docker rm db
+docker container exec -it db psql -U postgres -c "create table t(x int); insert into t values (1);"
+docker container exec -it db psql -U postgres -c "select * from t;"
+docker container stop db && docker container rm db
 docker run -d --name db -e POSTGRES_PASSWORD=demo postgres:17-alpine
-docker exec -it db psql -U postgres -c "select * from t;"
+docker container exec -it db psql -U postgres -c "select * from t;"
 ----
 
 . Explain the last error.
 . Repeat the whole sequence with a named volume so that the row survives.
-. Then remove the container with `docker rm -v db` and check whether the row is
+. Then remove the container with `docker container rm -v db` and check whether the row is
   still there.
 
 .Solution
@@ -40,7 +40,7 @@ docker exec -it db psql -U postgres -c "select * from t;"
 . With `-v bookingdata:/var/lib/postgresql/data` on both `run` commands the row
   survives, because the data directory is the volume rather than the writable
   layer.
-. `docker rm -v` removes *anonymous* volumes attached to the container. A named
+. `docker container rm -v` removes *anonymous* volumes attached to the container. A named
   volume survives it — which is the third argument for naming them. Try
   `docker volume rm bookingdata` afterwards to see the data actually disappear,
   and note that nothing asked for confirmation.
@@ -90,7 +90,7 @@ cat .env
 DB_PASSWORD=hunter2
 
 docker run -d --name api -e DB_PASSWORD=hunter2 myimage:1.0
-docker logs api | head -1
+docker container logs api | head -1
 #   starting with config: {db_password: hunter2, ...}
 ----
 
@@ -110,7 +110,7 @@ Name each leak and give the repair.
   repository is public it was read by a scanner within minutes. Repair: remove
   from tracking, add to `.gitignore`, commit a `.env.example` with names only —
   and rotate the password.
-. *Secret on the command line.* Visible in `docker ps`, in the shell history and
+. *Secret on the command line.* Visible in `docker container ls`, in the shell history and
   in the host's process list. Repair: `--env-file`, or a mounted secret file with
   the `*_FILE` convention.
 . *Secret in the log.* Logs are collected and forwarded; whoever reads the log

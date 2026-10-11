@@ -74,7 +74,7 @@ dist
 
 Note `CMD ["node", ...]` in exec form rather than `CMD npm start`: the shell form
 wraps the process in a shell, which then swallows the stop signal, and
-`docker stop` waits ten seconds before killing it every single time.
+`docker container stop` waits ten seconds before killing it every single time.
 ====
 
 == Measure the cache
@@ -115,7 +115,7 @@ Build this and then dig it out.
 
 [source,dockerfile]
 ----
-FROM alpine:3.20
+FROM alpine:3.24
 RUN echo "api_key=wx_live_8831f0c2" > /tmp/secrets.env
 RUN cat /tmp/secrets.env > /dev/null && rm /tmp/secrets.env
 CMD ["sh"]
@@ -125,14 +125,14 @@ CMD ["sh"]
 ----
 docker build -t leaky:1 .
 docker run --rm leaky:1 ls /tmp        # the file is gone
-docker history --no-trunc leaky:1      # and yet
+docker image history --no-trunc leaky:1      # and yet
 ----
 
 .Solution
 [%collapsible]
 ====
 `ls` shows nothing, because the final layer no longer contains the file.
-`docker history` shows the `RUN echo …` instruction with the key in plain text,
+`docker image history` shows the `RUN echo …` instruction with the key in plain text,
 and the layer that contained the file is still part of the image — anybody who
 pulls it can extract it, with `docker save` and `tar` if nothing else.
 

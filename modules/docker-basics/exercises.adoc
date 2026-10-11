@@ -21,11 +21,11 @@ step.
 [source,bash]
 ----
 docker run hello-world
-docker run alpine:3.20 echo hi
-docker run alpine:3.20 sh
-docker run -it alpine:3.20 sh
-docker ps
-docker ps -a
+docker run alpine:3.24 echo hi
+docker run alpine:3.24 sh
+docker run -it alpine:3.24 sh
+docker container ls
+docker container ls -a
 ----
 
 Answer: why did the third command return immediately, and where did the
@@ -37,10 +37,11 @@ containers from steps 1–4 go?
 The third command starts `sh` with no terminal attached. A shell with nothing to
 read from standard input reaches end-of-file at once, exits, and the container
 stops — so it looks like "nothing happened". `-it` attaches a terminal and gives
-you a prompt.
+you a prompt. Leave that shell again with `exit` (or kbd:[Ctrl+D]); the container
+stops with it, because the shell was its only process.
 
-`docker ps` shows only *running* containers, so after these steps it is likely
-empty. `docker ps -a` shows all four, stopped, still occupying disk. That is the
+`docker container ls` shows only *running* containers, so after these steps it is likely
+empty. `docker container ls -a` shows all four, stopped, still occupying disk. That is the
 point of the exercise: nothing removed them, because none of the commands used
 `--rm`.
 
@@ -69,10 +70,10 @@ docker run -d --name web -p 8080:80 nginx:1.27
 ====
 [source,bash]
 ----
-docker logs web
-docker exec -it web sh
+docker container logs web
+docker container exec -it web sh
 #   the file is /usr/share/nginx/html/index.html
-docker stop web && docker rm web
+docker container stop web && docker container rm web
 docker run -d --name web -p 8080:80 nginx:1.27
 ----
 
@@ -85,7 +86,7 @@ nothing is listening. The container starts fine, nothing errors, and
 http://localhost:80 refuses the connection. This failure mode is quiet, which is
 why the order is worth memorising: *host first*.
 
-Note also that `docker logs` shows exactly what the process wrote to stdout and
+Note also that `docker container logs` shows exactly what the process wrote to stdout and
 stderr. A program that logs to a file inside the container shows nothing here —
 which is a design rule for later: containerised programs log to stdout.
 ====
@@ -133,7 +134,7 @@ kind: project
   that a team member can run it without asking you.
 . Write down one sentence on whether it was worth it. Be willing to conclude that
   it was not; that answer is also a finding.
-. Check `docker ps -a` and `docker images` afterwards and clean up what the
+. Check `docker container ls -a` and `docker image ls` afterwards and clean up what the
   experiment left behind.
 
 Step 4 is the actual exercise. Containerising something is easy; deciding whether

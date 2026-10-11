@@ -19,10 +19,10 @@ kind: drill
 ----
 uname -m
 docker version --format '{{.Server.Arch}}'
-docker image inspect alpine:3.20 --format '{{.Os}}/{{.Architecture}}'
-docker buildx imagetools inspect alpine:3.20
-docker run --rm --platform linux/amd64 alpine:3.20 uname -m
-docker run --rm --platform linux/arm64 alpine:3.20 uname -m
+docker image inspect alpine:3.24 --format '{{.Os}}/{{.Architecture}}'
+docker buildx imagetools inspect alpine:3.24
+docker run --rm --platform linux/amd64 alpine:3.24 uname -m
+docker run --rm --platform linux/arm64 alpine:3.24 uname -m
 ----
 
 Compare with a classmate on the other kind of laptop. Which commands give
@@ -52,7 +52,7 @@ On any machine:
 
 [source,bash]
 ----
-docker run --rm --platform linux/s390x alpine:3.20 echo hi
+docker run --rm --platform linux/s390x alpine:3.24 echo hi
 ----
 
 . What happens, and why does this variant behave differently from `amd64` on a

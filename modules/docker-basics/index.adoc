@@ -54,7 +54,13 @@ software, and it is described in a file that is committed.*
 
 == Image, container, registry
 
-Three words, and confusing them is the source of most early errors.
+Three words, and confusing them is the source of most early errors. The picture
+below is the one to keep in your head: an image is a *file*, a container is that
+file *plus a process*, and the only part of a container that changes is a thin
+layer on top.
+
+.Image, container, port and volume (own)
+image::docker-image-container-v2-en.png["Image, container, mutable files, port and volume",700]
 
 [plantuml,image-container-registry,svg]
 ----
@@ -82,15 +88,15 @@ C -down-> I : "many containers\nfrom one image"
 |===
 |Term |What it is
 
-|*image*
+|*image* (Abbild)
 |an immutable, layered filesystem plus a default command. Never changes after it
  is built
 
-|*container*
+|*container* (Behälter)
 |one running instance of an image, with a thin writable layer on top. Changes
  inside it are lost when it is removed
 
-|*registry*
+|*registry* (Ablage)
 |where images live — Docker Hub, GitHub Container Registry, a school-internal one
 |===
 
@@ -107,17 +113,17 @@ into it.
 
 [source,bash]
 ----
-docker run --rm -it alpine:3.20 sh     # start, attach, delete on exit
+docker run --rm -it alpine:3.24 sh     # start, attach, delete on exit
 docker run -d --name web -p 8080:80 nginx:1.27   # detached, port published
 
-docker ps                # running containers
-docker ps -a             # including stopped ones
-docker logs web          # what it wrote to stdout/stderr
-docker exec -it web sh   # a shell inside a running container
-docker stop web          # SIGTERM, then SIGKILL after a grace period
-docker rm web            # remove the stopped container
-docker images            # local images
-docker rmi nginx:1.27    # remove an image
+docker container ls                # running containers
+docker container ls -a             # including stopped ones
+docker container logs web          # what it wrote to stdout/stderr
+docker container exec -it web sh   # a shell inside a running container
+docker container stop web          # SIGTERM, then SIGKILL after a grace period
+docker container rm web            # remove the stopped container
+docker image ls            # local images
+docker image rm nginx:1.27    # remove an image
 ----
 
 Four flags are worth understanding rather than copying:
@@ -127,8 +133,11 @@ Four flags are worth understanding rather than copying:
 * `-it` gives you a terminal. Without it an interactive shell exits immediately,
   which is the commonest first confusion.
 * `-d` detaches. The container keeps running and you get the prompt back.
-* `-p 8080:80` publishes *host port 8080* to *container port 80*. The order is
-  host first, and getting it backwards is the second commonest first confusion.
+* `-p 8080:80` does *port publishing* (Portweiterleitung) from *host port 8080* to
+  *container port 80*. The order is host first, and getting it backwards is the second commonest first confusion.
+
+.Reading `-p 8080:80` (own)
+image::docker-port-mapping-en.png["docker run -p 8080:80 — host port, separator, container port",400]
 
 The tag matters as much as the flags. `nginx` means `nginx:latest`, which is
 whatever was pushed most recently — a moving target, and therefore not
@@ -139,44 +148,11 @@ reproducible. *Always pin a version*: `nginx:1.27`.
 Both isolate. They isolate at different levels, and the difference explains every
 practical property.
 
-[plantuml,vm-vs-container,svg]
-----
-@startuml
-<style>
-element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
-arrow { LineColor #5A6B7D; FontColor #21303F }
-</style>
-skinparam shadowing false
-skinparam defaultFontName Helvetica
-
-rectangle "virtual machine" {
-  rectangle "hardware" as H1 #F0F2F5
-  rectangle "host OS + hypervisor" as O1 #F0F2F5
-  rectangle "guest kernel A" as K1 #FAF0D9
-  rectangle "guest kernel B" as K2 #FAF0D9
-  rectangle "app A" as A1 #E4F0E4
-  rectangle "app B" as A2 #E4F0E4
-  H1 -up-> O1
-  O1 -up-> K1
-  O1 -up-> K2
-  K1 -up-> A1
-  K2 -up-> A2
-}
-
-rectangle "containers" {
-  rectangle "hardware" as H2 #F0F2F5
-  rectangle "host OS — one kernel" as O2 #F0F2F5
-  rectangle "app C" as A3 #E4F0E4
-  rectangle "app D" as A4 #E4F0E4
-  H2 -up-> O2
-  O2 -up-> A3
-  O2 -up-> A4
-}
-@enduml
-----
+.Heavyweight versus lightweight virtualisation (own)
+image::docker-lightweight-virt-en.png[VirtualBox with a guest OS versus Docker sharing the host OS,700]
 
 A virtual machine brings its own kernel; a container shares the host's and is
-isolated by kernel features — namespaces for what it can see, cgroups for what it
+isolated by kernel features — namespaces (Namensräume) for what it can see, cgroups for what it
 may consume.
 
 [cols="1,1,1",options="header"]
@@ -211,6 +187,37 @@ that is the subject of `docker-multiarch`.
 The weaker isolation is worth stating plainly rather than glossing: a container is
 a boundary, not a sandbox for hostile code. Running an untrusted image with
 `--privileged` or with the Docker socket mounted gives it the host.
+
+== Containers talk to each other
+
+Containers on one host are not alone. Docker puts them into a *virtual network*
+(virtuelles Netzwerk), by default a *bridge* network. Every container gets its own
+IP address in it, and containers on the same network can reach each other without
+any port being published to the outside.
+
+.Containers in a shared Docker network (own)
+image::docker-network-en.png["A bridge network with web server, database and a third container, each with its own IP address and port",800]
+
+Read the picture from the inside out:
+
+* Inside the network the web server reaches the database on `5432` directly —
+  no `-p` involved.
+* `-p` publishes a port to the *host network* (the green boxes above the frame).
+  Only what a person or another machine has to reach is published: the web server
+  yes, the database usually not.
+* On a network you create yourself, containers also find each other *by name*
+  (`cache` instead of an IP address like `172.24.0.3`). The default bridge does not do that.
+
+[source,bash]
+----
+docker network create booking-net
+docker run -d --name cache --network booking-net redis:7-alpine
+docker run -d --name web --network booking-net -p 8080:80 nginx:1.27
+docker network ls
+----
+
+Starting and wiring several containers by hand does not scale. For that you
+describe the whole set in one file — Docker Compose, later in this course.
 
 == When a container is the wrong tool
 
@@ -266,31 +273,31 @@ people end up debugging their build system instead of their program.
 
 [cols="1,1",options="header"]
 |===
-|Deutsch |English
+|English |Deutsch
 
-|Abbild
 |image
+|Abbild
 
-|Behälter, laufende Instanz
 |container
+|Behälter, laufende Instanz
 
-|Registrierung, Ablage
 |registry
+|Registrierung, Ablage
 
-|Schicht
 |layer
+|Schicht
 
-|unveränderlich
 |immutable
+|unveränderlich
 
-|Namensraum
 |namespace
+|Namensraum
 
-|Portweiterleitung
 |port publishing
+|Portweiterleitung
 
-|Fingerabdruck des Abbilds
 |digest
+|Fingerabdruck des Abbilds
 |===
 
 == Further reading

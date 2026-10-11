@@ -26,8 +26,8 @@ endif::[]
 This is not an exotic topic. It is the reason one team's image runs on three
 machines and fails on the fourth.
 
-A container shares the host kernel, and it also runs the host's *instruction
-set*. An image contains compiled binaries, and a binary compiled for `amd64` — an
+A container shares the host kernel, and it also runs the host's *instruction set*
+(Befehlssatz). An image contains compiled binaries, and a binary compiled for `amd64` — an
 Intel or AMD processor — is not executable on `arm64` — an Apple Silicon Mac, a
 Raspberry Pi, or an ARM server in a cloud.
 
@@ -91,7 +91,7 @@ works but it is inexplicably slow" is a symptom of this, not of your code.
 
 == One tag, several images
 
-The mechanism that solves it is the *image index* — sometimes called a manifest
+The mechanism that solves it is the *image index* (Abbildverzeichnis) — sometimes called a manifest
 list. A tag in a registry does not have to point at one image; it can point at a
 small document listing several, one per platform.
 
@@ -209,25 +209,25 @@ what the server will do — slowly, but faithfully.
 
 [cols="1,1",options="header"]
 |===
-|Deutsch |English
+|English |Deutsch
 
-|Prozessorarchitektur
 |processor architecture
+|Prozessorarchitektur
 
-|Befehlssatz
 |instruction set
+|Befehlssatz
 
-|Abbildverzeichnis, Manifestliste
 |image index, manifest list
+|Abbildverzeichnis, Manifestliste
 
-|Plattform
 |platform
+|Plattform
 
-|Emulation
 |emulation
+|Emulation
 
-|native Erweiterung
 |native extension
+|native Erweiterung
 |===
 
 == Further reading
