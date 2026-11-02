@@ -57,6 +57,7 @@ while IFS= read -r module; do
     "${ASCIIDOCTOR_IMAGE}" \
     asciidoctor-revealjs -r asciidoctor-diagram \
       -a experimental \
+      -a imagesdir="../modules/${topic}/images" \
       -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@5.1.0 \
       -o "${SITE_DIR}/slides/${topic}.html" "${module}"
 done < <(find "${SITE_DIR}/modules" -name 'index.adoc' 2>/dev/null)

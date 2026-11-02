@@ -52,21 +52,15 @@ expensive it is to be wrong.
 |being wrong is found while you are still holding the thought
 |===
 
-[plantuml,three-tempos,svg]
-----
-@startuml
-<style>
-element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
-arrow { LineColor #5A6B7D; FontColor #21303F }
-</style>
-skinparam shadowing false
-rectangle "WATERFALL\nspecify -> build -> verify\none pass, months" as W #E3ECF8
-rectangle "SCRUM\nbacklog -> sprint -> review\nweeks, repeated" as S #FAF0D9
-rectangle "SDD\nspec -> change -> verify\nminutes, continuous" as D #E4F0E4
-W -down-> S : shorter loop
-S -down-> D : shorter loop again
-@enduml
-----
+The same picture, drawn as the phases of one pass: the waterfall runs analysis,
+design, implementation and test once, over the whole project. Iterative models
+(Rational Unified Process, Object Engineering Process) run them several times on
+a part of the system each. Agile models such as XP and Scrum shrink one pass
+until it fits into days. Spec-driven development continues the right-hand column:
+one pass per change, in minutes.
+
+.Kinds of process models — the same phases, run once, a few times, or continuously (own)
+image::kinds-of-process-models.svg["Waterfall model runs analysis, design, implementation and test once; iterative processes such as RUP and OEP run them a few times; XP runs them in many tiny steps",800]
 
 == Why the tempo changed
 
@@ -137,6 +131,12 @@ Nobody picks a model for their whole life. They pick a tempo for a situation.
 
 |Wasserfallmodell
 |waterfall model
+
+|iteratives / agiles Vorgehensmodell
+|iterative / agile process model
+
+|Analyse, Entwurf, Realisierung, Test
+|analysis, design, implementation, test
 
 |Iteration, Sprint
 |iteration, sprint
