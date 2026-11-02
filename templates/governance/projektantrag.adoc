@@ -13,6 +13,8 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
+// Inhalt nach dem Manz-Buch (Kap. 2, Lerneinheit 2): Aufgabenbeschreibung,
+// Nutzen, Konsequenzen bei Nichtdurchführung, Rahmenbedingungen. Dazu die
 // Feldstruktur des Diplomarbeitsantrags. Die Bezeichner sind zweisprachig, weil
 // das Formular im 5. Jahrgang deutsch ist und der Unterricht englisch läuft.
 // Wer den Stoff nur als "research objective" gelernt hat, übersetzt später
@@ -44,6 +46,24 @@ TODO: Was ist heute, und was ist daran unbefriedigend? Beschreibt den Zustand
 
 NOTE: Dieser Text wandert unverändert in `openspec/config.yaml` unter `context:`.
 Der Agent braucht ihn genauso wie der Betreuer.
+
+== Aufgabenbeschreibung / Outline of the task
+
+TODO: Was ist zu tun — als Überblick, nicht als Lösung.
+
+== Nutzen / Benefit
+
+TODO: Was gewinnt der Auftraggeber, wenn das Projekt durchgeführt ist?
+
+== Konsequenzen bei Nichtdurchführung / Consequences of not doing it
+
+TODO: Was passiert, wenn es niemand macht? Lautet die ehrliche Antwort "nicht
+viel", hat der Antrag seine eigene Frage beantwortet.
+
+== Rahmenbedingungen / Constraints
+
+TODO: Personelle und finanzielle Rahmenbedingungen — wer arbeitet wie viele
+Stunden mit, welche Geräte, Zugänge und Termine sind fix.
 
 == Untersuchungsanliegen / Research objective
 
@@ -86,3 +106,23 @@ Zielvorgabe.
 == Technologie / Technology
 
 TODO: Sprache, Framework, Datenhaltung, Zielplattform — je mit einem Satz, warum.
+
+== Vorstudie: Varianten und Entscheidung / Preliminary study: variants and decision
+
+Nach der Genehmigung des Antrags, vor dem Projektauftrag. Eine Seite genügt.
+
+[cols="2,3,3",options="header"]
+|===
+|Variante / Variant |Stärken / Strengths |Schwächen / Weaknesses
+
+|V1: TODO
+|TODO
+|TODO
+
+|V2: TODO
+|TODO
+|TODO
+|===
+
+Variantenentscheid / Variant decision: TODO — welche Variante, und *warum*.
+Eine Entscheidung ohne Begründung ist eine Vorliebe.

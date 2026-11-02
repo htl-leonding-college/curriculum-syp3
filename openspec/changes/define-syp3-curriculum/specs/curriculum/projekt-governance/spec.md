@@ -47,9 +47,18 @@ unterscheiden können sowie ein Projektziel so formulieren, dass seine Erreichun
 
 ### Requirement: Projektantrag und Projektauftrag erstellen
 Der Schüler SHALL einen Projektantrag und einen Projektauftrag mit den geforderten
-Feldern erstellen können: Ausgangslage, Zielsetzung, Untersuchungsanliegen, geplantes
-Ergebnis, Meilensteine mit Terminen, Aufwandsschätzung und Verantwortlichkeit je
-Teammitglied.
+Feldern erstellen können. Der Projektauftrag folgt den Teilen des Manz-Buchs
+(Projektbezeichnung, Auftraggeber, Projekthintergrund, Projektergebnis, Projektziele
+mit Nicht-Zielen, Projektbeschreibung, Meilensteine und Freigaben, Projektstart und
+-ende, Ressourcen, Risiken, Projektorganisation, Abschluss), ergänzt um die
+Stakeholder. Der Projektantrag trägt zusätzlich die Felder des Diplomarbeitsantrags:
+Ausgangslage, Zielsetzung, Untersuchungsanliegen, geplantes Ergebnis, Meilensteine
+mit Terminen, Aufwandsschätzung und Verantwortlichkeit je Teammitglied.
+
+#### Scenario: Vorstudie vor dem Auftrag
+- **WHEN** der Projektantrag genehmigt ist
+- **THEN** vergleicht das Team mindestens zwei Varianten und begründet den
+  Variantenentscheid, bevor der Projektauftrag geschrieben wird
 
 #### Scenario: Antrag im höheren Jahrgang
 - **WHEN** derselbe Schüler später einen Diplomarbeitsantrag ausfüllt

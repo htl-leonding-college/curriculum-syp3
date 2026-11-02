@@ -85,9 +85,10 @@ team works below that line in iterations and reports back what the board needs
 to steer: status, the product so far, risks and change requests.
 
 The *functional specification* (Pflichtenheft) does not come from the board. In
-the classic model the team writes it as its answer to the client's requirements;
-in this course it is not written as a separate document at all — the specs the
-team keeps in `openspec/specs/` are its content, and they live in the repository.
+the classic model the team writes it as its answer to the client's requirements.
+In this course the team writes it once, right after the charter, so that
+everybody has done it; from then on its requirements live as specs in
+`openspec/specs/` and change only through the repository.
 
 .Governance steers, the team delivers (own)
 image::governance-steering.svg["Steering board above hands the charter (problem statement, task, goals, constraints, milestones) and decisions down; the team in an iteration cycle below reports status, product, risks and change requests up; the team writes its own specs",800]

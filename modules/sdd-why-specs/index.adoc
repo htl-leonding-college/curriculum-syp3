@@ -257,26 +257,34 @@ the offers made for it.
 
 === What survives in this course
 
+You write a functional specification *once*, in your project, right after the
+charter is approved — from `templates/governance/pflichtenheft.adoc`, with the
+seven chapters above and together with your client. Nobody should leave this
+course without having written one: clients, tenders and the diploma thesis will
+ask for it.
+
+Then its content moves to where it is kept alive:
+
 [cols="1,2",options="header"]
 |===
-|In the book |In this course
+|In the functional specification |Afterwards, in this course
 
 |Initial situation, current state
-|the corresponding sections of project application and charter — frozen at
- approval
+|`openspec/config.yaml` -> `context:`, so that the agent reads it too
 
 |Objectives
 |the goals table of the charter, one row per goal with the check next to it
 
 |Requirements, functional
-|a requirement with its scenarios in `openspec/specs/`, one file per capability
+|a requirement with its scenarios in `openspec/specs/`, one file per capability,
+ the number from the functional specification kept visible
 
 |Requirements, non-functional
 |the same place — written as a requirement with a measurable scenario, never as
  an adjective
 
 |Volume estimate
-|the volume estimate section of the charter
+|non-functional requirements in `openspec/specs/`, with the numbers from chapter 5
 
 |Offer structure, administrative matters
 |no counterpart: a school project has no tender and no contract
@@ -285,9 +293,12 @@ the offers made for it.
 |the non-goals section of the charter
 |===
 
-Nothing in that list was abolished. What changed is the *form*: instead of one
-document written once, the same content lives in small files that are updated
-with every change and checked by the build.
+The functional specification itself is not updated afterwards; it stays as the
+state agreed with the client. What changed since, and why, is in
+`openspec/changes/archive/`. Nothing in the book's structure was abolished — what
+changed is the *form* in which the requirements are kept alive: small files that
+are updated with every change and checked by the build, instead of one document
+that is out of date the week after it is signed.
 
 == Requirements document vs. specification
 

@@ -257,6 +257,14 @@ eigenen Vorbereitung und werden nicht verteilt.
 *Verweis:* Die entsprechende Regelung für Bilder auf der öffentlichen Site steht in
 `../setup-curriculum-repository/design.md` — P11.
 
+*Nachtrag 2026-11-02 (Entscheidung des Lehrenden):* Projektantrag, Projektauftrag und
+Pflichtenheft folgen der Gliederung des Buchs (Kap. 2 LE 2 und 5, Kap. 7 LE 2), in
+eigener Formulierung und mit eigenen Diagrammen. Abweichungen mit Grund: Stakeholder
+im Auftrag (die Abnahme hängt an Interessen), Nicht-Ziele Pflicht statt optional,
+Felder des Diplomarbeitsantrags im Projektantrag. Ist-Zustand und Mengengerüst stehen
+wie im Buch im Pflichtenheft, nicht im Auftrag. Das Pflichtenheft schreibt das Team
+im Projekt einmal; danach übernehmen die specs seine Anforderungen.
+
 ## Jahresrahmen
 
 ```

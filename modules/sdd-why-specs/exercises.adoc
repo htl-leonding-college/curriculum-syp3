@@ -42,11 +42,25 @@ drift — no build failed, no test broke. That is the property specs plus a chec
 are meant to restore.
 ====
 
+== Write the functional specification for your project
+
+kind: project
+
+Write the functional specification for your project from
+`templates/governance/pflichtenheft.adoc`, once, right after the charter is
+approved. Fill chapters 1 to 5 and 7, number every requirement in chapter 4, and
+trace each one back to a goal in chapter 3. Go through it with your client and
+note the date of that agreement in the document.
+
+// Aufgabe am eigenen Projekt — keine Musterlösung.
+
 == Write the first capability spec for your project
 
 kind: project
 
-Write one `openspec/specs/<capability>/spec.md` for your project with at least
-two requirements, each with a scenario.
+Take the functional requirements of one area from chapter 4 of your functional
+specification and write them as one `openspec/specs/<capability>/spec.md` with at
+least two requirements, each with a scenario. Keep the requirement numbers
+visible.
 
 // Aufgabe am eigenen Projekt — keine Musterlösung.

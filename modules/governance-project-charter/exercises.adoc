@@ -41,6 +41,29 @@ browser — 10 Dec"; "The booking rules are covered by tests that run in CI — 
 Dec". Each names a checkable result and a date.
 ====
 
+== Two variants and a decision
+
+kind: drill
+
+A climbing gym wants its visitors to book time slots online instead of phoning
+the front desk. Describe three variants on one page, compare them on four
+criteria of your choice, and write the variant decision in two sentences.
+
+.Solution
+[%collapsible]
+====
+For example: a hosted room-booking service, a web application of your own,
+and a shared calendar with a booking form in front of it. Criteria could be
+cost per year, effort to build, how well the gym's own rules can be enforced
+(at most 40 visitors per slot, members book seven days ahead, day guests three), and who
+operates it afterwards.
+
+The decision names the variant *and the reason*: "A web application of our own,
+because only it can enforce the gym's booking rules; the hosted service would be
+cheaper to run, but the owner rejected its fixed rules." A decision without a
+reason is a preference.
+====
+
 == Write your project charter
 
 kind: project

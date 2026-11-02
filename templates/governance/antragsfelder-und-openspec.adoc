@@ -36,13 +36,13 @@ D -up-> G : liefert Nachweise
 
 [cols="2,2,3",options="header"]
 |===
-|Antragsfeld / Charter field |openspec-Artefakt |Nachweis / Evidence
+|Feld / Field |openspec-Artefakt |Nachweis / Evidence
 
 |Ausgangslage / Initial situation
 |`openspec/config.yaml` -> `context:`
 |Der Text steht dort, wo ihn auch der Agent liest
 
-|Ist-Zustand / Current state
+|Ist-Zustand / Current state (Pflichtenheft, Kap. 2)
 |`openspec/config.yaml` -> `context:`, zusammen mit der Ausgangslage
 |Was heute läuft, steht dort, wo verglichen wird
 
@@ -50,7 +50,11 @@ D -up-> G : liefert Nachweise
 |Menge der `openspec/specs/`
 |Jede Capability ist ein Ziel in prüfbarer Form
 
-|Mengengerüst / Volume estimate
+|Anforderungen / Requirements (Pflichtenheft, Kap. 4)
+|je Capability eine Datei in `openspec/specs/`
+|Die Nummer aus dem Pflichtenheft bleibt sichtbar, Scenarios kommen dazu
+
+|Mengengerüst / Volume estimate (Pflichtenheft, Kap. 5)
 |nichtfunktionale Requirements in `specs/`
 |Kapazität und Antwortzeit als Requirement mit Scenario, nicht als Adjektiv
 
@@ -81,7 +85,9 @@ D -up-> G : liefert Nachweise
 
 == Was das *nicht* heißt
 
-Die openspec-Artefakte ersetzen die Governance-Dokumente nicht. Beide bestehen
+Die openspec-Artefakte ersetzen die Governance-Dokumente nicht. Das
+Pflichtenheft schreibt das Team einmal; danach übernehmen die specs seine
+Anforderungen. Beide bestehen
 nebeneinander: Der Projektauftrag wird eingefroren und bleibt der
 Beurteilungsanker, die specs leben weiter. Genau diese Differenz —
 Auftrag gegen Endstand — macht `changes/archive/` sichtbar.

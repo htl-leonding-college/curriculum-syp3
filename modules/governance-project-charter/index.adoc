@@ -14,11 +14,78 @@ endif::[]
 
 == Learning outcomes
 
-* [[lo-1]] Name the fields of the project application and say what belongs in each
+* [[lo-1]] Name the parts of the project application and of the charter and say
+  what belongs in each
 * [[lo-2]] Explain the difference between the application (Projektantrag) and the
   charter (Projektauftrag)
 * [[lo-3]] Explain what "frozen" means for the charter and why it is the yardstick
 * [[lo-4]] Use the German field names alongside the English terms
+* [[lo-5]] Describe the path from the project idea to the project start, including
+  the preliminary study with its feasibility check and variants
+
+== From the idea to the project start
+
+Every project starts with a *project idea* (Projektidee) and a trigger: a weak
+spot in the current way of working, a technical innovation, a reorganisation, a
+customer's request. Between the idea and the first line of work lie two
+documents and one decision.
+
+.From the project idea to the project start, after the Manz textbook (chapter 2, lesson 2)
+[graphviz,idea-to-start,svg]
+----
+digraph start {
+  rankdir=TB;
+  bgcolor="transparent";
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
+
+  T [label="triggers\nweak spots, innovation,\nreorganisation, a customer's request",
+     fillcolor="#F0F2F5"];
+  I [label="project idea"];
+  A [label="project application\nthe team proposes", fillcolor="#FAF0D9"];
+  subgraph cluster_pre {
+    label="preliminary study"; fontname="Helvetica"; fontsize=11;
+    style="rounded,filled"; fillcolor="#FBF8F0"; color="#C9AE6E";
+    G [label="application approved"];
+    F [label="feasibility study\nvariants and a decision"];
+    D [label="feasible?", shape=diamond];
+  }
+  X [label="stop", fillcolor="#F8E5E5"];
+  C [label="project charter\nclient and team sign", fillcolor="#E3ECF8"];
+  S [label="project start", fillcolor="#E4F0E4"];
+
+  T -> I -> A -> G -> F -> D;
+  D -> X [label="no"];
+  D -> C [label="yes"];
+  C -> S [label="charter approved"];
+}
+----
+
+The *preliminary study* (Vorstudie) answers whether the idea deserves a project
+at all: is it a project in the first place, how safely can it be done, what will
+it change, what will it cost, and what does it contribute to the goals of the
+organisation. Its core is the *feasibility study* (Machbarkeitsstudie):
+
+* economic viability and contribution to the organisation's strategy
+* technical feasibility
+* risk
+* the resources it needs — people, money, equipment
+* other influences, above all the stakeholders
+
+A goal can almost always be reached in more than one way, so the study builds
+*variants* (Varianten) and compares them. For a club that wants its attendance
+online: a hosted standard product, a web application of its own, or a shared
+spreadsheet with a form in front of it. The variants are found with the
+creativity techniques of `governance-idea-generation` and narrowed in stages; the
+*variant decision* (Variantenentscheid) is taken by team and client together,
+supported by weighted scoring or a *SWOT analysis* (strengths, weaknesses,
+opportunities, threats — internal factors against external ones, always from one
+stated point of view).
+
+In a school project the preliminary study is small — one page with two or three
+variants and the reason for the choice — but it is not skipped. A team that never
+compared variants cannot say later why it built what it built.
 
 == Two documents, two moments
 
@@ -43,9 +110,13 @@ endif::[]
 |team and client
 |===
 
-The same fields appear in both. The application argues; the charter commits.
+The application argues; the charter commits. The charter takes over what the
+application said and the preliminary study decided, and makes it binding.
 
-== The fields
+== The project application
+
+The application records the idea in writing. It is short, and it contains above
+all:
 
 [cols="1,3",options="header"]
 |===
@@ -57,32 +128,152 @@ The same fields appear in both. The application argues; the charter commits.
 |Ausgangslage / initial situation
 |what exists today and why it is unsatisfactory — no solution
 
-|Untersuchungsanliegen / research objective
-|the open question the project answers
+|Aufgabenbeschreibung / outline of the task
+|what is to be done, as an overview
 
-|Zielsetzung / objectives
-|verifiable goals, each with its evidence
+|Nutzen / benefit
+|what the organisation gains when the project is done
 
-|Geplantes Ergebnis / planned deliverable
-|what exists at the end, and how you recognise it is done
+|Konsequenzen bei Nichtdurchführung / consequences of not doing it
+|what happens if nobody does it — the honest test of the benefit
 
-|Meilensteine / milestones
-|dated, checkable results — not activities
-
-|Verantwortlich / responsible
-|one named person per work package
-
-|Aufwandsschätzung / effort estimate
-|hours, as a range, per work package
+|Rahmenbedingungen / constraints
+|people, money, time, devices that are available or fixed
 |===
 
-These are the fields of the diploma thesis application. You fill them for the
-first time now, in year three, so that in year five the form is familiar rather
-than new.
+It is the basis for the preliminary study, not a plan. If the consequences of not
+doing the project are "nothing much", the application has answered its own
+question.
+
+== The parts of the charter
+
+The charter is the first binding document between client and team. It fixes
+what belongs to the project *in content, time and organisation* — and what does
+not — and it describes the deliverables, dates, costs and constraints, *not* how
+they will be implemented. The Manz textbook lists fourteen parts:
+
+[cols="2,3,3",options="header"]
+|===
+|Teil / Part |What belongs in it |In your project
+
+|Projektbezeichnung / project name
+|a short, memorable name or acronym, the long title, optionally a logo
+|names the result, not the technology
+
+|Projektauftraggeber / client
+|organisation, the responsible contact person, contact details
+|the real client — or the supervising teacher acting as one
+
+|Projekthintergrund / project background
+|why the project exists: the deficits it removes or the chance it uses, and its
+ trigger
+|the initial situation from the application, made precise
+
+|Projektergebnis / project result
+|the main deliverables in checkable form: what, how well, how much, by when
+|what exists in June and how you recognise it is done
+
+|Projektziele / project goals
+|derived from background and result; quantifiable and achievable — and,
+ optionally in the book, the non-goals
+|the goals table with the check for each goal; *non-goals are mandatory here*
+
+|Projektbeschreibung / project description
+|the main tasks with the results expected from each, the quality and the methods
+|the work packages, each with one responsible person
+
+|Meilensteine / milestones
+|per phase: the milestone as a result, the planned date, and whether an approval
+ is needed
+|dated, checkable results — see `governance-milestones`
+
+|Freigaben / approvals
+|the points at which the client explicitly agrees before the work goes on
+|the milestone reviews
+
+|Projektstart / project start
+|date and event of the official start
+|the approval of the charter
+
+|Projektende / project end
+|date and event of the official end, usually the acceptance
+|the acceptance — see `governance-acceptance`
+
+|Projektressourcen / resources
+|a rough calculation of infrastructure, personnel, material and other costs; the
+ expected revenue; what the client provides
+|hours per person as a range, priced fictitiously but realistically — the book
+ asks for that in school projects too
+
+|Projektrisiken / risks
+|events that could endanger success, each with the precaution taken
+|three to five, honestly: illness, a missing server, a client who stops answering
+
+|Projektorganisation / organisation
+|project manager, team with areas of responsibility, steering groups such as the
+ steering board (Lenkungsausschuss)
+|team roles; the steering board is client and supervisor — see `course-overview`
+
+|Abschluss des Projektauftrags / sign-off
+|date and the signatures of everybody responsible on both sides
+|signed, then frozen with a git tag
+|===
+
+Three of these carry most of the weight. The *project background* must be
+recognisable to somebody who does not know your solution. The *goals* must be
+checkable by a third party without asking what you meant. The *milestones* must
+be results with dates, not activities.
+
+Two parts the book has elsewhere are added in this course, each for a reason:
+
+* *Stakeholders* (Stakeholder) with their interests — the book treats them in the
+  project environment (chapter 2, lesson 4). They belong in the charter because
+  the acceptance depends on interests nobody wrote down.
+* *Current state* (Ist-Zustand) and *volume estimate* (Mengengerüst) are *not*
+  in the charter. They are chapters of the functional specification, which the
+  team writes after the charter — see `sdd-why-specs` and
+  `templates/governance/pflichtenheft.adoc`.
+
+== The diploma thesis application
+
+In year five the same content is asked for in a different form: the diploma
+thesis application, with German field names. Its fields map onto the book's
+parts:
+
+[cols="1,1",options="header"]
+|===
+|Diploma thesis application |Charter part
+
+|Ausgangslage / initial situation
+|project background
+
+|Untersuchungsanliegen / research objective
+|— no counterpart: the open question the project answers
+
+|Zielsetzung / objectives
+|project goals
+
+|Geplantes Ergebnis / planned deliverable
+|project result
+
+|Meilensteine / milestones
+|milestones
+
+|Verantwortlich / responsible
+|project organisation, per work package
+
+|Aufwandsschätzung / effort estimate
+|resources
+|===
+
+The *research objective* is the only field without a counterpart, and the one most
+often misread. It is not the goal and not the deliverable; it is what was
+genuinely uncertain at the start. The application template of this course
+carries it, so that in year five the form is familiar rather than new.
 
 [TIP]
 ====
-The field names are German because the form is German. That is why this course
+The field names are German because the forms are German. That is why this course
 teaches governance vocabulary in both languages — under exam pressure you should
 not be translating "research objective" back into *Untersuchungsanliegen*.
 ====
@@ -115,10 +306,15 @@ management, and it is only visible because one side does not move.
 
 == Decisions
 
-* The charter follows the field structure of the diploma thesis application, with
-  bilingual field labels.
-* It is frozen at approval. Changes go through `openspec/changes/` and are
-  visible there, not through edits to the charter.
+* The charter follows the fourteen parts of the Manz textbook. Stakeholders are
+  added; current state and volume estimate go to the functional specification.
+* The application carries the fields of the diploma thesis application as well,
+  bilingual, so that the year-five form is not new.
+* Non-goals are mandatory, not optional.
+* The preliminary study is done, on one page: variants and the reason for the
+  choice.
+* The charter is frozen at approval. Changes go through `openspec/changes/` and
+  are visible there, not through edits to the charter.
 * Effort estimates are ranges, never single numbers.
 * Every work package has exactly one responsible person — shared responsibility
   is none.
@@ -127,10 +323,14 @@ management, and it is only visible because one side does not move.
 
 * Filling in the fields as prose without a single verifiable statement. The form
   is then complete and useless.
+* Skipping the variants. The first idea becomes the plan, and nobody can say why.
 * Writing the charter after building. It happens, it is visible in the git dates,
   and it removes the only yardstick you had.
 * Milestones that are activities ("work on the frontend"). A milestone is a
   result you can check on a date.
+* Leaving out the approvals because they slow the team down. They are where the
+  client takes responsibility for an intermediate result — without them, the
+  client first looks at the work at the acceptance.
 * Editing the charter quietly when the plan changes. Then nobody can say what
   changed, and the archive of changes is the wrong place to look.
 
@@ -140,11 +340,62 @@ management, and it is only visible because one side does not move.
 |===
 |Deutsch |English
 
+|Projektidee
+|project idea
+
 |Projektantrag
 |project application / proposal
 
+|Vorstudie
+|preliminary study
+
+|Machbarkeitsstudie
+|feasibility study
+
+|Variantenbildung / Variantenentscheid
+|building variants / variant decision
+
+|SWOT-Analyse (Stärken, Schwächen, Chancen, Bedrohungen)
+|SWOT analysis (strengths, weaknesses, opportunities, threats)
+
 |Projektauftrag
 |project charter
+
+|Projektbezeichnung
+|project name
+
+|Projektauftraggeber
+|client
+
+|Projekthintergrund
+|project background
+
+|Projektergebnis
+|project result
+
+|Projektbeschreibung
+|project description
+
+|Freigabe
+|approval
+
+|Projektressourcen
+|project resources
+
+|Projektrisiken
+|project risks
+
+|Projektorganisation
+|project organisation
+
+|Lenkungsausschuss
+|steering board
+
+|Nutzen
+|benefit
+
+|Konsequenzen bei Nichtdurchführung
+|consequences of not doing the project
 
 |Untersuchungsanliegen
 |research objective
@@ -161,5 +412,8 @@ management, and it is only visible because one side does not move.
 
 == Further reading
 
+* Manz textbook, chapter 2, lesson 2 "Projektidee und Vorstudie" and lesson 5
+  "Projektauftrag"
 * `templates/governance/projektantrag.adoc` and `projektauftrag.adoc`
+* Module `sdd-why-specs` — the functional specification, the third document
 * Module `bridge-charter-to-specs` — which openspec artefact carries which field

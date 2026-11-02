@@ -1,0 +1,171 @@
+= Project topics
+:revealjs_theme: white
+:revealjs_slideNumber: true
+:revealjs_hash: true
+:icons: font
+
+// Die sechs Themen der Teamprojekte im 3. Jahrgang, als Folien für den
+// Unterricht. Programmiert wird in JavaFX am Desktop — keine mobile App.
+// Jedes Thema hat eine eigene GUI-Situation, damit die Teams sich nicht
+// gegenseitig die Oberfläche abschauen. Ausführlichere Hinweise stehen in den
+// Sprechernotizen (Taste S).
+
+== Six topics, one per team
+
+// Etwas kleinere Schrift, damit Themenfolien und Übersicht auf eine Folie passen.
+++++
+<style>
+.reveal .slides { font-size: 0.78em; }
+.reveal table { font-size: 0.8em; }
+</style>
+++++
+
+* Every topic has *rules*, not just data entry — something to specify and test
+* Every topic has *several roles* with different interests
+* Every topic has its own *situation at the screen* — a JavaFX desktop
+  application, no mobile app
+* Start small: a core for milestone 1, extensions for the later milestones
+
+[.notes]
+--
+Choose a topic in which somebody in your team has a contact person. That person
+becomes the client and sits on the steering board.
+--
+
+== Volunteer fire brigade (Freiwillige Feuerwehr)
+
+The commander keeps members, courses and equipment checks in three spreadsheets
+— and nobody knows who may wear breathing apparatus this month.
+
+* *Rules:* qualifications expire (medical check, yearly exercise); equipment has
+  inspection due dates; only qualified members count for a crew
+* *Roles:* commander, training officer, equipment keeper, members
+* *At the screen:* office PC in the fire station; a status board in the vehicle
+  hall — readable from three metres
+
+[.notes]
+--
+Milestone 1: members and qualifications with expiry dates. Extensions:
+exercise planning and attendance, equipment inspections, yearly report for the
+district command.
+--
+
+== Brass band (Musikkapelle)
+
+The archive holds 800 pieces in folders; for every performance the bandmaster
+asks around who still has which part.
+
+* *Rules:* a performance needs a minimum number of players per register; a part
+  or a loan instrument is with exactly one person; returns are due after the
+  season
+* *Roles:* chairperson, bandmaster, archivist, instrument keeper, musicians
+* *At the screen:* the archivist searching and lending at the desk; the
+  bandmaster putting together a programme by drag and drop
+
+[.notes]
+--
+Milestone 1: sheet music archive with search and lending. Extensions:
+performances with line-up check, loan instruments, attendance at rehearsals.
+--
+
+== Restaurant
+
+Orders are written on paper, carried to the kitchen and typed into the till at
+the end — and the bill for a table of eight is split by hand.
+
+* *Rules:* tables have capacities and time slots; an order goes through states
+  (ordered, cooking, served, paid); a bill can be split by person; allergens are
+  shown
+* *Roles:* guest, waiting staff, kitchen, owner
+* *At the screen:* a touch till for the waiting staff — fast, big targets; a
+  kitchen display read from two metres while cooking
+
+[.notes]
+--
+Milestone 1: menu, order per table, bill. Extensions: kitchen display,
+reservations, split bills, daily sales report.
+--
+
+== Cinema (Kino)
+
+A small cinema with three halls plans its programme on a whiteboard and sells
+tickets from a printed seat plan.
+
+* *Rules:* a show needs a free hall for film, adverts and cleaning time; no seat
+  is sold twice; price levels (child, student, cinema day)
+* *Roles:* customer, cashier, programme planner, manager
+* *At the screen:* the box office clicking seats in the seat plan while the
+  queue waits; a self-service terminal in the foyer that needs no explanation
+
+[.notes]
+--
+Milestone 1: programme planning with conflict check. Extensions: seat booking,
+price levels, self-service terminal, occupancy statistics.
+--
+
+== Driving school (Fahrschule)
+
+The office books lessons in a paper diary and checks by phone whether instructor
+and car are free.
+
+* *Rules:* a lesson needs instructor, vehicle and learner at the same time;
+  mandatory lessons per licence class; exam only when the prerequisites are met
+* *Roles:* office, instructors, learners, management
+* *At the screen:* reception with the customer at the counter — keyboard,
+  shortcuts, conflicts shown at once; the instructor entering progress after the
+  lesson
+
+[.notes]
+--
+Milestone 1: booking lessons with conflict check. Extensions: training
+progress per learner, exam registration, printout "what is still missing".
+--
+
+== Winter road service (Straßenmeisterei)
+
+The depot manager plans winter duty and on-call weeks in a spreadsheet and
+checks rest periods from memory.
+
+* *Rules:* rest periods after night shifts; only qualified drivers for each
+  vehicle; every route covered; shift swaps must keep all rules
+* *Roles:* depot manager, dispatcher, drivers
+* *At the screen:* the dispatcher at a large screen with roster and routes; a
+  touch terminal in the vehicle hall where drivers report with gloves on
+
+[.notes]
+--
+Milestone 1: duty roster with qualification check. Extensions: rest period
+check, shift swaps, report of routes and spreading material. Needs a contact
+person at a road depot — otherwise the team cannot elicit requirements.
+--
+
+== Overview
+
+[cols="2,3,3",options="header"]
+|===
+|Topic |Core rule |At the screen
+
+|Volunteer fire brigade
+|qualifications and inspections expire
+|fire station PC, status board in the hall
+
+|Brass band
+|every part with exactly one person; line-up per register
+|archive desk, programme by drag and drop
+
+|Restaurant
+|order states, split bill
+|touch till, kitchen display
+
+|Cinema
+|no hall overlap, no seat sold twice
+|box office seat plan, foyer terminal
+
+|Driving school
+|instructor, car and learner at the same time
+|reception with keyboard and shortcuts
+
+|Winter road service
+|rest periods and qualifications in the roster
+|dispatcher screen, touch terminal with gloves
+|===

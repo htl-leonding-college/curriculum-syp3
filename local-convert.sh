@@ -61,6 +61,12 @@ while IFS= read -r module; do
       -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@5.1.0 \
       -o "${SITE_DIR}/slides/${topic}.html" "${module}"
 done < <(find "${SITE_DIR}/modules" -name 'index.adoc' 2>/dev/null)
+# Folien ausserhalb der Module: die Projektthemen.
+docker run --rm -u "$(id -u):$(id -g)" -e HOME=/tmp -v "${PWD}:/documents" -w /documents \
+  "${ASCIIDOCTOR_IMAGE}" \
+  asciidoctor-revealjs \
+    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@5.1.0 \
+    -o "${SITE_DIR}/slides/projektthemen.html" site/projektthemen.adoc
 
 # asciidoctor-diagram legt neben jeder Quelle einen .asciidoctor-Cache an. Er
 # gehoert nicht in die Site — und upload-pages-artifact laesst Dotfiles ohnehin

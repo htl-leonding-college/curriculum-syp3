@@ -33,6 +33,8 @@ include::ue-overview.adoc[leveloffset=+1]
 
 == Elsewhere
 
+* link:slides/projektthemen.html[Project topics] — the six team projects, as
+  slides
 * link:questions/index.html[Question catalogue] — authoritative for SYP year 3
   from 2026/27 on
 * https://htl-leonding-college.github.io/fragenkatalog[Existing question

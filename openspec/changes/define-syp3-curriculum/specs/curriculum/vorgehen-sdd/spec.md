@@ -36,15 +36,21 @@ Anforderung formulieren, umsetzen, und die abgeschlossene Änderung in den Solls
 - **THEN** existiert dazu eine beschriebene Änderung mit prüfbaren Anforderungen,
   bevor gebaut wird
 
-### Requirement: Der Sollzustand ersetzt das Pflichtenheft
-Der Schüler SHALL erklären können, warum ein fortgeschriebener Sollzustand ein
-einmalig verfasstes Pflichtenheft ersetzt und wodurch die Beurteilbarkeit trotzdem
+### Requirement: Das Pflichtenheft wird einmal geschrieben, danach lebt der Sollzustand
+Der Schüler SHALL im Projekt einmal ein Pflichtenheft nach der Gliederung des
+Manz-Buchs verfassen und erklären können, warum danach ein fortgeschriebener
+Sollzustand seine Anforderungen übernimmt und wodurch die Beurteilbarkeit trotzdem
 erhalten bleibt.
+
+#### Scenario: Pflichtenheft im Projekt
+- **WHEN** der Projektauftrag freigegeben ist
+- **THEN** schreibt das Team das Pflichtenheft einmal, stimmt es mit dem Auftraggeber
+  ab und überträgt die nummerierten Anforderungen danach in `openspec/specs/`
 
 #### Scenario: Frage nach dem Pflichtenheft
 - **WHEN** der Schüler gefragt wird, wo im Projekt das Pflichtenheft steckt
-- **THEN** nennt er den Sollzustand als lebendes Gegenstück und den eingefrorenen
-  Projektauftrag als Beurteilungsanker
+- **THEN** nennt er das einmal abgestimmte Dokument, den Sollzustand als lebendes
+  Gegenstück und den eingefrorenen Projektauftrag als Beurteilungsanker
 
 ### Requirement: Brücke zwischen Governance und Durchführung
 Der Schüler SHALL jedes Feld des Projektantrags einem Artefakt der

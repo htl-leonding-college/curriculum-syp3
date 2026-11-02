@@ -16,6 +16,8 @@ endif::[]
 // Der Projektauftrag wird eingefroren. Er ist der Anker, gegen den am Ende
 // beurteilt wird - nicht der Endstand, sonst wären alle per Definition fertig.
 // Gebaut wird gegen openspec/specs/, die weiterleben dürfen.
+// Gliederung: die vierzehn Teile des Manz-Buchs (Kap. 2, Lerneinheit 5), dazu
+// die Stakeholder. Ist-Zustand und Mengengerüst stehen im Pflichtenheft.
 
 [IMPORTANT]
 ====
@@ -24,58 +26,47 @@ Vorhaben laufen über `openspec/changes/` und werden dort sichtbar; die Differen
 zwischen Auftrag und Endstand ist selbst Lerngegenstand (Scope-Management).
 ====
 
-== Projekttitel / Project title
+== Projektbezeichnung / Project name
 
-TODO
+TODO: Kurzname oder Akronym, das sich gut aussprechen lässt, dazu der
+Langtitel. Er benennt das Ergebnis, nicht die Technologie.
 
-== Auftraggeber und Team / Client and team
+== Projektauftraggeber / Client
 
-[cols="2,2,3",options="header"]
+TODO: Organisation (Verein, Firma, Abteilung), verantwortliche Ansprechperson,
+Kontakt (E-Mail, Telefon).
+
+== Projekthintergrund / Project background
+
+TODO: Sinn und Zweck des Projekts. Welche Mängel oder Probleme beseitigt es,
+welche Chance nutzt es? Übernommen aus der Ausgangslage des Projektantrags und
+präzisiert — ohne Lösung.
+
+Projektauslöser / Trigger: TODO
+
+== Projektergebnis / Project result
+
+TODO: Welches Ergebnis liegt am Projektende vor? Überprüfbar beschrieben: Was?
+Wie gut? Wie viel? Bis wann?
+
+[cols="1,3",options="header"]
 |===
-|Name |Rolle / Role |Verantwortlich für / Responsible for
+|Ergebnis / Deliverable |Woran erkennt man, dass es fertig ist? / Evidence
 
 |TODO
 |TODO
-|TODO
 |===
 
-== Ausgangslage / Initial situation
+== Projektziele / Project goals
 
-TODO: übernommen aus dem Projektantrag, ggf. präzisiert. Wer ist der
-Auftraggeber, was macht er, und warum wird das Vorhaben überhaupt angestoßen?
-
-== Ist-Zustand / Current state
-
-TODO: Wie läuft die Sache heute — *nur* die Bereiche, die das Projekt berührt.
-Ohne diesen Abschnitt ist nicht beurteilbar, ob das Neue besser ist als das
-Bestehende; verglichen wird am Ende genau damit.
-
-[cols="2,3",options="header"]
-|===
-|Bereich |Beschreibung
-
-|Ablauf heute / Current process
-|TODO: wer macht was, womit, in welcher Reihenfolge
-
-|Eingesetzte Systeme / Systems in use
-|TODO: Excel-Liste, Papier, Altanwendung, Datenbank
-
-|Bestehende Plattform / Existing platform
-|TODO: Server, Betriebssystem, Netz, Zugänge
-
-|Was daran stört / Pain points
-|TODO: woraus die Zielsetzung folgt
-|===
-
-== Zielsetzung / Objectives
-
-TODO: Was soll erreicht werden? Jedes Ziel prüfbar formuliert — woran erkennt
-ein Außenstehender, dass es erreicht ist? Art: *E* = Ergebnisziel (am Produkt
-geprüft), *V* = Vorgehensziel (an der Arbeitsweise geprüft).
+TODO: Abgeleitet aus Projekthintergrund und Projektergebnis. Jedes Ziel prüfbar
+formuliert — woran erkennt ein Außenstehender, dass es erreicht ist? Art: *E* =
+Ergebnisziel (am Produkt geprüft), *V* = Vorgehensziel (an der Arbeitsweise
+geprüft).
 
 [cols="1,3,2,1,1",options="header"]
 |===
-|Nr. |Ziel / Objective |Prüfbar an / Verified by |Art |Prio
+|Nr. |Ziel / Goal |Prüfbar an / Verified by |Art |Prio
 
 |Z1
 |TODO
@@ -88,14 +79,104 @@ Konkurrieren zwei Ziele miteinander, steht hier in einem Satz, welches gewinnt:
 
 TODO: Zielkonkurrenz und Entscheidung — oder ausdrücklich "keine bekannt".
 
-== Nicht-Ziele / Non-goals
+=== Nicht-Ziele / Non-goals
 
-TODO
+TODO: Was ist ausdrücklich *nicht* Ziel des Projekts? Im Buch optional, in
+diesem Kurs Pflicht. Eine leere Liste heißt: der Umfang ist nicht durchdacht.
 
-== Geplantes Ergebnis / Planned deliverable
+== Projektbeschreibung / Project description
 
-TODO: Beschreibung des Endprodukts. Die Ausformulierung lebt in
-`openspec/specs/` als Requirements und Scenarios.
+TODO: Die Projekthauptaufgaben — je Arbeitspaket das erwartete Ergebnis, die
+Qualität und die Vorgehensweise. Die Ausformulierung der Anforderungen steht im
+Pflichtenheft und danach in `openspec/specs/`.
+
+[cols="2,3,2",options="header"]
+|===
+|Arbeitspaket / Work package |Ergebnis / Result |Verantwortlich / Responsible
+
+|TODO
+|TODO
+|TODO (genau eine Person)
+|===
+
+== Meilensteine und Freigaben / Milestones and approvals
+
+Beschreibung der Projektphasen und ihrer überprüfbaren Zwischenergebnisse. Ein
+Meilenstein ist ein Ergebnis, keine Tätigkeit. Details in `meilensteinplan.adoc`.
+
+[cols="1,3,1,1",options="header"]
+|===
+|Phase |Meilenstein / Ergebnis |Soll-Termin |Freigabe
+
+|TODO
+|TODO
+|TODO
+|ja / nein
+|===
+
+Freigaben sind die Punkte, an denen der Auftraggeber dem Zwischenergebnis
+ausdrücklich zustimmt, bevor weitergearbeitet wird — in diesem Kurs die
+Meilenstein-Reviews.
+
+== Projektstart und Projektende / Project start and end
+
+[cols="1,1,3",options="header"]
+|===
+| |Datum / Date |Ereignis / Event
+
+|Projektstart
+|TODO
+|Freigabe dieses Projektauftrags
+
+|Projektende
+|TODO
+|Abnahme durch den Auftraggeber, siehe `abnahme.adoc`
+|===
+
+== Projektressourcen / Resources
+
+Grobkalkulation: Welche Mittel sind erforderlich, welche stehen zur Verfügung?
+Im Schulprojekt fiktive, aber realistische Kosten ansetzen — der Aufwand des
+Teams als Bandbreite in Stunden, mit einem Stundensatz bewertet.
+
+[cols="2,1,1,1",options="header"]
+|===
+|Position |Menge (Schätzung) |Euro je Einheit |Betrag
+
+|Personal / Personnel: TODO
+|TODO h (opt.–pess.)
+|TODO
+|TODO
+
+|Infrastruktur / Infrastructure: TODO
+|TODO
+|TODO
+|TODO
+
+|Material / Material: TODO
+|TODO
+|TODO
+|TODO
+
+|Sonstiges / Other: TODO
+|TODO
+|TODO
+|TODO
+|===
+
+Vom Auftraggeber zur Verfügung gestellt / Provided by the client: TODO (Server,
+Zugänge, Testdaten, Ansprechzeiten)
+
+== Projektrisiken / Risks
+
+[cols="3,1,3",options="header"]
+|===
+|Risiko / Risk |Wahrscheinlichkeit |Vorkehrung / Precaution
+
+|TODO
+|hoch / mittel / gering
+|TODO
+|===
 
 == Stakeholder
 
@@ -112,44 +193,38 @@ sagt nichts darüber, wie sie sich bei der Abnahme verhält.
 |TODO
 |===
 
-== Mengengerüst / Volume estimate
+== Projektorganisation / Project organisation
 
-TODO: Größenordnungen, keine Schätzgenauigkeit. 30 Mitglieder und 30 000 sind
-nicht dasselbe System — das entscheidet sich hier, nicht im Betrieb.
-
-[cols="3,2",options="header"]
+[cols="2,2,3",options="header"]
 |===
-|Größe / Quantity |Erwartet / Expected
+|Name |Rolle / Role |Verantwortlich für / Responsible for
 
-|Datenbestände (Anzahl Datensätze je Entität) / Records per entity
+|TODO
+|Projektleiter/in
 |TODO
 
-|Datenbewegungen pro Tag oder Woche / Transactions per day or week
 |TODO
-
-|Gleichzeitige Benutzer (Spitze) / Concurrent users (peak)
-|TODO
-
-|Wachstum pro Jahr / Growth per year
+|Teammitglied
 |TODO
 |===
 
-== Meilensteine / Milestones
+Lenkungsausschuss / Steering board: TODO (Auftraggeber und Betreuungslehrkraft)
 
-Siehe `meilensteinplan.adoc`.
+== Abschluss des Projektauftrags / Sign-off
 
-== Rahmenbedingungen / Constraints
-
-TODO: Zeit, Geräte, Zugänge, rechtliche Vorgaben.
-
-== Freigabe / Approval
+Mit ihrer Unterschrift erklären Auftraggeber und Projektteam die hier
+festgehaltenen Bedingungen für verbindlich.
 
 [cols="2,2,2",options="header"]
 |===
-|Datum / Date |Name |Unterschrift / Signature
+|Datum / Date |Name, Rolle |Unterschrift / Signature
 
 |TODO
+|TODO, Auftraggeber
+|
+
 |TODO
+|TODO, Projektleitung
 |
 |===
 
@@ -161,4 +236,7 @@ git tag baseline-v1
 git push origin baseline-v1
 ----
 
-Das "Pflichtenheft" ist ab hier ein `git diff baseline-v1 -- openspec/specs/`.
+Danach schreibt das Team einmal das Pflichtenheft (`pflichtenheft.adoc`). Seine
+Anforderungen wandern anschließend nach `openspec/specs/` und leben dort weiter;
+was sich seit der Freigabe geändert hat, zeigt
+`git diff baseline-v1 -- openspec/specs/`.

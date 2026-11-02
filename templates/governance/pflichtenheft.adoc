@@ -1,0 +1,213 @@
+= Pflichtenheft / Functional specification
+:toc: left
+:toc-title: Inhalt
+:toclevels: 2
+:icons: font
+:experimental:
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+// Gliederung nach dem Manz-Buch (Kap. 7, Lerneinheit 2), sieben Kapitel.
+// Im Schulprojekt schreibt das Team das Pflichtenheft einmal, nach der Freigabe
+// des Projektauftrags und in Abstimmung mit dem Auftraggeber. Danach wandern die
+// Anforderungen aus Kapitel 4 nach openspec/specs/ und leben dort weiter; dieses
+// Dokument bleibt als Stand zum Zeitpunkt der Abstimmung stehen.
+
+[NOTE]
+====
+Das Pflichtenheft beschreibt, *was* in welcher Qualität zu realisieren ist —
+nicht, wie die Implementierung aussieht. Keine Klassen, keine Tabellen, keine
+Bildschirmentwürfe bis ins Pixel: die technische Umsetzung ist Sache des Teams
+und kann sich ändern, ohne dass dieses Dokument falsch wird.
+====
+
+[cols="2,2",options="header"]
+|===
+|Projekt / Project |Stand / Version
+
+|TODO (Projektbezeichnung aus dem Projektauftrag)
+|TODO (Datum, abgestimmt mit TODO)
+|===
+
+== 1. Beschreibung der Ausgangslage / Initial situation
+
+TODO: Der Auftraggeber stellt sich vor:
+
+* Art und Größe der Organisation, Standorte
+* Produkte bzw. Dienstleistungen, Kunden- oder Mitgliederstruktur
+* Überblick über die IT: wer betreut was, womit
+* Gründe für das Vorhaben — übernommen aus dem Projekthintergrund des
+  Projektauftrags
+
+== 2. Ist-Zustand / Current state
+
+TODO: *Nur* die Bereiche, die das Projekt berührt. Ohne diesen Abschnitt ist
+nicht beurteilbar, ob das Neue besser ist als das Bestehende — verglichen wird
+am Ende genau damit.
+
+[cols="2,3",options="header"]
+|===
+|Bereich |Beschreibung
+
+|Aufbauorganisation / Organisational structure
+|TODO: wer ist wofür zuständig, wer entscheidet
+
+|Ablauforganisation / Business processes
+|TODO: wer macht was, womit, in welcher Reihenfolge — je Geschäftsprozess
+
+|Eingesetzte Anwendungen / Applications in use
+|TODO: Excel-Liste, Papier, Altanwendung, Datenbank
+
+|Bestehende Systemplattform / Existing platform
+|TODO: Rechner, Betriebssysteme, Server, Datenbanken, Netzwerk
+
+|Was daran stört / Pain points
+|TODO: woraus die Zielsetzung folgt
+|===
+
+== 3. Zielsetzung / Objectives
+
+Die Ziele aus dem Projektauftrag, mit Prioritäten. Realistisch und
+quantifizierbar — sonst ist das Ausmaß der Zielerreichung später nicht prüfbar.
+
+[cols="1,3,2,1",options="header"]
+|===
+|Nr. |Ziel / Objective |Art |Prio
+
+|Z1
+|TODO
+|nutzenrelevant / Systemziel / Vorgehensziel
+|1
+|===
+
+== 4. Anforderungen (Soll-Zustand) / Requirements (target state)
+
+Die Anforderungen sind *nummeriert*. Die Nummer macht sie referenzierbar: ein
+Testfall, ein Review-Kommentar und das Abnahmeprotokoll zeigen auf dieselbe
+Nummer und meinen denselben Satz. Jede Anforderung lässt sich auf ein Ziel aus
+Kapitel 3 zurückführen; eine, bei der das nicht geht, ist jemandes Privatwunsch.
+
+=== 4.1 Anforderungen an die Applikation / Application requirements
+
+==== Gesamtapplikation / The application as a whole
+
+TODO: Hauptbereiche und wie sie zusammenhängen, Bedienung und
+Benutzerfreundlichkeit, Datenschutz und Datensicherheit, Wartung und
+Administration.
+
+==== Funktionale Anforderungen / Functional requirements
+
+Je Teilapplikation der fachliche Ablauf und die verwendeten Datenfelder — *was*
+das System tut.
+
+[cols="1,4,1,1",options="header"]
+|===
+|Nr. |Anforderung / Requirement |Ziel |Prio
+
+|F1
+|TODO: Eine Lehrkraft kann ein Laborgerät an einen Schüler verleihen; ist das
+ Gerät bereits verliehen, lehnt das System die Ausleihe mit Hinweis ab.
+|Z1
+|muss
+|===
+
+==== Nichtfunktionale Anforderungen / Non-functional requirements
+
+*Wie gut* das System es tun muss — Effizienz, Leistung, Zuverlässigkeit,
+Robustheit, Bedienbarkeit, Sicherheit. Gegliedert nach ISO/IEC 25010 (siehe
+Modul `sdd-why-specs`). Eine nichtfunktionale Anforderung trägt eine Zahl oder
+eine beobachtbare Bedingung, nie nur ein Adjektiv.
+
+[cols="1,4,2,1",options="header"]
+|===
+|Nr. |Anforderung / Requirement |Merkmal (ISO 25010) |Prio
+
+|N1
+|TODO: Die Geräteliste mit 500 Einträgen öffnet sich auf den Laborlaptops in
+ unter einer Sekunde.
+|Performance efficiency
+|muss
+|===
+
+=== 4.2 Anforderungen an die Systemplattform / Platform requirements
+
+TODO: Systemkonzept und grundlegende Architektur, Verfügbarkeit; Server und
+Clients mit ihren Leistungs- und Sicherheitsanforderungen; Systemsoftware;
+Kommunikationsinfrastruktur.
+
+=== 4.3 Anbieterbezogene Anforderungen / Supplier requirements
+
+Im Schulprojekt ist der Anbieter das Team. Kurz:
+
+* Realisierung, Einschulung, Support und Wartung — was davon das Team leistet
+* Projektorganisation, Vorgehensmodell und Methoden
+* Termine — siehe Meilensteinplan
+* Gewährleistung — im Schulprojekt: was nach dem Projektende mit dem System
+  passiert
+
+== 5. Mengengerüst / Volume estimate
+
+Größenordnungen aus Sicht des Auftraggebers — so, dass sich Speicherbedarf und
+Bandbreite daraus ermitteln lassen. 500 Geräte und 500 000 sind nicht dasselbe
+System; das entscheidet sich hier, nicht im Betrieb.
+
+[cols="3,2",options="header"]
+|===
+|Größe / Quantity |Erwartet / Expected
+
+|Datenbestände (Anzahl Datensätze je Entität) / Records per entity
+|TODO
+
+|Datenbewegungen pro Tag oder Woche / Transactions per day or week
+|TODO
+
+|Gleichzeitige Benutzer (Spitze) / Concurrent users (peak)
+|TODO
+
+|Wachstum pro Jahr / Growth per year
+|TODO
+|===
+
+== 6. Aufbau und Inhalt der Offerte / Structure of the offer
+
+Nur bei einer Ausschreibung nötig: wie ein Angebot aufgebaut sein muss, damit
+Angebote vergleichbar sind (Vorstellung des Anbieters, Management Summary,
+angebotene Leistungen entlang der Kapitel 3 und 4).
+
+Im Schulprojekt: *entfällt* — es gibt keine Ausschreibung.
+
+== 7. Administratives / Administrative matters
+
+[cols="2,3",options="header"]
+|===
+|Punkt |Festlegung
+
+|Vertraulichkeit, Rückgabe, Copyright
+|TODO: z. B. Testdaten des Auftraggebers, Lizenz des Codes
+
+|Verteiler / Distribution
+|TODO: wer bekommt dieses Dokument
+
+|Budgetrahmen / Budget
+|siehe Projektressourcen im Projektauftrag
+
+|Rückfragen / Questions
+|TODO: Ansprechperson beim Auftraggeber
+
+|Termine / Dates
+|siehe Meilensteinplan
+|===
+
+== Danach / Afterwards
+
+Ist das Pflichtenheft mit dem Auftraggeber abgestimmt, wird es nicht
+weitergeschrieben. Die Anforderungen aus Kapitel 4 wandern nach
+`openspec/specs/` — je Capability eine Datei, jede Anforderung mit Scenarios, die
+Nummer aus diesem Dokument im Namen oder im Text, damit die Herkunft sichtbar
+bleibt. Ab dann ändern sich Anforderungen nur noch über `openspec/changes/`.
