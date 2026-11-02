@@ -77,6 +77,21 @@ The distinction that runs through the whole year:
 |`openspec/specs/`, `openspec/changes/`, `src/`
 |===
 
+The two sides meet at one place. A *steering board* (Lenkungsausschuss) — in a
+school project the client and the supervising teacher — hands the team exactly
+one document, the *charter*: problem statement, task, goals, constraints and
+milestones. Beyond that it takes the decisions the team cannot take alone. The
+team works below that line in iterations and reports back what the board needs
+to steer: status, the product so far, risks and change requests.
+
+The *functional specification* (Pflichtenheft) does not come from the board. In
+the classic model the team writes it as its answer to the client's requirements;
+in this course it is not written as a separate document at all — the specs the
+team keeps in `openspec/specs/` are its content, and they live in the repository.
+
+.Governance steers, the team delivers (own)
+image::governance-steering.svg["Steering board above hands the charter (problem statement, task, goals, constraints, milestones) and decisions down; the team in an iteration cycle below reports status, product, risks and change requests up; the team writes its own specs",800]
+
 A project charter never says "use Scrum". It asks what you want to achieve and
 by when. That is why the execution side could change — from Scrum to
 spec-driven development — without touching the governance side at all.
@@ -165,6 +180,27 @@ the module is for, which is more useful than reading the text twice.
 
 |Lernziel
 |learning outcome
+
+|Lenkungsausschuss
+|steering board
+
+|Problemstellung
+|problem statement
+
+|Aufgabenstellung
+|task
+
+|Rahmenbedingungen
+|constraints
+
+|Projektauftrag
+|charter
+
+|Änderungsantrag
+|change request
+
+|Pflichtenheft
+|functional specification
 |===
 
 == Further reading

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" width="900" height="660" font-family="Helvetica, Arial, sans-serif" fill="#21303F">
+  <!-- Governance band -->
+  <rect x="20" y="20" width="860" height="290" rx="10" fill="#E4F0E4" stroke="#8FB08F" stroke-width="1.5"/>
+  <text x="40" y="52" font-size="20" font-weight="bold">Governance</text>
+
+  <!-- Execution band -->
+  <rect x="20" y="320" width="860" height="320" rx="10" fill="#FAF0D9" stroke="#C9AE6E" stroke-width="1.5"/>
+  <text x="40" y="352" font-size="20" font-weight="bold">Execution</text>
+
+  <!-- Steering board -->
+  <rect x="340" y="40" width="220" height="70" rx="8" fill="#E3ECF8" stroke="#7C93AD" stroke-width="1.5"/>
+  <text x="450" y="72" font-size="19" font-weight="bold" text-anchor="middle">Steering board</text>
+  <text x="450" y="96" font-size="14" text-anchor="middle">client · supervisor</text>
+
+  <!-- Down: what the board hands to the team -->
+  <line x1="415" y1="112" x2="415" y2="366" stroke="#4A7BB7" stroke-width="14"/>
+  <polygon points="415,392 398,366 432,366" fill="#4A7BB7"/>
+  <g font-size="16">
+    <text x="215" y="146" font-weight="bold">Charter</text>
+    <text x="231" y="170">problem statement</text>
+    <text x="231" y="192">task</text>
+    <text x="231" y="214">goals</text>
+    <text x="231" y="236">constraints</text>
+    <text x="231" y="258">milestones</text>
+    <text x="215" y="290" font-weight="bold">Decisions</text>
+  </g>
+  <line x1="221" y1="156" x2="221" y2="262" stroke="#8FB08F" stroke-width="2"/>
+
+  <!-- Up: what the team reports back -->
+  <line x1="485" y1="392" x2="485" y2="138" stroke="#4A7BB7" stroke-width="14"/>
+  <polygon points="485,112 468,138 502,138" fill="#4A7BB7"/>
+  <g font-size="16">
+    <text x="510" y="190">Project status</text>
+    <text x="510" y="212">Product / result</text>
+    <text x="510" y="234">Risks, change requests</text>
+  </g>
+
+  <!-- Iteration cycle, clockwise -->
+  <path d="M472.8,420.0 A88,88 0 0 1 537.1,517.4" fill="none" stroke="#4A7BB7" stroke-width="14"/>
+  <polygon points="529.8,542.2 520.3,515.0 554.0,519.7" fill="#4A7BB7"/>
+  <path d="M512.2,567.2 A88,88 0 0 1 395.7,574.3" fill="none" stroke="#4A7BB7" stroke-width="14"/>
+  <polygon points="377.9,555.5 406.2,560.9 385.3,587.7" fill="#4A7BB7"/>
+  <path d="M365.0,527.8 A88,88 0 0 1 417.1,423.4" fill="none" stroke="#4A7BB7" stroke-width="14"/>
+  <polygon points="442.3,417.3 423.5,439.1 410.8,407.6" fill="#4A7BB7"/>
+  <text x="450" y="512" font-size="19" font-weight="bold" text-anchor="middle">Team</text>
+
+  <g font-size="16">
+    <text x="575" y="500" font-weight="bold">Iterations</text>
+    <text x="575" y="522">(Scrum)</text>
+  </g>
+  <g font-size="16" text-anchor="end">
+    <text x="325" y="478" font-style="italic">practices</text>
+    <text x="325" y="502">spec-driven</text>
+    <text x="325" y="524">test-driven</text>
+    <text x="325" y="546">AI-assisted</text>
+  </g>
+
+  <!-- The team's own specification -->
+  <rect x="600" y="560" width="250" height="62" rx="6" fill="#FFFFFF" stroke="#C9AE6E" stroke-width="1.5"/>
+  <text x="725" y="586" font-size="16" font-weight="bold" text-anchor="middle">Specs (openspec)</text>
+  <text x="725" y="608" font-size="13" text-anchor="middle">written by the team, not handed down</text>
+</svg>

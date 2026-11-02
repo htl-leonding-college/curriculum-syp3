@@ -114,6 +114,34 @@ und den Schalter *Alle aufklappen*, der auf jeder Seite mit mindestens zwei
 eingeklappten Blöcken erscheint — Antworten in `questions.adoc`, Lösungen in
 `exercises.adoc`.
 
+=== Vorschau vor dem Push
+
+Der Build schreibt statische Dateien. Zum Ansehen reicht ein einfacher Webserver
+auf `build/site/`:
+
+[source,bash]
+----
+./local-convert.sh --skip-check
+python3 -m http.server 8000 --bind 0.0.0.0 --directory build/site
+----
+
+Auf demselben Gerät: http://localhost:8000/. Läuft der Build in einer VM
+(z. B. Ubuntu-VM, per SSH erreichbar), im Browser des eigenen Rechners die
+Adresse der VM verwenden, etwa http://192.168.1.80:8000/. Die Adresse zeigt
+`hostname -I` in der VM.
+
+Blockiert eine Firewall den Port, geht es über einen SSH-Tunnel vom eigenen
+Rechner aus:
+
+[source,bash]
+----
+ssh -L 8000:localhost:8000 <user>@<vm-adresse>
+----
+
+Dann ist die Site unter http://localhost:8000/ erreichbar. Nach einem neuen
+Build genügt ein Reload im Browser; der Server bleibt laufen, bis er mit
+kbd:[Strg+C] beendet wird.
+
 === publish.sh — zusätzlich auf den Schulwebspace
 
 Die Veröffentlichung auf GitHub Pages erledigt die Pipeline bei jedem Push auf
