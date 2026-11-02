@@ -23,7 +23,7 @@ it can be checked.
 
 [cols="1,1",options="header"]
 |===
-|Pflichtenheft / requirements document |specs
+|Functional specification |specs
 
 |written once, before building
 |written continuously, alongside
@@ -54,7 +54,7 @@ Points the answer must contain:
 * Drift becomes visible instead of silent
 ====
 
-== What are Lastenheft and Pflichtenheft, who writes each, and what is in them?
+== What are the requirements specification and the functional specification, who writes each, and what is in them?
 
 covers: lo-5
 
@@ -63,7 +63,7 @@ covers: lo-5
 ====
 [cols="1,2,2",options="header"]
 |===
-| |*Lastenheft* |*Pflichtenheft*
+| |*Requirements specification* |*Functional specification*
 
 |Written by
 |the client (Auftraggeber)
@@ -82,8 +82,8 @@ covers: lo-5
 |basis of the contract and of the acceptance
 |===
 
-The sequence is what makes the pair make sense: *elicitation → Lastenheft →
-offer → Pflichtenheft → build → acceptance against the Pflichtenheft*. The client
+The sequence is what makes the pair make sense: *elicitation → requirements specification →
+offer → functional specification → build → acceptance against the functional specification*. The client
 states the need in the language of their own world, without prescribing
 technology; the contractor answers with what will be built, in enough detail that
 both sides can later agree on whether it was delivered.
@@ -92,10 +92,10 @@ both sides can later agree on whether it was delivered.
 |===
 |Classical |In this course
 
-|Lastenheft
-|Ausgangslage and Zielsetzung in the charter — frozen
+|Requirements specification
+|initial situation and objectives in the charter — frozen
 
-|Pflichtenheft
+|Functional specification
 |`openspec/specs/` — the living target state
 
 |a numbered requirement plus its test case
@@ -104,16 +104,16 @@ both sides can later agree on whether it was delivered.
 
 Points the answer must contain:
 
-* Lastenheft: written by the client, says what is needed and what for, basis for
+* Requirements specification: written by the client, says what is needed and what for, basis for
   the tender
-* Pflichtenheft: written by the contractor, says how it will be realised, basis
+* Functional specification: written by the contractor, says how it will be realised, basis
   of the contract and of the acceptance
-* The sequence: elicitation, Lastenheft, offer, Pflichtenheft, build, acceptance
+* The sequence: elicitation, requirements specification, offer, functional specification, build, acceptance
 * Nothing of it was abolished — the same content lives in charter and specs, in
   another form
 ====
 
-== Which chapters does a Pflichtenheft have, and what is the Kriterienkatalog for?
+== Which chapters does a functional specification have, and what is the criteria catalogue for?
 
 covers: lo-6
 
@@ -122,25 +122,24 @@ covers: lo-6
 ====
 Seven chapters, and their order is an argument rather than a filing system:
 
-. *Beschreibung der Ausgangslage* — who the client is and why they are procuring
+. *Description of the initial situation* — who the client is and why they are procuring
   anything at all
-. *Ist-Zustand* — the organisation, the processes and the systems that are
+. *Current state* — the organisation, the processes and the systems that are
   already there, limited to what the project touches
-. *Zielsetzung* — the goals with priorities, realistic and checkable
-. *Anforderungen (Soll)* — at the application software, at the system platform,
+. *Objectives* — the goals with priorities, realistic and checkable
+. *Requirements (target state)* — at the application software, at the system platform,
   at the supplier
-. *Mengengerüst* — data movements, data volumes, concurrent users
-. *Aufbau und Inhalt der Offerte* — only in a tender, so that offers can be
+. *Volume estimate* — data movements, data volumes, concurrent users
+. *Structure and content of the offer* — only in a tender, so that offers can be
   compared
-. *Administratives* — confidentiality, copyright, distribution list, budget,
+. *Administrative matters* — confidentiality, copyright, distribution list, budget,
   dates
 
 Chapters 1 to 3 carry the chain *initial situation → problem → task*: a
 requirement in chapter 4 that cannot be traced back to them is somebody's
-private wish. Chapter 4 itself splits into *funktionale* requirements — the
-professional workflow and the data fields — and *nichtfunktionale* ones:
-Effizienz, Leistung, Zuverlässigkeit, Robustheit, Benutzerfreundlichkeit,
-Datenschutz. A non-functional requirement counts as a requirement only once it
+private wish. Chapter 4 itself splits into *functional* requirements — the
+professional workflow and the data fields — and *non-functional* ones:
+efficiency, performance, reliability, robustness, usability, data protection. A non-functional requirement counts as a requirement only once it
 carries a number or an observable condition.
 
 The catalogue behind that second group is *ISO/IEC 25010*, the product quality
@@ -151,23 +150,23 @@ chapter 4 and decide per characteristic whether it matters here and what the
 measurable condition is. "Not applicable" is a valid answer and worth writing
 down.
 
-The *Kriterienkatalog* is a *different document*: internal to the client,
-written alongside the Pflichtenheft, never handed to the supplier. Its purpose
+The *criteria catalogue* is a *different document*: internal to the client,
+written alongside the functional specification, never handed to the supplier. Its purpose
 is to evaluate the offers that come in.
 
-* *Muss-* or *K.-o.-Kriterium* — not met, the offer drops out
-* *Wunschkriterium* (Soll-Kriterium) — the better it is met, the better the
+* *Mandatory* or *knock-out criterion* — not met, the offer drops out
+* *Desirable criterion* — the better it is met, the better the
   rating
-* *Abgrenzungskriterium* — informative, so the supplier can size the offer
+* *Exclusion criterion* — informative, so the supplier can size the offer
 
 Points the answer must contain:
 
-* The seven chapters, in order, with Ist-Zustand and Mengengerüst among them
+* The seven chapters, in order, with current state and volume estimate among them
 * Chapter 4 splits into functional and non-functional requirements, with
   examples of each; ISO/IEC 25010 is the catalogue of the non-functional ones
-* The Kriterienkatalog is a separate, internal document of the client, used to
-  evaluate offers — not a section of the Pflichtenheft
-* Muss-, Wunsch- and Abgrenzungskriterien with their effect on the evaluation
+* The criteria catalogue is a separate, internal document of the client, used to
+  evaluate offers — not a section of the functional specification
+* Mandatory, desirable and exclusion criteria with their effect on the evaluation
 ====
 
 == Write a requirement with a scenario for "sessions have a capacity limit"
@@ -277,7 +276,7 @@ digraph frozenalive {
         fontname="Helvetica", fontsize=11];
   edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
-  C [label="Projektauftrag\nfrozen at approval", fillcolor="#E3ECF8"];
+  C [label="Charter\nfrozen at approval", fillcolor="#E3ECF8"];
   S [label="openspec/specs/\nthe current target state"];
   A [label="changes/archive/\nhow it got there"];
 

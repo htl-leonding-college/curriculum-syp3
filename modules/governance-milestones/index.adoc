@@ -24,7 +24,7 @@ endif::[]
 
 == A milestone has no duration
 
-The word is used for four different things, and only one of them is a milestone.
+The word is used for four different things, and only one of them is a milestone (Meilenstein).
 
 [cols="1,2",options="header"]
 |===
@@ -41,7 +41,7 @@ The word is used for four different things, and only one of them is a milestone.
 |*Task*
 |a piece of work with an owner and an effort. Many tasks lead to a milestone
 
-|*Deadline*
+|*Deadline* (Termin)
 |a date with a consequence attached, usually external — the diploma thesis
  submission
 |===

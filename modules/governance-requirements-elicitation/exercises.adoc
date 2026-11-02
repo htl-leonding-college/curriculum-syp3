@@ -105,11 +105,11 @@ Name the technique and justify it in one sentence:
 .Solution
 [%collapsible]
 ====
-. *Beobachtung* — description and behaviour disagree, and only watching resolves
+. *Observation* — description and behaviour disagree, and only watching resolves
   that; an interview returns the description again.
-. *Fragebogen* — a question about quantity across a population too large to
+. *Questionnaire* — a question about quantity across a population too large to
   interview, with closed answers and no need for follow-ups.
-. *Dokumentenanalyse* — last year's report exists; its fields are the answer, and
+. *Document analysis* — last year's report exists; its fields are the answer, and
   reading it costs nobody anything.
 . *Interview*, with both of them and the document in front of you — the
   contradiction is exactly what an interview is for, and the statute probably

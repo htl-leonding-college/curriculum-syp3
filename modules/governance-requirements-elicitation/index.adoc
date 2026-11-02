@@ -30,7 +30,7 @@ question underneath: where does the content of those goals come from?
 Not from the team. A team that invents requirements builds what it imagined, and
 finds out in June that the trainer never wanted it. Requirements are *elicited* —
 from the people who have the problem, and from the documents they already work
-with. In German the discipline is *Anforderungsanalyse*, and its four classical
+with. The discipline is *requirements analysis* (Anforderungsanalyse), and its four classical
 techniques are:
 
 [cols="1,2,1,1",options="header"]
@@ -42,17 +42,17 @@ techniques are:
 |1 hour per person, plus preparation and write-up
 |people describe the process as it *should* be
 
-|*Fragebogen* (questionnaire)
+|*Questionnaire* (Fragebogen)
 |numbers over many people: how often, how many, how important
 |days of waiting; a low response rate
 |no follow-up question is possible
 
-|*Beobachtung* (observation)
+|*Observation* (Beobachtung)
 |what people actually do, including the workarounds nobody mentions
 |half a day per workplace
 |being watched changes the behaviour
 
-|*Dokumentenanalyse* (document analysis)
+|*Document analysis* (Dokumentenanalyse)
 |fields, data types, value ranges, vocabulary, volumes, rules
 |hours, and nobody else's time at all
 |documents show the rule, never the exception people make
@@ -73,10 +73,10 @@ digraph order {
         fontname="Helvetica", fontsize=11];
   edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
-  D [label="Dokumentenanalyse\nforms, lists, exports,\nregulations"];
+  D [label="Document analysis\nforms, lists, exports,\nregulations"];
   I [label="Interview\nthe why, the exceptions,\nthe contradictions"];
-  B [label="Beobachtung\nwhat really happens\nat the desk"];
-  F [label="Fragebogen\nhow often, how many,\nhow important"];
+  B [label="Observation\nwhat really happens\nat the desk"];
+  F [label="Questionnaire\nhow often, how many,\nhow important"];
   G [label="verifiable goals\nglossary\nopen questions"];
 
   D -> I [label="better questions"];
@@ -148,7 +148,7 @@ NOTE: A recording needs consent, and personal data from the interview follows th
 same rule as everywhere in this course: it does not go into a prompt, and it does
 not go into the repository.
 
-== Fragebogen
+== Questionnaire
 
 A questionnaire reaches many people cheaply and produces *numbers*: how many
 trainers, how often per week, how many members per group, how important is
@@ -168,7 +168,7 @@ Its place is *after* the qualitative work: interviews tell you which questions a
 worth asking, the questionnaire tells you how widespread each answer is. Used
 first, it asks the wrong things very efficiently.
 
-== Beobachtung
+== Observation
 
 Watching the work happen, at the place where it happens. It is the only technique
 that shows the difference between the process as described and the process as
@@ -188,7 +188,7 @@ Practicalities: announce it, explain that you are studying the process and not t
 person, take notes on *actions and times* rather than on impressions, and ask your
 questions afterwards rather than during.
 
-== Dokumentenanalyse
+== Document analysis
 
 The technique that gets skipped and pays best. Everything the organisation
 already writes down is evidence about what it does — and it can be read before
@@ -261,9 +261,9 @@ project: an assumption that is written down can be corrected in a five-minute
 conversation, an assumption that lives in somebody's head is discovered at the
 acceptance.
 
-Classically these findings are written into a *Lastenheft* — the client's
+Classically these findings are written into a *requirements specification* (Lastenheft) — the client's
 statement of what is needed — which the contractor answers with a
-*Pflichtenheft*. Both documents, and where their content lives in this course,
+*functional specification* (Pflichtenheft). Both documents, and where their content lives in this course,
 are the subject of `sdd-why-specs`.
 
 == Decisions
@@ -325,6 +325,12 @@ are the subject of `sdd-why-specs`.
 
 |Glossar
 |glossary
+
+|Lastenheft
+|requirements specification (client's)
+
+|Pflichtenheft
+|functional specification (contractor's)
 |===
 
 == Further reading

@@ -187,9 +187,20 @@ Option.
 
 == Sprache
 
-Modultext auf Englisch. Governance-Fachbegriffe zusätzlich deutsch, weil die
-Formulare deutsch sind: `Ausgangslage / Initial situation`. Der Abschnitt
-`Terminology` führt die Paare.
+Modultext auf Englisch, auch die Fachbegriffe: *outcome goal*, nicht
+*Ergebnisziel*. Die deutschen Begriffe stehen als Paare im Abschnitt
+`Terminology` am Ende des Moduls. Im Text erlaubt sind nur:
+
+* der deutsche Begriff in Klammern nach dem englischen, bei der ersten
+  Verwendung im Fließtext oder in einer Tabellenzeile: `*outcome goal*
+  (Ergebnisziel)`. In Theoriemodulen *erwünscht* bei jedem Fachbegriff, dem die
+  Klasse auf Deutsch begegnet (Formulare, Buch, Prüfung); in
+  Technologiemodulen nur, wo nötig. Nicht bei Lehnwörtern (stakeholder,
+  interview, requirement), nicht in Überschriften oder Lernzielen
+* Feldnamen der deutschen Formulare als Paar, weil sie wörtlich so auf dem
+  Formular stehen: `Ausgangslage / initial situation`
+* Titel deutscher Quellen und wörtliche Kundenbegriffe in Beispielen
+  (die Spalte `Bemerkung` einer Anwesenheitsliste)
 
 == Was nicht ins Modul gehört
 

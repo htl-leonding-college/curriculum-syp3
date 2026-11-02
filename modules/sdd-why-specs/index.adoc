@@ -19,10 +19,10 @@ endif::[]
 * [[lo-2]] Write a requirement with a scenario that can be checked
 * [[lo-3]] Explain why a precise statement of intent became the scarce resource
 * [[lo-4]] Say what stays frozen and what stays alive, and why both are needed
-* [[lo-5]] Explain what a Lastenheft and a Pflichtenheft are, who writes each,
+* [[lo-5]] Explain what a requirements specification and a functional specification are, who writes each,
   and which parts of them survive in this course
-* [[lo-6]] Name the seven chapters of a Pflichtenheft, separate functional from
-  non-functional requirements, and say what a Kriterienkatalog is for
+* [[lo-6]] Name the seven chapters of a functional specification, separate functional from
+  non-functional requirements, and say what a criteria catalogue is for
 
 == The scarce resource moved
 
@@ -47,7 +47,7 @@ type it. What it cannot do is decide *what should be true*.
 A specification is where that decision is written down — in a form precise enough
 to build from and to check against.
 
-== Lastenheft and Pflichtenheft
+== Requirements specification and functional specification
 
 Before comparing them with specifications, the two documents themselves. They
 are the classical pair of the German-speaking engineering world, they are what a
@@ -56,7 +56,7 @@ both.
 
 [cols="1,2,2",options="header"]
 |===
-| |*Lastenheft* |*Pflichtenheft*
+| |*Requirements specification* (Lastenheft) |*Functional specification* (Pflichtenheft)
 
 |Written by
 |the client (Auftraggeber)
@@ -79,12 +79,13 @@ both.
 |realisation requirements: functions, data, interfaces, quality, test cases
 |===
 
-The order is the point: *Anforderungserhebung → Lastenheft → offer →
-Pflichtenheft → build → acceptance against the Pflichtenheft*. The client says
+The order is the point: *requirements elicitation (Anforderungserhebung) →
+requirements specification → offer → functional specification → build →
+acceptance against the functional specification*. The client says
 what they need; the contractor answers with what they will build, in enough
 detail that both sides can later agree on whether it was delivered.
 
-=== What a Pflichtenheft contains
+=== What a functional specification contains
 
 The structure below follows the Manz textbook (chapter 7, lesson 2). Read it as
 one argument in seven steps: where the client stands, what they already have,
@@ -93,39 +94,39 @@ handed in, and what is agreed around all of that.
 
 [cols="1,2,4",options="header"]
 |===
-|Nr. |Kapitel |Inhalt
+|No. |Chapter |Content
 
 |1
-|Beschreibung der Ausgangslage
+|Description of the initial situation (Beschreibung der Ausgangslage)
 |kind and size of the organisation, locations, products and services, customer
  structure, how IT is organised, and the reasons for the procurement
 
 |2
-|Ist-Zustand
-|only the parts the project touches: Aufbauorganisation, Ablauforganisation with
- its business processes and the applications in use, the existing system
+|Current state (Ist-Zustand)
+|only the parts the project touches: the organisational structure (Aufbauorganisation), the workflows (Ablauforganisation) with
+ their business processes and the applications in use, the existing system
  platform
 
 |3
-|Zielsetzung
-|the goals with priorities, realistic and checkable — nutzenrelevante Ziele,
- Systemziele, Vorgehensziele
+|Objectives (Zielsetzung)
+|the goals with priorities, realistic and checkable — benefit goals (nutzenrelevante Ziele), system
+ goals, process goals
 
 |4
-|Anforderungen (Soll)
+|Requirements (target state)
 |at the application software, at the system platform, and at the supplier
 
 |5
-|Mengengerüst
+|Volume estimate (Mengengerüst)
 |data movements, data volumes, number of concurrent users
 
 |6
-|Aufbau und Inhalt der Offerte
+|Structure and content of the offer (Aufbau und Inhalt der Offerte)
 |only in a tender: how an offer must be structured so that offers can be
  compared at all
 
 |7
-|Administratives
+|Administrative matters (Administratives)
 |confidentiality, copyright, distribution list, budget, dates
 |===
 
@@ -134,9 +135,9 @@ initial situation, the problem it produces, and only then the task derived from
 it. A requirement whose origin you cannot trace back to chapters 1 to 3 is
 usually somebody's private wish.
 
-Two chapters are regularly skipped and both are expensive. *Ist-Zustand*: the
+Two chapters are regularly skipped and both are expensive. *Current state*: the
 system is built into an organisation that already works somehow, and whatever it
-does today is what people will compare yours with. *Mengengerüst*: 30 members
+does today is what people will compare yours with. *Volume estimate*: 30 members
 and 30 000 are not the same system, and you find that out either here or in
 production.
 
@@ -146,14 +147,14 @@ Chapter 4 carries two kinds of requirement, and telling them apart is the skill:
 
 [cols="1,3",options="header"]
 |===
-|Art |Was darin steht
+|Kind |What it contains
 
-|funktional
+|functional
 |the professional workflow and the data fields — *what* the system does
 
-|nichtfunktional
-|Effizienz, Leistung, Zuverlässigkeit, Robustheit, Benutzerfreundlichkeit,
- Datenschutz — *how well* it has to do it
+|non-functional
+|efficiency, performance, reliability, robustness, usability, data
+ protection — *how well* it has to do it
 |===
 
 A functional requirement you either implemented or you did not. A non-functional
@@ -225,32 +226,32 @@ And *Safety* only concerns you if your system can cause physical harm — in an
 attendance app the honest answer is "not applicable", and writing that down is
 better than inventing a requirement for it.
 
-=== The Kriterienkatalog is a different document
+=== The criteria catalogue is a different document
 
-Alongside the Pflichtenheft the client writes a second paper — for themselves.
-The *Kriterienkatalog* is internal, the supplier never sees it, and its purpose
+Alongside the functional specification the client writes a second paper — for themselves.
+The *criteria catalogue* (Kriterienkatalog) is internal, the supplier never sees it, and its purpose
 is to evaluate the offers that come in.
 
 [cols="1,3",options="header"]
 |===
-|Kriterium |Bedeutung
+|Criterion |Meaning
 
-|Muss- oder K.-o.-Kriterium
+|Mandatory or knock-out criterion (Muss- oder K.-o.-Kriterium)
 |not met — the offer drops out. No weighting, no discussion
 
-|Wunschkriterium (Soll-Kriterium)
+|Desirable criterion (Wunschkriterium)
 |the better it is met, the better the offer is rated
 
-|Abgrenzungskriterium
+|Exclusion criterion (Abgrenzungskriterium)
 |informative — what is deliberately not wanted, so the supplier can size the
  offer correctly
 |===
 
 [WARNING]
 ====
-Muss-, Wunsch- and Abgrenzungskriterien are frequently quoted as a *section of
-the Pflichtenheft*. They are not. Another document, another addressee, another
-purpose: the Pflichtenheft describes the system, the Kriterienkatalog evaluates
+Mandatory, desirable and exclusion criteria are frequently quoted as a *section of
+the functional specification*. They are not. Another document, another addressee, another
+purpose: the functional specification describes the system, the criteria catalogue evaluates
 the offers made for it.
 ====
 
@@ -258,29 +259,29 @@ the offers made for it.
 
 [cols="1,2",options="header"]
 |===
-|Im Buch |In diesem Kurs
+|In the book |In this course
 
-|Ausgangslage, Ist-Zustand
-|the corresponding sections of Projektantrag and Projektauftrag — frozen at
+|Initial situation, current state
+|the corresponding sections of project application and charter — frozen at
  approval
 
-|Zielsetzung
+|Objectives
 |the goals table of the charter, one row per goal with the check next to it
 
-|Anforderungen (Soll), funktional
+|Requirements, functional
 |a requirement with its scenarios in `openspec/specs/`, one file per capability
 
-|Anforderungen (Soll), nichtfunktional
+|Requirements, non-functional
 |the same place — written as a requirement with a measurable scenario, never as
  an adjective
 
-|Mengengerüst
-|the Mengengerüst section of the charter
+|Volume estimate
+|the volume estimate section of the charter
 
-|Aufbau der Offerte, Administratives
+|Offer structure, administrative matters
 |no counterpart: a school project has no tender and no contract
 
-|Kriterienkatalog, Abgrenzungskriterien
+|Criteria catalogue, exclusion criteria
 |the non-goals section of the charter
 |===
 
@@ -292,7 +293,7 @@ with every change and checked by the build.
 
 [cols="1,1",options="header"]
 |===
-|Pflichtenheft / requirements document |specs
+|Functional specification |specs
 
 |written once, before building
 |written continuously, alongside
@@ -338,7 +339,7 @@ element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
 arrow { LineColor #5A6B7D; FontColor #21303F }
 </style>
 skinparam shadowing false
-rectangle "Projektauftrag\nfrozen at approval" as C #E3ECF8
+rectangle "Charter\nfrozen at approval" as C #E3ECF8
 rectangle "specs/\nthe current target state" as S #E4F0E4
 rectangle "changes/\nhow it got there" as A #FAF0D9
 C -right-> S : sets the frame
@@ -355,7 +356,7 @@ both, and keeping the difference visible, is the whole arrangement.
 * Each team keeps a target state under `openspec/specs/`, one file per
   capability.
 * Requirements use SHALL / MUST NOT and carry at least one scenario.
-* The requirements document (Pflichtenheft) is replaced by the specs; the charter
+* The requirements document (functional specification) is replaced by the specs; the charter
   is not replaced by anything.
 * A requirement without an observable scenario goes back for rewriting.
 
@@ -377,31 +378,58 @@ both, and keeping the difference visible, is the whole arrangement.
 |Deutsch |English
 
 |Lastenheft
-|customer requirements specification
+|requirements specification (written by the client)
 
 |Pflichtenheft
-|(system) requirements specification
+|functional specification (written by the contractor)
+
+|Anforderungserhebung
+|requirements elicitation
 
 |Kriterienkatalog
-|evaluation criteria catalogue
+|criteria catalogue
 
 |Musskriterium, K.-o.-Kriterium
-|mandatory requirement, knock-out criterion
+|mandatory criterion, knock-out criterion
 
 |Wunschkriterium, Soll-Kriterium
-|desirable requirement
+|desirable criterion
 
 |Abgrenzungskriterium
-|non-goal, exclusion criterion
+|exclusion criterion
+
+|Beschreibung der Ausgangslage
+|description of the initial situation
 
 |Ist-Zustand
 |current state, as-is situation
+
+|Aufbauorganisation, Ablauforganisation
+|organisational structure, workflows
+
+|Zielsetzung
+|objectives
+
+|nutzenrelevante Ziele, Systemziele, Vorgehensziele
+|benefit goals, system goals, process goals
+
+|Anforderungen (Soll)
+|requirements (target state)
+
+|Aufbau und Inhalt der Offerte
+|structure and content of the offer
+
+|Administratives
+|administrative matters
 
 |Mengengerüst
 |volume estimate, sizing
 
 |funktionale / nichtfunktionale Anforderung
 |functional / non-functional requirement
+
+|Effizienz, Leistung, Zuverlässigkeit, Robustheit, Benutzerfreundlichkeit, Datenschutz
+|efficiency, performance, reliability, robustness, usability, data protection
 
 |Spezifikation
 |specification
@@ -421,11 +449,11 @@ both, and keeping the difference visible, is the whole arrangement.
 * Module `sdd-openspec-artifacts` — the concrete files and their roles
 * Module `bridge-charter-to-specs` — which charter field maps to which artefact
 * Module `governance-requirements-elicitation` — where the content of a
-  Lastenheft comes from in the first place
+  requirements specification comes from in the first place
 * https://www.monterail.com/blog/software-qa-standards-iso-25010[Monterail — Software QA standards: ISO 25010] — what the nine characteristics
   are good for in practice, and how teams prioritise among them
 * https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[iso25000.com — ISO/IEC 25010] — the characteristics and
   sub-characteristics in their official wording
 * Manz textbook, chapter 7 lesson 2 "Das Pflichtenheft" — the seven-chapter
-  structure and the Kriterienkatalog used above
-* DIN 69901-5 — the definitions of Lastenheft and Pflichtenheft
+  structure and the criteria catalogue used above
+* DIN 69901-5 — the definitions of both specifications

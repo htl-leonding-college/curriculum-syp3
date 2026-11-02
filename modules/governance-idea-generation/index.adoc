@@ -20,7 +20,7 @@ endif::[]
   one suits
 * [[lo-4]] Build a morphological box for a given problem and read combinations
   out of it
-* [[lo-5]] Explain how Bionik and the Delphi method differ from the intuitive
+* [[lo-5]] Explain how biomimetics and the Delphi method differ from the intuitive
   techniques
 
 == Diverge first, converge later
@@ -63,23 +63,23 @@ opinion* — and that is what decides which one you reach for.
 |association, spoken
 |a group, a warm-up, a broad question, fifteen minutes
 
-|*Methode 6-3-5*
+|*6-3-5 method* (Methode 6-3-5)
 |association, written
 |a group in which not everybody speaks up; you need written results
 
-|*Mind mapping*
+|*Mind mapping* (Mindmapping)
 |association, structuring
 |one person or a pair; the area is unclear and needs ordering
 
-|*Morphologischer Kasten*
+|*Morphological box* (Morphologischer Kasten)
 |systematic combination
-|the problem has clearly separable characteristics; you want completeness
+|the problem has clearly separable characteristics (Merkmale); you want completeness
 
-|*Bionik*
+|*Biomimetics* (Bionik)
 |analogy from nature
 |a technical problem that resists direct attack; nature has solved it already
 
-|*Delphi-Methode*
+|*Delphi method* (Delphi-Methode)
 |structured expert opinion, several rounds
 |assessing something nobody can know for certain — a forecast, an estimate
 |===
@@ -100,12 +100,12 @@ fifteen to thirty minutes. Four rules carry it:
   the point, not a lapse of originality.
 
 Two weaknesses are worth naming, because they decide when you use a different
-technique. Only one person can speak at a time, so ideas are lost while waiting —
-*Bewertungsangst* and *Produktionsblockierung* are the German terms for the two
-effects. And a group with a strong personality in it produces that person's
-ideas. Both are exactly what 6-3-5 removes.
+technique. Only one person can speak at a time, so ideas are lost while waiting
+— *production blocking* (Produktionsblockierung). Ideas that might be judged are
+held back — *evaluation apprehension* (Bewertungsangst). And a group with a
+strong personality in it produces that person's ideas. Both are exactly what 6-3-5 removes.
 
-=== Methode 6-3-5 (Brainwriting)
+=== The 6-3-5 method (brainwriting)
 
 Six people, three ideas each, five minutes per round, six rounds. Every round the
 sheet moves one seat on, and you read what is there before you write.
@@ -164,7 +164,7 @@ it degenerates quickly, because the person holding the pen decides the structure
 In this course you meet mind maps a second time as a *representation* rather than
 a technique — the curriculum overview on the start page is one.
 
-=== Morphologischer Kasten
+=== The morphological box
 
 The systematic one, and the only one of the six that aims at *completeness*
 rather than inspiration. Fritz Zwicky's idea: break the problem into its
@@ -213,10 +213,10 @@ if choosing a value in one row forces a value in another, they are one
 characteristic, not two. And five to seven rows is the practical limit; beyond
 that the number of combinations stops being informative.
 
-=== Bionik
+=== Biomimetics
 
 Nature has been running a very long optimisation process, and its results are
-free to look at. Bionik transfers them: abstract your problem until it is a
+free to look at. Biomimetics transfers them: abstract your problem until it is a
 functional question, find a living system that answers that question, and
 transfer the principle back — not the shape.
 
@@ -253,7 +253,7 @@ something usable. In a school project the same move works on a smaller scale:
 "how does an anthill distribute work without a central plan" is a real question
 about a scheduling problem.
 
-=== Delphi-Methode
+=== The Delphi method
 
 The odd one out: it does not produce ideas out of nothing, it *sharpens an
 assessment* that no single person can make reliably — how long something will
@@ -302,27 +302,27 @@ discussed.
 |Brainstorming
 
 |Group of six, quiet members, you need the result on paper
-|Methode 6-3-5
+|6-3-5 method
 
 |You alone, an area you do not yet have a structure for
 |Mind mapping
 
 |The solution space has clear characteristics and you want all combinations
-|Morphologischer Kasten
+|Morphological box
 
 |A technical function you cannot solve directly
-|Bionik
+|Biomimetics
 
 |An estimate or a forecast where opinions differ and nobody can prove theirs
-|Delphi-Methode
+|Delphi method
 |===
 
 == Decisions
 
 * 6-3-5 is the technique actually carried out in this course. Brainstorming and
-  the morphological box are practised in short form; Bionik and Delphi are
+  the morphological box are practised in short form; biomimetics and Delphi are
   understood and placed, not run.
-* Idea generation happens in the theory unit, without machines. It needs paper,
+* Idea generation (Ideenfindung) happens in the theory unit, without machines. It needs paper,
   not an IDE.
 * The sheets and the box are kept. They become the raw material for the project
   proposals in the following lessons.
@@ -337,7 +337,7 @@ discussed.
 * A morphological box whose rows are not independent. If choosing "card reader"
   already fixes the device row, the two rows are one characteristic and the
   combination count is fiction.
-* Copying the shape in Bionik instead of the principle. The abstraction step is
+* Copying the shape in biomimetics instead of the principle. The abstraction step is
   the method; without it you get decoration.
 * Running Delphi with three classmates and calling them experts. Anonymity does
   not create knowledge.
@@ -365,6 +365,12 @@ discussed.
 
 |Methode 6-3-5, Brainwriting
 |6-3-5 method, brainwriting
+
+|Bewertungsangst
+|evaluation apprehension
+
+|Produktionsblockierung
+|production blocking
 
 |Mindmapping
 |mind mapping

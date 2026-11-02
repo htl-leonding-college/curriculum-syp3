@@ -162,7 +162,7 @@ git log --oneline --author "Name" -- openspec/specs/
 ----
 
 This matters beyond bookkeeping. The diploma thesis application has a
-*Verantwortlich* column, and in year five it has to be filled per student with
+*responsible* (Verantwortlich) column, and in year five it has to be filled per student with
 something defensible. Filling it from change ownership and git history is honest
 and takes a minute; reconstructing it from memory in June is neither.
 
@@ -176,7 +176,7 @@ Points the answer must contain:
 
 * Each change has an owner; git history shows the commits
 * `openspec list` and `git log --author` answer the question directly
-* The diploma application's "Verantwortlich" column is filled from this
+* The diploma application's "responsible" (Verantwortlich) column is filled from this
 ====
 
 == What goes wrong if you copy the charter text into the specs?

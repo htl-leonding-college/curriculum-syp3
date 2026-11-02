@@ -82,7 +82,7 @@ needs it for the same reason the supervisor does — it is the only place that
 says what the work is *for*.
 ====
 
-== The three constraints
+== The three constraints (Rahmenbedingungen)
 
 [plantuml,magic-triangle,svg]
 ----
@@ -103,7 +103,7 @@ note bottom of T : quality is not a fourth corner —\nit is what gets sacrifice
 ----
 
 In a school year, *time is fixed* and *resources are fixed*: the year ends, and
-you are the team you are. Only scope can move. That is why a project that is
+you are the team you are. Only scope (Projektumfang) can move. That is why a project that is
 "almost finished" in June is normally a project whose scope was never cut.
 
 == Decisions

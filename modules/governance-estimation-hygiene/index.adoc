@@ -33,11 +33,11 @@ Four mechanisms are, and they are worth being able to name:
 |===
 |Mechanism |What it looks like
 
-|*Planning fallacy*
+|*Planning fallacy* (Planungsfehlschluss)
 |you estimate the work you can imagine. The work you cannot imagine is not
  estimated at zero — it is not estimated at all
 
-|*Anchoring*
+|*Anchoring* (Ankereffekt)
 |somebody says "two days?" and every subsequent estimate clusters around two days,
  including yours
 
@@ -77,7 +77,7 @@ supplies their own assumption — usually "that is the plan".
  I want two hours to find out first."
 |===
 
-Three properties of the right column. The *width of the range says how much you
+Three properties of the right column. The *width of the range (Bandbreite) says how much you
 know*, which is information the client needs more than the midpoint. The
 *assumption is named*, so somebody can check it. And there is a *date at which
 the uncertainty will be smaller*, which converts an unpleasant "we do not know"
@@ -149,7 +149,7 @@ of the damage.
 |"you will have it on Friday"
 |===
 
-A commitment is legitimate — projects need dates. What is not legitimate is
+A commitment (Zusage) is legitimate — projects need dates. What is not legitimate is
 *converting an estimate into a commitment without saying so*, which is what
 happens when a manager or a teacher hears "one to four days" and writes "Tuesday"
 into a plan. The conversion happened; it just was not announced, and the person
@@ -179,7 +179,7 @@ Trigger a re-estimate when:
 * the scope changes, in either direction;
 * you learn something that halves or doubles the uncertainty — the spike came
   back;
-* a milestone passes and the measured throughput differs from the assumed one.
+* a milestone passes and the measured throughput (Durchsatz) differs from the assumed one.
 
 And a habit worth building for the *next* project: when a change is archived,
 write down what it actually took next to what was estimated. Ten of those lines

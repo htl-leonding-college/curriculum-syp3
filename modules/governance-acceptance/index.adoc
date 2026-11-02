@@ -24,7 +24,7 @@ endif::[]
 
 == Acceptance is a moment, not a mood
 
-*Abnahme* is the point at which the client declares that what was delivered is
+*Acceptance* (Abnahme) is the point at which the client declares that what was delivered is
 what was ordered. It is a formal act with consequences, and in a diploma-thesis
 context it is the moment the project becomes a result rather than an activity.
 
@@ -44,7 +44,7 @@ What changes at that moment:
 |the target state describes something somebody has signed off
 
 |responsibility for operating it is the team's
-|responsibility passes with the handover
+|responsibility passes with the handover (Übergabe)
 |===
 
 The reason to make it a *moment* rather than a fading-out is that a project which
@@ -114,13 +114,13 @@ done:
 . *Every criterion is tried*, in order, including the refusals.
 . *Each outcome is recorded* immediately as passed, passed with a defect, or
   failed.
-. *The defect list is agreed in the room*, with a severity per entry.
-. *A written record is signed* by both sides — the *Abnahmeprotokoll*.
+. *The defect list (Mängelliste) is agreed in the room*, with a severity per entry.
+. *A written record is signed* by both sides — the *acceptance record* (Abnahmeprotokoll).
 
 The protocol contains: what was tested, on which version — a tag or commit, not
 "the current one" — who was present, the result per criterion, the defect list
 with severities and agreed deadlines, and the declaration of acceptance,
-acceptance with defects, or refusal.
+acceptance with defects (Abnahme unter Vorbehalt), or refusal.
 
 NOTE: Naming the exact version is what makes the protocol worth anything later.
 "It worked at the acceptance" is only checkable if somebody wrote down which

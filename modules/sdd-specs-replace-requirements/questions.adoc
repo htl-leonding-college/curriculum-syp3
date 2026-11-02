@@ -100,7 +100,7 @@ covers: lo-3
 |elicited
 |a sign-in sheet with an `anwesend` column; a trainer mentions excused absence
 
-|Lastenheft
+|requirements specification
 |"attendance must be recorded per member and session, including excused absence"
 
 |charter objective
@@ -128,7 +128,7 @@ nobody said out loud but the sheet implied.
 
 Points the answer must contain:
 
-* Document/interview → Lastenheft → charter objective → specs → change → archive
+* Document/interview → requirements specification → charter objective → specs → change → archive
   → scenario run
 * The client's vocabulary survives unchanged through all of it
 * Precision increases; scope does not
@@ -210,7 +210,7 @@ Points the answer must contain:
 * The client's own vocabulary was used throughout, so the scenarios are readable
 ====
 
-== Why must a Pflichtenheft and a target state not be maintained side by side?
+== Why must a functional specification and a target state not be maintained side by side?
 
 covers: lo-1, lo-4
 
@@ -227,7 +227,7 @@ when the requirement changes, and it is always the one the team actually uses.
 The other keeps its authority — it is the one with the signature — while quietly
 becoming fiction.
 
-The practical resolution is not to abolish the Pflichtenheft where a client
+The practical resolution is not to abolish the functional specification where a client
 requires one. It is to *generate or derive* it from the target state at the
 moment it is needed, so there is still only one source. What must not happen is
 two documents both maintained by hand.
@@ -237,5 +237,5 @@ Points the answer must contain:
 * Two copies of a fact drift; the unused one keeps its authority
 * The team updates the one it works with, which is not the signed one
 * Same one-fact-in-one-place rule as target state versus delta
-* Where a Pflichtenheft is required, derive it from the target state
+* Where a functional specification is required, derive it from the target state
 ====

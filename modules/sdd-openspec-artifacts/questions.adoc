@@ -128,7 +128,7 @@ Every value is *observable from outside*: capacity, a refusal, a reason string.
 And it is *falsifiable* — you can state exactly what would prove it wrong.
 
 `SHALL` marks the sentence as binding rather than aspirational; it is the same
-vocabulary the client's Pflichtenheft uses.
+vocabulary the client's functional specification uses.
 
 Scenarios come roughly in threes: the normal case, the boundary, and the case
 that must be refused. A spec with only the happy path is the commonest defect in

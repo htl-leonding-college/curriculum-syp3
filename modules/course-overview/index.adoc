@@ -100,7 +100,7 @@ shows what exists and compares estimate against reality.
 
 == Assessment
 
-Assessment has two parts, and they ask different things of you.
+Assessment (Leistungsfeststellung) has two parts, and they ask different things of you.
 
 *Four written exams* over the year — normally two per semester. They cover the
 modules taught up to that point and are answered in writing, under time. What
@@ -115,7 +115,7 @@ longer proof of anything.
 
 So the exercises stop pretending to be proof and become what they are — an
 occasion to learn. Every module ships its exam questions with it, in
-`questions.adoc`, and both the written exams and the oral examination draw on
+`questions.adoc`, and both the written exams and the oral examination (mündliche Prüfung) draw on
 that same catalogue. Nothing is hidden, nothing is unlocked later.
 
 [TIP]

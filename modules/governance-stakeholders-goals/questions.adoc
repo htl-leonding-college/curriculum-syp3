@@ -26,10 +26,10 @@ someone who only believes they are affected will act as if they were.
 |===
 | |Examples in a school project
 
-|*intern* — inside the organisation running the project
+|*internal* — inside the organisation running the project
 |the team, the supervising teacher, the school's IT operations
 
-|*extern* — outside it
+|*external* — outside it
 |the club the project is for, its members whose data is stored, the parents,
  whoever hosts the server afterwards
 |===
@@ -173,38 +173,38 @@ Points the answer must contain:
 * Rewrite it as what a user can then do
 ====
 
-== In which three dimensions is a project goal stated, and what is an Ergebnisziel?
+== In which three dimensions is a project goal stated, and what is an outcome goal?
 
 covers: lo-4
 
 .Answer
 [%collapsible]
 ====
-*Leistung, Termine, Kosten.* Leistung has two halves — the *Umfang* (which
-functions) and the *Qualität* (how well they must work). Termine is when it is
-there, Kosten is what it takes: effort, money, devices, licences.
+*Scope and quality, schedule, cost.* The first has two halves — the *scope*
+(which functions) and the *quality* (how well they must work). The schedule is
+when it is there, the cost is what it takes: effort, money, devices, licences.
 
 The three are coupled, so a goal that names only one of them is not agreed yet.
 In a school project the deadline is fixed by the calendar and the cost is fixed
-by the hours that actually exist, which leaves *Leistung* as the only adjustable
-dimension. A team that refuses to adjust it adjusts quality instead, quietly,
-somewhere around March.
+by the hours that actually exist, which leaves *scope and quality* as the only
+adjustable dimension. A team that refuses to cut scope cuts quality instead,
+quietly, somewhere around March.
 
-An *Ergebnisziel* says what exists at the end and is checked at the acceptance,
-on the product: "members can be enrolled in courses online". A *Vorgehensziel*
+An *outcome goal* says what exists at the end and is checked at the acceptance,
+on the product: "members can be enrolled in courses online". A *process goal*
 says how the work is done and is checked during the project, on the way of
 working: "the team meets weekly and records its decisions in the repository".
 
 Both belong in the charter, each marked as what it is. The usual failure is a
-charter full of Vorgehenszielen — meetings, tools, methods — with no statement
+charter full of process goals — meetings, tools, methods — with no statement
 of what will exist in June.
 
 Points the answer must contain:
 
-* Leistung (Umfang and Qualität), Termine, Kosten — coupled
-* In a school project only Leistung is really adjustable
-* Ergebnisziel: the result, checked at the acceptance
-* Vorgehensziel: the way of working, checked during the project
+* Scope and quality, schedule, cost — coupled
+* In a school project only scope and quality is really adjustable
+* Outcome goal: the result, checked at the acceptance
+* Process goal: the way of working, checked during the project
 ====
 
 == Which four questions do you ask before writing a goal down?
@@ -214,33 +214,33 @@ covers: lo-5
 .Answer
 [%collapsible]
 ====
-*WOZU? FÜR WEN? ENDERGEBNIS? ERFOLGSKRITERIEN?*
+*WHAT FOR? FOR WHOM? END RESULT? SUCCESS CRITERIA?*
 
-* *Wozu* — the purpose behind the goal. If the answer is "because somebody asked
+* *What for* — the purpose behind the goal. If the answer is "because somebody asked
   for it", the goal is not understood yet
-* *Für wen* — the stakeholder who benefits. A goal with no named beneficiary is
+* *For whom* — the stakeholder who benefits. A goal with no named beneficiary is
   usually somebody's hobby
-* *Endergebnis* — what concretely exists when it is reached: a thing, not an
+* *End result* — what concretely exists when it is reached: a thing, not an
   activity
-* *Erfolgskriterien* — how a third party recognises that it was reached
+* *Success criteria* — how a third party recognises that it was reached
 
 The fourth question is the one that turns a wish into a goal, because it forces
 an observable condition. The first two occasionally delete a goal outright —
 which is a good outcome and is far cheaper in October than in May.
 
-Applied to "the app should be fast": wozu — the trainer records attendance
-during the session, not afterwards; für wen — the trainer; Endergebnis — an
-attendance list that opens while the group is still lining up; Erfolgskriterium
+Applied to "the app should be fast": what for — the trainer records attendance
+during the session, not afterwards; for whom — the trainer; end result — an
+attendance list that opens while the group is still lining up; success criterion
 — under one second for a group of 30 on the lab laptops.
 
 Points the answer must contain:
 
 * The four questions, in their own words
-* Erfolgskriterien is what makes a goal verifiable
-* Für wen names the stakeholder, and a goal without one is suspect
+* The success criteria are what makes a goal verifiable
+* For whom names the stakeholder, and a goal without one is suspect
 ====
 
-== What is Zielkonkurrenz, and what do you do about it?
+== What are conflicting goals, and what do you do about them?
 
 covers: lo-6
 
@@ -249,25 +249,60 @@ covers: lo-6
 ====
 Goals in one charter influence each other, in three ways:
 
-* *Zielkonkurrenz* — reaching one makes the other harder. More functions against
+* *Conflicting goals* — reaching one makes the other harder. More functions against
   an earlier deadline; stronger data protection against a more convenient login
-* *Zielkomplementarität* — reaching one helps the other. A clean data model
+* *Complementary goals* — reaching one helps the other. A clean data model
   serves both the export and the deletion requirement
-* *Zielneutralität* — the two do not influence each other. Rarer than it looks
+* *Independent goals* — the two do not influence each other. Rarer than it looks
 
-Zielkonkurrenz is not a planning error, it is the normal state. What is an error
+A goal conflict is not a planning error, it is the normal state. What is an error
 is leaving it unnamed: the team then averages the two, delivers both badly and
 discovers at the acceptance which one actually mattered. The charter's job is to
 say *which of the two wins* when they collide.
 
-Below the goals sit the *Teilziele*, decomposed until each is checkable on its
+Below the goals sit the *sub-goals*, decomposed until each is checkable on its
 own — and they are not equally important. Weighting them is a small
-Nutzwertanalyse: each Teilziel gets a weight with a stated reason, and "what do
+weighted scoring: each sub-goal gets a weight with a stated reason, and "what do
 we build first" becomes a calculation instead of a mood.
 
 Points the answer must contain:
 
-* The three relationships, with an example of competition
-* Competition is normal; the charter decides which goal wins
-* Teilziele are weighted, not treated as equal
+* The three relationships, with an example of a conflict
+* Conflict is normal; the charter decides which goal wins
+* Sub-goals are weighted, not treated as equal
+====
+
+== What does it mean to operationalise a goal, and how is a goal hierarchy built?
+
+covers: lo-7
+
+.Answer
+[%collapsible]
+====
+An overall goal like "trainers spend less time on administration" is agreed but
+cannot be acted on or checked. *Operationalising* it means breaking it down until
+every part can. The tool is the *goal hierarchy*: the overall goal at the root,
+goal classes below it (technical, economic, ecological, …), and sub-goals refined
+over one or more levels until each is described by a *criterion* — a property of
+the solution — and an *extent* — how far it has to be realised. "The attendance
+list for 30 members opens in under one second" is such an operational goal.
+
+The hierarchy can be built three ways:
+
+* *Top-down* — decompose and refine the overall goal level by level down to
+  sub-goals with criterion and extent
+* *Bottom-up* — detailed goals already exist; group them by their contribution to
+  the overall goal and assign them to goal classes
+* *Mixed* — neither pure form is optimal, so the hierarchy is built iteratively
+  using both
+
+The hierarchy also checks itself: an operational goal that cannot be traced up to
+the root is a wish that slipped in.
+
+Points the answer must contain:
+
+* Operationalising: breaking the overall goal down until every part has a
+  criterion and an extent
+* The levels: overall goal, goal classes, sub-goals
+* Top-down, bottom-up and mixed, each with its direction
 ====

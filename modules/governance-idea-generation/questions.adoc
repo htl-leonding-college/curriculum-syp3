@@ -99,7 +99,7 @@ covers: lo-3
 |association, spoken
 |a group, a warm-up, a broad question, fifteen minutes
 
-|*Methode 6-3-5*
+|*6-3-5 method*
 |association, written
 |a group in which not everybody speaks up; you need written results
 
@@ -107,15 +107,15 @@ covers: lo-3
 |association, structuring
 |one person or a pair; the area is unclear and needs ordering
 
-|*Morphologischer Kasten*
+|*Morphological box*
 |systematic combination
 |the problem has clearly separable characteristics; you want completeness
 
-|*Bionik*
+|*Biomimetics*
 |analogy from nature
 |a technical function that resists direct attack
 
-|*Delphi-Methode*
+|*Delphi method*
 |structured expert opinion in rounds
 |assessing what nobody can know for certain — a forecast, an estimate
 |===
@@ -123,8 +123,8 @@ covers: lo-3
 The middle column is the part worth remembering, because it is what decides the
 choice. Three of the six work by *association* and differ only in the social
 setting: spoken in a group, written in a group, alone with a structure.
-`Morphologischer Kasten` is the only one aiming at *completeness* rather than
-inspiration, Bionik is the only one that imports a solution from outside the
+The morphological box is the only one aiming at *completeness* rather than
+inspiration, biomimetics is the only one that imports a solution from outside the
 problem domain, and Delphi is the only one whose purpose is to *narrow* a spread
 rather than widen it.
 
@@ -133,8 +133,8 @@ quantity before quality, wild ideas welcome, build on what has been said.
 
 Points the answer must contain:
 
-* Brainstorming, Methode 6-3-5, Mind mapping, Morphologischer Kasten, Bionik,
-  Delphi-Methode
+* Brainstorming, 6-3-5 method, mind mapping, morphological box, biomimetics,
+  Delphi method
 * Three work by association, one by systematic combination, one by analogy, one
   by structured expert opinion
 * The situation decides: group or alone, spoken or written, inspiration or
@@ -205,7 +205,7 @@ Points the answer must contain:
 * The characteristics must be independent, otherwise the combinations are fiction
 ====
 
-== How do Bionik and the Delphi method differ from the intuitive techniques?
+== How do biomimetics and the Delphi method differ from the intuitive techniques?
 
 covers: lo-5
 
@@ -216,7 +216,7 @@ Brainstorming, 6-3-5 and mind mapping all draw on *what the people in the room
 already know*, and organise how it comes out. The other two do something
 different.
 
-*Bionik imports a solution from outside the problem domain.* It works through an
+*Biomimetics imports a solution from outside the problem domain.* It works through an
 abstraction: the technical problem is turned into a functional question ("how
 does a surface stay clean?"), an answer is looked for in a living system (the
 lotus leaf), and the *principle* — not the shape — is transferred back. The
@@ -233,12 +233,12 @@ reasons rather than on status, which is why the spread usually narrows over two 
 three rounds. It costs days rather than minutes and needs people who actually
 know the subject.
 
-So: five techniques diverge, Delphi converges; five look inward, Bionik looks
+So: five techniques diverge, Delphi converges; five look inward, biomimetics looks
 outward.
 
 Points the answer must contain:
 
-* Bionik transfers a principle from nature through an abstraction step, not a
+* Biomimetics transfers a principle from nature through an abstraction step, not a
   shape
 * Delphi is written, anonymous and runs in rounds with the summary fed back
 * Delphi sharpens an assessment (it converges), the others produce ideas (they

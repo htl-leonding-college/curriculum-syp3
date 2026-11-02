@@ -22,11 +22,11 @@ endif::[]
 
 == The method
 
-*Nutzwertanalyse* — weighted scoring — turns a decision between alternatives into
+*Weighted scoring* (Nutzwertanalyse) turns a decision between alternatives into
 something you can hand to somebody else and have them follow.
 
 . List the criteria that matter.
-. Give each a weight; the weights sum to 100.
+. Give each a weight (Gewichtung); the weights sum to 100.
 . Rate each alternative per criterion, on a fixed scale (say 0–10).
 . Multiply, sum, compare.
 

@@ -21,7 +21,7 @@ endif::[]
 
 == One pattern
 
-Every process model, from the 1970s to this morning, runs the same loop:
+Every process model (Vorgehensmodell), from the 1970s to this morning, runs the same loop:
 
 ----
 clarify the goal

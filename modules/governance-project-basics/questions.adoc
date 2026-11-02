@@ -65,7 +65,7 @@ covers: lo-2
 .Answer
 [%collapsible]
 ====
-The *Ausgangslage* describes what exists today and what is unsatisfactory about
+The *initial situation* (Ausgangslage) describes what exists today and what is unsatisfactory about
 it: who has the problem, what happens now, and what it costs in time, money or
 nerves. It does not describe your solution and it names no technology.
 

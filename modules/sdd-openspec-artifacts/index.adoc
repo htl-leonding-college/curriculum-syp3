@@ -54,7 +54,7 @@ which is the property that keeps the documentation from going stale, because
 there is only one place a fact can live.
 
 A useful test when you cannot decide where something goes: *would this sentence
-still be true in a year?* If yes, it is target state. If it only makes sense
+still be true in a year?* If yes, it is target state (Zielzustand). If it only makes sense
 while the work is being done, it belongs to the change.
 
 == The four artefacts
@@ -125,7 +125,7 @@ separates a specification from a wish:
 * it is falsifiable: you can write down exactly what would prove it wrong.
 
 The keyword `SHALL` is not decoration. It marks the sentence as binding, and it
-is the vocabulary the client's own documents already use — the *Pflichtenheft*
+is the vocabulary the client's own documents already use — the *functional specification* (Pflichtenheft)
 of `sdd-why-specs` is built from the same kind of sentence.
 
 Scenarios come in threes, roughly: the normal case, the boundary, and the case
@@ -249,11 +249,17 @@ start before task 3, that has to be visible, or two people will collide.
 
 |Abnahmekriterium
 |acceptance criterion
+
+|Lastenheft
+|requirements specification (client's)
+
+|Pflichtenheft
+|functional specification (contractor's)
 |===
 
 == Further reading
 
 * This repository's `openspec/specs/` and `openspec/changes/` — a worked example
 * Module `sdd-why-specs` — why a living target state instead of a requirements
-  document, and where Lastenheft and Pflichtenheft fit
+  document, and where the requirements and functional specifications fit
 * Module `sdd-change-lifecycle` — the same artefacts along their life cycle

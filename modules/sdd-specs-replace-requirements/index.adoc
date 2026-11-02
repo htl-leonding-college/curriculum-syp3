@@ -18,14 +18,14 @@ endif::[]
 * [[lo-1]] Explain why a requirements document goes stale and a target state does
   not
 * [[lo-2]] Name what must stay frozen even when the target state lives, and why
-* [[lo-3]] Trace a requirement from the Lastenheft through to an archived change
+* [[lo-3]] Trace a requirement from the requirements specification through to an archived change
 * [[lo-4]] Decide whether a proposed wording belongs in the charter, the target
   state or a change
 * [[lo-5]] Explain what replaces the signed requirements document at acceptance
 
 == The document that is wrong by March
 
-The classical shape: a *Pflichtenheft* is written, agreed, signed, and printed.
+The classical shape: a *functional specification* (Pflichtenheft) is written, agreed, signed, and printed.
 Then the project starts, and every week the software and the document drift a
 little further apart.
 
@@ -51,7 +51,7 @@ be read by the client.
 |===
 |
 |Requirements document
-|Living target state
+|Living target state (Zielzustand)
 
 |Written
 |once, before the work
@@ -101,7 +101,7 @@ skinparam shadowing false
 skinparam defaultFontName Helvetica
 
 rectangle "frozen" {
-  rectangle "Projektauftrag / charter\ngoals, scope, non-goals,\ndeadline, roles" as CH #E3ECF8
+  rectangle "Charter\ngoals, scope, non-goals,\ndeadline, roles" as CH #E3ECF8
 }
 rectangle "alive" {
   rectangle "specs/\nwhat must be true now" as SP #E4F0E4
@@ -141,7 +141,7 @@ different lesson and they are easy to see as separate topics.
 |a sign-in sheet with an `anwesend` column, and a trainer saying "sometimes
  somebody is excused"
 
-|Lastenheft
+|requirements specification (Lastenheft)
 |"attendance must be recorded per member and session, including excused absence"
 
 |charter objective
@@ -201,7 +201,7 @@ either document.
 == What replaces the signature
 
 At acceptance the classical model produces a document comparison: does the
-delivered system match the signed Pflichtenheft? Here the same question is
+delivered system match the signed functional specification? Here the same question is
 answered by *running the target state*.
 
 * Every charter objective maps to capabilities in `specs/`.
@@ -230,7 +230,7 @@ must be able to do afterwards — are the subject of `governance-acceptance`.
 
 == Pitfalls
 
-* Maintaining a Pflichtenheft *and* a target state. Two descriptions of the same
+* Maintaining a functional specification *and* a target state. Two descriptions of the same
   thing, and within a month one of them is lying.
 * Treating "living" as "negotiable". The charter is the anchor; without it the
   project cannot fail and therefore cannot succeed.
@@ -277,6 +277,6 @@ must be able to do afterwards — are the subject of `governance-acceptance`.
 == Further reading
 
 * Module `sdd-why-specs` — the first pass at the same question, with the DIN
-  structure of the Pflichtenheft
+  structure of the functional specification
 * Module `sdd-change-lifecycle` — why an update to the target state is cheap
 * Module `governance-acceptance` — what happens at the handover

@@ -80,8 +80,8 @@ those conditions are themselves goals with their own checks.
 
 kind: project
 
-Take one goal from your charter and answer, in writing: *Wozu? Für wen?
-Endergebnis? Erfolgskriterien?* If question two has no named stakeholder, or
+Take one goal from your charter and answer, in writing: *What for? For whom?
+End result? Success criteria?* If question two has no named stakeholder, or
 question four no observable condition, rewrite the goal — or drop it.
 
 // Aufgabe am eigenen Projekt — keine Musterlösung.

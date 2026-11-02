@@ -20,8 +20,8 @@ would carry it.
 .Solution
 [%collapsible]
 ====
-The fields that regularly cause discussion are "Aufwandsschätzung" and
-"Rahmenbedingungen": neither has an openspec artefact, and both stay in the
+The fields that regularly cause discussion are the effort estimate
+(Aufwandsschätzung) and the constraints (Rahmenbedingungen): neither has an openspec artefact, and both stay in the
 charter. Not every field needs a counterpart — the mapping exists where a field
 has a living counterpart, not for symmetry.
 ====

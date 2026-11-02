@@ -17,7 +17,7 @@ covers: lo-1
 .Answer
 [%collapsible]
 ====
-*Abnahme* is the point at which the client declares that what was delivered is
+*Acceptance* is the point at which the client declares that what was delivered is
 what was ordered. It is a formal act on a date, not a mood.
 
 |===

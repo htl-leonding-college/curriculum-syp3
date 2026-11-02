@@ -20,11 +20,13 @@ endif::[]
 * [[lo-3]] Distinguish goals from non-goals and explain why non-goals are written
   down
 * [[lo-4]] Name the three dimensions a project goal is measured in, and tell
-  Ergebnisziele from Vorgehenszielen
-* [[lo-5]] Agree a goal using the four questions: Wozu, für wen, Endergebnis,
-  Erfolgskriterien
-* [[lo-6]] Recognise Zielkonkurrenz, Zielkomplementarität and Zielneutralität,
-  and weight sub-goals instead of pretending they are equal
+  outcome goals from process goals
+* [[lo-5]] Agree a goal using the four questions: what for, for whom, end
+  result, success criteria
+* [[lo-6]] Recognise conflicting, complementary and independent goals, and
+  weight sub-goals instead of pretending they are equal
+* [[lo-7]] Explain how a goal hierarchy operationalises the overall goal, and
+  build one top-down, bottom-up or with the mixed approach
 
 == Stakeholders
 
@@ -41,7 +43,7 @@ not because somebody was unknown.
 
 [cols="1,2,2",options="header"]
 |===
-| |*Interne Stakeholder* |*Externe Stakeholder*
+| |*Internal stakeholders* |*External stakeholders*
 
 |Who
 |inside the organisation running the project: client, project management, the
@@ -104,7 +106,12 @@ The pattern: an observable action, a measurable condition, a context in which it
 holds. If your goal has none of those, it is a wish — write it down as one, but
 do not call it a goal.
 
-=== Leistung, Termine, Kosten
+Two properties make a goal a good one: it is *achievable*, and it is
+*quantifiable* — whether it was reached can be measured. And it prescribes no
+solution: "trainers record attendance digitally" is a goal, "we build a React
+app" is a decision that comes later.
+
+=== Scope, schedule, cost
 
 Project goals are stated in three dimensions, and a goal that names only one of
 them is not yet agreed.
@@ -117,9 +124,9 @@ element { BackgroundColor #EDF3FA; LineColor #7C93AD; FontColor #21303F }
 arrow { LineColor #5A6B7D; FontColor #21303F }
 </style>
 skinparam shadowing false
-rectangle "Leistung\nscope and quality:\nwhat it does, how well" as L #E3ECF8
-rectangle "Termine\ndeadlines:\nwhen it is there" as T #FAF0D9
-rectangle "Kosten\neffort, money,\ndevices, licences" as K #E4F0E4
+rectangle "Scope and quality\nwhat it does, how well" as L #E3ECF8
+rectangle "Schedule\nwhen it is there" as T #FAF0D9
+rectangle "Cost\neffort, money,\ndevices, licences" as K #E4F0E4
 L -right- T
 T -down- K
 K -left- L
@@ -127,19 +134,20 @@ K -left- L
 ----
 
 They are coupled: hold two of them and the third follows. In a school project
-*Termine* is fixed by the calendar and *Kosten* is fixed by the hours you
-actually have, which leaves exactly one adjustable dimension — *Leistung*. A
-team that refuses to adjust it ends up adjusting quality instead, silently.
+the *schedule* (Termine) is fixed by the calendar and the *cost* (Kosten) is
+fixed by the hours you actually have, which leaves exactly one adjustable
+dimension — *scope and quality* (Leistung). A team that refuses to cut scope ends
+up cutting quality instead, silently.
 
-*Leistung* has two halves and both belong in the goal: the *Umfang* (which
-functions) and the *Qualität* (how well they have to work — the non-functional
+This dimension has two halves and both belong in the goal: the *scope* (which
+functions) and the *quality* (how well they have to work — the non-functional
 side, see `sdd-why-specs`).
 
-=== Ergebnisziele and Vorgehensziele
+=== Outcome goals and process goals
 
 [cols="1,2,2",options="header"]
 |===
-| |*Ergebnisziel* |*Vorgehensziel*
+| |*Outcome goal* (Ergebnisziel) |*Process goal* (Vorgehensziel)
 
 |Says
 |what exists at the end
@@ -159,8 +167,85 @@ side, see `sdd-why-specs`).
 |===
 
 Both belong in the charter, marked as what they are. The frequent mistake is a
-charter full of Vorgehenszielen — meetings, tools, methods — with no statement
+charter full of process goals — meetings, tools, methods — with no statement
 of what will exist at the end.
+
+=== Operationalising goals: the goal hierarchy
+
+An overall goal such as "trainers spend less time on administration" is true,
+agreed — and impossible to act on or check. *Operationalising* it
+(Operationalisierung) means breaking it down until every part can be acted on and
+checked. The tool for that is the *goal hierarchy* (Zielhierarchie).
+
+It starts from a root, the *overall goal* (Gesamtziel). Below it sit goal
+classes — technical, economic, ecological, … — and below those the sub-goals,
+refined over one or more levels until each one is described by a *criterion*
+(Kriterium) and an *extent* (Ausmaß). A criterion is a property of the solution;
+the extent says how far it has to be realised for the goal to count as reached.
+
+[graphviz,goal-hierarchy,svg]
+----
+digraph hierarchy {
+  rankdir=TB;
+  bgcolor="transparent";
+  nodesep=0.25;
+  node [shape=box, style=filled, fillcolor="#EDF3FA", color="#7C93AD",
+        fontname="Helvetica", fontsize=11];
+  edge [color="#5A6B7D", arrowhead=none];
+
+  node [shape=plaintext, style="", fontcolor="#5A6B7D"];
+  L1 [label="overall goal"];
+  L2 [label="sub-goals"];
+  L3 [label="operational goals\n(criterion + extent;\nonly attendance shown)"];
+  L1 -> L2 -> L3 [style=invis];
+
+  node [shape=box, style=filled, fontcolor="#21303F"];
+  G  [label="Trainers spend half as much time\non administration as today", fillcolor="#E3ECF8"];
+  S1 [label="Digital attendance", fillcolor="#E4F0E4"];
+  S2 [label="Online course\nenrolment", fillcolor="#E4F0E4"];
+  S3 [label="Annual report at\nthe press of a button", fillcolor="#E4F0E4"];
+  O1 [label="list for 30 members\nopens in < 1 s", fillcolor="#FAF0D9"];
+  O2 [label="session recorded in\n< 2 min, no instructions", fillcolor="#FAF0D9"];
+  O3 [label="excused absence\nrecorded per session", fillcolor="#FAF0D9"];
+
+  { rank=same; L1; G; }
+  { rank=same; L2; S1; S2; S3; }
+  { rank=same; L3; O1; O2; O3; }
+  L1 -> G [style=invis]; L2 -> S1 [style=invis]; L3 -> O1 [style=invis];
+
+  G -> S1; G -> S2; G -> S3;
+  S1 -> O1; S1 -> O2; S1 -> O3;
+}
+----
+
+Only the bottom row can be implemented and checked at the acceptance. The rows
+above explain *why* it is there — and a box at the bottom that cannot be traced
+up to the root is a wish that slipped in.
+
+The hierarchy can be built in three ways:
+
+[cols="1,3",options="header"]
+|===
+|Approach |How it works
+
+|*Top-down* (Top-down-Ansatz)
+|start from the overall goal and decompose and refine it, level by level, down to
+ sub-goals with criterion and extent
+
+|*Bottom-up* (Bottom-up-Ansatz)
+|detailed goals already exist — wishes from the interviews, requirements of the
+ club. They are grouped by their contribution to the overall goal and assigned
+ to goal classes
+
+|*Mixed approach* (gemischter Ansatz)
+|neither pure form works best, so the hierarchy is built iteratively, using both
+ directions in turn
+|===
+
+Top-down alone produces sub-goals nobody checked against what is possible;
+bottom-up alone produces a pile of details without a common direction. A school
+project is mixed in practice: the client brings the overall goal, the
+elicitation brings the details, and the charter is where both meet.
 
 === The four questions of a goal agreement
 
@@ -169,20 +254,20 @@ the Coverdale method and they are the fastest test there is.
 
 [cols="1,3",options="header"]
 |===
-|Frage |What it forces out
+|Question |What it forces out
 
-|*WOZU?*
+|*WHAT FOR?* (Wozu?)
 |the purpose behind the goal. If the answer is "because it was asked for", the
  goal is not understood yet
 
-|*FÜR WEN?*
+|*FOR WHOM?* (Für wen?)
 |the stakeholder who benefits. A goal without a named beneficiary is usually
  somebody's hobby
 
-|*ENDERGEBNIS?*
+|*END RESULT?* (Endergebnis?)
 |what concretely exists when it is reached — a thing, not an activity
 
-|*ERFOLGSKRITERIEN?*
+|*SUCCESS CRITERIA?* (Erfolgskriterien?)
 |how a third party recognises that it was reached
 |===
 
@@ -196,39 +281,38 @@ Goals in the same charter are not independent, and the relationship has a name.
 
 [cols="1,3",options="header"]
 |===
-|Beziehung |Bedeutung
+|Relationship |Meaning
 
-|*Zielkonkurrenz*
+|*Conflicting goals* (Zielkonkurrenz)
 |reaching one makes the other harder — more functions against an earlier
  deadline. Must be decided, not averaged away
 
-|*Zielkomplementarität*
+|*Complementary goals* (Zielkomplementarität)
 |reaching one helps the other — a clean data model helps both the export and
  the deletion requirement
 
-|*Zielneutralität*
+|*Independent goals* (Zielneutralität)
 |the two do not influence each other. Rarer than it looks
 |===
 
-Zielkonkurrenz is the interesting case: it is not a planning error, it is the
+Conflicting goals are the interesting case: it is not a planning error, it is the
 normal state, and the charter's job is to say which of the two wins when they
 collide.
 
-=== Teilziele and their weight
+=== Sub-goals and their weight
 
-A large goal is decomposed into *Teilziele*, hierarchically, until each part is
-checkable on its own. The parts are not equally important — pretending that they
-are is how a project ends up with a perfect export function and no working
-enrolment.
+The *sub-goals* (Teilziele) of the hierarchy are not equally important —
+pretending that they are is how a project ends up with a perfect export function
+and no working enrolment.
 
-Weighting them is a small Nutzwertanalyse: give each Teilziel a weight, state
+Weighting them is a small weighted scoring (Nutzwertanalyse): give each sub-goal a weight, state
 what the weight is based on, and the decision "what do we build first" becomes a
 calculation rather than a mood. The method itself is taught in year 4, in
 `governance-weighted-scoring`.
 
 == Non-goals
 
-Non-goals are what the project explicitly does not do. They cost one line each
+Non-goals (Nicht-Ziele) are what the project explicitly does not do. They cost one line each
 and prevent the two most expensive conversations of the year: scope creep during
 the project, and disappointment at the acceptance.
 
@@ -248,8 +332,8 @@ scope for *this* project, in *this* year.
   with the interest each of them pursues.
 * Goals are written so a third party can check them; unverifiable goals go back
   to the team for rewriting.
-* Every goal states Leistung, Termin and Kosten, and is marked as Ergebnisziel
-  or Vorgehensziel.
+* Every goal states scope and quality, schedule and cost, and is marked as
+  outcome goal or process goal.
 * Competing goals are named as competing, with the decision which one wins.
 * Every charter has a non-goals section. An empty one is not accepted — if
   nothing is out of scope, the scope was not thought through.
@@ -261,7 +345,7 @@ scope for *this* project, in *this* year.
   about what they will do at the acceptance.
 * Goals that measure your effort instead of the result ("we implement a REST
   API"). Nobody outside your team cares how it is built; they care what it does.
-* A charter of pure Vorgehenszielen: much method, no promised result.
+* A charter of pure process goals: much method, no promised result.
 * Goals written after the fact, matched to what was finished. That is what the
   frozen charter exists to prevent.
 * Non-goals that are secretly plans ("no mobile app *for now*"). Then it is not a
@@ -283,13 +367,22 @@ scope for *this* project, in *this* year.
 |objectives
 
 |Ergebnisziel
-|result goal, outcome goal
+|outcome goal
 
 |Vorgehensziel
 |process goal
 
 |Leistung, Termine, Kosten
 |scope and quality, schedule, cost
+
+|Umfang
+|scope
+
+|Qualität
+|quality
+
+|Wozu? Für wen? Endergebnis? Erfolgskriterien?
+|What for? For whom? End result? Success criteria?
 
 |Zielkonkurrenz
 |conflicting goals
@@ -303,8 +396,32 @@ scope for *this* project, in *this* year.
 |Teilziel
 |sub-goal
 
+|Nutzwertanalyse
+|weighted scoring, utility analysis
+
 |Nicht-Ziel
 |non-goal
+
+|Operationalisierung
+|operationalisation
+
+|Gesamtziel, Hauptziel
+|overall goal
+
+|Zielklasse
+|goal class
+
+|Kriterium, Ausmaß
+|criterion, extent
+
+|Zielhierarchie
+|goal hierarchy
+
+|Top-down-Ansatz, Bottom-up-Ansatz
+|top-down approach, bottom-up approach
+
+|gemischter Ansatz
+|mixed approach
 
 |überprüfbar
 |verifiable
@@ -318,5 +435,7 @@ scope for *this* project, in *this* year.
 * Template `templates/governance/projektauftrag.adoc` — the goals table you fill
 * Module `governance-weighted-scoring` — how sub-goals get their weights (year 4)
 * Module `governance-acceptance` — where these goals are checked again
-* Module `sdd-why-specs` — where the Qualität half of Leistung is written down
+* Module `sdd-why-specs` — where the quality half of the goal is written down
 * ÖNORM ISO 21500 — the stakeholder definition used above
+* Manz textbook, chapter 2 lesson 3 "Zielbestimmung" — the goal hierarchy, the
+  three approaches and the goal relationships

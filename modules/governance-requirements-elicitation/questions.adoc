@@ -26,17 +26,17 @@ covers: lo-1
 |1 hour per person, plus preparation and write-up
 |people describe the process as it *should* be
 
-|*Fragebogen*
+|*Questionnaire*
 |numbers over many people: how often, how many, how important
 |days of waiting; a low response rate
 |no follow-up question is possible
 
-|*Beobachtung*
+|*Observation*
 |what people actually do, including unmentioned workarounds
 |half a day per workplace
 |being watched changes the behaviour
 
-|*Dokumentenanalyse*
+|*Document analysis*
 |fields, data types, value ranges, vocabulary, volumes, rules
 |hours, and nobody else's time
 |shows the rule, never the exception
@@ -54,7 +54,7 @@ one that yields *structure*: field names, types, ranges.
 
 Points the answer must contain:
 
-* Interview, Fragebogen, Beobachtung, Dokumentenanalyse
+* Interview, questionnaire, observation, document analysis
 * What each delivers: reasons and exceptions; numbers over many people; actual
   behaviour; fields, vocabulary and volumes
 * Each has a blind spot the others cover; nobody uses one alone
@@ -186,10 +186,10 @@ digraph order {
         fontname="Helvetica", fontsize=11];
   edge [color="#5A6B7D", arrowsize=0.7, fontname="Helvetica", fontsize=10];
 
-  D [label="Dokumentenanalyse\nfields, vocabulary,\nvolumes"];
+  D [label="Document analysis\nfields, vocabulary,\nvolumes"];
   I [label="Interview\nthe why, the exceptions,\nthe contradictions"];
-  B [label="Beobachtung\nwhat really happens\nat the desk"];
-  F [label="Fragebogen\nhow often, how many,\nhow important"];
+  B [label="Observation\nwhat really happens\nat the desk"];
+  F [label="Questionnaire\nhow often, how many,\nhow important"];
 
   D -> I [label="better questions"];
   I -> B [label="check the claims"];
@@ -231,13 +231,13 @@ covers: lo-4
 [%collapsible]
 ====
 *"The trainers say the paper list works fine, but three of them keep a private
-Excel sheet."* — Beobachtung. The statement and the behaviour disagree, and only
+Excel sheet."* — Observation. The statement and the behaviour disagree, and only
 watching resolves that. An interview will get the description again, because
 people do not experience their workarounds as part of the process. Stay long
 enough for the first twenty minutes of best behaviour to wear off.
 
 *"We need to know how many of the 400 members would use online booking, and how
-often."* — Fragebogen. It is a question about quantity across a population that
+often."* — Questionnaire. It is a question about quantity across a population that
 is far too big to interview, the answers are closed (yes/no, a number, a scale),
 and no follow-up is needed. Pretest it with three people first.
 

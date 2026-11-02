@@ -21,7 +21,7 @@ endif::[]
 
 == Programming is not the discipline
 
-Programming is getting a machine to do something. Software engineering is
+Programming is getting a machine to do something. Software engineering (Softwaretechnik) is
 everything that becomes necessary once *other people* and *time* are involved.
 
 [cols="1,1",options="header"]
