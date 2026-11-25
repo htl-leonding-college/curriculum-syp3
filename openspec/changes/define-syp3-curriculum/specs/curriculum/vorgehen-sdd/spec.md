@@ -25,6 +25,16 @@ einordnen können, auch wenn im Projekt nicht danach gearbeitet wird.
 - **WHEN** dem Schüler ein Begriff wie Sprint, Backlog oder Phase begegnet
 - **THEN** kann er ihn einordnen und dem zugehörigen Modell zuweisen
 
+#### Scenario: Agiles Modell neben Scrum
+- **WHEN** dem Schüler Extreme Programming begegnet
+- **THEN** ordnet er es als agiles Modell ein und nennt, worin es sich von Scrum
+  unterscheidet
+
+#### Scenario: User Story schreiben
+- **WHEN** der Schüler eine Anforderung als User Story formulieren soll
+- **THEN** verwendet er die Schablone mit Rolle, Ziel und Nutzen, gibt
+  Akzeptanzkriterien an und prüft die Story an INVEST
+
 ### Requirement: Spezifikationsgetriebene Entwicklung anwenden
 Der Schüler SHALL eine Änderung nach dem spezifikationsgetriebenen Ablauf durchführen
 können: Anliegen und Umfang beschreiben, gewünschtes Verhalten als prüfbare
@@ -70,3 +80,9 @@ können.
 - **WHEN** das verwendete Werkzeug durch ein anderes ersetzt wird
 - **THEN** bleibt das Gelernte anwendbar, weil der Schüler das Prinzip und nicht die
   Befehlsfolge gelernt hat
+
+#### Scenario: Zweites Werkzeug
+- **WHEN** dem Schüler ein anderes SDD-Werkzeug oder eine reine Markdown-Ablage
+  vorgelegt wird
+- **THEN** ordnet er dessen Artefakte den Schritten des Musters zu, die er von openspec
+  kennt

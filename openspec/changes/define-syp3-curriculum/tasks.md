@@ -35,7 +35,7 @@
 
 ## 4. Abstimmung und Quellenlage
 
-- [ ] 4.1 Verschiebung von Deployment-Diagramm und Kubernetes-Vertiefung in den 4. Jahrgang mit den dort Unterrichtenden abstimmen; Prüfung: Zusage oder Ablehnung im Change vermerkt, bei Ablehnung Rücknahme in `curriculum.yaml` und Budget
+- [ ] 4.1 Verschiebung der Kubernetes-Vertiefung in den 4. Jahrgang mit den dort Unterrichtenden abstimmen (das Deployment-Diagramm bleibt seit 2026-11-25 im 3. Jg, D13); Prüfung: Zusage oder Ablehnung im Change vermerkt, bei Ablehnung Rücknahme in `curriculum.yaml` und Budget
 - [ ] 4.2 JDK-Version für `versions.env` mit 4./5. Jahrgang abstimmen und an `setup-curriculum-repository` Aufgabe 7.3 melden; Prüfung: eine Version, die in allen drei Jahrgängen gilt
 - [x] 4.3 Materialbestand je Topic sichten (Manz-Kapitel, PUMA-Kreativitätstechniken, PUMA-Nutzwertanalyse, UML Uni Heidelberg, `01.Vorgehensmodelle.key`) und in `coverage.md` je Topic als Quelle vermerken; Prüfung: jedes Governance- und Modellierungs-Topic nennt seine Quelle oder ausdrücklich keine
 - [x] 4.4 Nutzungsregel für das Manz-Schulbuch aus D11 an sichtbarer Stelle festhalten: eigene Formulierung, eigene Gliederung, keine Abbildungen, keine Weitergabe der PDF-Kapitel; Prüfung: Regel steht im `README.adoc` des Curriculum-Repositorys neben der Bildherkunfts-Regel
@@ -44,3 +44,13 @@
 
 - [x] 5.1 Abschnitt "Open Questions" in `design.md` auf den Stand der yaml bringen (Schätzverfahren entschieden, AI-Aufteilung entschieden, revealjs auf U22 gelegt); Prüfung: keine Frage bleibt ohne Entscheidung oder Vertagungsgrund
 - [x] 5.2 Übergabe an den Autoren-Change: Reihenfolge der zu schreibenden Module aus der Eröffnungssequenz ableiten (U1-U10 zuerst); Prüfung: Liste liegt vor und beginnt mit den Topics, die vor Schulbeginn fertig sein müssen
+
+## 6. Nachtrag 2026-11-25: Vorgehensmodelle und UML (D12-D14)
+
+- [ ] 6.1 `curriculum.yaml` umstellen: `uml-class-object` auf L22, `uml-use-case` auf L23, `uml-activity` wird `uml-activity-state` (L24), `uml-state-overview` wird `uml-architecture` (L25), `requires` nachziehen (`uml-use-case` setzt `process-scrum` voraus); Prüfung: `tools/check-curriculum.py` ohne Befund, Budget unverändert
+- [ ] 6.2 `coverage.md` auf die neuen Requirements von `uml-basics` und `vorgehen-sdd` und die umbenannten Topics bringen; Prüfung: jedes Requirement nennt ein Topic, jedes Topic trägt ein Requirement
+- [ ] 6.3 Modul `sdd-principle-not-tool` (L18) nach D14 schreiben; Prüfung: Tabelle Prinzip/Werkzeug mit mindestens zwei Werkzeugen, die Übung „openspec gibt es morgen nicht mehr", Überleitung zu L19
+- [ ] 6.4 Module `process-waterfall` (L19) und `process-scrum` (L20) aus den Folien nach D12 auf Englisch schreiben; Prüfung: jede Folie außer 1, 5 und 41 ist einem Abschnitt zugeordnet, kein Bild mit deutschem Text
+- [ ] 6.5 Bilder mit deutschem Text nachzeichnen (Folien 4, 7, 11, 14); die Mindmaps nach den Freeplane-Dateien in `assets/freeplane/` als `@startmindmap`; Prüfung: Diagramme rendern, Inhalt stimmt mit dem Original überein
+- [ ] 6.6 Herkunftsklasse `quoted` in P11 (`setup-curriculum-repository`) und `tools/rights-report.py` ergänzen, dekorative Bilder nur in Moodle; Prüfung: der Report zählt `quoted` getrennt, kein dekoratives fremdes Bild im Site-Build
+- [ ] 6.7 Module `uml-overview` (L21, WBS nach UML 2.5), `uml-class-object` (L22, DOM), `uml-use-case` (L23), `uml-activity-state` (L24), `uml-architecture` (L25) nach D13 schreiben; Prüfung: nur die Notationselemente aus der Tabelle in D13, alle Diagramme als PlantUML, kein Projektthema als Beispiel

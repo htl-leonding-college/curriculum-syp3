@@ -128,6 +128,11 @@ Kubernetes-Block gehört. Darstellung durchgängig PlantUML.
 *Trade-off:* Finanziert den neuen Brücken-Block. Objektdiagramm kostet neben dem
 Klassendiagramm fast nichts; Zustandsdiagramme sind in 3.-Jg-Projekten selten tragend.
 
+*Nachtrag 2026-11-25 (Entscheidung des Lehrenden):* Die 5 UE bleiben, ihr Zuschnitt
+ändert sich (D13). Aktivitäts- und Zustandsdiagramm teilen sich eine UE; die frei
+werdende UE geht an Architekturdiagramme. Das Deployment-Diagramm bleibt damit im
+3. Jg, nur die Kubernetes-Vertiefung wandert weiter in den 4. Jg (Aufgabe 4.1).
+
 ### D5 — Schätz-Hygiene statt Schätzverfahren
 
 Function Points, COCOMO und Planning Poker entfallen. Stattdessen 1 UE: Zerlegen schlägt
@@ -265,6 +270,122 @@ Felder des Diplomarbeitsantrags im Projektantrag. Ist-Zustand und Mengengerüst 
 wie im Buch im Pflichtenheft, nicht im Auftrag. Das Pflichtenheft schreibt das Team
 im Projekt einmal; danach übernehmen die specs seine Anforderungen.
 
+### D12 — Folien „Vorgehensmodelle" in L19 und L20
+
+Entscheidung des Lehrenden 2026-11-25. Quelle ist die eigene Präsentation
+`assets/01.Vorgehensmodelle.pdf` (41 Folien, Keynote 2014), nicht das Manz-Buch; D11
+betrifft sie nicht.
+
+```
+L19 process-waterfall        L20 process-scrum
+  Folie 2  Arten (bereits      Folie 3      Einstieg (Dilbert)
+           nachgezeichnet)     Folie 6      Extreme Programming, als agiler
+  Folie 4  Wasserfall                       Verwandter von Scrum
+  Folie 7  V-Modell            Folien 8-23  Manifest, Ablauf, Rollen, Backlog,
+  Folie 5  Boehm: entfällt                  Schätzen, Sprint, Burndown
+                               Folien 24-40 User Stories, INVEST,
+                                            Akzeptanzkriterien
+```
+
+- Inhalte werden ins Englische übersetzt, Folie für Folie, ohne Kürzung über das
+  Weglassen von Boehm hinaus. Die User Stories bleiben in L20, auch wenn die Lesson
+  damit dicht wird; L23 setzt sie für den Vergleich mit dem Use Case voraus.
+- Bilder mit deutschem Text werden auf Englisch nachgezeichnet, gleich von wem sie
+  stammen: Folien 4, 7, 11 und die Mindmap auf Folie 14. Die Mindmaps hat der Lehrende
+  selbst in Freeplane gezeichnet; nachgezeichnet wird nach den `.mm`-Dateien (sie
+  zeigen auch zugeklappte Äste) als PlantUML `@startmindmap`, sonst als PlantUML oder
+  SVG nach P11.
+- Keynote-Tabellen und -Text (Folien 9, 10, 15-19, 23, 30, 32) werden zu englischen
+  AsciiDoc-Tabellen und -Text, nicht zu Bildern.
+- Fremde Bilder ohne deutschen Text werden 1:1 übernommen.
+
+**Fremde Bilder als Zitat.** Der Lehrende stützt die Übernahme auf das Zitatrecht
+(§ 42f UrhG) mit Quellenangabe. Auf der öffentlichen Site trägt das Zitat nur, wo das
+Bild im Text besprochen wird; die Unterrichtsausnahme (§ 42g) deckt nur den
+abgegrenzten Kreis (P11). Daraus:
+
+```
+im Text besprochen  (V-Modell, XP, Agile-Velocity-  -> Site, Bildunterschrift
+Serie, Taskboard-Grafik, Burndown, Beispielkarten)     "(quoted: <Quelle>)"
+dekorativ  (Rugby-Foto, Dilbert, Foto Taskboard)    -> nur Moodle, die Site
+                                                       verweist darauf
+```
+
+`quoted` ist eine vierte Herkunftsklasse neben `own`, `free` und `unclear` (P11);
+`tools/rights-report.py` muss sie kennen (Aufgabe 6.6).
+
+### D13 — UML-Zuschnitt L21-L25
+
+Entscheidung des Lehrenden 2026-11-25; ersetzt die Reihenfolge aus D4.
+
+| Lesson | Topic | Inhalt |
+|---|---|---|
+| 21 | `uml-overview` | Wozu UML; Übersicht aller Diagrammtypen als PlantUML-WBS |
+| 22 | `uml-class-object` | Klassendiagramm als Domain Object Model (DOM), Objektdiagramm |
+| 23 | `uml-use-case` | Use-Case-Diagramm, Unterschied zur User Story (L20) |
+| 24 | `uml-activity-state` | Aktivitäts- und Zustandsdiagramm, nur Grundelemente |
+| 25 | `uml-architecture` | Komponenten- und Verteilungsdiagramm, C4 Level 1 und 2 |
+
+Bisher `uml-activity` (wird `uml-activity-state`) und `uml-state-overview` (wird
+`uml-architecture`).
+
+**Übersicht nach UML 2.5**, nicht nach den Heidelberger Folien (UML 1.1: dort noch
+Kollaborations- statt Kommunikationsdiagramm, alte Komponentennotation, kein Timing-
+und Interaktionsübersichtsdiagramm). `*` markiert die in SYP 3 behandelten Diagramme,
+C4 steht als Ergänzung daneben, weil es kein UML ist:
+
+```
+UML 2.5
++-- Structure diagrams
+|   +-- Class *  Object *  Component *  Deployment *
+|   +-- Package  Composite structure  Profile
++-- Behaviour diagrams
+    +-- Use case *  Activity *  State machine *
+    +-- Interaction diagrams
+        +-- Sequence  Communication  Timing  Interaction overview
+```
+
+**Notation: nur, was das Projekt braucht.**
+
+| Diagramm | behandelt | weggelassen |
+|---|---|---|
+| Class (DOM) | Klasse, Attribut mit Typ, Assoziation mit Name und Multiplizität, Komposition, Generalisierung, Assoziationsklasse, Enum | Operationen, Sichtbarkeit, Interfaces, Abhängigkeit, Qualifizierer, Stereotype, n-äre Assoziation |
+| Object | `name : Klasse`, Attributwerte, Links | alles andere |
+| Use Case | Akteur, Use Case, Systemgrenze, Assoziation, `<<include>>`, Akteur-Generalisierung, kurze textuelle Beschreibung | `<<extend>>` mit Extension Points (höchstens erwähnt) |
+| Activity | Start, Ende, Aktion, Verzweigung/Zusammenführung mit Bedingungen, Fork/Join, Swimlanes | Objektfluss, Signale, Ausnahmen, Regionen |
+| State | Start, Ende, Zustand, Übergang `Ereignis [Bedingung] / Aktion` | zusammengesetzte Zustände, History, parallele Regionen |
+| Component / Deployment | Komponente, angebotene/benötigte Schnittstelle, Knoten, Artefakt, Kommunikationspfad | Ports, Delegation, Ausführungsumgebungen im Detail |
+| C4 | Level 1 Context, Level 2 Container | Level 3 und 4 (dafür Component und Class) |
+
+**DOM statt Implementierungsmodell.** Klassendiagramme zeigen nur fachliche Entitäten,
+vergleichbar einem ERD, ohne technische Klassen und ohne Operationen. Beispiele:
+Ausleihe von Laborgeräten als Einstieg (die Assoziationsklasse an „Schüler leiht Gerät
+von/bis"), Stundenplan und Fahrradverleih als Übungen. Keines der sechs Projektthemen
+wird als Beispiel verwendet.
+
+Die Heidelberger Folien bleiben Quelle für Begriffe und Beispiele, nicht für Notation.
+
+### D14 — Inhalt von L18 `sdd-principle-not-tool`
+
+Entscheidung des Lehrenden 2026-11-25.
+
+```
+  Prinzip (bleibt)                     Werkzeug (wechselt)
+  Sollzustand steht schriftlich   <--  openspec/specs/
+  Änderung als Delta              <--  openspec/changes/
+  Prüfen vor dem Bauen            <--  proposal, Review
+  Verifizieren an Szenarien       <--  Scenarios, Tests
+  Abschließen, Stand nachziehen   <--  archive
+                                       daneben: ein zweites SDD-Werkzeug
+                                       und reines Markdown
+```
+
+- Kern: die Schritte des Musters aus D3 als Prinzip benennen, dann zwei oder drei
+  Werkzeuge auf dieselben Zeilen legen.
+- Übung: „openspec gibt es morgen nicht mehr. Wie führt euer Team die Specs weiter?"
+- Abschluss: Überleitung zu L19/L20 — Wasserfall und Scrum füllen dieselben Zeilen in
+  anderem Takt.
+
 ## Jahresrahmen
 
 ```
@@ -285,7 +406,7 @@ hier sind die Vorgabe, gegen die der CI-Check prüft (P2, Prüfung 2).
 |---|---|---|
 | `governance` | 9 | Projektbegriff, Ausgangslage, Kreativitätstechniken, Stakeholder, Zielsetzung, Projektauftrag, Schätz-Hygiene, Meilensteinplanung, Abnahme (8) + Leistungsfeststellung in der Reserve (1) |
 | `vorgehen` | 10 | Vorgehensmodelle-Überblick, Wasserfall, Scrum (3) + SDD / openspec vertieft (5) + Brücke Governance ↔ SDD (2) |
-| `modellierung` | 5 | UML: Überblick, Use-Case, Klassen/Objekt, Aktivität, Zustand im Überblick |
+| `modellierung` | 5 | UML: Überblick, Klassen/Objekt (DOM), Use-Case, Aktivität + Zustand, Architektur (D13) |
 | `werkzeuge` | 2 | Kursüberblick U1 (1) + Was ist Software-Engineering (1) |
 
 **Praxis 56 UE = 28 Themen à 2 UE**
@@ -360,10 +481,11 @@ statt zu programmieren.
 *** SDD / openspec
 *** Brücke Governance <-> SDD
 ** Modellierung
+*** Übersicht der Diagrammtypen
+*** Klassen- / Objektdiagramm (DOM)
 *** Use-Case-Diagramm
-*** Klassen- / Objektdiagramm
-*** Aktivitätsdiagramm
-*** Zustandsdiagramm (Überblick)
+*** Aktivitäts- / Zustandsdiagramm
+*** Komponenten- / Verteilungsdiagramm, C4
 ** Werkzeuge
 *** Lernumgebung (Ubuntu / macOS, setup.sh)
 *** git
@@ -411,5 +533,5 @@ Stand 2026-09-07: durch `curriculum.yaml` beantwortet.
   Meilenstein-Review in U24.
 
 Offen bleibt nur, was von außerhalb abhängt: die Abstimmung mit dem 4./5. Jahrgang über
-Deployment-Diagramm, Kubernetes-Vertiefung und die gepinnte JDK-Version (Aufgaben 4.1
-und 4.2).
+die Kubernetes-Vertiefung und die gepinnte JDK-Version (Aufgaben 4.1 und 4.2). Das
+Deployment-Diagramm bleibt seit 2026-11-25 im 3. Jg (D13).
