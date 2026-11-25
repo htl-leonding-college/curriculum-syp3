@@ -1,0 +1,238 @@
+= SYP Lecture Notes: Goals, Specification, Process Models and Scrum
+:author: Egor
+:revdate: 2026-11-24
+:toc: left
+:toclevels: 2
+:icons: font
+:source-highlighter: rouge
+
+== 1. Result vs. impact of the result
+
+A project has a *result* and an *impact* (the goal behind it). They are not the same thing, and the teacher calls this distinction "very, very important".
+
+.Example: speed limit on a highway through a city
+[cols="1,3"]
+|===
+| Result | The signs that are standing there (the thing that was built).
+| Impact (goal) | Cars keep to the legal limit, accidents drop, fewer people are injured or killed, the roads are safer.
+|===
+
+For software the same holds:
+
+* *Result* = what you program (the app).
+* *Goal* = the impact the app should have.
+
+[TIP]
+====
+In the thesis next year there is a form with exactly these two fields:
+"What is the result?" and "What is the goal?".
+====
+
+== 2. Effectiveness and efficiency
+
+Both terms relate to a goal. A goal must be defined *in numbers* (operationalised), otherwise neither can be judged.
+
+[cols="1,3"]
+|===
+| Effectiveness | The *degree to which the goal is reached*. "Do I reach my goal, and how far away am I?"
+| Efficiency | The *input-output relation*: how many resources and how much effort were needed to reach the goal.
+|===
+
+.Example
+* Today 100 people die per year. Goal: reduce by 50 %.
+* Only 60 are left, so the reduction is 40 %. The goal is missed, so we were *not 100 % effective* (we reached 40 of the 50 points, i.e. 80 % of the goal).
+* If two teams both reach the goal, the difference between them is *efficiency*: one needed high effort and several attempts, the other needed few resources. The first has a poor input-output relation.
+
+[NOTE]
+.Exam hint: terms
+====
+* Every exam contains *one question that only asks for terms*. Terms must create the right picture in your head, otherwise technicians misunderstand each other.
+* When you explain a term, *always give one example*. Without a good example it looks as if you did not understand it.
+====
+
+== 3. Requirements specification and functional specification
+
+=== 3.1 Table of contents of a functional specification
+. Initial situation
+. Current state
+. Objectives
+. Requirements
+. Volume estimate
+. (Plan with milestones)
+
+=== 3.2 Rules for the chapters
+Initial situation / current state::
+Describe the organisation and the department or the closer situation (for example a school that holds a barbecue every year). *Never mention the solution.* UML diagrams are allowed to describe workflows.
+Problems::
+The teacher often gives the problems *their own chapter*: "What are the problems?" Because of the problems we want goals.
+Objectives::
+Problems lead to goals (objectives), goals lead to requirements. The process of finding the requirements is called *requirements elicitation*.
+Volume estimate::
+Less important today. In the past hardware was the bottleneck; now the cloud scales almost without limit.
+Plan::
+The steering committee does not care exactly who does what when, but it needs milestones: the date by which the result is needed.
+
+=== 3.3 Use of the functional specification
+It can be sent to several companies, which then make an offer. In that case it also states how the offer must be structured.
+
+=== 3.4 What, not how
+The functional specification says *what* is done, not *how*. The "how" belongs to the *design*. The steering committee does not design, but it may set *restrictions*, for example "our employees only know C#, so the solution should use C#".
+
+=== 3.5 Functional vs. non-functional requirements
+.Example: a Mercedes-Benz
+[cols="1,3"]
+|===
+| Functional | What the car does: drive, accelerate, brake, turn, switch on the lights.
+| Non-functional | Properties such as safety. They are not a function, but they decide the quality.
+|===
+
+.Non-functional requirements named in the lecture
+[cols="1,3"]
+|===
+| Testability | Can the program be tested well?
+| Modularity | Windows is not modular, Linux is modular, "with all pros and cons".
+| Interoperability | Does the software run on one operating system or on several? On one processor family or several?
+| Fault tolerance / robustness | Does the system show a "blue screen" or does it handle faulty input well?
+|===
+
+The requirement documents are *frozen* once they are agreed.
+
+== 4. Process models
+
+A *process model* describes in which steps software is made.
+
+=== 4.1 Waterfall model (classic)
+Specification -> design -> implementation -> testing -> operation and maintenance.
+
+* Requirements were very detailed (forms, windows, ...), and implementation started after the specification.
+* *Problems:*
+** Projects could last two years. In that time requirements, law or market change.
+** While implementing you notice that something was forgotten and must go back: "the loop".
+** Result: very strict, *not flexible*.
+* Smaller pieces helped a little, but not enough.
+* Extreme programming (XP) was mentioned only briefly and is not covered.
+
+=== 4.2 V-model
+* The German model: it is used when selling to the government.
+* Same idea as the waterfall model, *but every development step has a matching test*.
+
+[cols="2,2"]
+|===
+| Development (left side) | Test (right side)
+
+| Definition / requirements | *Acceptance test*: a person sits down and tries to create an invoice, order something, and confirms that it works.
+| System specification | *System tests*: test the whole system, for example Playwright for the UI, tests for REST or GraphQL services.
+| Rough design: which components and packages | Tests of the components (see added note).
+| Fine design: class level | *Unit tests*, for example JUnit.
+| Implementation | (bottom of the V)
+|===
+
+[NOTE]
+.Added note
+====
+In the standard V-model the test for the rough design is the *integration test*. The teacher described it only as "tests for these parts".
+====
+
+=== 4.3 Agile process models and Scrum
+* *Agile* = very flexible.
+* The system is *not specified all at once and not built as a monolith*. It is modular: build one module, then the next. When the situation changes, the work can change too.
+* Within Scrum you work with a *small spec, a small design, implementation and tests* for each piece, again and again.
+
+== 5. Scrum
+
+=== 5.1 Overview of the process
+[cols="1,3"]
+|===
+| Product backlog | List of the parts of the product, a rough idea of what we want.
+| Sprint planning | Plan what to implement in the next sprint. A *sprint* is the time box and is normally short.
+| Sprint backlog | Items taken from the product backlog and split into *tasks* (for example "write an invoice" becomes GUI task, database task, ...).
+| Daily scrum | Small meeting every morning.
+| Definition of done | The agreement on when something is finished.
+|===
+
+[IMPORTANT]
+====
+The *definition of done* is very important. It is not easy to know when you are finished, so the team has to agree on it.
+====
+
+=== 5.2 Roles
+[cols="1,3"]
+|===
+| Product owner | Has the role of the customer (or is the customer). Looks at the result and says whether it is okay.
+| Scrum master | The organiser ("Kuemmerer"). Makes sure the team has laptops and so on, and *protects the team from disturbance* by other departments.
+| Development team | Builds the product.
+|===
+
+The *customer and the user are not the same person*: the customer may be the chief of the company, the user an employee.
+
+=== 5.3 Why user stories?
+Before Scrum, technicians said what the program had to do and programmed many functions that the users never used. The inventors of Scrum wanted to *focus on what users need and will use*. Every function is described from the user's point of view.
+
+=== 5.4 User story template
+[source]
+----
+As a <role>, I want <goal/feature>, so that <business value / benefit>.
+----
+
+You must say: Who am I? What do I need? Why do I need it, and what benefit does it have for the business?
+
+.Examples
+* As a CEO, I want an overview of my sales.
+* As a CEO, I want the monthly turnover per product group.
+* As a salesman, I want to see the maximum discount I may give, so that I know my room for negotiation.
+* As a salesman, I want to add new customers to the database.
+* As a shopper, I want to place products on a list and share it with my friends, so that they buy me things I actually want.
+
+=== 5.5 Steps from idea to user stories
+. *Identify the roles* of everybody who will use the system. Be empathetic: imagine sitting at their table and ask what they need to receive.
+. *Prioritise.* Use only coarse levels: *must have* and *should have* (not points 1, 2, 3). Example: writing invoices is a must have, because invoices bring money, and without money a company disappears quickly. Adding new customers is also very important, the current stock is less important.
+. *Estimate the size* (story points), only roughly (for example 5, 6, 1), because you do not yet know the real effort.
+. Write the *user stories*.
+. Create a *domain model* (class diagram). The teacher will explain domain object models and UML class diagrams next time. A class diagram shows what you can program and what not.
+
+=== 5.6 Acceptance criteria
+* They show *when a story is finished*.
+* They are also very useful for an AI agent: the agent knows which unit tests to create.
+* Example for the wish list: when a product is placed on the list, the list options appear; if the user is not logged in, they are asked to log in or create an account and then the wish list is shown.
+* On paper cards: *user story on the front, acceptance criteria on the back*.
+* Work with more and more detail: the better the user story is detailed, the better the AI agent works.
+
+[NOTE]
+.Added note
+====
+INVEST is the standard checklist for a good user story: Independent, Negotiable, Valuable, Estimable, Small, Testable.
+====
+
+=== 5.7 Business value and template details
+* The business value sentence must be concise: not too open, but also not too specific.
+* Business and non-functional requirements are formulated on top.
+
+=== 5.8 Wish-list example (workshop)
+. Brainstorm session: the wish list is created. The owner writes down notes after the meeting and does *not criticise*, to allow a conversation.
+. Functions found: add product, remove product, use link, e-mail to a friend.
+. *Grooming:* estimate everything (for example with 4, 5 or 10 points; the exact scale does not matter).
+. Add acceptance criteria.
+
+=== 5.9 Sprint board and burn-down chart
+Sprint board::
+Tasks move through columns such as *open, in progress, finished* (or: tasks, working, check, done). You can have ten columns, but simple is fine. On a physical wall with post-its, windows and wind can ruin it.
+Burn-down chart::
+Each story has story points. At the start you add up all points of the stories you work on. Whenever a story is completed, the remaining points go down. The curve shows the progress.
+
+== 6. Tools: GitHub Projects
+
+* Views: Kanban board (columns for example backlog, ready, in progress, in review), backlog, roadmap/features, and others. Kanban is Japanese and is more oriented towards milestones. You can ask your AI agent which columns to choose for Scrum.
+* *Every task has a number* (for example #66).
+* *Every commit must refer to a task number* (or to the user story, which also has a number). GitHub then links the commit and opens the task with one click. This also works when committing with AI.
+
+== 7. Documentation: minutes of meeting
+
+* Every project needs a *minutes of meeting* document.
+* *Reason:* when somebody later asks "Why did you do this?", you can look up who wanted it. The teacher always wrote minutes when working in a hospital: for a computer tomography device that cost 20 million he wanted to know afterwards why the expensive option was chosen.
+* *Content:*
+** who participates, where and when
+** which topics were discussed
+** a table with the results (who does what)
+* It is a *result protocol*, not a word-for-word record of who said what.
+* Write it in *AsciiDoc*. The teacher provides a template in the lecture-notes repository (folder with the AsciiDoc documents). It shows, for example, how to include an image.
+* Documents are written in English.
