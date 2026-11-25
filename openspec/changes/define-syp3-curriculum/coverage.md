@@ -4,7 +4,7 @@ Jede Zeile ordnet ein Requirement der acht Capabilities den Themen aus
 `curriculum.yaml` zu, die es tragen. Beide Richtungen zählen: kein Requirement ohne
 Thema, kein Thema ohne Requirement.
 
-Stand 2026-09-07 · 54 Themen · Quellenvermerk je Thema in der letzten Spalte
+Stand 2026-11-25 · 55 Themen · Quellenvermerk je Thema in der letzten Spalte
 (Aufgabe 4.3; `—` heißt ausdrücklich: keine fremde Quelle, Neuautorenschaft).
 
 ## curriculum/jahresplanung
@@ -73,7 +73,7 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 | Requirement | Themen | Quelle |
 |---|---|---|
 | Projektbegriff und Ausgangslage | `governance-project-basics` | Manz Kap. 1–2 (eigene Formulierung) |
-| Ideenfindung mit sechs Techniken, eine davon durchgeführt | `governance-idea-generation` | PUMA8_12 Kreativitätstechniken (Brainstorming, 6-3-5, Morphologischer Kasten, Mindmapping, Bionik, Delphi) |
+| Ideenfindung mit einer tatsächlich durchgeführten Technik | `governance-idea-generation` | PUMA8_12 Kreativitätstechniken (Brainstorming, 6-3-5, Morphologischer Kasten, Mindmapping, Bionik, Delphi) |
 | Projektauswahl ist kriterienbasiert und nachvollziehbar | `governance-weighted-scoring` — **jg4**, nicht im 3. Jg unterrichtet | PUMA8_05 Nutzwertanalyse |
 | Stakeholder und Zielsetzung | `governance-stakeholders-goals` | Manz Kap. 3 (eigene Formulierung) |
 | Erhebungstechniken der Anforderungsanalyse — Interview, Fragebogen, Beobachtung, Dokumentenanalyse | `governance-requirements-elicitation` | PUMA Anforderungsanalyse |
@@ -88,9 +88,9 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 | Requirement | Themen | Quelle |
 |---|---|---|
 | Vorgehensmodelle als drei Taktfrequenzen desselben Musters | `process-models-overview` | `01.Vorgehensmodelle.key` |
-| Vokabular der klassischen Modelle | `process-waterfall`, `process-scrum` | `01.Vorgehensmodelle.key`, Manz Kap. 4 |
+| Vokabular der klassischen Modelle | `process-waterfall`, `process-scrum` | `01.Vorgehensmodelle.key` (D12), Manz Kap. 4 |
 | Spezifikationsgetriebene Entwicklung anwenden | `sdd-openspec-artifacts`, `sdd-change-lifecycle`, `openspec-hands-on` | openspec-Dokumentation |
-| Der Sollzustand ersetzt das Pflichtenheft | `sdd-why-specs`, `sdd-specs-replace-requirements` | — |
+| Das Pflichtenheft wird einmal geschrieben, danach lebt der Sollzustand | `sdd-why-specs`, `sdd-specs-replace-requirements` | — |
 | Brücke zwischen Governance und Durchführung | `bridge-charter-to-specs`, `bridge-progress-and-milestones` | — |
 | Das Prinzip ist der Lerngegenstand, nicht das Werkzeug | `sdd-principle-not-tool` | — |
 
@@ -98,15 +98,20 @@ Unterrichte —, geprüft durch die Prüfungen 2, 3 und 5.
 
 | Requirement | Themen | Quelle |
 |---|---|---|
-| Anwendungsfalldiagramm erstellen und lesen | `uml-use-case` | UML-Skripten Uni Heidelberg |
-| Klassen- und Objektdiagramm erstellen und lesen | `uml-class-object` | UML-Skripten Uni Heidelberg |
-| Aktivitätsdiagramm erstellen und lesen | `uml-activity` | UML-Skripten Uni Heidelberg |
-| Zustandsdiagramm im Überblick | `uml-state-overview` | UML-Skripten Uni Heidelberg |
+| Diagrammtypen einordnen | `uml-overview` | UML 2.5 (OMG), Begriffe aus den UML-Skripten Uni Heidelberg |
+| Klassendiagramm als Domain Object Model erstellen und lesen | `uml-class-object` | UML-Skripten Uni Heidelberg |
+| Anwendungsfalldiagramm erstellen und lesen | `uml-use-case` | UML-Skripten Uni Heidelberg, `01.Vorgehensmodelle.key` (User Story) |
+| Aktivitäts- und Zustandsdiagramm mit Grundelementen | `uml-activity-state` | UML-Skripten Uni Heidelberg |
+| Architektur des Projekts darstellen | `uml-architecture` | UML-Skripten Uni Heidelberg, c4model.com |
 | Diagramme werden als Quelltext geführt | `uml-overview` und alle UML-Themen | PlantUML-Dokumentation |
+
+*Nachtrag 2026-11-25 (D13):* `uml-activity` heißt `uml-activity-state`,
+`uml-state-overview` wurde zu `uml-architecture`; zwei Requirements sind neu
+(Diagrammtypen, Architektur).
 
 ## Gegenprobe
 
-Alle 54 Themen kommen oben vor. Zwei Themen hatten anfangs kein Requirement —
+Alle 55 Themen kommen oben vor. Zwei Themen hatten anfangs kein Requirement —
 `what-is-software-engineering` und `assessment-written-and-oral`; dafür sind die beiden mit
 *(neu)* markierten Requirements in `specs/curriculum/jahresplanung/spec.md` ergänzt
 worden (Aufgabe 1.2). Kein Requirement blieb ohne Thema.

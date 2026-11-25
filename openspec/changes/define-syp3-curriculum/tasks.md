@@ -47,8 +47,8 @@
 
 ## 6. Nachtrag 2026-11-25: Vorgehensmodelle und UML (D12-D14)
 
-- [ ] 6.1 `curriculum.yaml` umstellen: `uml-class-object` auf L22, `uml-use-case` auf L23, `uml-activity` wird `uml-activity-state` (L24), `uml-state-overview` wird `uml-architecture` (L25), `requires` nachziehen (`uml-use-case` setzt `process-scrum` voraus); Prüfung: `tools/check-curriculum.py` ohne Befund, Budget unverändert
-- [ ] 6.2 `coverage.md` auf die neuen Requirements von `uml-basics` und `vorgehen-sdd` und die umbenannten Topics bringen; Prüfung: jedes Requirement nennt ein Topic, jedes Topic trägt ein Requirement
+- [x] 6.1 `curriculum.yaml` umstellen: `uml-class-object` auf L22, `uml-use-case` auf L23, `uml-activity` wird `uml-activity-state` (L24), `uml-state-overview` wird `uml-architecture` (L25), `requires` nachziehen (`uml-use-case` setzt `process-scrum` voraus); Prüfung: `tools/check-curriculum.py` ohne Befund, Budget unverändert
+- [x] 6.2 `coverage.md` auf die neuen Requirements von `uml-basics` und `vorgehen-sdd` und die umbenannten Topics bringen; Prüfung: jedes Requirement nennt ein Topic, jedes Topic trägt ein Requirement
 - [ ] 6.3 Modul `sdd-principle-not-tool` (L18) nach D14 schreiben; Prüfung: Tabelle Prinzip/Werkzeug mit mindestens zwei Werkzeugen, die Übung „openspec gibt es morgen nicht mehr", Überleitung zu L19
 - [ ] 6.4 Module `process-waterfall` (L19) und `process-scrum` (L20) aus den Folien nach D12 auf Englisch schreiben; Prüfung: jede Folie außer 1, 5 und 41 ist einem Abschnitt zugeordnet, kein Bild mit deutschem Text
 - [ ] 6.5 Bilder mit deutschem Text nachzeichnen (Folien 4, 7, 11, 14); die Mindmaps nach den Freeplane-Dateien in `assets/freeplane/` als `@startmindmap`; Prüfung: Diagramme rendern, Inhalt stimmt mit dem Original überein

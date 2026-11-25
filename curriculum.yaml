@@ -329,8 +329,8 @@ topics:
     prerequisite_for: jg4
     requires: [what-is-software-engineering]
 
-  - id: uml-use-case
-    title: Use case diagrams
+  - id: uml-class-object
+    title: Class and object diagrams as a domain object model
     block: modellierung
     theme: Diagram types
     kind: theorie
@@ -338,10 +338,10 @@ topics:
     lesson: 22
     taught_in: jg3
     prerequisite_for: jg4
-    requires: [uml-overview, governance-stakeholders-goals]
+    requires: [uml-overview]
 
-  - id: uml-class-object
-    title: Class and object diagrams
+  - id: uml-use-case
+    title: Use case diagrams and user stories
     block: modellierung
     theme: Diagram types
     kind: theorie
@@ -349,10 +349,10 @@ topics:
     lesson: 23
     taught_in: jg3
     prerequisite_for: jg4
-    requires: [uml-overview]
+    requires: [uml-overview, governance-stakeholders-goals, process-scrum]
 
-  - id: uml-activity
-    title: Activity diagrams
+  - id: uml-activity-state
+    title: Activity and state diagrams in outline
     block: modellierung
     theme: Diagram types
     kind: theorie
@@ -362,8 +362,8 @@ topics:
     prerequisite_for: jg4
     requires: [uml-overview]
 
-  - id: uml-state-overview
-    title: State diagrams in outline
+  - id: uml-architecture
+    title: Component and deployment diagrams, C4
     block: modellierung
     theme: Diagram types
     kind: theorie
@@ -371,7 +371,7 @@ topics:
     lesson: 25
     taught_in: jg3
     prerequisite_for: jg4
-    requires: [uml-overview]
+    requires: [uml-overview, compose-basics]
 
 # ============================================================================
 # Kernbetrieb U2-U25 — Praxis
